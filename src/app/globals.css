@@ -14,11 +14,28 @@
   }
 }
 
+/* 스크롤바 숨기기 */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 body {
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* flex display 중앙 정렬 */
+  .flex-center {
+    @apply flex justify-center items-center;
   }
 }
