@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "format": "prettier --write .",
-    "prepare": "husky install"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@tanstack/react-query": "^5.56.2",
@@ -18,6 +17,7 @@
     "next": "14.2.11",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
