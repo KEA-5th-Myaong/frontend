@@ -38,4 +38,18 @@ body {
   .flex-center {
     @apply flex justify-center items-center;
   }
+
+  /* 로그인/회원가입 */
+  .form-error-text {
+    @apply mt-1 text-sm text-red-500 font-semibold;
+  }
+  .form-input {
+    @apply w-full px-4 py-2 border rounded;
+  }
+  .form-btn {
+    @apply form-input text-black font-medium rounded hover:bg-blue-200;
+  }
+  .form-label {
+    @apply block mb-2 font-semibold;
+  }
 }
