@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-# Lint 코드
-npm run lint
-
-# 코드 형식 자동 수정
-npx prettier --write .
