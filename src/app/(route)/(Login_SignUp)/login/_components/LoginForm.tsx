@@ -3,8 +3,8 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import axios from 'axios';
-import { LoginState } from '../_types/login';
-import { SIGN_IN_ERROR, SIGN_IN_TEXT } from '../_constants/login';
+import { FORM_ERROR, FORM_TEXT } from '../../_constants/forms';
+import { LoginState } from '../../_types/forms';
 
 export default function LoginForm() {
   const {
@@ -23,7 +23,7 @@ export default function LoginForm() {
     try {
       await onSubmit(data);
     } catch (error) {
-      setErrorMessage(SIGN_IN_ERROR[2]);
+      setErrorMessage(FORM_ERROR[2]);
     }
   };
 
@@ -32,20 +32,20 @@ export default function LoginForm() {
       {/* 아이디 input */}
       <div>
         <label htmlFor="userId" className="form-label">
-          {SIGN_IN_TEXT[1]}
-          <input id="userId" {...register('userId', { required: SIGN_IN_ERROR[0] })} className="form-input" />
+          {FORM_TEXT[1]}
+          <input id="userId" {...register('userId', { required: FORM_ERROR[0] })} className="form-input" />
         </label>
         {errors.userId && <p className="form-error-text">{errors.userId.message}</p>}
       </div>
       {/* 비밀번호 input */}
       <div>
         <label htmlFor="userPwd" className="form-label">
-          {SIGN_IN_TEXT[2]}
+          {FORM_TEXT[2]}
           <input
             id="userPwd"
             type="password"
             className="form-input"
-            {...register('userPwd', { required: SIGN_IN_ERROR[1] })}
+            {...register('userPwd', { required: FORM_ERROR[1] })}
           />
         </label>
         {errors.userPwd && <p className="form-error-text">{errors.userPwd.message}</p>}
@@ -54,7 +54,7 @@ export default function LoginForm() {
       <div className="mt-8">
         {errorMessage && <p className="form-error-text">{errorMessage}</p>}
         <button type="submit" className="form-btn">
-          {SIGN_IN_TEXT[0]}
+          {FORM_TEXT[0]}
         </button>
       </div>
     </form>

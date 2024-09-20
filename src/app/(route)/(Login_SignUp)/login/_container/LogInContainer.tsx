@@ -1,21 +1,21 @@
 import Link from 'next/link';
-import { SIGN_IN_TEXT } from '../_constants/login';
+import { FORM_TEXT } from '../../_constants/forms';
 import LoginForm from '../_components/LoginForm';
 
 export default function LogInContainer() {
   return (
     <div className="flex-center flex-col self-stretch">
       <div className="flex flex-col items-center w-1/3">
-        <p className="mb-6 text-3xl font-bold text-center">{SIGN_IN_TEXT[0]}</p>
+        <p className="mb-6 text-3xl font-bold text-center">{FORM_TEXT[0]}</p>
         <LoginForm />
 
         <div className="flex self-stretch justify-around mt-6">
           <Link href="/" className="">
-            {SIGN_IN_TEXT[3]}
+            {FORM_TEXT[3]}
           </Link>
 
           <Link href="/sign-up" className="">
-            {SIGN_IN_TEXT[4]}
+            {FORM_TEXT[4]}
           </Link>
         </div>
 
