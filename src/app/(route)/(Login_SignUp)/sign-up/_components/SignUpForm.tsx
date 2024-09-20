@@ -99,7 +99,7 @@ export default function SignUpForm() {
     if (!pwdRegex.test(pwd)) {
       setError('userPwd', {
         type: 'manual',
-        message: FORM_ERROR[10],
+        message: FORM_ERROR[9],
       });
       return false;
     }
@@ -114,7 +114,7 @@ export default function SignUpForm() {
     if (checkPwd !== userPwdValue) {
       setError('checkPwd', {
         type: 'manual',
-        message: FORM_ERROR[12], // 비밀번호가 일치하지 않는 경우의 에러 메시지
+        message: FORM_ERROR[11], // 비밀번호가 일치하지 않는 경우의 에러 메시지
       });
       return false;
     }
@@ -141,96 +141,91 @@ export default function SignUpForm() {
   };
 
   return (
-    <form className="flex flex-col gap-4 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
+    <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
       {/* 이름 input */}
       <div>
-        <label htmlFor="userName" className="form-label">
-          <div className="flex items-center gap-2">
-            {FORM_TEXT[6]} <p className="form-red-dot" />
-          </div>
-          <input id="userName" {...register('userName', { required: FORM_ERROR[3] })} className="mt-2 form-input" />
-        </label>
+        <div className="flex items-center gap-2">
+          {FORM_TEXT[6]} <p className="form-red-dot" />
+        </div>
+        <input id="userName" {...register('userName', { required: FORM_ERROR[3] })} className="mt-2 form-input" />
+
         {errors.userName && <p className="form-error-text">{errors.userName.message}</p>}
       </div>
 
       {/* 이메일 input */}
       <div>
-        <label htmlFor="userEMail" className="form-label">
-          <div className="flex items-center gap-2">
-            {FORM_TEXT[7]} <p className="form-red-dot" />
-          </div>
-          <input
-            type="email"
-            id="userEMail"
-            {...register('userEMail', { required: FORM_ERROR[4], onBlur: (e) => checkEMailDuplicate(e.target.value) })}
-            className="mt-2 form-input"
-          />
-        </label>
+        <div className="flex items-center gap-2">
+          {FORM_TEXT[7]} <p className="form-red-dot" />
+        </div>
+        <input
+          type="email"
+          id="userEMail"
+          {...register('userEMail', { required: FORM_ERROR[4], onBlur: (e) => checkEMailDuplicate(e.target.value) })}
+          className="mt-2 form-input"
+        />
+
         {errors.userEMail && <p className="form-error-text">{errors.userEMail.message}</p>}
       </div>
 
       {/* 아이디 input */}
       <div>
-        <label htmlFor="userId" className="form-label">
-          <div className="flex items-center gap-2">
-            {FORM_TEXT[1]} <p className="form-red-dot" />
-          </div>
-          <input
-            maxLength={10}
-            id="userId"
-            {...register('userId', { required: FORM_ERROR[0], onBlur: (e) => checkIdDuplicate(e.target.value) })}
-            className="mt-2 form-input"
-          />
-        </label>
+        <div className="flex items-center gap-2">
+          {FORM_TEXT[1]} <p className="form-red-dot" />
+        </div>
+        <input
+          maxLength={10}
+          id="userId"
+          {...register('userId', { required: FORM_ERROR[0], onBlur: (e) => checkIdDuplicate(e.target.value) })}
+          className="mt-2 form-input"
+        />
+
         {errors.userId ? (
           <p className="form-error-text">{errors.userId.message}</p>
         ) : (
-          <p className="mt-1 text-xs text-gray-3">{FORM_TEXT[9]}</p>
+          <p className="text-gray-3 font-normal form-error-text">{FORM_TEXT[9]}</p>
         )}
       </div>
 
       {/* 비밀번호 input */}
       <div>
-        <label htmlFor="userPwd" className="form-label">
-          <div className="flex items-center gap-2">
-            {FORM_TEXT[2]} <p className="form-red-dot" />
-          </div>
-          <input
-            type="password"
-            minLength={10}
-            id="userPwd"
-            {...register('userPwd', { required: FORM_ERROR[9], onBlur: (e) => validatePwd(e.target.value) })}
-            className="mt-2 form-input"
-          />
-        </label>
+        <div className="flex items-center gap-2">
+          {FORM_TEXT[2]} <p className="form-red-dot" />
+        </div>
+        <input
+          type="password"
+          minLength={10}
+          id="userPwd"
+          {...register('userPwd', { required: FORM_ERROR[1], onBlur: (e) => validatePwd(e.target.value) })}
+          className="mt-2 form-input"
+        />
+
         {errors.userPwd ? (
           <p className="form-error-text">{errors.userPwd.message}</p>
         ) : (
-          <p className="mt-1 text-xs text-gray-3">{FORM_TEXT[10]}</p>
+          <p className="text-gray-3 font-normal form-error-text">{FORM_TEXT[9]}</p>
         )}
       </div>
 
       {/* 비밀번호 확인 input */}
       <div>
-        <label htmlFor="checkPwd" className="form-label">
-          <div className="flex items-center gap-2">
-            {FORM_TEXT[8]} <p className="form-red-dot" />
-          </div>
-          <input
-            type="password"
-            id="checkPwd"
-            {...register('checkPwd', { required: FORM_ERROR[11], onBlur: (e) => validateCheckPwd(e.target.value) })}
-            className="mt-2 form-input"
-          />
-        </label>
+        <div className="flex items-center gap-2">
+          {FORM_TEXT[8]} <p className="form-red-dot" />
+        </div>
+        <input
+          type="password"
+          id="checkPwd"
+          {...register('checkPwd', { required: FORM_ERROR[10], onBlur: (e) => validateCheckPwd(e.target.value) })}
+          className="mt-2 form-input"
+        />
+
         {errors.checkPwd && <p className="form-error-text">{errors.checkPwd.message}</p>}
       </div>
 
       {/* 회원가입 button */}
-      <div className="mt-8">
+      <div className="mt-[60px]">
         {errorMessage && <p className="form-error-text">{errorMessage}</p>}
         <button type="submit" className={`form-btn ${!isFormValid ? 'bg-gray-2' : ''}`} disabled={!isFormValid}>
-          {FORM_TEXT[0]}
+          {FORM_TEXT[11]}
         </button>
       </div>
     </form>

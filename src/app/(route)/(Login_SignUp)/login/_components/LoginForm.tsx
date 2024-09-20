@@ -28,30 +28,28 @@ export default function LoginForm() {
   };
 
   return (
-    <form className="flex flex-col gap-4 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
+    <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
       {/* 아이디 input */}
-      <div>
-        <label htmlFor="userId" className="form-label">
-          {FORM_TEXT[1]}
-          <input id="userId" {...register('userId', { required: FORM_ERROR[0] })} className="form-input" />
-        </label>
+      <div className="relative">
+        <p className="form-label">{FORM_TEXT[1]}</p>
+        <input id="userId" {...register('userId', { required: FORM_ERROR[0] })} className="form-input" />
+
         {errors.userId && <p className="form-error-text">{errors.userId.message}</p>}
       </div>
       {/* 비밀번호 input */}
-      <div>
-        <label htmlFor="userPwd" className="form-label">
-          {FORM_TEXT[2]}
-          <input
-            id="userPwd"
-            type="password"
-            className="form-input"
-            {...register('userPwd', { required: FORM_ERROR[1] })}
-          />
-        </label>
+      <div className="relative">
+        <p className="form-label">{FORM_TEXT[2]}</p>
+        <input
+          id="userPwd"
+          type="password"
+          className="form-input"
+          {...register('userPwd', { required: FORM_ERROR[1] })}
+        />
+
         {errors.userPwd && <p className="form-error-text">{errors.userPwd.message}</p>}
       </div>
       {/* 로그인 button */}
-      <div className="mt-8">
+      <div className="mt-5">
         {errorMessage && <p className="form-error-text">{errorMessage}</p>}
         <button type="submit" className="form-btn">
           {FORM_TEXT[0]}

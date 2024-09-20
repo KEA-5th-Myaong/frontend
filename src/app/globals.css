@@ -40,17 +40,20 @@ body {
   }
 
   /* 로그인/회원가입 */
+  .form-title {
+    @apply mb-12 text-[32px] font-semibold text-center;
+  }
   .form-error-text {
-    @apply mt-1 text-xs text-red-500;
+    @apply absolute pl-4 mt-[6px] font-semibold text-sm text-red-500;
   }
   .form-input {
-    @apply w-full px-4 py-2 border rounded-lg border-green-0;
+    @apply w-full p-4 border-2 rounded-lg border-green-0;
   }
   .form-btn {
     @apply form-input border-white text-white font-medium rounded-lg bg-green-0;
   }
   .form-label {
-    @apply block;
+    @apply block pb-[10px];
   }
   .form-red-dot {
     @apply bg-red-600 w-1 h-1 rounded-full;
