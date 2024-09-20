@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { SIGN_IN_TEXT } from '../constants/login';
+import { SIGN_IN_TEXT } from '../_constants/login';
 import LoginForm from '../_components/LoginForm';
 
 export default function LogInContainer() {

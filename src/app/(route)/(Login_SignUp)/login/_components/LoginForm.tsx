@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import axios from 'axios';
 import { LoginState } from '../_types/login';
-import { SIGN_IN_ERROR, SIGN_IN_TEXT } from '../constants/login';
+import { SIGN_IN_ERROR, SIGN_IN_TEXT } from '../_constants/login';
 
 export default function LoginForm() {
   const {
