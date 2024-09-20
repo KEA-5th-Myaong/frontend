@@ -17,18 +17,26 @@ const config: Config = {
         pretendard: ['var(--font-pretendard)'],
       },
       colors: {
+        dark: {
+          0: '#2E2E3A',
+          1: '#21212A',
+          2: '#17171C',
+        },
         gray: {
-          0: '#F4F4F4',
-          1: '#E0E0E0',
-          2: '#B8B8B8',
-          3: '#929292',
-          4: '#6E6E6E',
-          5: '#4B4B4B',
-          6: '#2B2B2B',
-          7: '#111111',
+          0: '#D2D2D2',
+          1: '#9FA6B2',
+          2: '#6E6E82',
+        },
+        snow: {
+          0: '#F1F1F5',
         },
         green: {
           0: '#00D154',
+          1: '#00D154',
+          2: '#4DFF94',
+        },
+        yellow: {
+          0: '#FFC83C',
         },
       },
     },
