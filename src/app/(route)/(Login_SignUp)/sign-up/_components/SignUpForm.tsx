@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import axios from 'axios';
-import { FORM_CATCH_ERROR, FORM_ERROR, FORM_TEXT } from '../../_constants/forms';
+import { FORM_CATCH_ERROR, FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { SignUpState } from '../../_types/forms';
 
 export default function SignUpForm() {
@@ -147,7 +147,12 @@ export default function SignUpForm() {
         <div className="flex items-center gap-2">
           {FORM_TEXT[6]} <p className="form-red-dot" />
         </div>
-        <input id="userName" {...register('userName', { required: FORM_ERROR[3] })} className="mt-2 form-input" />
+        <input
+          id="userName"
+          {...register('userName', { required: FORM_ERROR[3] })}
+          className="mt-2 form-input"
+          placeholder={FORM_PLACEHOLDER[2]}
+        />
 
         {errors.userName && <p className="form-error-text">{errors.userName.message}</p>}
       </div>
@@ -162,6 +167,7 @@ export default function SignUpForm() {
           id="userEMail"
           {...register('userEMail', { required: FORM_ERROR[4], onBlur: (e) => checkEMailDuplicate(e.target.value) })}
           className="mt-2 form-input"
+          placeholder={FORM_PLACEHOLDER[3]}
         />
 
         {errors.userEMail && <p className="form-error-text">{errors.userEMail.message}</p>}
@@ -177,12 +183,13 @@ export default function SignUpForm() {
           id="userId"
           {...register('userId', { required: FORM_ERROR[0], onBlur: (e) => checkIdDuplicate(e.target.value) })}
           className="mt-2 form-input"
+          placeholder={FORM_PLACEHOLDER[0]}
         />
 
         {errors.userId ? (
           <p className="form-error-text">{errors.userId.message}</p>
         ) : (
-          <p className="text-gray-3 font-normal form-error-text">{FORM_TEXT[9]}</p>
+          <p className="text-gray-3 font-normal form-error-text">{FORM_TEXT[8]}</p>
         )}
       </div>
 
@@ -197,6 +204,7 @@ export default function SignUpForm() {
           id="userPwd"
           {...register('userPwd', { required: FORM_ERROR[1], onBlur: (e) => validatePwd(e.target.value) })}
           className="mt-2 form-input"
+          placeholder={FORM_PLACEHOLDER[1]}
         />
 
         {errors.userPwd ? (
@@ -209,13 +217,14 @@ export default function SignUpForm() {
       {/* 비밀번호 확인 input */}
       <div>
         <div className="flex items-center gap-2">
-          {FORM_TEXT[8]} <p className="form-red-dot" />
+          {FORM_TEXT[3]} <p className="form-red-dot" />
         </div>
         <input
           type="password"
           id="checkPwd"
           {...register('checkPwd', { required: FORM_ERROR[10], onBlur: (e) => validateCheckPwd(e.target.value) })}
           className="mt-2 form-input"
+          placeholder={FORM_PLACEHOLDER[4]}
         />
 
         {errors.checkPwd && <p className="form-error-text">{errors.checkPwd.message}</p>}
@@ -225,7 +234,7 @@ export default function SignUpForm() {
       <div className="mt-[60px]">
         {errorMessage && <p className="form-error-text">{errorMessage}</p>}
         <button type="submit" className={`form-btn ${!isFormValid ? 'bg-gray-2' : ''}`} disabled={!isFormValid}>
-          {FORM_TEXT[11]}
+          {FORM_TEXT[10]}
         </button>
       </div>
     </form>

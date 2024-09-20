@@ -9,7 +9,7 @@ export default function LogInContainer() {
         <LoginForm />
 
         <div className="flex flex-col self-stretch items-center mt-[60px]">
-          <span className="mb-4 text-gray-3">{FORM_TEXT[12]}</span>
+          <span className="mb-4 text-gray-3">{FORM_TEXT[5]}</span>
 
           <div className="flex gap-5">
             <div className="bg-yellow-300 rounded-full p-6 cursor-pointer" />

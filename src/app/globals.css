@@ -47,7 +47,7 @@ body {
     @apply absolute pl-4 mt-[6px] font-semibold text-sm text-red-500;
   }
   .form-input {
-    @apply w-full p-4 border-2 rounded-lg border-green-0;
+    @apply w-full p-4 border-2 rounded-lg border-green-0 text-black font-medium;
   }
   .form-btn {
     @apply form-input border-white text-white font-medium rounded-lg bg-green-0;

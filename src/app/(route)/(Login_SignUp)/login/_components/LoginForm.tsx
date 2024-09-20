@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import axios from 'axios';
-import { FORM_ERROR, FORM_TEXT } from '../../_constants/forms';
+import { FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { LoginState } from '../../_types/forms';
 
 export default function LoginForm() {
@@ -32,7 +32,12 @@ export default function LoginForm() {
       {/* 아이디 input */}
       <div className="relative">
         <p className="form-label">{FORM_TEXT[1]}</p>
-        <input id="userId" {...register('userId', { required: FORM_ERROR[0] })} className="form-input" />
+        <input
+          id="userId"
+          {...register('userId', { required: FORM_ERROR[0] })}
+          className="form-input"
+          placeholder={FORM_PLACEHOLDER[0]}
+        />
 
         {errors.userId && <p className="form-error-text">{errors.userId.message}</p>}
       </div>
@@ -42,8 +47,9 @@ export default function LoginForm() {
         <input
           id="userPwd"
           type="password"
-          className="form-input"
           {...register('userPwd', { required: FORM_ERROR[1] })}
+          className="form-input"
+          placeholder={FORM_PLACEHOLDER[1]}
         />
 
         {errors.userPwd && <p className="form-error-text">{errors.userPwd.message}</p>}
