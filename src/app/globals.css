@@ -41,15 +41,18 @@ body {
 
   /* 로그인/회원가입 */
   .form-error-text {
-    @apply mt-1 text-sm text-red-500 font-semibold;
+    @apply mt-1 text-xs text-red-500;
   }
   .form-input {
-    @apply w-full px-4 py-2 border rounded;
+    @apply w-full px-4 py-2 border rounded-lg border-green-0;
   }
   .form-btn {
-    @apply form-input text-black font-medium rounded hover:bg-blue-200;
+    @apply form-input border-white text-white font-medium rounded-lg bg-green-0;
   }
   .form-label {
-    @apply block mb-2 font-semibold;
+    @apply block;
+  }
+  .form-red-dot {
+    @apply bg-red-600 w-1 h-1 rounded-full;
   }
 }
