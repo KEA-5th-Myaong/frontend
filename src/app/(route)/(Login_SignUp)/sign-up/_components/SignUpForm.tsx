@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FORM_CATCH_ERROR, FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { SignUpState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
+import { validateCheckPwd, validateEmail, validateId, validatePwd } from '../../_utils/validation';
 
 export default function SignUpForm() {
   const {
@@ -16,27 +17,13 @@ export default function SignUpForm() {
     clearErrors,
     watch,
   } = useForm<SignUpState>({
-    mode: 'onChange',
+    mode: 'onBlur',
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // 이메일 유효성 검사
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
-      setError('userEMail', {
-        type: 'manual',
-        message: FORM_ERROR[8],
-      });
-      return false;
-    }
-    clearErrors('userEMail');
-    return true;
-  };
-
   // 이메일 중복 검사
   const checkEMailDuplicate = async (email: string) => {
-    if (!validateEmail(email)) {
+    if (!validateEmail(email, setError, clearErrors)) {
       return; // 유효성 검사를 통과하지 않으면 중복검사를 실행하지 않음
     }
 
@@ -58,22 +45,9 @@ export default function SignUpForm() {
     }
   };
 
-  // 아이디 유효성 검사
-  const validateId = (id: string): boolean => {
-    const validIdRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]+$/;
-    if (!validIdRegex.test(id)) {
-      setError('userId', {
-        type: 'manual',
-        message: FORM_ERROR[6],
-      });
-      return false;
-    }
-    return true;
-  };
-
   // 아이디 중복 검사
   const checkIdDuplicate = async (id: string) => {
-    if (!validateId(id)) {
+    if (!validateId(id, setError)) {
       return; // 유효성 검사를 통과하지 않으면 중복검사를 실행하지 않음
     }
     try {
@@ -94,34 +68,8 @@ export default function SignUpForm() {
     }
   };
 
-  // 비밀번호 유효성 검사
-  const validatePwd = (pwd: string): boolean => {
-    const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}:;?~<>]).{10,}$/;
-    if (!pwdRegex.test(pwd)) {
-      setError('userPwd', {
-        type: 'manual',
-        message: FORM_ERROR[9],
-      });
-      return false;
-    }
-    clearErrors('userPwd');
-    return true;
-  };
-
   // 비밀번호 체크
   const userPwdValue = watch('userPwd');
-
-  const validateCheckPwd = (checkPwd: string): boolean => {
-    if (checkPwd !== userPwdValue) {
-      setError('checkPwd', {
-        type: 'manual',
-        message: FORM_ERROR[11], // 비밀번호가 일치하지 않는 경우의 에러 메시지
-      });
-      return false;
-    }
-    clearErrors('checkPwd');
-    return true;
-  };
 
   // 회원 가입 api 호출
   const onSubmit = async (data: SignUpState) => {
@@ -185,7 +133,7 @@ export default function SignUpForm() {
         placeholder={FORM_PLACEHOLDER[1]}
         register={register}
         required={FORM_ERROR[1]}
-        onBlur={(e) => validatePwd(e.target.value)}
+        onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
         type="password"
         error={errors.userPwd}
         minLength={10}
@@ -199,7 +147,7 @@ export default function SignUpForm() {
         placeholder={FORM_PLACEHOLDER[4]}
         register={register}
         required={FORM_ERROR[10]}
-        onBlur={(e) => validateCheckPwd(e.target.value)}
+        onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
         type="password"
         error={errors.checkPwd}
       />
