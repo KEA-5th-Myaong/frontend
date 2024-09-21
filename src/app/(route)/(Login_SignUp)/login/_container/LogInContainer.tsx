@@ -13,7 +13,7 @@ export default function LogInContainer() {
 
           <div className="flex gap-5">
             <div className="bg-yellow-300 rounded-full p-6 cursor-pointer" />
-            <div className="bg-snow-0 rounded-full border-2 p-6 cursor-pointer" />
+            <div className="bg-white-0 rounded-full border-2 p-6 cursor-pointer" />
           </div>
         </div>
       </div>

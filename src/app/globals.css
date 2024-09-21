@@ -25,6 +25,7 @@
 }
 
 body {
+  background-color: #f1f1f5;
 }
 
 @layer utilities {
@@ -47,15 +48,15 @@ body {
     @apply absolute pl-4 mt-[6px] font-semibold text-sm text-red-500;
   }
   .form-input {
-    @apply w-full p-4 border-2 rounded-lg border-green-0 text-black font-medium;
+    @apply w-full p-4 border-2 rounded-lg border-green-1 text-black-0 font-medium;
   }
   .form-btn {
-    @apply form-input border-white text-white font-medium rounded-lg bg-green-0;
+    @apply form-input border-white-0 text-white-0 font-medium rounded-lg bg-green-1;
   }
   .form-label {
     @apply block pb-[10px];
   }
   .form-red-dot {
-    @apply bg-red-600 w-1 h-1 rounded-full;
+    @apply bg-red-600 w-[5px] h-[5px] rounded-full;
   }
 }

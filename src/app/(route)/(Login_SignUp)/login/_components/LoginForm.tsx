@@ -5,6 +5,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { LoginState } from '../../_types/forms';
+import FormInput from '../../_components/FormInput';
 
 export default function LoginForm() {
   const {
@@ -30,33 +31,31 @@ export default function LoginForm() {
   return (
     <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
       {/* 아이디 input */}
-      <div className="relative">
-        <p className="form-label">{FORM_TEXT[1]}</p>
-        <input
-          id="userId"
-          {...register('userId', { required: FORM_ERROR[0] })}
-          className="form-input"
-          placeholder={FORM_PLACEHOLDER[0]}
-        />
+      <FormInput<LoginState>
+        id="userId"
+        label={FORM_TEXT[1]}
+        placeholder={FORM_PLACEHOLDER[0]}
+        register={register}
+        required={FORM_ERROR[0]}
+        error={errors.userId}
+        isEssential={false}
+      />
 
-        {errors.userId && <p className="form-error-text">{errors.userId.message}</p>}
-      </div>
       {/* 비밀번호 input */}
-      <div className="relative">
-        <p className="form-label">{FORM_TEXT[2]}</p>
-        <input
-          id="userPwd"
-          type="password"
-          {...register('userPwd', { required: FORM_ERROR[1] })}
-          className="form-input"
-          placeholder={FORM_PLACEHOLDER[1]}
-        />
+      <FormInput<LoginState>
+        id="userPwd"
+        label={FORM_TEXT[2]}
+        placeholder={FORM_PLACEHOLDER[1]}
+        register={register}
+        type="password"
+        required={FORM_ERROR[1]}
+        error={errors.userPwd}
+        isEssential={false}
+      />
 
-        {errors.userPwd && <p className="form-error-text">{errors.userPwd.message}</p>}
-      </div>
+      <div>{errorMessage && <p className="form-error-text">{errorMessage}</p>}</div>
       {/* 로그인 button */}
-      <div className="mt-5">
-        {errorMessage && <p className="form-error-text">{errorMessage}</p>}
+      <div className="">
         <button type="submit" className="form-btn">
           {FORM_TEXT[0]}
         </button>

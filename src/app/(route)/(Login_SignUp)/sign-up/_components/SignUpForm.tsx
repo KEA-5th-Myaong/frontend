@@ -5,6 +5,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { FORM_CATCH_ERROR, FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { SignUpState } from '../../_types/forms';
+import FormInput from '../../_components/FormInput';
 
 export default function SignUpForm() {
   const {
@@ -59,7 +60,7 @@ export default function SignUpForm() {
 
   // 아이디 유효성 검사
   const validateId = (id: string): boolean => {
-    const validIdRegex = /^[a-z0-9]+$/;
+    const validIdRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]+$/;
     if (!validIdRegex.test(id)) {
       setError('userId', {
         type: 'manual',
@@ -143,92 +144,65 @@ export default function SignUpForm() {
   return (
     <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
       {/* 이름 input */}
-      <div>
-        <div className="flex items-center gap-2">
-          {FORM_TEXT[6]} <p className="form-red-dot" />
-        </div>
-        <input
-          id="userName"
-          {...register('userName', { required: FORM_ERROR[3] })}
-          className="mt-2 form-input"
-          placeholder={FORM_PLACEHOLDER[2]}
-        />
-
-        {errors.userName && <p className="form-error-text">{errors.userName.message}</p>}
-      </div>
+      <FormInput<SignUpState>
+        id="userName"
+        label={FORM_TEXT[6]}
+        placeholder={FORM_PLACEHOLDER[2]}
+        register={register}
+        required={FORM_ERROR[3]}
+        error={errors.userName}
+      />
 
       {/* 이메일 input */}
-      <div>
-        <div className="flex items-center gap-2">
-          {FORM_TEXT[7]} <p className="form-red-dot" />
-        </div>
-        <input
-          type="email"
-          id="userEMail"
-          {...register('userEMail', { required: FORM_ERROR[4], onBlur: (e) => checkEMailDuplicate(e.target.value) })}
-          className="mt-2 form-input"
-          placeholder={FORM_PLACEHOLDER[3]}
-        />
-
-        {errors.userEMail && <p className="form-error-text">{errors.userEMail.message}</p>}
-      </div>
+      <FormInput<SignUpState>
+        id="userEMail"
+        label={FORM_TEXT[7]}
+        placeholder={FORM_PLACEHOLDER[3]}
+        register={register}
+        onBlur={(e) => checkEMailDuplicate(e.target.value)}
+        type="email"
+        error={errors.userEMail}
+        required={FORM_ERROR[4]}
+      />
 
       {/* 아이디 input */}
-      <div>
-        <div className="flex items-center gap-2">
-          {FORM_TEXT[1]} <p className="form-red-dot" />
-        </div>
-        <input
-          maxLength={10}
-          id="userId"
-          {...register('userId', { required: FORM_ERROR[0], onBlur: (e) => checkIdDuplicate(e.target.value) })}
-          className="mt-2 form-input"
-          placeholder={FORM_PLACEHOLDER[0]}
-        />
-
-        {errors.userId ? (
-          <p className="form-error-text">{errors.userId.message}</p>
-        ) : (
-          <p className="text-gray-3 font-normal form-error-text">{FORM_TEXT[8]}</p>
-        )}
-      </div>
+      <FormInput<SignUpState>
+        id="userId"
+        label={FORM_TEXT[1]}
+        placeholder={FORM_PLACEHOLDER[0]}
+        register={register}
+        required={FORM_ERROR[0]}
+        onBlur={(e) => checkIdDuplicate(e.target.value)}
+        error={errors.userId}
+        maxLength={10}
+        infoText={FORM_TEXT[8]}
+      />
 
       {/* 비밀번호 input */}
-      <div>
-        <div className="flex items-center gap-2">
-          {FORM_TEXT[2]} <p className="form-red-dot" />
-        </div>
-        <input
-          type="password"
-          minLength={10}
-          id="userPwd"
-          {...register('userPwd', { required: FORM_ERROR[1], onBlur: (e) => validatePwd(e.target.value) })}
-          className="mt-2 form-input"
-          placeholder={FORM_PLACEHOLDER[1]}
-        />
-
-        {errors.userPwd ? (
-          <p className="form-error-text">{errors.userPwd.message}</p>
-        ) : (
-          <p className="text-gray-3 font-normal form-error-text">{FORM_TEXT[9]}</p>
-        )}
-      </div>
+      <FormInput<SignUpState>
+        id="userPwd"
+        label={FORM_TEXT[2]}
+        placeholder={FORM_PLACEHOLDER[1]}
+        register={register}
+        required={FORM_ERROR[1]}
+        onBlur={(e) => validatePwd(e.target.value)}
+        type="password"
+        error={errors.userPwd}
+        minLength={10}
+        infoText={FORM_TEXT[9]}
+      />
 
       {/* 비밀번호 확인 input */}
-      <div>
-        <div className="flex items-center gap-2">
-          {FORM_TEXT[3]} <p className="form-red-dot" />
-        </div>
-        <input
-          type="password"
-          id="checkPwd"
-          {...register('checkPwd', { required: FORM_ERROR[10], onBlur: (e) => validateCheckPwd(e.target.value) })}
-          className="mt-2 form-input"
-          placeholder={FORM_PLACEHOLDER[4]}
-        />
-
-        {errors.checkPwd && <p className="form-error-text">{errors.checkPwd.message}</p>}
-      </div>
+      <FormInput<SignUpState>
+        id="checkPwd"
+        label={FORM_TEXT[3]}
+        placeholder={FORM_PLACEHOLDER[4]}
+        register={register}
+        required={FORM_ERROR[10]}
+        onBlur={(e) => validateCheckPwd(e.target.value)}
+        type="password"
+        error={errors.checkPwd}
+      />
 
       {/* 회원가입 button */}
       <div className="mt-[60px]">
