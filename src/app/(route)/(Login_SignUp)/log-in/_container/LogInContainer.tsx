@@ -4,7 +4,7 @@ import LoginForm from '../_components/LoginForm';
 export default function LogInContainer() {
   return (
     <div className="flex-center flex-col self-stretch">
-      <div className="flex flex-col items-center w-1/3">
+      <div className="flex flex-col items-center w-full min-w-[355px] max-w-[660px] px-5">
         <p className="form-title">{FORM_TEXT[0]}</p>
         <LoginForm />
 
