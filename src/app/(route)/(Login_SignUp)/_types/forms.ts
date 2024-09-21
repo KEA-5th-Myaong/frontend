@@ -5,10 +5,8 @@ export interface LoginState {
   userPwd: string;
 }
 
-export interface SignUpState {
+export interface SignUpState extends LoginState {
   userName: string;
-  userId: string;
-  userPwd: string;
   checkPwd: string;
   userEMail: string;
 }

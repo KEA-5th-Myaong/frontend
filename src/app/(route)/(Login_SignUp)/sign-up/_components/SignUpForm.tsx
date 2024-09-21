@@ -17,7 +17,7 @@ export default function SignUpForm() {
     clearErrors,
     watch,
   } = useForm<SignUpState>({
-    mode: 'onBlur',
+    mode: 'onChange',
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 

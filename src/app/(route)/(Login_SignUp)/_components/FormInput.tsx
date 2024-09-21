@@ -8,13 +8,13 @@ export default function FormInput<T extends FieldValues>({
   placeholder,
   register,
   required,
-  onBlur,
-  type,
-  error,
-  isEssential,
-  maxLength,
-  minLength,
-  infoText,
+  onBlur = undefined,
+  type = undefined,
+  error = undefined,
+  isEssential = true,
+  maxLength = undefined,
+  minLength = 1,
+  infoText = '',
 }: FormInputProps<T>) {
   return (
     <div className="relative">
@@ -39,13 +39,3 @@ export default function FormInput<T extends FieldValues>({
     </div>
   );
 }
-
-FormInput.defaultProps = {
-  onBlur: undefined,
-  type: undefined,
-  error: undefined,
-  isEssential: true,
-  maxLength: undefined,
-  minLength: 1,
-  infoText: '',
-};
