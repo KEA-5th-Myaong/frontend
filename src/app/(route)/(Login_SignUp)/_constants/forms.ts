@@ -40,3 +40,5 @@ export const FORM_PLACEHOLDER = [
   '이메일을 입력해주세요.',
   '**********',
 ];
+
+export const MODAL_TEXT = ['확인', '회원가입에 성공했습니다.', '로그인 화면으로 이동합니다.'];
