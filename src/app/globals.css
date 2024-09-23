@@ -41,7 +41,7 @@ body {
   }
   /* 모달 텍스트 */
   .modal-text {
-    @apply text-center font-medium break-words whitespace-pre-wrap;
+    @apply text-center text-xl font-semibold break-words whitespace-pre-wrap;
   }
 
   /* 로그인/회원가입 */

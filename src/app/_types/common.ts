@@ -11,4 +11,8 @@ export interface ModalProps {
 
   isWarn?: boolean;
   onOverlayClick?: () => void;
+
+  hasInput?: boolean;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
