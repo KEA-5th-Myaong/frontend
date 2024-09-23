@@ -7,6 +7,7 @@ export interface LoginState {
 
 export interface SignUpState extends LoginState {
   userName: string;
+  userNickname: string;
   checkPwd: string;
   userEMail: string;
 }

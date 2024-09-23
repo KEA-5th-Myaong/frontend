@@ -118,6 +118,18 @@ export default function SignUpForm() {
           error={errors.userName}
         />
 
+        {/* 닉네임 input */}
+        <FormInput<SignUpState>
+          id="userNickname"
+          label={FORM_TEXT[11]}
+          placeholder={FORM_PLACEHOLDER[5]}
+          register={register}
+          required={FORM_ERROR[12]}
+          error={errors.userNickname}
+          maxLength={10}
+          infoText={FORM_TEXT[8]}
+        />
+
         {/* 이메일 input */}
         <FormInput<SignUpState>
           id="userEMail"
