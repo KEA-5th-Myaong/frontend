@@ -11,7 +11,7 @@ interface IconsProps {
 }
 
 // Icons 컴포넌트 정의
-function Icons({ name, className, hoverFill, onClick }: IconsProps) {
+export default function Icons({ name, className, hoverFill, onClick }: IconsProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   // name prop에서 필요한 속성들을 구조 분해 할당
@@ -42,5 +42,3 @@ function Icons({ name, className, hoverFill, onClick }: IconsProps) {
     </svg>
   );
 }
-
-export default Icons;
