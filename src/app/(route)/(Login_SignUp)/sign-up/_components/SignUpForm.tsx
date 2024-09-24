@@ -107,7 +107,7 @@ export default function SignUpForm() {
 
   return (
     <>
-      <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
+      <form className="flex flex-col gap-10 self-stretch pb-12" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* 이름 input */}
         <FormInput<SignUpState>
           id="userName"

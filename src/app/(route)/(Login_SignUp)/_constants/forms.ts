@@ -12,6 +12,7 @@ export const FORM_TEXT = [
   '가입하기', // 10
   '닉네임',
   '비밀번호 변경',
+  '뒤로가기',
 ];
 
 export const FORM_ERROR = [
