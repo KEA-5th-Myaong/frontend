@@ -11,6 +11,7 @@ export const FORM_TEXT = [
   '영문(대소), 특수문자, 숫자 10자 이상',
   '가입하기', // 10
   '닉네임',
+  '비밀번호 변경',
 ];
 
 export const FORM_ERROR = [
@@ -44,4 +45,9 @@ export const FORM_PLACEHOLDER = [
   '닉네임을 입력해주세요.', // 5
 ];
 
-export const MODAL_TEXT = ['확인', '회원가입에 성공했습니다.', '로그인 화면으로 이동합니다.'];
+export const MODAL_TEXT = [
+  '확인',
+  '회원가입에 성공했습니다.',
+  '로그인 화면으로 이동합니다.',
+  '비밀번호가 변경되었습니다.',
+];

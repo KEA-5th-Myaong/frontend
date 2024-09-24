@@ -12,6 +12,11 @@ export interface SignUpState extends LoginState {
   userEMail: string;
 }
 
+export interface ChangePwdProps {
+  userPwd: string;
+  checkPwd: string;
+}
+
 export interface FormInputProps<T extends FieldValues> {
   id: keyof T;
   label: string;
