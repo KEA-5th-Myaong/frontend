@@ -27,18 +27,27 @@ const config: Config = {
           0: '#6E6E82',
           1: '#9FA6B2',
           2: '#D2D2D2',
+          3: '#A6A6A6',
+          4: '#F3F3F3',
         },
         white: {
           0: '#FFFFFF',
           1: '#F1F1F5',
+          2: '#F5FFF9',
         },
-        green: {
+        primary: {
           0: '#4DFF94',
           1: '#00D154',
-          2: '#00D154',
+          2: '#23B581',
         },
         yellow: {
           0: '#FFC83C',
+        },
+        pink: {
+          0: '#FF2F9F',
+        },
+        red: {
+          0: '#FF0000',
         },
       },
     },

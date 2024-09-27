@@ -16,7 +16,7 @@ export default function Post({ userName, userJob, postTitle, postContent, postDa
           <div id="profile" className="min-w-[42px] h-[42px] bg-black-3 rounded-full mr-5" />
           <span>{userName}</span>
         </div>
-        <div className="ml-[62px] max-w-fit text-xs bg-green-0 bg-opacity-25 text-green-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
+        <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
           {userJob}
         </div>
       </div>
@@ -30,8 +30,8 @@ export default function Post({ userName, userJob, postTitle, postContent, postDa
         <div className="flex justify-between">
           <span className="text-sm text-gray-1">{postDate}</span>
           <div className="flex bg-black-2 min-w-[70px] px-3 py-[6px] rounded-3xl items-center gap-[6px]">
-            <div id="goodIcon" className={`${isLoved ? 'bg-green-2' : 'bg-gray-1'} w-[18px] h-[18px] rounded-full`} />
-            <span className={`${isLoved ? 'text-green-2' : 'text-gray-1'}`}>{lovedCount}</span>
+            <div id="goodIcon" className={`${isLoved ? 'bg-primary-2' : 'bg-gray-1'} w-[18px] h-[18px] rounded-full`} />
+            <span className={`${isLoved ? 'text-primary-2' : 'text-gray-1'}`}>{lovedCount}</span>
           </div>
         </div>
       </div>

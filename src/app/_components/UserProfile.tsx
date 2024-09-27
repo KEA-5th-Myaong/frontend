@@ -13,7 +13,7 @@ export default function UserProfile({ userName, follower, following, isFollowed 
           <div className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] bg-pink-300 rounded-full" />
 
           <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 md:w-[300px] gap-3">
-            <span className="text-2xl font-semibold md:text-green-1 text-black-1 whitespace-nowrap">
+            <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
               {userName}
               <span className="inline md:hidden">님의 블로그</span>
             </span>
@@ -37,14 +37,14 @@ export default function UserProfile({ userName, follower, following, isFollowed 
 
           <button
             type="button"
-            className={`${isFollowed ? 'bg-green-1' : 'bg-gray-0'} ml-0 sm:ml-10 md:ml-0 py-[4.5px] self-stretch text-white-0 rounded-xl text-lg whitespace-nowrap h-fit sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] md:px-0`}
+            className={`${isFollowed ? 'bg-primary-1' : 'bg-gray-0'} ml-0 sm:ml-10 md:ml-0 py-[4.5px] self-stretch text-white-0 rounded-xl text-lg whitespace-nowrap h-fit sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] md:px-0`}
           >
             팔로우
           </button>
         </div>
 
         <div className="flex flex-col items-start gap-3 sm:hidden md:gap-5 md:w-[300px] md:items-center">
-          <span className="text-2xl font-semibold md:text-green-1 text-black-1">
+          <span className="text-2xl font-semibold md:text-primary-1 text-black-1">
             {userName}
             <span className="inline md:hidden">님의 블로그</span>
           </span>

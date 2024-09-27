@@ -52,7 +52,7 @@ export default function Modal({
         {/* 인풋 */}
         {hasInput && (
           <input
-            className="flex justify-center self-stretch py-6 px-5 w-full rounded-lg border border-green-2"
+            className="flex justify-center self-stretch py-6 px-5 w-full rounded-lg border border-primary-2"
             value={value}
             onChange={onChange}
           />
@@ -75,7 +75,7 @@ export default function Modal({
           <button
             type="button"
             onClick={onBtnClick}
-            className={`w-full ${isWarn ? 'bg-yellow-0' : 'bg-green-1'} mx-auto py-[22px] rounded-lg text-white-0`}
+            className={`w-full ${isWarn ? 'bg-yellow-0' : 'bg-primary-1'} mx-auto py-[22px] rounded-lg text-white-0`}
           >
             {btnText}
           </button>

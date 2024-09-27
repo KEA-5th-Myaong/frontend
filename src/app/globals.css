@@ -52,10 +52,10 @@ body {
     @apply absolute pl-4 mt-[6px] font-semibold text-sm text-red-500;
   }
   .form-input {
-    @apply w-full p-4 border-2 rounded-lg border-green-1 text-black-0 font-medium;
+    @apply w-full p-4 border-2 rounded-lg border-primary-1 text-black-0 font-medium;
   }
   .form-btn {
-    @apply form-input border-white-0 text-white-0 font-medium rounded-lg bg-green-1;
+    @apply form-input border-white-0 text-white-0 font-medium rounded-lg bg-primary-1;
   }
   .form-label {
     @apply block pb-[10px];
