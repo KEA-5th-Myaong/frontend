@@ -53,19 +53,19 @@ body {
     @apply mb-12 text-[32px] font-semibold text-center;
   }
   .form-error-text {
-    @apply absolute pl-4 mt-[6px] font-semibold text-sm text-red-500;
+    @apply absolute pl-4 mt-[6px] font-medium text-xs text-red-0;
   }
   .form-input {
-    @apply w-full p-4 border-2 rounded-lg border-primary-1 text-black-0 font-medium;
+    @apply w-full p-4 border-2 rounded-lg border-primary-1 text-black-0 font-medium focus:outline-none;
   }
   .form-btn {
-    @apply form-input border-white-0 text-white-0 font-medium rounded-lg bg-primary-1;
+    @apply border-none text-white-0 bg-primary-1 form-input;
   }
   .form-label {
     @apply block pb-[10px];
   }
   .form-red-dot {
-    @apply bg-red-600 w-[5px] h-[5px] rounded-full;
+    @apply bg-red-0 w-[5px] h-[5px] rounded-full;
   }
 
   /* 블로그 */
