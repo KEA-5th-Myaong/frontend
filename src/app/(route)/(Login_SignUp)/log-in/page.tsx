@@ -3,6 +3,7 @@ import { FORM_TEXT } from '../_constants/forms';
 import LoginForm from './_components/LoginForm';
 
 export default function Login() {
+  // jira 커밋 테스트
   return (
     <section className="flex flex-col pt-44 w-full">
       <div className="flex-center flex-col self-stretch">
