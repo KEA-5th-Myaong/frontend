@@ -11,9 +11,9 @@ export default function PostComment() {
     setCommentLists(testComments);
   }, []);
   return (
-    <>
+    <div className="px-[9px]">
       {commentLists.map((comment) => (
-        <div className="py-6 border-b">
+        <div className="py-6 px-[6px] border-b">
           <div className="flex items-center justify-between ">
             <div className="flex items-center gap-[10px]">
               <div id="profile" className="min-w-[29px] min-h-[29px] bg-pink-300 rounded-full" />
@@ -32,6 +32,6 @@ export default function PostComment() {
 
       {/* 댓글 입력 인풋 */}
       <CommentInput />
-    </>
+    </div>
   );
 }
