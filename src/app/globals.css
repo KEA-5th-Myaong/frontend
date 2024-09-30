@@ -25,6 +25,7 @@
 }
 
 body {
+  background-color: #f1f1f5;
 }
 
 @layer utilities {
@@ -38,18 +39,28 @@ body {
   .flex-center {
     @apply flex justify-center items-center;
   }
+  /* 모달 텍스트 */
+  .modal-text {
+    @apply text-center text-xl font-semibold break-words whitespace-pre-wrap;
+  }
 
   /* 로그인/회원가입 */
+  .form-title {
+    @apply mb-12 text-[32px] font-semibold text-center;
+  }
   .form-error-text {
-    @apply mt-1 text-sm text-red-500 font-semibold;
+    @apply absolute pl-4 mt-[6px] font-medium text-xs text-red-0;
   }
   .form-input {
-    @apply w-full px-4 py-2 border rounded;
+    @apply w-full p-4 border-2 rounded-lg border-primary-1 text-black-0 font-medium focus:outline-none;
   }
   .form-btn {
-    @apply form-input text-black font-medium rounded hover:bg-blue-200;
+    @apply border-none text-white-0 bg-primary-1 form-input;
   }
   .form-label {
-    @apply block mb-2 font-semibold;
+    @apply block pb-[10px];
+  }
+  .form-red-dot {
+    @apply bg-red-0 w-[5px] h-[5px] rounded-full;
   }
 }
