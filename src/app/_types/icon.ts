@@ -2,7 +2,7 @@ export interface IconPathTypes {
   path: string | string[];
   width: number;
   height: number;
-  fill: string;
+  fill?: string;
   options?: IconOptions;
 }
 export interface IconOptions {
