@@ -41,6 +41,7 @@ export default function FormInput<T extends FieldValues>({
       {isPassword && (
         <button
           type="button"
+          tabIndex={-1} // 눈 아이콘에 focus가 생기지 않도록
           onClick={togglePasswordVisibility}
           className="absolute right-4 top-[62px] transform -translate-y-1/2"
         >

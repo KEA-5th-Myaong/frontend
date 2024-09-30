@@ -25,6 +25,7 @@ export default function LoginForm() {
       await onSubmit(data);
     } catch (error) {
       setErrorMessage(FORM_ERROR[2]);
+      console.log(errorMessage); // api 연결 후, 모달로 수정
     }
   };
 
@@ -53,9 +54,8 @@ export default function LoginForm() {
         isEssential={false}
       />
 
-      <div>{errorMessage && <p className="form-error-text">{errorMessage}</p>}</div>
       {/* 로그인 button */}
-      <div className="">
+      <div className="pt-5">
         <button type="submit" className="form-btn">
           {FORM_TEXT[0]}
         </button>
