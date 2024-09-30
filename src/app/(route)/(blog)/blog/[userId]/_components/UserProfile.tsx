@@ -7,7 +7,7 @@ export interface UserProfileProps {
 
 export default function UserProfile({ userName, follower, following, isFollowed }: UserProfileProps) {
   return (
-    <div className="pt-[51px] pb-[41px] px-5 rounded-2xl bg-white-0 border border-gray-2">
+    <div className="pt-[51px] pb-[41px] xl:px-5 px-2 rounded-2xl bg-white-0 md:border md:border-gray-2 h-fit">
       <div className="flex items-center sm:gap-0 gap-8">
         <div className="flex flex-col sm:flex-row  md:flex-col items-center gap-3 sm:gap-10 ">
           <div className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] bg-pink-300 rounded-full" />
@@ -37,7 +37,9 @@ export default function UserProfile({ userName, follower, following, isFollowed 
 
           <button
             type="button"
-            className={`${isFollowed ? 'bg-primary-1' : 'bg-gray-0'} ml-0 sm:ml-10 md:ml-0 py-[4.5px] self-stretch text-white-0 rounded-xl text-lg whitespace-nowrap h-fit sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] md:px-0`}
+            className={`${isFollowed ? 'bg-gray-0' : 'bg-primary-1'} ml-0 sm:ml-10 
+            md:ml-0 self-stretch text-lg h-fit py-[4.5px] 
+            sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold primary-1-btn`}
           >
             팔로우
           </button>
