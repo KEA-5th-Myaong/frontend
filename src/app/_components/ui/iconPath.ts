@@ -54,3 +54,11 @@ export const MoreIcon: IconPathTypes = {
     strokeWidth: 1.5,
   },
 };
+
+// 왼쪽 Arrow(<) 아이콘, 회전하며 사용
+export const ArrowIcon: IconPathTypes = {
+  path: 'M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z',
+  fill: '#9fa6b2',
+  width: 20,
+  height: 20,
+};
