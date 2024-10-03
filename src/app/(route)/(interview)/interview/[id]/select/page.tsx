@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import Icons from '../../../../../_components/ui/Icon';
 import { SearchIcon } from '../../../../../_components/ui/iconPath';
 
@@ -14,22 +15,22 @@ export default function InterviewSelect() {
     '텐핑거스',
     '로그앤코딩',
     '조아라',
-    '위볼린',
-    '텐핑거스',
-    '로그앤코딩',
-    '조아라',
-    '위볼린',
-    '텐핑거스',
-    '로그앤코딩',
-    '조아라',
-    '위볼린',
-    '텐핑거스',
-    '로그앤코딩',
-    '조아라',
-    '위볼린',
-    '텐핑거스',
-    '로그앤코딩',
-    '조아라',
+    '위볼린2',
+    '텐핑거스2',
+    '로그앤코딩2',
+    '조아라2',
+    '위볼린3',
+    '텐핑거스3',
+    '로그앤코딩3',
+    '조아라3',
+    '위볼린4',
+    '텐핑거스4',
+    '로그앤코딩4',
+    '조아라4',
+    '위볼린5',
+    '텐핑거스5',
+    '로그앤코딩5',
+    '조아라5',
   ]);
   return (
     <section className="w-full pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-32 pt-11">
@@ -40,22 +41,27 @@ export default function InterviewSelect() {
           <Icons name={SearchIcon} />
           <input className="w-full focus:outline-none" placeholder="기업 이름을 검색하거나 선택하세요" />
         </div>
-        <button type="button" className="px-2 md:px-10 py-1 md:py-[18px] rounded-[2rem] primary-1-btn">
+        <motion.button
+          type="button"
+          layoutId="select"
+          className="px-4 md:px-10 py-2 md:py-[18px] rounded-[2rem] primary-1-btn"
+        >
           선택
-        </button>
+        </motion.button>
       </div>
 
       <div className="flex flex-wrap pt-5">
         {corpList.map((corp) => (
-          <button
+          <motion.button
             type="button"
+            layoutId={`corp-${corp}`}
             onClick={() => {
               router.push(`/interview/${id.id}/${corp}`);
             }}
             className="corp-block"
           >
             {corp}
-          </button>
+          </motion.button>
         ))}
       </div>
     </section>
