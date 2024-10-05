@@ -33,10 +33,10 @@ export default function InterviewSelect() {
     '조아라5',
   ]);
   return (
-    <section className="w-full pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-32 pt-11">
+    <section className="w-full max-w-[1000px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11">
       <p className="font-semibold">모의 면접</p>
 
-      <div className="flex gap-4 self-stretch pt-7">
+      <div className="flex gap-4 self-stretch pt-6">
         <div className="flex self-stretch items-center px-5 py:1 md:py-4 gap-5 rounded-[3rem] border border-primary-1 w-full sm:w-[320px] lg:w-full">
           <Icons name={SearchIcon} />
           <input className="w-full focus:outline-none" placeholder="기업 이름을 검색하거나 선택하세요" />

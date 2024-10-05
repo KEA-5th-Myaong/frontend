@@ -35,10 +35,10 @@ export default function QuestionList() {
   }, []);
 
   return (
-    <section className="w-full pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-32 pt-11">
+    <section className="w-full max-w-[1000px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11">
       <p className="font-semibold">모의 면접</p>
 
-      <div className="flex flex-col self-stretch pt-6 w-full sm:w-[320px] lg:w-full">
+      <div className="flex flex-col self-stretch pt-6 w-full">
         <p className="text-sm">선택 기업</p>
 
         <div className="flex gap-3 pt-3 whitespace-nowrap">
