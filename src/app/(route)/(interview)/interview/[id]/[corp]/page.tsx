@@ -35,7 +35,7 @@ export default function QuestionList() {
   }, []);
 
   return (
-    <section className="w-full max-w-[1000px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11">
+    <section className="interview-container">
       <p className="font-semibold">모의 면접</p>
 
       <div className="flex flex-col self-stretch pt-2 w-full">
@@ -43,7 +43,7 @@ export default function QuestionList() {
 
         <div className="flex gap-3 pt-3 whitespace-nowrap">
           <motion.div
-            className="w-full max-w-64 py-[18px] px-5 bg-gray-4 font-bold rounded-[28px]"
+            className="w-full max-w-64 py-4 px-5 bg-gray-4 font-bold rounded-[28px]"
             layoutId={`corp-${corp}`}
           >
             {corp}
@@ -52,7 +52,7 @@ export default function QuestionList() {
             type="button"
             layoutId="select"
             onClick={router.back}
-            className="py-[18px] px-6 rounded-[28px] primary-1-btn"
+            className="py-4 px-6 rounded-[28px] primary-1-btn"
           >
             다시 선택
           </motion.button>

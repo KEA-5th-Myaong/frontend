@@ -33,7 +33,7 @@ export default function InterviewSelect() {
     '조아라5',
   ]);
   return (
-    <section className="w-full max-w-[1000px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11">
+    <section className="interview-container">
       <p className="font-semibold">모의 면접</p>
 
       <div className="flex gap-4 self-stretch pt-6">
@@ -44,7 +44,7 @@ export default function InterviewSelect() {
         <motion.button
           type="button"
           layoutId="select"
-          className="px-4 md:px-10 py-2 md:py-[18px] rounded-[2rem] primary-1-btn"
+          className="px-4 md:px-10 py-2 md:py-4 rounded-[28px] primary-1-btn"
         >
           선택
         </motion.button>

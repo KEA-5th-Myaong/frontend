@@ -35,9 +35,8 @@ export default function MessageForm({ onSubmit }: MessageFormProps) {
         onKeyDown={handleKeyDown}
         className="flex-grow pl-8 pr-2 focus:outline-none rounded-xl resize-none hide-scrollbar"
         placeholder="답변을 입력해주세요"
-        aria-label="메시지 입력"
       />
-      <button type="submit" className="pr-3 cursor-pointer" aria-label="메시지 보내기">
+      <button type="submit" className="pr-3 cursor-pointer">
         <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
       </button>
     </form>

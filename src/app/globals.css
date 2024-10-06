@@ -74,7 +74,18 @@ body {
   }
 
   /* 모의 면접 */
+  .interview-container {
+    @apply w-full max-w-[800px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11;
+  }
   .corp-block {
     @apply py-[6px] px-5 text-gray-0 rounded-lg w-1/3 hover:bg-primary-1 hover:text-white-0 cursor-pointer my-2;
+  }
+  .chat-msg-text {
+    @apply w-fit max-w-[80%] min-w-[20%] font-semibold border border-gray-0 
+    border-opacity-20 py-6 px-8 text-sm text-start rounded-[30px];
+  }
+  .chat-msg-btn {
+    @apply flex items-center gap-4 border border-gray-0 border-opacity-20 
+    pl-6 pr-2 py-2 text-[10px] sm:text-xs md:text-sm rounded-[60px] whitespace-nowrap;
   }
 }

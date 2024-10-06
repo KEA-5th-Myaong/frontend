@@ -42,28 +42,13 @@ export default function ChatContainer() {
           {messages.map((msg) => (
             <div className={`flex flex-col ${msg.isAI ? 'items-start' : 'items-end'}`}>
               {msg.isAI && <p className="font-semibold pb-3">면접관</p>}
-              <div
-                className={`w-fit max-w-[80%] min-w-[20%] font-semibold border border-gray-0 
-                    border-opacity-20 py-6 px-8 text-sm text-start rounded-[30px] ${
-                      msg.isAI ? 'bg-gray-4' : 'bg-white-2 text-white'
-                    }`}
-              >
-                {msg.text}
-              </div>
+              <div className={`chat-msg-text ${msg.isAI ? 'bg-gray-4' : 'bg-white-2 text-white'}`}>{msg.text}</div>
               {!msg.isAI && (
                 <div className="flex items-center gap-4 pt-4">
-                  <button
-                    type="button"
-                    className="flex items-center gap-4 border border-gray-0 border-opacity-20 pl-6 pr-2 py-2 text-[10px] sm:text-xs md:text-sm rounded-[60px] whitespace-nowrap"
-                    onClick={handleTailQuestion}
-                  >
+                  <button type="button" className="chat-msg-btn" onClick={handleTailQuestion}>
                     꼬리 질문 받기 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
                   </button>
-                  <button
-                    type="button"
-                    className="flex items-center gap-4 border border-gray-0 border-opacity-20 pl-6 pr-2 py-2 text-[10px] sm:text-xs md:text-sm rounded-[60px] whitespace-nowrap"
-                    onClick={handleNewQuestion}
-                  >
+                  <button type="button" className="chat-msg-btn" onClick={handleNewQuestion}>
                     새 질문 생성 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
                   </button>
                 </div>
