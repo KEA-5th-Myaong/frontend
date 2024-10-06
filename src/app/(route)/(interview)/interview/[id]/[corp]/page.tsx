@@ -38,7 +38,7 @@ export default function QuestionList() {
     <section className="w-full max-w-[1000px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11">
       <p className="font-semibold">모의 면접</p>
 
-      <div className="flex flex-col self-stretch pt-6 w-full">
+      <div className="flex flex-col self-stretch pt-2 w-full">
         <p className="text-sm">선택 기업</p>
 
         <div className="flex gap-3 pt-3 whitespace-nowrap">
@@ -61,7 +61,7 @@ export default function QuestionList() {
         <p className="font-semibold py-8">면접 질문 생성</p>
       </div>
 
-      <div className="flex flex-col self-stretch gap-5">
+      <div className="flex flex-col self-stretch gap-5 pb-12">
         {questionList.map((question: QuestionBoxProps, index) => (
           <motion.div key={question.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
             <QuestionBox
