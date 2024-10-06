@@ -27,16 +27,16 @@ export default function MessageForm({ onSubmit }: MessageFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="py-2 h-[90px] w-full flex border border-primary-1 rounded-xl mt-auto bg-white-0"
+      className="flex items-center py-2 h-[90px] w-full border border-primary-1 rounded-xl mt-auto bg-white-0"
     >
       <textarea
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="flex-grow pl-8 pr-2 focus:outline-none rounded-xl resize-none hide-scrollbar"
+        className="flex-grow pl-5 md:pl-8 pr-2 focus:outline-none rounded-xl resize-none hide-scrollbar"
         placeholder="답변을 입력해주세요"
       />
-      <button type="submit" className="pr-3 cursor-pointer">
+      <button type="submit" tabIndex={-1} className="pr-2 sm:pr-3 md:pr-4 cursor-pointer">
         <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
       </button>
     </form>
