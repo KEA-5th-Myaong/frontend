@@ -61,7 +61,7 @@ export default function QuestionList() {
         <p className="font-semibold py-8">면접 질문 생성</p>
       </div>
 
-      <div className="flex flex-col self-stretch gap-5 pb-12">
+      <div className="flex flex-col self-stretch gap-5 w-full pb-12">
         {questionList.map((question: QuestionBoxProps, index) => (
           <motion.div key={question.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
             <QuestionBox
@@ -72,6 +72,16 @@ export default function QuestionList() {
             />
           </motion.div>
         ))}
+
+        <button
+          type="button"
+          onClick={() => {
+            console.log('질문 다시 생성');
+          }}
+          className="flex self-center mt-3 px-6 py-4 max-w-fit rounded-[28px] primary-1-btn"
+        >
+          질문 다시 생성
+        </button>
       </div>
     </section>
   );

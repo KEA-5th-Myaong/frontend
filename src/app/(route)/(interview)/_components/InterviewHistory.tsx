@@ -1,10 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Icons from '../../../_components/ui/Icon';
 import { PlusIcon, TriangleIcon, XIcon } from '../../../_components/ui/iconPath';
 
 export default function InterviewHistory() {
+  const router = useRouter();
+  const { id } = useParams();
+
   const [historyLists, setHistoryLists] = useState(['위블린', '카카오엔터프라이즈', '위블린']);
   const [showMore, setShowMore] = useState(false);
 
@@ -33,7 +37,13 @@ export default function InterviewHistory() {
         ))}
       </div>
 
-      <button type="button" className={`${showMore ? 'flex' : 'hidden'} sm:flex items-center gap-2 pl-[13px]`}>
+      <button
+        onClick={() => {
+          router.push(`/interview/${id}/select`);
+        }}
+        type="button"
+        className={`${showMore ? 'flex' : 'hidden'} sm:flex items-center gap-2 pl-[13px]`}
+      >
         <Icons name={PlusIcon} className="mb-1" />
         면접 생성
       </button>
