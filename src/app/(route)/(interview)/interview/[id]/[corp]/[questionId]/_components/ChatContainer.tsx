@@ -5,6 +5,7 @@ import MessageForm from './MessageForm';
 import Icons from '../../../../../../../_components/ui/Icon';
 import { ArrowIcon } from '../../../../../../../_components/ui/iconPath';
 import useContainerHeight from '../../../../../_utils/useContainerHeight';
+import useScrollToBottom from '../../../../../../../_hooks/useScrollToBottom';
 
 export default function ChatContainer() {
   const [messages, setMessages] = useState([
@@ -13,6 +14,7 @@ export default function ChatContainer() {
 
   // 채팅 컨테이너에 대한 참조를 생성(DOM 요소에 접근)
   const chatContainerRef = useContainerHeight();
+  const messagesEndRef = useScrollToBottom(messages); // 메시지 보내면 하단으로 스크롤
 
   const addMessage = (message: string, isAI: boolean) => {
     setMessages((prevMessages) => [...prevMessages, { text: message, isAI }]);
@@ -55,6 +57,7 @@ export default function ChatContainer() {
               )}
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 
