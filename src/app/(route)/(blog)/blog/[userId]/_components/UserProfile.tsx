@@ -1,24 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import Overlay from '../../../../../_components/Overlay';
-import testFollowers from './follower.json';
-import testFollowing from './following.json';
+import testFollower from './_follow/follow.json';
 import { UserProfileProps, FollowProps } from '../_types/blog';
-
-const followMotion = {
-  variants: {
-    hidden: { y: 50, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  },
-  transition: {
-    type: 'spring',
-    stiffness: 300,
-    damping: 30,
-    duration: 0.3,
-  },
-};
+import FollowButton from './_follow/FollowButton';
+import FollowModal from './_follow/FollowModal';
 
 export default function UserProfile({ userName, follower, following, isFollowed }: UserProfileProps) {
   const [followerList, setFollowerList] = useState<FollowProps[]>([]);
@@ -31,10 +17,10 @@ export default function UserProfile({ userName, follower, following, isFollowed 
     const fetchData = async () => {
       try {
         // 팔로워 데이터 가져오기
-        setFollowerList(testFollowers);
+        setFollowerList(testFollower);
 
         // 팔로잉 데이터 가져오기
-        setFollowingList(testFollowing);
+        setFollowingList(testFollower);
       } catch (err) {
         console.error(err);
       }
@@ -59,29 +45,11 @@ export default function UserProfile({ userName, follower, following, isFollowed 
             </div>
 
             <div className="hidden md:flex justify-between self-stretch px-[58px] md:w-auto">
-              <button
-                type="button"
-                className="flex flex-col items-center gap-[10px]"
-                onClick={() => {
-                  setIsFollowerOpen(true);
-                }}
-              >
-                <p className="text-xl">{follower}</p>
-                <p>팔로워</p>
-              </button>
+              <FollowButton count={follower} label="팔로워" onClick={() => setIsFollowerOpen(true)} />
 
               <div className="h-[53px] bg-gray-0 w-[2px]" />
 
-              <button
-                type="button"
-                className="flex flex-col items-center gap-[10px]"
-                onClick={() => {
-                  setIsFollowingOpen(true);
-                }}
-              >
-                <span className="text-xl">{following}</span>
-                <span>팔로잉</span>
-              </button>
+              <FollowButton count={following} label="팔로잉" onClick={() => setIsFollowingOpen(true)} />
             </div>
 
             <button
@@ -105,55 +73,20 @@ export default function UserProfile({ userName, follower, following, isFollowed 
         </div>
       </div>
 
-      {isFollowerOpen && (
-        <Overlay
-          onClick={() => {
-            setIsFollowerOpen(false);
-          }}
-        >
-          <motion.div
-            onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 Overlay까지 전달되지 않도록
-            {...followMotion}
-            className="flex m-4 min-w-[300px] max-w-[510px] w-full pt-14 pb-4 px-10 flex-col items-start gap-8 rounded-2xl bg-white-0 shadow-md"
-          >
-            <p className="font-semibold text-2xl">김현중님을 팔로우하는 유저</p>
+      {/* 팔로워/팔로잉 목록 모달 */}
+      <FollowModal
+        isOpen={isFollowerOpen}
+        onClose={() => setIsFollowerOpen(false)}
+        title={`${userName}님을 팔로우하는 유저`}
+        list={followerList}
+      />
 
-            <div className="flex flex-col gap-6 w-full h-[514px] overflow-scroll pb-2 hide-scrollbar">
-              {followerList.map((fo) => (
-                <div className="flex items-center gap-5">
-                  <div className="w-[52px] h-[52px] bg-purple-300 rounded-full" />
-                  <p className="font-medium text-lg">{fo.name}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </Overlay>
-      )}
-
-      {isFollowingOpen && (
-        <Overlay
-          onClick={() => {
-            setIsFollowingOpen(false);
-          }}
-        >
-          <motion.div
-            onClick={(e) => e.stopPropagation()}
-            {...followMotion}
-            className="flex m-4 min-w-[300px] max-w-[510px] w-full pt-14 pb-4 px-10 flex-col items-start gap-8 rounded-2xl bg-white-0 shadow-md"
-          >
-            <p className="font-semibold text-2xl">김현중님이 팔로우하는 유저</p>
-
-            <div className="flex flex-col gap-6 w-full h-[514px] overflow-scroll pb-2 hide-scrollbar">
-              {followingList.map((fo) => (
-                <div key={fo.id} className="flex items-center gap-5">
-                  <div className="w-[52px] h-[52px] bg-purple-300 rounded-full" />
-                  <p className="font-medium text-lg">{fo.name}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </Overlay>
-      )}
+      <FollowModal
+        isOpen={isFollowingOpen}
+        onClose={() => setIsFollowingOpen(false)}
+        title={`${userName}님이 팔로우하는 유저`}
+        list={followingList}
+      />
     </>
   );
 }
