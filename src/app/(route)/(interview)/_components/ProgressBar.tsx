@@ -8,7 +8,7 @@ export default function ProgressBar({ progress }: { progress: number }) {
         <p>AI 모의 면접 시작</p>
       </div>
       <div className="bg-[#D9D9D9] h-2 w-full rounded-[10px]">
-        <div className={`bg-primary-0 w-[${progress}%] h-2 rounded-[10px]`} />
+        <div style={{ width: `${progress}%` }} className="bg-primary-0 h-2 rounded-[10px]" />
       </div>
     </div>
   );
