@@ -82,7 +82,7 @@ body {
   }
   .chat-msg-text {
     @apply w-fit max-w-[90%] sm:max-w-[80%] min-w-[20%] font-semibold border border-gray-0 
-    border-opacity-20 py-6 px-4 sm:px-6 md:px-8 text-sm text-start rounded-[30px];
+    border-opacity-20 p-4 sm:py-6 sm:px-6 md:px-8 text-sm text-start rounded-[30px];
   }
   .chat-msg-btn {
     @apply flex items-center gap-4 border border-gray-0 border-opacity-20 

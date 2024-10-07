@@ -18,7 +18,9 @@ export default function MessageForm({ onSubmit }: MessageFormProps) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    // e.nativeEvent.isComposing은 입력한 한글이 조합중인지 검사
+    // Enter를 누르는 순간 한글 조합은 false가 됨, && 연산자는 왼쪽부터 실행
+    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault(); // 새 줄 입력 방지
       handleSubmit();
     }
