@@ -78,7 +78,7 @@ body {
     @apply w-full max-w-[800px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11;
   }
   .corp-block {
-    @apply py-[6px] px-5 text-gray-0 rounded-lg w-1/3 hover:bg-primary-1 hover:text-white-0 cursor-pointer my-2;
+    @apply py-[6px] px-1 sm:px-8 text-black-0 rounded-lg w-1/3 hover:bg-primary-0 cursor-pointer my-2;
   }
   .chat-msg-text {
     @apply w-fit max-w-[90%] sm:max-w-[80%] min-w-[20%] font-semibold border border-gray-0 
