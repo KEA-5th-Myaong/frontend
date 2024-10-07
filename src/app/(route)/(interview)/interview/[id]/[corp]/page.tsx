@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import QuestionBox from './_components/QuestionBox';
 import questionsData from './_components/question.json';
 import { QuestionBoxProps } from './_types/corp';
+import ProgressBar from '../../../_components/ProgressBar';
 
 export const ListVariants = {
   hidden: {
@@ -36,6 +37,7 @@ export default function QuestionList() {
 
   return (
     <section className="interview-container">
+      <ProgressBar progress={66} />
       <p className="font-semibold">모의 면접</p>
 
       <div className="flex flex-col self-stretch pt-2 w-full">

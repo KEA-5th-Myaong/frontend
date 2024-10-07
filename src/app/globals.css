@@ -75,7 +75,7 @@ body {
 
   /* 모의 면접 */
   .interview-container {
-    @apply w-full max-w-[800px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11;
+    @apply relative w-full max-w-[800px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11;
   }
   .corp-block {
     @apply py-[6px] px-1 sm:px-8 text-black-0 rounded-lg w-1/3 hover:bg-primary-0 cursor-pointer my-2;

@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Icons from '../../../../../_components/ui/Icon';
 import { SearchIcon } from '../../../../../_components/ui/iconPath';
+import ProgressBar from '../../../_components/ProgressBar';
 
 export default function InterviewSelect() {
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function InterviewSelect() {
   ]);
   return (
     <section className="interview-container">
+      <ProgressBar progress={3} />
       <p className="font-semibold">모의 면접</p>
 
       <div className="flex gap-4 self-stretch pt-6 min-w-[318px]">
