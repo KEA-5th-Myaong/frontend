@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import Icons from '../../../../../../_components/ui/Icon';
 import { ArrowIcon } from '../../../../../../_components/ui/iconPath';
-import { IntroductionBoxProps } from '../_types/corp';
+import { PersonalStatementBoxProps } from '../_types/corp';
 
-export default function IntroductionBox({ introduction, onClick }: IntroductionBoxProps) {
+export default function PersonalStatementBox({ content, onClick }: PersonalStatementBoxProps) {
   return (
     <motion.button
       className="flex gap-10 justify-between self-stretch w-full min-w-[333px] max-w-[735px] 
@@ -14,7 +14,7 @@ export default function IntroductionBox({ introduction, onClick }: IntroductionB
       type="button"
     >
       <div className="flex flex-col h-full justify-between">
-        <p className="font-semibold overflow-scroll hide-scrollbar">{introduction}</p>
+        <p className="font-semibold overflow-scroll hide-scrollbar">{content}</p>
 
         <div className="flex text-xs text-gray-0 gap-7">
           <p>작성일자 2024.10.16</p>

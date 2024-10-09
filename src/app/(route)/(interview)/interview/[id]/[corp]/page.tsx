@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import QuestionBox from './_components/QuestionBox';
-import introductions from './_components/introduction.json';
+import personalStatement from './_components/personalStatement.json';
 import questions from './_components/question.json';
-import { IntroductionBoxProps, QuestionBoxProps } from './_types/corp';
+import { PersonalStatementBoxProps, QuestionBoxProps } from './_types/corp';
 import ProgressBar from '../../../_components/ProgressBar';
-import IntroductionBox from './_components/IntroductionBox';
+import PersonalStatementBox from './_components/PersonalStatementBox';
 
 export const ListVariants = {
   hidden: {
@@ -33,11 +33,11 @@ export default function QuestionList() {
 
   const [isSelected, setIsSelected] = useState(false); // 자소서 선택 여부
 
-  const [introductionList, setIntroductionList] = useState([]); // 자소서 배열
+  const [personalStatementList, setPersonalStatementList] = useState([]); // 자소서 배열
   const [questionList, setQuestionList] = useState([]); // 질문목록 배열
 
   useEffect(() => {
-    setIntroductionList(introductions.introductions); // 자소서 목록 로드
+    setPersonalStatementList(personalStatement.contents); // 자소서 목록 로드
   }, []);
 
   // 다시 선택 버튼
@@ -49,7 +49,7 @@ export default function QuestionList() {
     }
   };
 
-  const handleIntroductionSelect = () => {
+  const handlePSSelect = () => {
     setIsSelected(true); // 자소서 선택
     setQuestionList(questions.questions); // 질문 목록 로드
   };
@@ -115,9 +115,9 @@ export default function QuestionList() {
           </>
         ) : (
           <>
-            {introductionList.map((intro: IntroductionBoxProps, index) => (
-              <motion.div key={intro.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
-                <IntroductionBox introduction={intro.introduction} onClick={handleIntroductionSelect} />
+            {personalStatementList.map((ps: PersonalStatementBoxProps, index) => (
+              <motion.div key={ps.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
+                <PersonalStatementBox content={ps.content} onClick={handlePSSelect} />
               </motion.div>
             ))}
           </>
