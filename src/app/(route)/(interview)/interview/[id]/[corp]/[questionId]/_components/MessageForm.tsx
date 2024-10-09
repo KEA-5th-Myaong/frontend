@@ -39,7 +39,7 @@ export default function MessageForm({ onSubmit }: MessageFormProps) {
         placeholder="답변을 입력해주세요"
       />
       <button type="submit" tabIndex={-1} className="pr-2 sm:pr-3 md:pr-4 cursor-pointer">
-        <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
+        <Icons className="rotate-180 border rounded-full border-gray-1" name={ArrowIcon} />
       </button>
     </form>
   );

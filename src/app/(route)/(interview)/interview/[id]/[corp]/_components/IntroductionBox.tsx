@@ -6,7 +6,10 @@ import { IntroductionBoxProps } from '../_types/corp';
 export default function IntroductionBox({ introduction, onClick }: IntroductionBoxProps) {
   return (
     <motion.button
-      className="flex gap-10 justify-between self-stretch w-full min-w-[333px] max-w-[735px] h-32 bg-gray-4 text-start rounded-[10px] pl-8 pr-3 pt-8 lg:pt-6 xl:pt-8 pb-4 lg:pb-6 overflow-scroll hide-scrollbar cursor-pointer"
+      className="flex gap-10 justify-between self-stretch w-full min-w-[333px] max-w-[735px] 
+      h-32 bg-gray-4 text-start rounded-[10px] 
+      pl-8 pr-3 pt-8 lg:pt-6 xl:pt-8 pb-4 lg:pb-6 
+      overflow-scroll hide-scrollbar cursor-pointer"
       onClick={onClick}
       type="button"
     >
@@ -18,9 +21,12 @@ export default function IntroductionBox({ introduction, onClick }: IntroductionB
           <p>수정일자 2024.10.18</p>
         </div>
       </div>
-      <div className="flex self-center items-center gap-2 font-semibold bg-primary-1 p-2 lg:py-3 lg:pl-5 lg:pr-2 text-white-0 whitespace-nowrap rounded-[28px]">
+      <div
+        className="flex self-center items-center gap-2 font-semibold bg-primary-1 
+      p-2 lg:py-3 lg:pl-5 lg:pr-2 text-white-0 whitespace-nowrap rounded-[28px]"
+      >
         <p className="hidden lg:block">면접 시작</p>
-        <Icons fill="none" className="border border-gray-2 rounded-full rotate-180" name={ArrowIcon} />
+        <Icons className="border border-gray-2 rounded-full rotate-180 bg-white-0" name={ArrowIcon} />
       </div>
     </motion.button>
   );
