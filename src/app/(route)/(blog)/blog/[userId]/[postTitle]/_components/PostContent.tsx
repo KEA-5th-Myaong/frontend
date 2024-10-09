@@ -5,7 +5,7 @@ import Icons from '../../../../../../_components/ui/Icon';
 import { FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
 import testPosts from '../../_components/test.json';
 import PostDropDown from './PostDropDown';
-import useClickOutside from '../../../../../../_utils/useClickOutside';
+import useClickOutside from '../../../../../../_hooks/useClickOutside';
 
 export default function PostContent() {
   const [showDropDown, setShowDropDown] = useState(false);

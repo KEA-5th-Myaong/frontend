@@ -1,6 +1,6 @@
 import PostContent from './_components/PostContent';
 import PostComment from './_components/PostComment';
-import BackButton from './_components/BackButton';
+import BackButton from '../../../../../_components/BackButton';
 
 export default function BlogPosts() {
   return (
