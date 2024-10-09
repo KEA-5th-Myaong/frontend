@@ -13,7 +13,7 @@ export default function InterviewHistory() {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <section className="max-w-full sm:max-w-[253px] sm:w-full self-stretch max-h-fit min-w-[150px] border-2 pt-[29px] pb-[22px] px-5 sm:px-2 md:px-5 rounded-2xl font-semibold">
+    <section className="bg-white-0 sm:max-w-[253px] sm:w-full self-stretch max-h-fit border-2 pt-[29px] pb-[22px] px-5 sm:px-2 md:px-5 rounded-2xl font-semibold z-10">
       <div className="flex justify-between">
         <p className={`pl-[13px] ${showMore ? 'mb-5' : 'mb-0'} sm:mb-5`}>면접 기록</p>
         <Icons

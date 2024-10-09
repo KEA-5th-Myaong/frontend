@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import QuestionBox from './_components/QuestionBox';
-import questionsData from './_components/question.json';
-import { QuestionBoxProps } from './_types/corp';
+import introductions from './_components/introduction.json';
+import questions from './_components/question.json';
+import { IntroductionBoxProps, QuestionBoxProps } from './_types/corp';
+import ProgressBar from '../../../_components/ProgressBar';
+import IntroductionBox from './_components/IntroductionBox';
 
 export const ListVariants = {
   hidden: {
@@ -28,14 +31,32 @@ export default function QuestionList() {
   const selectedCorp = params.corp as string;
   const corp = decodeURI(selectedCorp);
 
-  const [questionList, setQuestionList] = useState([]);
+  const [isSelected, setIsSelected] = useState(false); // 자소서 선택 여부
+
+  const [introductionList, setIntroductionList] = useState([]); // 자소서 배열
+  const [questionList, setQuestionList] = useState([]); // 질문목록 배열
 
   useEffect(() => {
-    setQuestionList(questionsData.questions);
+    setIntroductionList(introductions.introductions); // 자소서 목록 로드
   }, []);
+
+  // 다시 선택 버튼
+  const handleReSelct = () => {
+    if (isSelected) {
+      setIsSelected(false);
+    } else {
+      router.back();
+    }
+  };
+
+  const handleIntroductionSelect = () => {
+    setIsSelected(true); // 자소서 선택
+    setQuestionList(questions.questions); // 질문 목록 로드
+  };
 
   return (
     <section className="interview-container">
+      <ProgressBar progress={isSelected ? 67 : 33} />
       <p className="font-semibold">모의 면접</p>
 
       <div className="flex flex-col self-stretch pt-2 w-full">
@@ -51,37 +72,56 @@ export default function QuestionList() {
           <motion.button
             type="button"
             layoutId="select"
-            onClick={router.back}
+            onClick={handleReSelct}
             className="py-4 px-6 rounded-[28px] primary-1-btn"
           >
             다시 선택
           </motion.button>
         </div>
 
-        <p className="font-semibold py-8">면접 질문 생성</p>
+        {isSelected ? (
+          <p className="font-semibold py-8">면접 질문 생성</p>
+        ) : (
+          <>
+            <p className="font-semibold pt-8 pb-4">자기소개서 선택</p>
+            <p className="text-sm pb-4">면접을 위해 제출할 자기소개서를 선택하세요</p>
+          </>
+        )}
       </div>
 
       <div className="flex flex-col self-stretch gap-5 w-full pb-12">
-        {questionList.map((question: QuestionBoxProps, index) => (
-          <motion.div key={question.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
-            <QuestionBox
-              question={`Q. ${question.question}`}
-              onClick={() => {
-                router.push(`/interview/${id}/${corp}/${question.id}`);
-              }}
-            />
-          </motion.div>
-        ))}
+        {isSelected ? (
+          <>
+            {questionList.map((question: QuestionBoxProps, index) => (
+              <motion.div key={question.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
+                <QuestionBox
+                  question={`Q. ${question.question}`}
+                  onClick={() => {
+                    router.push(`/interview/${id}/${corp}/${question.id}`);
+                  }}
+                />
+              </motion.div>
+            ))}
 
-        <button
-          type="button"
-          onClick={() => {
-            console.log('질문 다시 생성');
-          }}
-          className="flex self-center mt-3 px-6 py-4 max-w-fit rounded-[28px] primary-1-btn"
-        >
-          질문 다시 생성
-        </button>
+            <button
+              type="button"
+              onClick={() => {
+                console.log('질문 다시 생성');
+              }}
+              className="flex self-center mt-3 px-6 py-4 max-w-fit rounded-[28px] primary-1-btn"
+            >
+              질문 다시 생성
+            </button>
+          </>
+        ) : (
+          <>
+            {introductionList.map((intro: IntroductionBoxProps, index) => (
+              <motion.div key={intro.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
+                <IntroductionBox introduction={intro.introduction} onClick={handleIntroductionSelect} />
+              </motion.div>
+            ))}
+          </>
+        )}
       </div>
     </section>
   );

@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Icons from '../../../../../_components/ui/Icon';
 import { SearchIcon } from '../../../../../_components/ui/iconPath';
+import ProgressBar from '../../../_components/ProgressBar';
 
 export default function InterviewSelect() {
   const router = useRouter();
@@ -34,9 +35,10 @@ export default function InterviewSelect() {
   ]);
   return (
     <section className="interview-container">
+      <ProgressBar progress={3} />
       <p className="font-semibold">모의 면접</p>
 
-      <div className="flex gap-4 self-stretch pt-6">
+      <div className="flex gap-4 self-stretch pt-6 min-w-[318px]">
         <div className="flex self-stretch items-center px-5 py:1 md:py-4 gap-5 rounded-[3rem] border border-primary-1 w-full sm:w-[320px] lg:w-full">
           <Icons name={SearchIcon} />
           <input className="w-full focus:outline-none" placeholder="기업 이름을 검색하거나 선택하세요" />
@@ -50,7 +52,7 @@ export default function InterviewSelect() {
         </motion.button>
       </div>
 
-      <div className="flex flex-wrap pt-5">
+      <div className="flex flex-wrap mx-auto pt-5 w-full min-w-[263px] max-w-[440px]">
         {corpList.map((corp) => (
           <motion.button
             type="button"
