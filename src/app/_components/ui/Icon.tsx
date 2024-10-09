@@ -8,6 +8,7 @@ interface IconsProps {
   hoverFill?: string;
   className?: string;
   onClick?: () => void;
+  fill?: string;
 }
 
 // Icons 컴포넌트 정의
@@ -27,13 +28,16 @@ export default function Icons({ name, className, hoverFill, onClick }: IconsProp
     setIsHovered(false);
   };
 
+  // fill prop이 제공되면 그것을 사용하고, 아니면 name.fill을 사용
+  const iconFill = fill || name.fill;
+
   return (
     <svg
       width={width} // SVG의 너비
       height={height} // SVG의 높이
       viewBox={`0 0 ${width} ${height}`} // SVG의 뷰포트 설정
       onClick={onClick} // 클릭 이벤트 핸들러
-      fill={isHovered ? hoverFill || fill : fill} // 호버 상태에 따른 채우기 색상
+      fill={isHovered ? hoverFill || iconFill : iconFill} // 호버 상태에 따른 채우기 색상
       className={className} // CSS 클래스
       onMouseEnter={handleMouseEnter} // 마우스 진입 이벤트 핸들러
       onMouseLeave={handleMouseLeave} // 마우스 이탈 이벤트 핸들러

@@ -25,7 +25,7 @@
 }
 
 body {
-  background-color: #f1f1f5;
+  background-color: #ffffff;
 }
 
 @layer utilities {
@@ -42,6 +42,10 @@ body {
   /* 모달 텍스트 */
   .modal-text {
     @apply text-center text-xl font-semibold break-words whitespace-pre-wrap;
+  }
+  /* primary-1 버튼 */
+  .primary-1-btn {
+    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg hover:bg-primary-2;
   }
 
   /* 로그인/회원가입 */
@@ -62,5 +66,10 @@ body {
   }
   .form-red-dot {
     @apply bg-red-0 w-[5px] h-[5px] rounded-full;
+  }
+
+  /* 블로그 */
+  .blog-favor-frame {
+    @apply flex items-center gap-[5px] bg-black-2 px-3 py-[6px] rounded-3xl cursor-pointer hover:bg-opacity-90;
   }
 }
