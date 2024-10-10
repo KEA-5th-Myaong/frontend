@@ -11,7 +11,7 @@ export default function QuestionBox({ question, onClick }: QuestionBoxProps) {
       type="button"
     >
       <p className="font-semibold overflow-scroll hide-scrollbar">{question}</p>
-      <div className="flex gap-2 font-semibold text-gray-2 whitespace-nowrap">
+      <div className="flex gap-2 font-semibold text-gray-2 whitespace-nowrap mr-2">
         <p className="hidden lg:block">면접 생성</p>
         <Icons className="border border-gray-2 rounded-full rotate-180" name={ArrowIcon} />
       </div>

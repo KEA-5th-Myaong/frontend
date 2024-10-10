@@ -44,9 +44,18 @@ export default function ChatContainer() {
           {messages.map((msg) => (
             <div className={`flex flex-col ${msg.isAI ? 'items-start' : 'items-end'}`}>
               {msg.isAI && <p className="font-semibold pb-3">면접관</p>}
-              <div className={`break-words chat-msg-text ${msg.isAI ? 'bg-gray-4' : 'bg-white-2 text-white'}`}>
-                {msg.text}
+
+              <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
+                {!msg.isAI && (
+                  <button type="button" className="text-xs text-gray-0 self-end pb-2 whitespace-nowrap">
+                    수정
+                  </button>
+                )}
+                <div className={`break-words chat-msg-text ${msg.isAI ? 'bg-gray-4' : 'bg-white-2 text-white'}`}>
+                  {msg.text}
+                </div>
               </div>
+
               {!msg.isAI && (
                 <div className="flex items-center gap-4 pt-4">
                   <button type="button" className="chat-msg-btn" onClick={handleTailQuestion}>
