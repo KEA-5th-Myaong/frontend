@@ -23,7 +23,7 @@ export default function PersonalStatementBox({ content, onClick }: PersonalState
       </div>
       <div
         className="flex self-center items-center gap-2 font-semibold bg-primary-1 
-      p-2 lg:py-3 lg:pl-5 lg:pr-2 text-white-0 whitespace-nowrap rounded-[28px]"
+      p-2 lg:py-3 lg:pl-5 lg:pr-2 text-white-0 whitespace-nowrap rounded-[28px] mr-2"
       >
         <p className="hidden lg:block">면접 시작</p>
         <Icons className="border border-gray-2 rounded-full rotate-180 bg-white-0" name={ArrowIcon} />

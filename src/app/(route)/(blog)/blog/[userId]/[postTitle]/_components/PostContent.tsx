@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import Icons from '../../../../../../_components/ui/Icon';
 import { FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
 import testPosts from '../../_components/test.json';
-import PostDropDown from './PostDropDown';
+import MoreOptions from '../../../../../../_components/MoreOptions';
 import useClickOutside from '../../../../../../_hooks/useClickOutside';
 
 export default function PostContent() {
@@ -30,7 +30,7 @@ export default function PostContent() {
             name={MoreIcon}
           />
 
-          {showDropDown && <PostDropDown />}
+          {showDropDown && <MoreOptions />}
         </div>
       </div>
 

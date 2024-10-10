@@ -58,7 +58,7 @@ export default function InterviewSelect() {
             type="button"
             layoutId={`corp-${corp}`}
             onClick={() => {
-              router.push(`/interview/${id.id}/${corp}`);
+              router.push(`/interview/${id.id}/${corp}/personal-statement`);
             }}
             className="corp-block"
           >

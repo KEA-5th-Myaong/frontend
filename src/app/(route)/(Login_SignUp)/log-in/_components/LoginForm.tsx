@@ -20,7 +20,7 @@ export default function LoginForm() {
     console.log(response); // 콘솔로그는 나중에 제거
   };
 
-  const handleFormSubmit = async (data: LoginState) => {
+  FormSubmit = async (data: LoginState) => {
     try {
       await onSubmit(data);
     } catch (error) {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Icons from '../../../../../../../_components/ui/Icon';
 import { ArrowIcon } from '../../../../../../../_components/ui/iconPath';
 
@@ -8,6 +8,16 @@ interface MessageFormProps {
 
 export default function MessageForm({ onSubmit }: MessageFormProps) {
   const [newMessage, setNewMessage] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'; // 이전 설정 높이 리셋
+      // Math.min 함수를 사용하여 scrollHeight와 160px 중 작은 값을 선택
+      // scrollHeight는 textarea의 내용을 모두 표시하는 데 필요한 높이
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 160)}px`;
+    }
+  }, [newMessage]);
 
   const handleSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -29,17 +39,19 @@ export default function MessageForm({ onSubmit }: MessageFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center py-2 h-[90px] w-full border border-primary-1 rounded-xl mt-auto bg-white-0"
+      className="flex items-center py-2 w-full border border-primary-1 rounded-xl mt-auto bg-white-0"
     >
       <textarea
+        ref={textareaRef}
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="flex-grow pl-5 md:pl-8 pr-2 focus:outline-none rounded-xl resize-none hide-scrollbar"
+        className="flex-grow pl-5 md:pl-8 pr-2 py-2 focus:outline-none rounded-xl resize-none hide-scrollbar
+         max-h-[160px] overflow-y-auto"
         placeholder="답변을 입력해주세요"
       />
       <button type="submit" tabIndex={-1} className="pr-2 sm:pr-3 md:pr-4 cursor-pointer">
-        <Icons className="rotate-180 border rounded-full border-gray-1" name={ArrowIcon} />
+        <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
       </button>
     </form>
   );

@@ -1,4 +1,4 @@
-export default function PostDropDown() {
+export default function MoreOptions() {
   return (
     <div className="absolute border rounded-lg p-[10px] bg-white-0 right-0">
       <button
