@@ -4,7 +4,7 @@ import { useState } from 'react';
 import MessageForm from './MessageForm';
 import Icons from '../../../../../../../_components/ui/Icon';
 import { ArrowIcon } from '../../../../../../../_components/ui/iconPath';
-import useContainerHeight from '../../../../../_utils/useContainerHeight';
+import useContainerHeight from '../../../../../_hooks/useContainerHeight';
 import useScrollToBottom from '../../../../../../../_hooks/useScrollToBottom';
 
 export default function ChatContainer() {
