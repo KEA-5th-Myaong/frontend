@@ -2,9 +2,37 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const router = useRouter();
+
+  const cardAnimation = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 300, // 애니메이션이 튕기는 정도
+        damping: 20, // 튕기는 속도와 부드러움을 조절
+        duration: 1, // 전체 애니메이션 지속 시간
+      },
+    },
+  };
+
+  const easeInOutAnimation = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        ease: 'easeInOut',
+        duration: 1,
+        y: { duration: 1 },
+      },
+    },
+  };
   return (
     <div className="flex flex-col relative items-center text-center pt-[50px] bg-gradient-to-b from-[#F1F1F5] to-[#D8ECFF] h-full ">
       <Image src="/assets/logo-lg.svg" alt="PPLOG 로고" width={130} height={130} className="hidden sm:block" />
@@ -36,7 +64,13 @@ export default function Home() {
           <p>포트폴리오부터 면접까지,</p>
           <p> 완벽한 준비를 위한 All-in-One 솔루션</p>
         </div>
-        <div className="flex items-center z-[2] text-left bg-white-0 sm:w-[500px] md:w-[700px] lg:w-[900px] sm:h-[250px] md:h-[300px] rounded-[80px] mt-[50px] py-[50px] sm:pl-[50px] md:pl-[60px] lg:pl-[90px]">
+        <motion.div
+          variants={cardAnimation}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          className="flex items-center z-[2] text-left bg-white-0 sm:w-[500px] md:w-[700px] lg:w-[900px] sm:h-[250px] md:h-[300px] rounded-[80px] mt-[50px] py-[50px] sm:pl-[50px] md:pl-[60px] lg:pl-[90px]"
+        >
           <div>
             <p className="sm:text-[12px]  md:text-[15px] font-semibold text-blue-0 mb-[8px]">AI 자소서 첨삭</p>
             <p className="sm:pre-xl-semibold md:pre-2xl-semibold">
@@ -59,8 +93,14 @@ export default function Home() {
             height={200}
             className="sm:ml-[8px] md:ml-[30px] mr-[10px] sm:w-[170px] sm:h-[170px] md:w-[220px] md:h-[220px] lg:w-[300px] lg:h-[300px]"
           />
-        </div>
-        <div className="flex z-[2] text-left bg-white-0 sm:w-[500px] md:w-[700px] lg:w-[900px] sm:h-[250px] md:h-[300px] rounded-[80px] mt-[20px] py-[50px]  sm:pl-[50px] md:pl-[60px] lg:pl-[90px]">
+        </motion.div>
+        <motion.div
+          variants={cardAnimation}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          className="flex z-[2] text-left bg-white-0 sm:w-[500px] md:w-[700px] lg:w-[900px] sm:h-[250px] md:h-[300px] rounded-[80px] mt-[20px] py-[50px]  sm:pl-[50px] md:pl-[60px] lg:pl-[90px]"
+        >
           <div>
             <p className="sm:text-[12px] md:text-[15px] font-semibold text-blue-0 mb-[8px]">AI 모의 면접</p>
             <p className="sm:pre-xl-semibold md:pre-2xl-semibold">
@@ -83,10 +123,16 @@ export default function Home() {
             height={180}
             className="sm:ml-[8px] md:ml-[30px] mr-[10px] sm:w-[130px] sm:h-[130px] md:w-[170px] md:h-[170px] lg:w-[200px] lg:h-[200px]"
           />
-        </div>
+        </motion.div>
       </section>
       <main>
-        <div className="relative mt-[400px] flex flex-col items-center">
+        <motion.div
+          variants={easeInOutAnimation}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          className="relative mt-[400px] flex flex-col items-center"
+        >
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold">
             AI 면접관이 당신의 포트폴리오와 자기소개서를 분석하고
           </p>
@@ -108,9 +154,15 @@ export default function Home() {
             height={300}
             className="absolute top-[120px] left-[150px] z-[0] "
           />
-        </div>
+        </motion.div>
 
-        <div className="mt-[400px] flex flex-col items-center px-[60px]">
+        <motion.div
+          variants={easeInOutAnimation}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          className="mt-[400px] flex flex-col items-center px-[60px]"
+        >
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold">AI가 당신의 경력과 자기소개서에 맞춘 </p>
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold">모의 면접 질문을 제공합니다</p>
           <p className="sm:pre-xl-medium md:pre-2xl-medium text-gray-5 mt-[30px]">
@@ -140,9 +192,15 @@ export default function Home() {
               className="hidden md:block"
             />
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mt-[400px] flex flex-col items-center">
+        <motion.div
+          variants={easeInOutAnimation}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          className="mt-[400px] flex flex-col items-center"
+        >
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold">
             취업 준비에 필요한 지식과 경험을 블로그와 함께 나누세요
           </p>
@@ -189,10 +247,16 @@ export default function Home() {
               />
             </div>
           </div>
-        </div>
+        </motion.div>
       </main>
       <section>
-        <div className="mt-[400px] mb-[400px] flex flex-col items-center">
+        <motion.div
+          variants={easeInOutAnimation}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false }}
+          className="mt-[400px] mb-[400px] flex flex-col items-center"
+        >
           <Image src="/assets/landing-page/section5.svg" alt="책 이미지" width={300} height={300} />
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold mt-[50px]">
             취업 성공을 위한 맞춤형 AI 지원, 지금 시작하세요
@@ -228,7 +292,7 @@ export default function Home() {
               간편 회원가입
             </button>
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
