@@ -1,6 +1,10 @@
+'use client';
+
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
   return (
     <div className="flex flex-col relative items-center text-center pt-[50px] bg-gradient-to-b from-[#F1F1F5] to-[#D8ECFF] h-full ">
       <Image src="/assets/logo-lg.svg" alt="PPLOG 로고" width={130} height={130} className="hidden sm:block" />
@@ -44,6 +48,7 @@ export default function Home() {
               type="button"
               className="sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 sm:mt-[20px] md:mt-[55px] sm:py-[10px] md:py-[15px] px-[35px] rounded-[100px] hover:scale-105 transform transition-transform duration-200 ease-out"
             >
+              {/* //TODO: 자소서 첨삭 링크 어디로 연결할지 논의 필요 */}
               바로가기
             </button>
           </div>
@@ -67,6 +72,7 @@ export default function Home() {
               type="button"
               className="sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 sm:mt-[20px] md:mt-[40px] lg:mt-[55px] sm:py-[10px] md:py-[15px] px-[35px] rounded-[100px] hover:scale-105 transform transition-transform duration-200 ease-out"
             >
+              {/* //TODO: 모의 면접 링크 어디로 연결할지 논의 필요 */}
               바로가기
             </button>
           </div>
@@ -207,6 +213,9 @@ export default function Home() {
             </button>
             <button
               type="button"
+              onClick={() => {
+                router.push('/log-in');
+              }}
               className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-black-0 text-white-0 mx-[10px] py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
             >
               <Image
