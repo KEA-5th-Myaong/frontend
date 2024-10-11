@@ -1,18 +1,32 @@
-export interface PostProps {
-  userName: string;
-  userJob: string;
-  postTitle: string;
-  postContent: string;
-  postDate: string;
-  isLoved: boolean;
-  lovedCount: string | number;
-}
+import { PostProps } from '../(route)/(blog)/blog/[userId]/_types/blog';
+import Icons from './ui/Icon';
+import { FavorIcon } from './ui/iconPath';
 
-export default function Post({ userName, userJob, postTitle, postContent, postDate, isLoved, lovedCount }: PostProps) {
+export default function Post({
+  userName,
+  userJob,
+  postTitle,
+  postContent,
+  postDate,
+  isLoved,
+  lovedCount,
+  onUserClick,
+  onContentClick,
+}: PostProps) {
   return (
-    <div className="flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] rounded-2xl border border-gray-2 ">
+    <div className="flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] rounded-2xl border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out">
       <div className="flex flex-col">
-        <div className="flex items-center">
+        <div
+          className="flex items-center max-w-fit"
+          role="button"
+          onClick={onUserClick}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              onUserClick();
+            }
+          }}
+          tabIndex={0}
+        >
           <div id="profile" className="min-w-[42px] h-[42px] bg-black-3 rounded-full mr-5" />
           <span>{userName}</span>
         </div>
@@ -22,16 +36,26 @@ export default function Post({ userName, userJob, postTitle, postContent, postDa
       </div>
 
       <div className="flex flex-col pl-[12px] sm:pl-[62px] pr-5 gap-7">
-        <div className="flex flex-col gap-4">
+        <div
+          className="flex flex-col gap-4"
+          role="button"
+          onClick={onContentClick}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              onContentClick();
+            }
+          }}
+          tabIndex={0}
+        >
           <span className="text-[#030303] font-semibold">{postTitle}</span>
           <span className="text-[#030303] overflow-hidden line-clamp-3">{postContent}</span>
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <span className="text-sm text-gray-1">{postDate}</span>
-          <div className="flex bg-black-2 min-w-[70px] px-3 py-[6px] rounded-3xl items-center gap-[6px]">
-            <div id="goodIcon" className={`${isLoved ? 'bg-primary-2' : 'bg-gray-1'} w-[18px] h-[18px] rounded-full`} />
-            <span className={`${isLoved ? 'text-primary-2' : 'text-gray-1'}`}>{lovedCount}</span>
+          <div className="cursor-default blog-favor-frame">
+            <Icons name={FavorIcon} className={`${isLoved ? 'text-primary-2' : 'text-gray-1'}`} />
+            <span className={`${isLoved ? 'text-primary-2' : 'text-gray-1'} text-sm`}>{lovedCount}</span>
           </div>
         </div>
       </div>

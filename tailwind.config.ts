@@ -13,6 +13,7 @@ const config: Config = {
       sm: '576px', // 가로 px이 각각 576px, 768px, 882px 이상일 때의 스타일을 지정
       md: '768px',
       lg: '882px',
+      xl: '1088px',
     },
     extend: {
       fontFamily: {
