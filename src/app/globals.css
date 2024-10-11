@@ -26,6 +26,7 @@
 
 body {
   background-color: #f1f1f5;
+  overflow-x: hidden;
 }
 
 @layer utilities {
