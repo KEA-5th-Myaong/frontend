@@ -11,8 +11,11 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Popolog',
-  description: 'Popolog',
+  title: 'PPlog',
+  description: 'PPlog',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -22,6 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <Providers>
         <body className={`${pretendard.variable} font-pretendard`}>{children}</body>
       </Providers>
