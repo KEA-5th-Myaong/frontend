@@ -10,7 +10,7 @@ const config: Config = {
   ],
   theme: {
     screens: {
-      sm: '576px', // 가로 px이 각각 576px, 768px, 882px 이상일 때의 스타일을 지정
+      sm: '360px',
       md: '768px',
       lg: '882px',
       xl: '1088px',
@@ -77,6 +77,18 @@ const config: Config = {
         },
         '.pre-2xl-bold': {
           fontSize: '20px',
+          fontWeight: theme('fontWeight.bold'),
+        },
+        '.pre-xl-medium': {
+          fontSize: '15px',
+          fontWeight: theme('fontWeight.medium'),
+        },
+        '.pre-xl-semibold': {
+          fontSize: '15px',
+          fontWeight: theme('fontWeight.semibold'),
+        },
+        '.pre-xl-bold': {
+          fontSize: '15px',
           fontWeight: theme('fontWeight.bold'),
         },
       });
