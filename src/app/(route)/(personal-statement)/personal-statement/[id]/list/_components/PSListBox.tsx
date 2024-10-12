@@ -23,18 +23,18 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
   };
 
   return (
-    <div
-      role="button"
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          handlePSListBoxClick();
-        }
-      }}
-      onClick={handlePSListBoxClick}
-      className="flex justify-between px-8 pb-4 pt-10 border border-gray-2 rounded-lg bg-white-0 cursor-pointer"
-      tabIndex={0}
-    >
-      <div className="flex flex-col gap-3 w-2/3">
+    <div className="flex justify-between px-8 pb-4 pt-10 border border-gray-2 rounded-lg bg-white-0 cursor-pointer">
+      <div
+        role="button"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            handlePSListBoxClick();
+          }
+        }}
+        onClick={handlePSListBoxClick}
+        className="flex flex-col gap-3 w-2/3"
+        tabIndex={0}
+      >
         <div className="flex items-center gap-4">
           <p className="font-semibold text-xl">{title}</p>
           <div className="bg-primary-1 rounded-md px-5 py-1 text-xs text-white-0">지원직무 : {job}</div>
