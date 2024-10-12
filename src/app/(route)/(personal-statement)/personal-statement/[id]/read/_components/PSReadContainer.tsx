@@ -21,7 +21,7 @@ export default function PSReadContainer() {
 
   return (
     <>
-      <PSCreateHeader />
+      <PSCreateHeader title={psState.title} mode="read" onButtonClick={() => {}} />
       <div className="self-start w-full">
         <p className="w-full font-semibold text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">자기소개서</p>
 

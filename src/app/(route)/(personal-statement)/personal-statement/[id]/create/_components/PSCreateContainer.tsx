@@ -1,26 +1,50 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import PSFooter from '../../_components/PSFooter';
 import { PSFormData } from '../_types/psCreate';
+import usePSStore from '../../_store/psStore';
+import PSCreateHeader from './PSCreateHeader';
 
 export default function PSCreateContainer() {
   const router = useRouter();
-  const { register, handleSubmit, watch } = useForm<PSFormData>();
+  const { psData, setPSData, resetPSData } = usePSStore();
+
+  const { register, handleSubmit, watch, setValue } = useForm<PSFormData>({
+    defaultValues: psData, // Zustand 스토어의 데이터로 폼 초기화
+  });
+
+  // 컴포넌트 마운트 시 스토어의 데이터로 폼 필드 설정
+  useEffect(() => {
+    // psData 객체의 모든 키-값 쌍을 순회
+    Object.entries(psData).forEach(([key, value]) => {
+      setValue(key as keyof PSFormData, value); // setValue를 사용하여 각 폼 필드의 값을 설정
+    });
+  }, [psData, setValue]);
 
   const onSubmit = (data: PSFormData) => {
     console.log(data);
+    resetPSData();
   };
 
   const handleDoneClick = () => {
     handleSubmit(onSubmit)();
   };
 
+  const handlePreviewClick = () => {
+    const data = watch(); // 인자 없이 watch()를 호출하면, 폼의 모든 등록된 필드의 현재 값을 포함하는 객체를 반환
+    setPSData(data);
+    router.push('/personal-statement/1/preview');
+  };
+
   const reasonContent = watch('reason', ''); // 글자수 확인 위해
   const contentContent = watch('content', ''); // 글자수 확인 위해
   return (
     <>
+      <PSCreateHeader title="" mode="create" onButtonClick={handleDoneClick} />
+
       <div className="self-start w-full">
         <p className="w-full font-semibold text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">자기소개서</p>
 
@@ -90,9 +114,7 @@ export default function PSCreateContainer() {
         showPreview
         showDone
         handlePdfClick={() => {}}
-        handlePreviewClick={() => {
-          router.push('/personal-statement/1/preview');
-        }}
+        handlePreviewClick={handlePreviewClick}
         handleDoneClick={handleDoneClick}
       />
     </>
