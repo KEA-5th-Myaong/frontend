@@ -6,7 +6,6 @@ import MoreOptions from '../../../../../../_components/MoreOptions';
 import Icons from '../../../../../../_components/ui/Icon';
 import { MoreIcon } from '../../../../../../_components/ui/iconPath';
 import useClickOutside from '../../../../../../_hooks/useClickOutside';
-import PSFooter from '../../_components/PSFooter';
 
 export default function PSCreateHeader() {
   const router = useRouter();
@@ -44,8 +43,6 @@ export default function PSCreateHeader() {
           {showDropDown && <MoreOptions />}
         </div>
       </div>
-
-      <PSFooter handlePdfClick={() => {}} handlePreviewClick={() => {}} handleDoneClick={() => {}} />
     </div>
   );
 }

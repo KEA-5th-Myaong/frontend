@@ -88,4 +88,12 @@ body {
     @apply flex items-center gap-4 border border-gray-0 border-opacity-20 
     pl-6 pr-2 py-2 text-[10px] sm:text-xs md:text-sm rounded-[60px] whitespace-nowrap;
   }
+
+  /* 자소서 */
+  .ps-label {
+    @apply flex flex-col gap-[6px] w-full text-[13px] font-semibold;
+  }
+  .ps-input {
+    @apply bg-[#F9F9F9] px-5 border border-[#D9D9D9] rounded-[10px] placeholder:text-[#DEDEDE] font-normal;
+  }
 }
