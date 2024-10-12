@@ -14,7 +14,7 @@ export default function PSListHeader() {
       </div>
       <button
         type="button"
-        onClick={() => router.push('/')}
+        onClick={() => router.push('/personal-statement/1/create')}
         className="flex items-center gap-3 p-2 sm:p-4 rounded-[28px] text-xs sm:text-base primary-1-btn"
       >
         <Icons fill="#fff" name={PlusIcon} />

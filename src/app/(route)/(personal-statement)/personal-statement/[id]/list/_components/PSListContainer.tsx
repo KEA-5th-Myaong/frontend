@@ -25,7 +25,7 @@ export default function PSListContainer() {
           ))}
           <button
             type="button"
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/personal-statement/1/create')}
             className="flex-center gap-8 py-11 border border-gray-2 rounded-lg bg-white-0"
           >
             <Icons className="border border-primary-1" name={PlusIcon} />

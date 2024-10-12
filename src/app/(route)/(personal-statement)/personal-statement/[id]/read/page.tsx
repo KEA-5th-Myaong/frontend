@@ -1,3 +1,5 @@
+'use client';
+
 import PSFooter from '../_components/PSFooter';
 
 export default function PersonalStatementRead() {
