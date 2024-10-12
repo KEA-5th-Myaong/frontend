@@ -1,7 +1,7 @@
 interface PSFooterProps {
   handlePdfClick: () => void;
-  handlePreviewClick: () => void;
-  handleDoneClick: () => void;
+  handlePreviewClick?: () => void;
+  handleDoneClick?: () => void;
 }
 
 export default function PSFooter({ handlePdfClick, handlePreviewClick, handleDoneClick }: PSFooterProps) {

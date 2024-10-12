@@ -1,10 +1,12 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import PSFooter from '../../_components/PSFooter';
 import { PSFormData } from '../_types/psCreate';
 
 export default function PSCreateContainer() {
+  const router = useRouter();
   const { register, handleSubmit, watch } = useForm<PSFormData>();
 
   const onSubmit = (data: PSFormData) => {
@@ -84,7 +86,13 @@ export default function PSCreateContainer() {
           자기소개서는 최대 2000자까지 입력 가능합니다.
         </div>
       </div>
-      <PSFooter handlePdfClick={() => {}} handlePreviewClick={() => {}} handleDoneClick={handleDoneClick} />
+      <PSFooter
+        handlePdfClick={() => {}}
+        handlePreviewClick={() => {
+          router.push('/personal-statement/1/read');
+        }}
+        handleDoneClick={handleDoneClick}
+      />
     </>
   );
 }

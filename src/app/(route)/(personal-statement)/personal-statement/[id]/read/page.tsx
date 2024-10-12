@@ -1,12 +1,9 @@
-'use client';
-
-import PSFooter from '../_components/PSFooter';
+import PSReadContainer from './_components/PSReadContainer';
 
 export default function PersonalStatementRead() {
   return (
-    <div>
-      자소서 조회
-      <PSFooter handlePdfClick={() => {}} handlePreviewClick={() => {}} handleDoneClick={() => {}} />
-    </div>
+    <section className="flex-center flex-col mx-auto w-full h-full pt-[100px] pb-32 px-8 gap-20 max-w-[1000px] min-w-[365px]">
+      <PSReadContainer />
+    </section>
   );
 }
