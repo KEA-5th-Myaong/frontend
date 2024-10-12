@@ -1,10 +1,19 @@
 interface PSFooterProps {
+  showPreview?: boolean;
+  showDone?: boolean;
+
   handlePdfClick: () => void;
   handlePreviewClick?: () => void;
   handleDoneClick?: () => void;
 }
 
-export default function PSFooter({ handlePdfClick, handlePreviewClick, handleDoneClick }: PSFooterProps) {
+export default function PSFooter({
+  showPreview,
+  showDone,
+  handlePdfClick,
+  handlePreviewClick,
+  handleDoneClick,
+}: PSFooterProps) {
   return (
     <div
       className="fixed bottom-0 w-full flex items-center justify-between bg-white-0 py-4 px-16 
@@ -15,16 +24,25 @@ export default function PSFooter({ handlePdfClick, handlePreviewClick, handleDon
       </button>
 
       <div className="flex gap-5">
-        <button type="button" onClick={handlePreviewClick} className="rounded-[10px] border border-[#E1E1E1] py-2 px-6">
-          미리보기
-        </button>
-        <button
-          type="button"
-          onClick={handleDoneClick}
-          className="bg-primary-1 text-white-0 rounded-[10px] border border-[#E1E1E1] py-2 px-6"
-        >
-          작성 완료
-        </button>
+        {showPreview && (
+          <button
+            type="button"
+            onClick={handlePreviewClick}
+            className="rounded-[10px] border border-[#E1E1E1] py-2 px-6"
+          >
+            미리보기
+          </button>
+        )}
+
+        {showDone && (
+          <button
+            type="button"
+            onClick={handleDoneClick}
+            className="bg-primary-1 text-white-0 rounded-[10px] border border-[#E1E1E1] py-2 px-6"
+          >
+            작성 완료
+          </button>
+        )}
       </div>
     </div>
   );

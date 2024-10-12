@@ -87,9 +87,11 @@ export default function PSCreateContainer() {
         </div>
       </div>
       <PSFooter
+        showPreview
+        showDone
         handlePdfClick={() => {}}
         handlePreviewClick={() => {
-          router.push('/personal-statement/1/read');
+          router.push('/personal-statement/1/preview');
         }}
         handleDoneClick={handleDoneClick}
       />

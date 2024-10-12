@@ -31,7 +31,7 @@ export default function PSReadContainer() {
           <PSReadContent label="자기소개" content={psState.content} />
         </div>
       </div>
-      <PSFooter handlePdfClick={() => {}} handlePreviewClick={() => {}} handleDoneClick={() => {}} />
+      <PSFooter handlePdfClick={() => {}} />
     </>
   );
 }
