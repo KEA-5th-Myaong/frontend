@@ -17,6 +17,22 @@ const modalMotion = {
   },
 };
 
+export const initailModalState = {
+  open: false,
+  topText: '',
+  subText: '',
+  btnText: '',
+  onBtnClick: () => {},
+  hasSubBtn: false,
+  subBtnText: '',
+  onSubBtnClick: () => {},
+  isWarn: false,
+  onOverlayClick: () => {},
+  hasInput: false,
+  value: '',
+  onChange: () => {},
+};
+
 export default function Modal({
   topText,
   subText = '',

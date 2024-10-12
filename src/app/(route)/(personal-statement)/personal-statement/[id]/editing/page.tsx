@@ -1,12 +1,41 @@
 'use client';
 
-import BackButton from '../../../../../_components/BackButton';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Icons from '../../../../../_components/ui/Icon';
+import { ArrowIcon } from '../../../../../_components/ui/iconPath';
 import PSEditingBox from './_components/PSEditingBox';
+import Modal, { initailModalState } from '../../../../../_components/Modal';
 
 export default function PersonalStatementEditing() {
+  const router = useRouter();
+
+  const [modalState, setModalState] = useState(initailModalState);
+
+  const handleDeleteClick = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '포스트를 생성하지 않으면 다시 첨삭 내용을 볼 수 없습니다.',
+      subText: '정말 페이지를 나가시겠습니까?',
+      subBtnText: '취소',
+      btnText: '확인',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () => router.back(),
+    }));
+  };
+
   return (
     <section className="flex-center flex-col mx-auto w-full h-full pt-[100px] pb-8 px-8 max-w-[1056px] min-w-[365px]">
-      <BackButton className="self-start pb-2" />
+      <div className="flex items-center self-start gap-[9px] font-semibold pb-2">
+        <Icons
+          className="cursor-pointer border border-gray-1 rounded-full"
+          onClick={handleDeleteClick}
+          name={ArrowIcon}
+        />
+        뒤로가기
+      </div>
 
       <div className="flex items-center justify-between w-full pb-4">
         <p className="font-semibold">자소서 첨삭</p>
@@ -44,6 +73,18 @@ export default function PersonalStatementEditing() {
           </p>
         </div>
       </div>
+
+      {modalState.open && (
+        <Modal
+          hasSubBtn={modalState.hasSubBtn}
+          topText={modalState.topText}
+          subText={modalState.subText}
+          subBtnText={modalState.subBtnText}
+          btnText={modalState.btnText}
+          onSubBtnClick={modalState.onSubBtnClick}
+          onBtnClick={modalState.onBtnClick}
+        />
+      )}
     </section>
   );
 }

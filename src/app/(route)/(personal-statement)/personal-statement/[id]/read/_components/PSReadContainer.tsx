@@ -8,6 +8,7 @@ import { PSFormData } from '../../create/_types/psCreate';
 import psReadTest from './psReadTest.json';
 import PSCreateHeader from '../../create/_components/PSCreateHeader';
 import BackButton from '../../../../../../_components/BackButton';
+import Modal, { initailModalState } from '../../../../../../_components/Modal';
 
 export default function PSReadContainer() {
   const router = useRouter();
@@ -18,9 +19,33 @@ export default function PSReadContainer() {
     content: '',
   });
 
+  const [modalState, setModalState] = useState(initailModalState);
+
   useEffect(() => {
     setPsState(psReadTest[0]);
   }, []);
+
+  // 삭제 클릭
+  const handleDeleteClick = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '자기소개서를 삭제하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '확인',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () =>
+        setModalState((prev2) => ({
+          ...prev2,
+          open: true,
+          hasSubBtn: false,
+          topText: '삭제되었습니다.',
+          btnText: '확인',
+          onBtnClick: () => setModalState(initailModalState),
+        })),
+    }));
+  };
 
   return (
     <>
@@ -31,6 +56,7 @@ export default function PSReadContainer() {
         onButtonClick={() => {
           router.push('/personal-statement/1/editing');
         }}
+        handleDeleteClick={handleDeleteClick}
       />
 
       <div className="self-start w-full mt-20">
@@ -49,6 +75,17 @@ export default function PSReadContainer() {
           router.back();
         }}
       />
+
+      {modalState.open && (
+        <Modal
+          hasSubBtn={modalState.hasSubBtn}
+          topText={modalState.topText}
+          subBtnText={modalState.subBtnText}
+          btnText={modalState.btnText}
+          onSubBtnClick={modalState.onSubBtnClick}
+          onBtnClick={modalState.onBtnClick}
+        />
+      )}
     </>
   );
 }

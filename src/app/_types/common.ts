@@ -1,5 +1,6 @@
 // 모달 인터페이스
 export interface ModalProps {
+  open?: boolean;
   topText: string;
   subText?: string;
 

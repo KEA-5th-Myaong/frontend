@@ -7,9 +7,11 @@ import PSFooter from '../../_components/PSFooter';
 import { PSFormData } from '../_types/psCreate';
 import usePSStore from '../../_store/psStore';
 import PSCreateHeader from './PSCreateHeader';
+import BackButton from '../../../../../../_components/BackButton';
 
 export default function PSCreateContainer() {
   const router = useRouter();
+
   const { psData, setPSData, resetPSData } = usePSStore();
 
   const { register, handleSubmit, watch, setValue } = useForm<PSFormData>({
@@ -43,9 +45,10 @@ export default function PSCreateContainer() {
   const contentContent = watch('content', ''); // 글자수 확인 위해
   return (
     <>
+      <BackButton className="self-start pb-4" />
       <PSCreateHeader title="" mode="create" onButtonClick={handleDoneClick} />
 
-      <div className="self-start w-full">
+      <div className="self-start w-full mt-12">
         <p className="w-full font-semibold text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">자기소개서</p>
 
         <div className="flex flex-col gap-[18px] bg-gray-4 pt-5 px-14 pb-10 rounded-[10px]">
