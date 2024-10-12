@@ -1,18 +1,23 @@
 interface PSFooterProps {
   showPreview?: boolean;
   showDone?: boolean;
+  showBack?: boolean;
 
   handlePdfClick: () => void;
   handlePreviewClick?: () => void;
   handleDoneClick?: () => void;
+  handleBackClick?: () => void;
 }
 
 export default function PSFooter({
   showPreview,
   showDone,
+  showBack,
+
   handlePdfClick,
   handlePreviewClick,
   handleDoneClick,
+  handleBackClick,
 }: PSFooterProps) {
   return (
     <div
@@ -41,6 +46,16 @@ export default function PSFooter({
             className="bg-primary-1 text-white-0 rounded-[10px] border border-[#E1E1E1] py-2 px-6"
           >
             작성 완료
+          </button>
+        )}
+
+        {showBack && (
+          <button
+            type="button"
+            onClick={handleBackClick}
+            className="bg-primary-1 text-white-0 rounded-[10px] border border-[#E1E1E1] py-2 px-6"
+          >
+            뒤로가기
           </button>
         )}
       </div>
