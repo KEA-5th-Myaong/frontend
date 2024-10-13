@@ -29,6 +29,7 @@ export default function PersonalStatementPreview() {
         </div>
       </div>
       <PSFooter
+        showPDF
         showBack
         handlePdfClick={() => {}}
         handleBackClick={() => {

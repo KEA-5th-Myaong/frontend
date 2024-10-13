@@ -1,15 +1,17 @@
 interface PSFooterProps {
+  showPDF?: boolean;
   showPreview?: boolean;
   showDone?: boolean;
   showBack?: boolean;
 
-  handlePdfClick: () => void;
+  handlePdfClick?: () => void;
   handlePreviewClick?: () => void;
   handleDoneClick?: () => void;
   handleBackClick?: () => void;
 }
 
 export default function PSFooter({
+  showPDF,
   showPreview,
   showDone,
   showBack,
@@ -21,12 +23,14 @@ export default function PSFooter({
 }: PSFooterProps) {
   return (
     <div
-      className="fixed bottom-0 w-full flex items-center justify-between bg-white-0 py-4 px-16 
-    border border-t-gray-2 font-semibold whitespace-nowrap"
+      className={`fixed bottom-0 w-full flex items-center ${showPDF ? 'justify-between' : 'justify-end'} bg-white-0 py-4 px-16 
+    border border-t-gray-2 font-semibold whitespace-nowrap`}
     >
-      <button type="button" onClick={handlePdfClick} className="rounded-[10px] border border-[#E1E1E1] py-2 px-6">
-        PDF로 저장
-      </button>
+      {showPDF && (
+        <button type="button" onClick={handlePdfClick} className="rounded-[10px] border border-[#E1E1E1] py-2 px-6">
+          PDF로 저장
+        </button>
+      )}
 
       <div className="flex gap-5">
         {showPreview && (

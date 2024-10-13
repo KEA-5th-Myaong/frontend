@@ -7,6 +7,7 @@ import Icons from '../../../../../../_components/ui/Icon';
 import { MoreIcon } from '../../../../../../_components/ui/iconPath';
 import useClickOutside from '../../../../../../_hooks/useClickOutside';
 import { PSListBoxProps } from '../_types/psList';
+import Modal, { initailModalState } from '../../../../../../_components/Modal';
 
 export default function PSListBox({ id, title, job, content, created_at }: PSListBoxProps) {
   const router = useRouter();
@@ -20,6 +21,30 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
 
   const handlePSListBoxClick = () => {
     router.push(`/personal-statement/${id}/read`);
+  };
+
+  const [modalState, setModalState] = useState(initailModalState);
+
+  // 삭제 클릭
+  const handleDeleteClick = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '자기소개서를 삭제하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '확인',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () =>
+        setModalState((prev2) => ({
+          ...prev2,
+          open: true,
+          hasSubBtn: false,
+          topText: '삭제되었습니다.',
+          btnText: '확인',
+          onBtnClick: () => setModalState(initailModalState),
+        })),
+    }));
   };
 
   return (
@@ -53,8 +78,19 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
           name={MoreIcon}
         />
 
-        {showDropDown && <MoreOptions />}
+        {showDropDown && <MoreOptions handleDeleteClick={handleDeleteClick} />}
       </div>
+
+      {modalState.open && (
+        <Modal
+          hasSubBtn={modalState.hasSubBtn}
+          topText={modalState.topText}
+          subBtnText={modalState.subBtnText}
+          btnText={modalState.btnText}
+          onSubBtnClick={modalState.onSubBtnClick}
+          onBtnClick={modalState.onBtnClick}
+        />
+      )}
     </div>
   );
 }

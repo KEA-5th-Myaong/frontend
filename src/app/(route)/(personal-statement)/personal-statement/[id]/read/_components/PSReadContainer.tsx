@@ -69,6 +69,7 @@ export default function PSReadContainer() {
         </div>
       </div>
       <PSFooter
+        showPDF
         showBack
         handlePdfClick={() => {}}
         handleBackClick={() => {
