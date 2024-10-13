@@ -49,10 +49,12 @@ export default function PSCreateContainer() {
       <BackButton className="self-start pb-4" />
       <PSCreateHeader title="" mode="create" onButtonClick={handleDoneClick} />
 
-      <div className="self-start w-full mt-12">
-        <p className="w-full font-semibold text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">자기소개서</p>
+      <div className="self-start w-full mt-0 sm:mt-12">
+        <p className="w-full font-semibold text-xl sm:text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">
+          자기소개서
+        </p>
 
-        <div className="flex flex-col gap-[18px] bg-gray-4 pt-5 px-14 pb-10 rounded-[10px]">
+        <div className="flex flex-col gap-[18px] bg-gray-4 pt-5 px-4 sm:px-14 pb-10 rounded-[10px]">
           {/* 제목 */}
           <PSForm name="title" label="제목" maxLength={20} register={register} placeholder="제목을 입력해주세요" />
 

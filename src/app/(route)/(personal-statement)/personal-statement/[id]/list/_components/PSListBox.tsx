@@ -48,7 +48,7 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
   };
 
   return (
-    <div className="flex justify-between px-8 pb-4 pt-10 border border-gray-2 rounded-lg bg-white-0 cursor-pointer">
+    <div className="flex justify-between px-6 pb-4 pt-6 sm:px-8 sm:pb-4 sm:pt-10 border border-gray-2 rounded-lg bg-white-0 cursor-pointer">
       <div
         role="button"
         onKeyDown={(e) => {
@@ -61,12 +61,12 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
         tabIndex={0}
       >
         <div className="flex items-center gap-4">
-          <p className="font-semibold text-xl line-clamp-2">{title}</p>
+          <p className="font-semibold text-lg sm:text-xl line-clamp-2">{title}</p>
           <div className="hidden sm:block bg-primary-1 rounded-md px-5 py-1 text-xs text-white-0">지원직무 : {job}</div>
         </div>
 
         <p className="text-gray-0 text-sm line-clamp-5">{content}</p>
-        <p className="text-gray-0 text-sm pt-4">{created_at} 등록</p>
+        <p className="text-gray-0 text-xs sm:text-sm pt-4">{created_at} 등록</p>
       </div>
 
       <div className="relative" ref={dropdownRef}>

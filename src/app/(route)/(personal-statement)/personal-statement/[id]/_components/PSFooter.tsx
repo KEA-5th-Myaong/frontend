@@ -23,7 +23,7 @@ export default function PSFooter({
 }: PSFooterProps) {
   return (
     <div
-      className={`fixed bottom-0 w-full flex items-center ${showPDF ? 'justify-between' : 'justify-end'} min-w-[360px] bg-white-0 py-4 px-16 
+      className={`fixed bottom-0 w-full flex items-center ${showPDF ? 'justify-between' : 'justify-end'} min-w-[360px] bg-white-0 py-4 px-4 sm:px-16 
     border border-t-gray-2 font-semibold whitespace-nowrap`}
     >
       {showPDF && (

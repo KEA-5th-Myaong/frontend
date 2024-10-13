@@ -66,7 +66,7 @@ export default function PSReadContainer() {
         handleDeleteClick={handleDeleteClick}
       />
 
-      <div ref={targetRef} className="self-start w-full mt-20">
+      <div ref={targetRef} className="self-start w-full mt-8 sm:mt-20">
         <p className="w-full font-semibold text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">자기소개서</p>
 
         <div className="flex flex-col gap-11">

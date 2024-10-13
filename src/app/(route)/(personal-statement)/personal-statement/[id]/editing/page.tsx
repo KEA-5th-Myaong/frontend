@@ -2,17 +2,17 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Icons from '../../../../../_components/ui/Icon';
-import { ArrowIcon } from '../../../../../_components/ui/iconPath';
 import PSEditingBox from './_components/PSEditingBox';
 import Modal, { initailModalState } from '../../../../../_components/Modal';
+import BackButton from '../../../../../_components/BackButton';
+import PSCreateHeader from '../create/_components/PSCreateHeader';
 
 export default function PersonalStatementEditing() {
   const router = useRouter();
 
   const [modalState, setModalState] = useState(initailModalState);
 
-  const handleDeleteClick = () => {
+  const handleBackClick = () => {
     setModalState((prev) => ({
       ...prev,
       open: true,
@@ -28,21 +28,15 @@ export default function PersonalStatementEditing() {
 
   return (
     <section className="flex-center flex-col mx-auto w-full h-full pt-[100px] pb-8 px-8 max-w-[1056px] min-w-[365px]">
-      <div className="flex items-center self-start gap-[9px] font-semibold pb-2">
-        <Icons
-          className="cursor-pointer border border-gray-1 rounded-full"
-          onClick={handleDeleteClick}
-          name={ArrowIcon}
-        />
-        뒤로가기
-      </div>
-
+      <BackButton onBtnClick={handleBackClick} className="self-start pb-4" />
+      {/* 
       <div className="flex items-center justify-between w-full pb-4">
         <p className="font-semibold">자소서 첨삭</p>
         <button type="button" onClick={() => {}} className="px-10 py-[18px] rounded-[28px] primary-1-btn">
           포스트 작성
         </button>
-      </div>
+      </div> */}
+      <PSCreateHeader title="" mode="editing" onButtonClick={() => {}} />
 
       {/* 메인 컨텐츠 */}
       <div className="flex flex-col sm:flex-row gap-5 w-full">

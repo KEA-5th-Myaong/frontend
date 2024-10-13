@@ -94,6 +94,6 @@ body {
     @apply flex flex-col gap-[6px] w-full text-[13px] font-semibold;
   }
   .ps-input {
-    @apply bg-[#F9F9F9] px-5 border border-[#D9D9D9] rounded-[10px] placeholder:text-[#DEDEDE] font-normal;
+    @apply bg-[#F9F9F9] px-5 border border-[#D9D9D9] rounded-[10px] placeholder:text-[#DEDEDE] font-normal focus:outline-none;
   }
 }
