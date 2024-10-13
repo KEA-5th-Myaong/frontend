@@ -1,4 +1,4 @@
-import PSReadContainer from './_components/PSReadContainer';
+import PSReadContainer from '../../../_components/_read/PSReadContainer';
 
 export default function PersonalStatementRead() {
   return (

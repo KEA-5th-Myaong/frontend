@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { PSFormData } from '../create/_types/psCreate';
+import { PSFormData } from '../_types/psCreate';
 
 interface PSStore {
   psData: PSFormData;

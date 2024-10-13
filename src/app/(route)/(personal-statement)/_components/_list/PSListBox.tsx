@@ -2,12 +2,12 @@
 
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import MoreOptions from '../../../../../../_components/MoreOptions';
-import Icons from '../../../../../../_components/ui/Icon';
-import { MoreIcon } from '../../../../../../_components/ui/iconPath';
-import useClickOutside from '../../../../../../_hooks/useClickOutside';
-import { PSListBoxProps } from '../_types/psList';
-import Modal, { initailModalState } from '../../../../../../_components/Modal';
+import Modal, { initailModalState } from '../../../../_components/Modal';
+import MoreOptions from '../../../../_components/MoreOptions';
+import Icons from '../../../../_components/ui/Icon';
+import { MoreIcon } from '../../../../_components/ui/iconPath';
+import useClickOutside from '../../../../_hooks/useClickOutside';
+import { PSListBoxProps } from '../../_types/psList';
 
 export default function PSListBox({ id, title, job, content, created_at }: PSListBoxProps) {
   const router = useRouter();

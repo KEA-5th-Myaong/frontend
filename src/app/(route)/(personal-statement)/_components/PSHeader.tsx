@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import MoreOptions from '../../../../../_components/MoreOptions';
-import Icons from '../../../../../_components/ui/Icon';
-import { MoreIcon } from '../../../../../_components/ui/iconPath';
-import useClickOutside from '../../../../../_hooks/useClickOutside';
+import MoreOptions from '../../../_components/MoreOptions';
+import Icons from '../../../_components/ui/Icon';
+import { MoreIcon } from '../../../_components/ui/iconPath';
+import useClickOutside from '../../../_hooks/useClickOutside';
 
 export interface PSCreateHeaderProps {
   title: string;
