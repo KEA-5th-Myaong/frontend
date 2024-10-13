@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import PSFooter from '../../_components/PSFooter';
 import { PSFormData } from '../_types/psCreate';
 import usePSStore from '../../_store/psStore';
-import PSCreateHeader from './PSCreateHeader';
+import PSHeader from '../../_components/PSHeader';
 import BackButton from '../../../../../../_components/BackButton';
 import PSForm from './PSForm';
 
@@ -47,7 +47,7 @@ export default function PSCreateContainer() {
   return (
     <>
       <BackButton className="self-start pb-4" />
-      <PSCreateHeader title="" mode="create" onButtonClick={handleDoneClick} />
+      <PSHeader title="" mode="create" onButtonClick={handleDoneClick} />
 
       <div className="self-start w-full mt-0 sm:mt-12">
         <p className="w-full font-semibold text-xl sm:text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">

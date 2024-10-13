@@ -7,7 +7,7 @@ import PSFooter from '../../_components/PSFooter';
 import PSReadContent from './PSReadContent';
 import { PSFormData } from '../../create/_types/psCreate';
 import psReadTest from './psReadTest.json';
-import PSCreateHeader from '../../create/_components/PSCreateHeader';
+import PSHeader from '../../_components/PSHeader';
 import BackButton from '../../../../../../_components/BackButton';
 import Modal, { initailModalState } from '../../../../../../_components/Modal';
 
@@ -57,7 +57,7 @@ export default function PSReadContainer() {
   return (
     <>
       <BackButton className="self-start pb-4" />
-      <PSCreateHeader
+      <PSHeader
         title={psState.title}
         mode="read"
         onButtonClick={() => {

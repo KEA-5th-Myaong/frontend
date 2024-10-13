@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import PSEditingBox from './_components/PSEditingBox';
 import Modal, { initailModalState } from '../../../../../_components/Modal';
 import BackButton from '../../../../../_components/BackButton';
-import PSCreateHeader from '../create/_components/PSCreateHeader';
+import PSHeader from '../_components/PSHeader';
 
 export default function PersonalStatementEditing() {
   const router = useRouter();
@@ -29,14 +29,7 @@ export default function PersonalStatementEditing() {
   return (
     <section className="flex-center flex-col mx-auto w-full h-full pt-[100px] pb-8 px-8 max-w-[1056px] min-w-[365px]">
       <BackButton onBtnClick={handleBackClick} className="self-start pb-4" />
-      {/* 
-      <div className="flex items-center justify-between w-full pb-4">
-        <p className="font-semibold">자소서 첨삭</p>
-        <button type="button" onClick={() => {}} className="px-10 py-[18px] rounded-[28px] primary-1-btn">
-          포스트 작성
-        </button>
-      </div> */}
-      <PSCreateHeader title="" mode="editing" onButtonClick={() => {}} />
+      <PSHeader title="" mode="editing" />
 
       {/* 메인 컨텐츠 */}
       <div className="flex flex-col sm:flex-row gap-5 w-full">

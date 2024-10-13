@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import MoreOptions from '../../../../../../_components/MoreOptions';
-import Icons from '../../../../../../_components/ui/Icon';
-import { MoreIcon } from '../../../../../../_components/ui/iconPath';
-import useClickOutside from '../../../../../../_hooks/useClickOutside';
+import MoreOptions from '../../../../../_components/MoreOptions';
+import Icons from '../../../../../_components/ui/Icon';
+import { MoreIcon } from '../../../../../_components/ui/iconPath';
+import useClickOutside from '../../../../../_hooks/useClickOutside';
 
 export interface PSCreateHeaderProps {
   title: string;
@@ -28,7 +28,7 @@ const headerText = {
   },
 };
 
-export default function PSCreateHeader({ title, mode, onButtonClick, handleDeleteClick }: PSCreateHeaderProps) {
+export default function PSHeader({ title, mode, onButtonClick, handleDeleteClick }: PSCreateHeaderProps) {
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
