@@ -54,10 +54,16 @@ export default function PSCreateContainer() {
 
         <div className="flex flex-col gap-[18px] bg-gray-4 pt-5 px-14 pb-10 rounded-[10px]">
           {/* 제목 */}
-          <PSForm name="title" label="제목" register={register} placeholder="제목을 입력해주세요" />
+          <PSForm name="title" label="제목" maxLength={20} register={register} placeholder="제목을 입력해주세요" />
 
           {/* 지원직무 */}
-          <PSForm name="position" label="지원직무" register={register} placeholder="지원 직무를 입력해주세요" />
+          <PSForm
+            name="position"
+            label="지원직무"
+            maxLength={20}
+            register={register}
+            placeholder="지원 직무를 입력해주세요"
+          />
 
           {/* 지원사유 */}
           <PSForm

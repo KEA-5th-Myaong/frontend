@@ -61,11 +61,11 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
         tabIndex={0}
       >
         <div className="flex items-center gap-4">
-          <p className="font-semibold text-xl">{title}</p>
-          <div className="bg-primary-1 rounded-md px-5 py-1 text-xs text-white-0">지원직무 : {job}</div>
+          <p className="font-semibold text-xl line-clamp-2">{title}</p>
+          <div className="hidden sm:block bg-primary-1 rounded-md px-5 py-1 text-xs text-white-0">지원직무 : {job}</div>
         </div>
 
-        <p className="text-gray-0 text-sm">{content}</p>
+        <p className="text-gray-0 text-sm line-clamp-5">{content}</p>
         <p className="text-gray-0 text-sm pt-4">{created_at} 등록</p>
       </div>
 

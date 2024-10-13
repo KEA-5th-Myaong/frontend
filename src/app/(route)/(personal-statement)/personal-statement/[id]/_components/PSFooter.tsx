@@ -23,11 +23,15 @@ export default function PSFooter({
 }: PSFooterProps) {
   return (
     <div
-      className={`fixed bottom-0 w-full flex items-center ${showPDF ? 'justify-between' : 'justify-end'} bg-white-0 py-4 px-16 
+      className={`fixed bottom-0 w-full flex items-center ${showPDF ? 'justify-between' : 'justify-end'} min-w-[360px] bg-white-0 py-4 px-16 
     border border-t-gray-2 font-semibold whitespace-nowrap`}
     >
       {showPDF && (
-        <button type="button" onClick={handlePdfClick} className="rounded-[10px] border border-[#E1E1E1] py-2 px-6">
+        <button
+          type="button"
+          onClick={handlePdfClick}
+          className="hidden sm:block rounded-[10px] border border-[#E1E1E1] py-2 px-6"
+        >
           PDF로 저장
         </button>
       )}
