@@ -8,10 +8,10 @@ import { PSFormData } from '../_types/psCreate';
 import usePSStore from '../../_store/psStore';
 import PSCreateHeader from './PSCreateHeader';
 import BackButton from '../../../../../../_components/BackButton';
+import PSForm from './PSForm';
 
 export default function PSCreateContainer() {
   const router = useRouter();
-
   const { psData, setPSData, resetPSData } = usePSStore();
 
   const { register, handleSubmit, watch, setValue } = useForm<PSFormData>({
@@ -26,6 +26,7 @@ export default function PSCreateContainer() {
     });
   }, [psData, setValue]);
 
+  // 폼 제출
   const onSubmit = (data: PSFormData) => {
     console.log(data);
     resetPSData();
@@ -53,56 +54,32 @@ export default function PSCreateContainer() {
 
         <div className="flex flex-col gap-[18px] bg-gray-4 pt-5 px-14 pb-10 rounded-[10px]">
           {/* 제목 */}
-          <label htmlFor="title" className="ps-label">
-            제목
-            <input
-              {...register('title', { required: true })}
-              id="title"
-              className="py-[10px] ps-input"
-              placeholder="제목을 입력해주세요"
-            />
-          </label>
+          <PSForm name="title" label="제목" register={register} placeholder="제목을 입력해주세요" />
 
           {/* 지원직무 */}
-          <label htmlFor="position" className="ps-label">
-            지원직무
-            <input
-              {...register('position', { required: true })}
-              id="position"
-              className="py-[10px] ps-input"
-              placeholder="지원 직무를 입력해주세요"
-            />
-          </label>
+          <PSForm name="position" label="지원직무" register={register} placeholder="지원 직무를 입력해주세요" />
 
           {/* 지원사유 */}
-          <label htmlFor="reason" className="ps-label">
-            <div className="flex justify-between w-full">
-              <p>지원사유</p>
-              <p>{reasonContent.length}/500</p>
-            </div>
-            <textarea
-              {...register('reason', { required: true })}
-              id="reason"
-              maxLength={500}
-              className="resize-none h-32 py-4 ps-input"
-              placeholder="지원 사유를 입력해주세요"
-            />
-          </label>
+          <PSForm
+            name="reason"
+            label="지원사유"
+            isTextarea
+            value={reasonContent}
+            maxLength={500}
+            register={register}
+            placeholder="지원 사유를 입력해주세요"
+          />
 
           {/* 자기소개 */}
-          <label htmlFor="content" className="ps-label">
-            <div className="flex justify-between w-full">
-              <p>자기소개</p>
-              <p>{contentContent.length}/2000</p>
-            </div>
-            <textarea
-              {...register('content', { required: true })}
-              id="content"
-              maxLength={2000}
-              className="resize-none h-64 py-4 ps-input"
-              placeholder="자기소개서 내용을 입력해주세요"
-            />
-          </label>
+          <PSForm
+            name="content"
+            label="자기소개"
+            isTextarea
+            value={contentContent}
+            maxLength={2000}
+            register={register}
+            placeholder="자기소개서 내용을 입력해주세요"
+          />
         </div>
 
         {/* 안내문구 */}
@@ -113,13 +90,7 @@ export default function PSCreateContainer() {
           자기소개서는 최대 2000자까지 입력 가능합니다.
         </div>
       </div>
-      <PSFooter
-        showPreview
-        showDone
-        handlePdfClick={() => {}}
-        handlePreviewClick={handlePreviewClick}
-        handleDoneClick={handleDoneClick}
-      />
+      <PSFooter showPreview showDone handlePreviewClick={handlePreviewClick} handleDoneClick={handleDoneClick} />
     </>
   );
 }
