@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Icons from '../../../../../../_components/ui/Icon';
-import { PlusIcon } from '../../../../../../_components/ui/iconPath';
 import { PSListBoxProps } from '../_types/psList';
 import PSListBox from './PSListBox';
 import pstests from './PStest.json';
@@ -33,9 +31,11 @@ export default function PSListContainer() {
               <button
                 type="button"
                 onClick={() => router.push('/personal-statement/1/create')}
-                className="flex-center gap-8 w-full py-11 border border-gray-2 rounded-lg bg-white-0"
+                className="flex-center gap-6 w-full py-11 border border-gray-2 rounded-lg bg-white-0"
               >
-                <Icons className="border border-primary-1" name={PlusIcon} />
+                <div className="flex-center pb-1 border border-primary-1 rounded-full text-primary-1 w-8 h-8">
+                  <p className="text-2xl">+</p>
+                </div>
                 자기소개서를 추가해보세요
               </button>
             )}

@@ -18,7 +18,7 @@ export default function PSListHeader({ psLength }: { psLength: number }) {
           onClick={() => router.push('/personal-statement/1/create')}
           className="flex items-center gap-3 p-2 sm:p-4 rounded-[28px] text-xs sm:text-base primary-1-btn"
         >
-          <Icons fill="#fff" name={PlusIcon} />
+          <Icons name={{ ...PlusIcon, fill: '#fff', options: { ...PlusIcon.options, stroke: '#fff' } }} />
           자기소개서 추가
         </button>
       )}
