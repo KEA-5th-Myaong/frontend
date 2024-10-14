@@ -1,9 +1,15 @@
+'use client';
+
 import Icons from '@/app/_components/ui/Icon';
+import { PlusIcon } from '@/app/_components/ui/iconPath';
 import PortfolioCard from '../_components/PortfolioCard';
-import { PlusIconWhite } from '@/app/_components/ui/iconPath';
 import PortfolioAddCard from '../_components/PortfolioAddCard';
+import usePortfolioStore from '@/app/_store/portfolio';
+import { PortfolioCardProps } from '@/app/_types/portfolio';
 
 export default function PortfolioList() {
+  const { portfolio } = usePortfolioStore(); // 상태 가져오기
+
   return (
     <div>
       <div className="mt-[60px] flex justify-between items-center w-full max-w-[1000px] mx-auto">
@@ -15,17 +21,18 @@ export default function PortfolioList() {
           type="button"
           className="flex items-center font-bold text-white-0 text-[16px] py-[19px] px-[28px] bg-primary-4 rounded-[30px] hover-animation"
         >
-          <Icons name={PlusIconWhite} className="mr-[10px]" />
+          <Icons
+            className="mr-[10px]"
+            name={{ ...PlusIcon, fill: '#fff', options: { ...PlusIcon.options, stroke: '#fff' } }}
+          />
           포트폴리오 추가
         </button>
       </div>
       <div className="flex flex-col items-center">
         <div className="w-full max-w-[1000px] grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[20px] gap-y-[25px] mt-[30px] mx-auto">
-          <PortfolioCard />
-          <PortfolioCard />
-          <PortfolioCard />
-          <PortfolioCard />
-          <PortfolioCard />
+          {portfolio.map((item: PortfolioCardProps) => (
+            <PortfolioCard key={item.id} id={item.id} title={`곽서연 포트폴리오 ${item.id}`} date="2024.10.17" />
+          ))}
           <PortfolioAddCard />
         </div>
       </div>
