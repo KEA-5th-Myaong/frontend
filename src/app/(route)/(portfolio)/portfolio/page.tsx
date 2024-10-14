@@ -1,6 +1,7 @@
 import Icons from '@/app/_components/ui/Icon';
 import PortfolioCard from '../_components/PortfolioCard';
 import { PlusIconWhite } from '@/app/_components/ui/iconPath';
+import PortfolioAddCard from '../_components/PortfolioAddCard';
 
 export default function PortfolioList() {
   return (
@@ -25,6 +26,7 @@ export default function PortfolioList() {
           <PortfolioCard />
           <PortfolioCard />
           <PortfolioCard />
+          <PortfolioAddCard />
         </div>
       </div>
     </div>
