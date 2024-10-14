@@ -8,10 +8,10 @@ import useClickOutside from '@/app/_hooks/useClickOutside';
 import { PortfolioCardProps } from '@/app/_types/portfolio';
 import usePortfolioStore from '@/app/_store/portfolio';
 
-export default function PortfolioCard({ id, title, date }: PortfolioCardProps) {
-  const [memo, setMemo] = useState('메모 입력');
+export default function PortfolioCard({ id, title, date, memo }: PortfolioCardProps) {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const { isMainPortfolio, setMainPortfolio } = usePortfolioStore();
+  const { isMainPortfolio, setMainPortfolio, setMemo } = usePortfolioStore();
+  const [currentMemo, setCurrentMemo] = useState(memo); // 메모의 현재 상태를 저장
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside({
@@ -19,8 +19,16 @@ export default function PortfolioCard({ id, title, date }: PortfolioCardProps) {
     callback: () => setIsShowDropdown(false),
   });
 
+  // 대표 포트폴리오 설정
   const handleSetMain = () => {
-    setMainPortfolio(id); // 대표 포트폴리오 설정
+    setMainPortfolio(id);
+  };
+
+  // 메모 업데이트
+  const handleMemoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newMemo = e.target.value;
+    setCurrentMemo(newMemo);
+    setMemo(id, newMemo);
   };
 
   return (
@@ -52,8 +60,9 @@ export default function PortfolioCard({ id, title, date }: PortfolioCardProps) {
         <h1 className="font-semibold text-[14px]">MEMO</h1>
         <input
           type="text"
-          value={memo}
-          onChange={(e) => setMemo(e.target.value)}
+          placeholder="메모 입력"
+          value={currentMemo}
+          onChange={handleMemoChange}
           className="whitespace-nowrap overflow-hidden mt-[10px] bg-gray-4 text-gray-0 text-[14px] "
         />
       </form>
