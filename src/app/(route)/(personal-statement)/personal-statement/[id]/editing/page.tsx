@@ -1,4 +1,4 @@
-import PSEditingContainer from '../../../_components/_editing/PSEditingContainer';
+import PSEditingContainer from './_components/PSEditingContainer';
 
 export default function PersonalStatementEditing() {
   return (

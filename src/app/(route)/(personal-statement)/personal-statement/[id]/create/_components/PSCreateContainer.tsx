@@ -3,12 +3,12 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import PSFooter from '../PSFooter';
-import { PSFormData } from '../../_types/psCreate';
-import PSHeader from '../PSHeader';
-import BackButton from '../../../../_components/BackButton';
+import PSFooter from '../../../../_components/PSFooter';
+import PSHeader from '../../../../_components/PSHeader';
+import usePSStore from '../../../../_store/psStore';
+import BackButton from '../../../../../../_components/BackButton';
+import { PSFormData } from '../_types/psCreate';
 import PSForm from './PSForm';
-import usePSStore from '../../_store/psStore';
 
 export default function PSCreateContainer() {
   const router = useRouter();

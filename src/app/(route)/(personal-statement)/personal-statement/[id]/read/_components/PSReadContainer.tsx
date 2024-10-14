@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { usePDF } from 'react-to-pdf';
 import psReadTest from './psReadTest.json';
-import BackButton from '../../../../_components/BackButton';
-import Modal, { initailModalState } from '../../../../_components/Modal';
-import { PSFormData } from '../../_types/psCreate';
-import PSFooter from '../PSFooter';
-import PSHeader from '../PSHeader';
+import BackButton from '../../../../../../_components/BackButton';
+import Modal, { initailModalState } from '../../../../../../_components/Modal';
+import { PSFormData } from '../../create/_types/psCreate';
+import PSFooter from '../../../../_components/PSFooter';
+import PSHeader from '../../../../_components/PSHeader';
 import PSReadContent from './PSReadContent';
 
 export default function PSReadContainer() {

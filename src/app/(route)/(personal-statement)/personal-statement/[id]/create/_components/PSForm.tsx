@@ -1,5 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
-import { PSFormData } from '../../_types/psCreate';
+import { PSFormData } from '../_types/psCreate';
 
 interface FormFieldProps {
   label: string;

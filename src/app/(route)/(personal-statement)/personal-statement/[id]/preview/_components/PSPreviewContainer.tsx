@@ -2,11 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { usePDF } from 'react-to-pdf';
-
-import PSReadContent from '../_read/PSReadContent';
-import PSFooter from '../PSFooter';
-import PSHeader from '../PSHeader';
-import usePSStore from '../../_store/psStore';
+import PSReadContent from '../../read/_components/PSReadContent';
+import PSFooter from '../../../../_components/PSFooter';
+import PSHeader from '../../../../_components/PSHeader';
+import usePSStore from '../../../../_store/psStore';
 
 export default function PSPreviewContainer() {
   const router = useRouter();

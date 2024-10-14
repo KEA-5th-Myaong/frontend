@@ -1,4 +1,4 @@
-import PSListContainer from '../../../_components/_list/PSListContainer';
+import PSListContainer from './_components/PSListContainer';
 
 export default function PersonalStatementList() {
   return (

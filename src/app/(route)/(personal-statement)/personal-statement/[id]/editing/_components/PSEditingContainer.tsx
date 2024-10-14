@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import BackButton from '../../../../_components/BackButton';
-import Modal, { initailModalState } from '../../../../_components/Modal';
-import PSHeader from '../PSHeader';
+import BackButton from '../../../../../../_components/BackButton';
+import Modal, { initailModalState } from '../../../../../../_components/Modal';
+import PSHeader from '../../../../_components/PSHeader';
 import PSEditingBox from './PSEditingBox';
 
 export default function PSEditingContainer() {

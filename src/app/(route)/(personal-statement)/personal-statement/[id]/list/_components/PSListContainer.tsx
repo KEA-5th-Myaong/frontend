@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { PSListBoxProps } from '../../_types/psList';
+import { PSListBoxProps } from '../_types/psList';
 import PSListBox from './PSListBox';
 import pstests from './PStest.json';
 import PSListHeader from './PSListHeader';

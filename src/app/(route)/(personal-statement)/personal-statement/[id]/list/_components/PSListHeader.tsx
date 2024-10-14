@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Icons from '../../../../_components/ui/Icon';
-import { PlusIcon } from '../../../../_components/ui/iconPath';
+import Icons from '../../../../../../_components/ui/Icon';
+import { PlusIcon } from '../../../../../../_components/ui/iconPath';
 
 export default function PSListHeader({ psLength }: { psLength: number }) {
   const router = useRouter();

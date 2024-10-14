@@ -1,4 +1,4 @@
-import PSCreateContainer from '../../../_components/_create/PSCreateContainer';
+import PSCreateContainer from './_components/PSCreateContainer';
 
 export default function PersonalStatementCreate() {
   return (
