@@ -48,6 +48,10 @@ body {
     @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg hover:bg-primary-2;
   }
 
+  /*hover 애니메이션*/
+  .hover-animation {
+    @apply hover:scale-105 transform transition-transform duration-200 ease-out;
+  }
   /* 로그인/회원가입 */
   .form-title {
     @apply mb-12 text-[32px] font-semibold text-center;
@@ -71,5 +75,13 @@ body {
   /* 블로그 */
   .blog-favor-frame {
     @apply flex items-center gap-[5px] bg-black-2 px-3 py-[6px] rounded-3xl cursor-pointer hover:bg-opacity-90;
+  }
+
+  /*드롭다운 스타일*/
+  .dropdown {
+    @apply flex-center flex-col p-[10px] bg-white-0 text-[14px] rounded-[8px] border border-[1px] border-gray-5;
+  }
+  .dropdown-item {
+    @apply py-[6px] px-[30px] hover:bg-primary-4 hover:text-white-0 rounded-[6px];
   }
 }

@@ -3,11 +3,16 @@
 import { useState } from 'react';
 import Icons from '../../../_components/ui/Icon';
 import { MoreIcon } from '../../../_components/ui/iconPath';
+import PortfolioDropdown from './PortfolioDropdown';
 
 export default function PortfolioCard() {
+  //FIX: 대표 여부는 props로 변경 예정
   const [isMain, setIsMain] = useState(false);
+  const [memo, setMemo] = useState('메모 입력');
+  const [isShowDropdown, setIsShowDropdown] = useState(false);
+
   return (
-    <div className="w-[320px] h-[200px] bg-white-0 border border-[1px] border-gray-5 rounded-[12px] pt-[30px] px-[30px]">
+    <div className="relative w-[320px] h-[200px] bg-white-0 border border-[1px] border-gray-5 rounded-[12px] pt-[30px] px-[30px]">
       <div className="flex justify-between">
         <h1 className="max-w-[15ch] font-semibold text-[16px] whitespace-nowrap text-ellipsis overflow-hidden">
           곽서연 포트폴리오
@@ -17,14 +22,24 @@ export default function PortfolioCard() {
         >
           대표
         </div>
-        <Icons name={MoreIcon} />
+        <Icons
+          name={MoreIcon}
+          onClick={() => {
+            setIsShowDropdown(!isShowDropdown);
+          }}
+        />
+
+        {isShowDropdown && <PortfolioDropdown />}
       </div>
-      <section className="bg-gray-4 rounded-[6px] mt-[20px] py-[15px] px-[15px]">
+      <form className="bg-gray-4 rounded-[6px] mt-[20px] py-[15px] px-[15px]">
         <h1 className="font-semibold text-[14px]">MEMO</h1>
-        <p className="whitespace-nowrap overflow-hidden mt-[10px] text-gray-0 text-[14px]">
-          위볼린(기업) 지원용 포트폴리오
-        </p>
-      </section>
+        <input
+          type="text"
+          value={memo}
+          onChange={(e) => setMemo(e.target.value)}
+          className="whitespace-nowrap overflow-hidden mt-[10px] bg-gray-4 text-gray-0 text-[14px] "
+        />
+      </form>
       <p className="text-right mt-[10px] text-gray-0  text-[12px]">2024.03.05 등록</p>
     </div>
   );
