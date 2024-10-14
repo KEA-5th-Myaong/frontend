@@ -1,9 +1,5 @@
-import CheckPwd from '../../_components/CheckPwd';
+import CheckPwdContainer from './_components/CheckPwdContainer';
 
-export default function MyPage() {
-  return (
-    <section className="flex justify-center w-full min-h-screen pt-[100px]">
-      <CheckPwd />
-    </section>
-  );
+export default function CheckPassword() {
+  return <CheckPwdContainer />;
 }

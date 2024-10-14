@@ -39,8 +39,8 @@ export default function ChangeProfileContainer() {
   };
 
   return (
-    <div className="flex flex-col justify-center pt-14 w-full max-w-[687px] pb-12">
-      <div className="flex gap-10">
+    <div className="flex flex-col justify-center pt-14 px-4 w-full min-w-[360px] max-w-[687px] pb-12">
+      <div className="flex flex-col sm:flex-row gap-7 sm:gap-6 md:gap-10">
         <ImageChange setProfileImage={setProfileImage} />
 
         <JobSelection jobData={jobData} onJobSelect={handleJobSelect} />

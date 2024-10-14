@@ -33,7 +33,7 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
             <button
               type="button"
               onClick={() => setSelectJobCategory(category)}
-              className={`flex justify-between w-full py-2 px-3 rounded-[10px] font-medium ${
+              className={`flex justify-between w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
                 selectJobCategory === category ? 'bg-primary-0' : 'text-gray-0'
               }`}
             >
@@ -43,9 +43,9 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
           ))}
         </div>
         {/* 중앙선 */}
-        <div className="w-[1px] h-full bg-[#d9d9d9] mx-8" />
+        <div className="w-[1px] h-full bg-[#d9d9d9] mx-3 sm:mx-6 md:mx-8" />
         {/* 직군 상세 */}
-        <div className="flex items-center flex-col w-full max-w-52 pr-4 overflow-scroll hide-scrollbar">
+        <div className="flex items-center flex-col w-full max-w-52 pr-0 sm:pr-4 overflow-scroll hide-scrollbar">
           {jobs.map((job: string) => (
             <button
               type="button"
@@ -54,17 +54,17 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
               className="flex justify-between w-full py-1"
             >
               <p
-                className={`w-full text-center font-medium ${allJobs.includes(selectJob) && selectJob === job ? '' : 'text-gray-0'}`}
+                className={`w-full text-center font-medium line-clamp-2 ${allJobs.includes(selectJob) && selectJob === job ? '' : 'text-gray-0'}`}
               >
                 {job}
               </p>
 
               {allJobs.includes(selectJob) && selectJob === job ? (
-                <div className="flex-center w-5 h-5 border-2 border-primary-1 rounded-full">
-                  <div className="w-[10px] h-[10px] bg-primary-1 rounded-full" />
+                <div className="flex-center w-5 h-5 border-2 ml-2 border-primary-1 rounded-full">
+                  <div className="w-[10px] h-[10px] min-w-[10px] max-h-[10px] bg-primary-1 rounded-full" />
                 </div>
               ) : (
-                <div className="w-5 h-5 border-2 border-primary-1 rounded-full" />
+                <div className="w-5 h-5 min-w-5 max-h-5 border-2 ml-2 border-primary-1 rounded-full" />
               )}
             </button>
           ))}

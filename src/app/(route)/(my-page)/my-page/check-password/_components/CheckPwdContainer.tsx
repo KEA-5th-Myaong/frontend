@@ -4,11 +4,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, FieldValues } from 'react-hook-form';
-import FormInput from '../../(Login_SignUp)/_components/FormInput';
-import { FORM_TEXT, FORM_PLACEHOLDER, FORM_ERROR } from '../../(Login_SignUp)/_constants/forms';
-import Modal from '../../../_components/Modal';
+import FormInput from '../../../../(Login_SignUp)/_components/FormInput';
+import { FORM_TEXT, FORM_PLACEHOLDER, FORM_ERROR } from '../../../../(Login_SignUp)/_constants/forms';
+import Modal from '../../../../../_components/Modal';
 
-export default function CheckPwd() {
+export default function CheckPwdContainer() {
   const router = useRouter();
   const { register, handleSubmit } = useForm({});
   const [showModal, setShowModal] = useState(false);
