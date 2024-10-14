@@ -2,16 +2,14 @@
 
 import axios from 'axios';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm, FieldValues } from 'react-hook-form';
 import FormInput from '../../(Login_SignUp)/_components/FormInput';
 import { FORM_TEXT, FORM_PLACEHOLDER, FORM_ERROR } from '../../(Login_SignUp)/_constants/forms';
 import Modal from '../../../_components/Modal';
 
-interface AccountCertificateProps {
-  certifyHandler: () => void;
-}
-
-export default function CheckPwd({ certifyHandler }: AccountCertificateProps) {
+export default function CheckPwd() {
+  const router = useRouter();
   const { register, handleSubmit } = useForm({});
   const [showModal, setShowModal] = useState(false);
 
@@ -25,7 +23,7 @@ export default function CheckPwd({ certifyHandler }: AccountCertificateProps) {
       await onSubmit(data);
     } catch (error) {
       setShowModal(true);
-      certifyHandler(); // 나중에 try{} 안쪽으로 옮김
+      router.push('/my-page/change-profile');
     }
   };
 

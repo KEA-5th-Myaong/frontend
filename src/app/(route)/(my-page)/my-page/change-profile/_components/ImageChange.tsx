@@ -1,10 +1,7 @@
 import { useState, useRef } from 'react';
-import Icons from '../../../_components/ui/Icon';
-import { PictureIcon } from '../../../_components/ui/iconPath';
-
-interface ImageChangeProps {
-  setProfileImage: React.Dispatch<File | null>;
-}
+import Icons from '../../../../../_components/ui/Icon';
+import { PictureIcon } from '../../../../../_components/ui/iconPath';
+import { ImageChangeProps } from '../_types/myPage';
 
 export default function ImageChange({ setProfileImage }: ImageChangeProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 이미지 미리보기용 url 저장

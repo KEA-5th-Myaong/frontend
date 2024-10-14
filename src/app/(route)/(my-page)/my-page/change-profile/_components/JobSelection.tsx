@@ -1,12 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
-import Icons from '../../../_components/ui/Icon';
-import { ArrowIcon } from '../../../_components/ui/iconPath';
-import { JobCategory } from '../_types/myPage';
-
-interface JobSelectionProps {
-  jobData: Record<JobCategory, string[]>; // 직업 카테고리별 직업 목록
-  onJobSelect: (category: JobCategory, job: string) => void; // 직업 선택 시 호출될 콜백 함수
-}
+import Icons from '../../../../../_components/ui/Icon';
+import { ArrowIcon } from '../../../../../_components/ui/iconPath';
+import { JobCategory, JobSelectionProps } from '../_types/myPage';
 
 export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps) {
   const [selectJobCategory, setSelectJobCategory] = useState<JobCategory>('직군 전체');
@@ -36,7 +31,6 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
           {/* 주어진 직업 객체의 열거 가능한 속성 이름들(카테고리)을 배열로 반환 */}
           {(Object.keys(jobData) as JobCategory[]).map((category) => (
             <button
-              key={category}
               type="button"
               onClick={() => setSelectJobCategory(category)}
               className={`flex justify-between w-full py-2 px-3 rounded-[10px] font-medium ${

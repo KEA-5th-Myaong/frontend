@@ -3,13 +3,13 @@
 import { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import jobData from './jobTest.json';
-import JobSelection from './JobSelection';
-import FormInput from '../../(Login_SignUp)/_components/FormInput';
-import Modal from '../../../_components/Modal';
+import FormInput from '../../../../(Login_SignUp)/_components/FormInput';
+import Modal from '../../../../../_components/Modal';
 import ImageChange from './ImageChange';
-import { JobCategory, ProfileFormProps } from '../_types/myPage';
+import JobSelection from './JobSelection';
+import { ProfileFormProps, JobCategory } from '../_types/myPage';
 
-export default function ChangeProfile() {
+export default function ChangeProfileContainer() {
   const { register, handleSubmit } = useForm<ProfileFormProps>({});
   const [showModal, setShowModal] = useState(false);
 
@@ -37,6 +37,7 @@ export default function ChangeProfile() {
 
     setShowModal(true);
   };
+
   return (
     <div className="flex flex-col justify-center pt-14 w-full max-w-[687px] pb-12">
       <div className="flex gap-10">
