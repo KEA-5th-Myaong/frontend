@@ -1,12 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function Home() {
-  const router = useRouter();
-
   const cardAnimation = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -275,22 +273,21 @@ export default function Home() {
               />
               구경해보기
             </button>
-            <button
-              type="button"
-              onClick={() => {
-                router.push('/log-in');
-              }}
-              className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-black-0 text-white-0 mx-[10px] py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
-            >
-              <Image
-                src="/assets/landing-page/ic-lightning.svg"
-                alt="번개 아이콘"
-                width={20}
-                height={20}
-                className="mr-[10px] "
-              />
-              간편 회원가입
-            </button>
+            <Link href="/log-in">
+              <button
+                type="button"
+                className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-black-0 text-white-0 mx-[10px] py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
+              >
+                <Image
+                  src="/assets/landing-page/ic-lightning.svg"
+                  alt="번개 아이콘"
+                  width={20}
+                  height={20}
+                  className="mr-[10px] "
+                />
+                간편 회원가입
+              </button>
+            </Link>
           </div>
         </motion.div>
       </section>
