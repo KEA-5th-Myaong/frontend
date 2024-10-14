@@ -58,7 +58,7 @@ export default function PSHeader({ title, mode, onButtonClick, handleDeleteClick
       <div className="flex justify-between items-center w-full mt-[10px]">
         <p className="font-semibold text-2xl sm:text-[32px]">{title}</p>
         {mode === 'read' && (
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative mr-5" ref={dropdownRef}>
             <Icons onClick={() => setShowDropDown((prev) => !prev)} className="cursor-pointer" name={MoreIcon} />
             {showDropDown && <MoreOptions handleDeleteClick={handleDeleteClick} />}
           </div>
