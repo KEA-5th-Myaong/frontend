@@ -1,20 +1,29 @@
-'use client';
+import Link from 'next/link';
 
-export default function MyPageHeader() {
+interface MyPageHeaderProps {
+  currentPage: 'change-profile' | 'change-password' | 'withdraw';
+}
+
+export default function MyPageHeader({ currentPage }: MyPageHeaderProps) {
+  // 현재 페이지에 따라 링크의 스타일을 결정하는 함수
+  const getLinkStyle = (page: string) => {
+    return currentPage === page ? 'font-bold' : 'font-semibold text-gray-0';
+  };
+
   return (
-    <div className="flex items-center gap-16 w-full pt-4 pb-6 max-w-[1300px] border-b border-[#d9d9d9]">
-      <p className="font-semibold text-[32px]">김현중 님</p>
+    <div className="hidden sm:flex items-center sm:gap-8 md:gap-16 w-full pt-4 pb-6 max-w-[1300px] border-b border-[#d9d9d9]">
+      <p className="font-semibold sm:text-[22px] md:text-[32px]">김현중 님</p>
 
-      <div className="flex gap-12">
-        <button className="font-bold" type="button">
+      <div className="flex gap-12 whitespace-nowrap">
+        <Link href="/my-page/change-profile" className={getLinkStyle('change-profile')}>
           기본 정보 수정
-        </button>
-        <button className="font-bold" type="button">
+        </Link>
+        <Link href="/my-page/change-password" className={getLinkStyle('change-password')}>
           비밀번호 변경
-        </button>
-        <button className="font-bold" type="button">
+        </Link>
+        <Link href="/my-page/withdraw" className={getLinkStyle('withdraw')}>
           회원 탈퇴
-        </button>
+        </Link>
       </div>
     </div>
   );
