@@ -1,15 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Icons from '../../../_components/ui/Icon';
 import { MoreIcon } from '../../../_components/ui/iconPath';
 import PortfolioDropdown from './PortfolioDropdown';
+import useClickOutside from '@/app/_hooks/useClickOutside';
 
 export default function PortfolioCard() {
   //FIX: 대표 여부는 props로 변경 예정
   const [isMain, setIsMain] = useState(false);
   const [memo, setMemo] = useState('메모 입력');
   const [isShowDropdown, setIsShowDropdown] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside({
+    ref: dropdownRef,
+    callback: () => setIsShowDropdown(false),
+  });
 
   return (
     <div className="relative w-[320px] h-[200px] bg-white-0 border border-[1px] border-gray-5 rounded-[12px] pt-[30px] px-[30px]">
@@ -22,12 +30,15 @@ export default function PortfolioCard() {
         >
           대표
         </div>
-        <Icons
-          name={MoreIcon}
-          onClick={() => {
-            setIsShowDropdown(!isShowDropdown);
-          }}
-        />
+        <div ref={dropdownRef}>
+          <Icons
+            name={MoreIcon}
+            onClick={() => {
+              setIsShowDropdown((prev) => !prev);
+            }}
+            className="cursor-pointer"
+          />
+        </div>
 
         {isShowDropdown && <PortfolioDropdown />}
       </div>
