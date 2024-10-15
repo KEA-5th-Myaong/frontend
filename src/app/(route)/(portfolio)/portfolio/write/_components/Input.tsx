@@ -32,7 +32,7 @@ export default function Input({ element, label, size, color, type, placeholder, 
         <textarea
           placeholder={placeholder}
           required={required}
-          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-black-0 border border-[1px] border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
+          className={`${inputWidth} ${background} h-[110px] mt-[8px] px-[20px] py-[12px] text-black-0 border border-[1px] border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
         />
       )}
     </div>
