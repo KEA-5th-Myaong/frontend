@@ -16,7 +16,7 @@ export default function Overlay({ children, onClick }: { children: React.ReactNo
     <motion.div
       onClick={onClick}
       {...overlayMotion}
-      className="fixed inset-0 flex-center bg-black-3 bg-opacity-25 z-50 backdrop-blur-[3px]"
+      className="fixed inset-0 flex-center bg-black-3 bg-opacity-25 z-50 backdrop-blur-[3px] cursor-default"
     >
       {children}
     </motion.div>
