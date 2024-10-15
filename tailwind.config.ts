@@ -37,8 +37,8 @@ const config: Config = {
           2: '#F5FFF9',
         },
         primary: {
-          0: '#4DFF94',
-          1: '#00D154',
+          0: '#41AED9',
+          1: '#D8E6F1',
           2: '#23B581',
         },
         yellow: {
@@ -49,6 +49,9 @@ const config: Config = {
         },
         red: {
           0: '#FF0000',
+        },
+        green: {
+          0: '#00D154',
         },
       },
     },
