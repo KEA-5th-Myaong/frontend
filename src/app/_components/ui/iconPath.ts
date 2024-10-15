@@ -98,3 +98,10 @@ export const SearchIcon: IconPathTypes = {
   width: 24,
   height: 24,
 };
+// required (필수 항목) 아이콘
+export const RequiredIcon: IconPathTypes = {
+  path: 'M2.23622 2.5a2.23622 2.23622 0 1 1 4.47244 0 2.23622 2.23622 0 1 1-4.47244 0z',
+  fill: '#FF0000',
+  width: 10,
+  height: 10,
+};

@@ -4,15 +4,15 @@ import { useRef, useState } from 'react';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
-import PortfolioDropdown from '../../_components/PortfolioDropdown';
 import PortfolioWriteDropdown from './_components/PortfolioWriteDropdown';
-import EducationSection from './_components/EducationSection';
-import ExperienceSection from './_components/ExperienceSection';
-import LinksSection from './_components/LinksSection';
-import SkillsSection from './_components/SkillsSection';
-import CertificationsSection from './_components/CertificationsSection';
-import ActivitiesSection from './_components/ActivitiesSection';
-import PSSection from './_components/PSSection';
+import EducationSection from './_components/section/EducationSection';
+import ExperienceSection from './_components/section/ExperienceSection';
+import LinksSection from './_components/section/LinksSection';
+import SkillsSection from './_components/section/SkillsSection';
+import CertificationsSection from './_components/section/CertificationsSection';
+import ActivitiesSection from './_components/section/ActivitiesSection';
+import PSSection from './_components/section/PSSection';
+import Input from './_components/Input';
 
 export default function PortfolioWrite() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
@@ -54,6 +54,45 @@ export default function PortfolioWrite() {
           {isShowDropdown && <PortfolioWriteDropdown />}
         </div>
         <section className="mt-5">
+          <section>
+            <form>
+              <Input
+                element="input"
+                label="이름"
+                size="sm"
+                type="text"
+                color="white"
+                placeholder="이름을 입력해주세요"
+                required
+              />
+              <Input
+                element="input"
+                label="휴대폰 번호"
+                size="sm"
+                type="tel"
+                color="white"
+                placeholder="휴대폰 번호를 입력해주세요"
+                required
+              />
+              <Input
+                element="input"
+                label="이메일"
+                size="lg"
+                type="email"
+                color="white"
+                placeholder="이메일을 입력해주세요"
+                required
+              />
+              <Input
+                element="input"
+                label="관심 직무"
+                size="lg"
+                type="text"
+                color="white"
+                placeholder="관심직무를 입력해주세요"
+              />
+            </form>
+          </section>
           <EducationSection />
           <ExperienceSection />
           <LinksSection />
