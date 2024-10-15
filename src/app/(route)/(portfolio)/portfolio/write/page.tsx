@@ -53,7 +53,7 @@ export default function PortfolioWrite() {
 
           {isShowDropdown && <PortfolioWriteDropdown />}
         </div>
-        <section className="mt-5">
+        <section className="mt-5 mb-[50px]">
           <section>
             <form>
               <Input
