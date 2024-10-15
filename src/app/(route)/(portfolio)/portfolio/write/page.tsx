@@ -13,6 +13,7 @@ import CertificationsSection from './_components/section/CertificationsSection';
 import ActivitiesSection from './_components/section/ActivitiesSection';
 import PSSection from './_components/section/PSSection';
 import Input from './_components/Input';
+import Footer from './_components/Footer';
 
 export default function PortfolioWrite() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
@@ -102,6 +103,7 @@ export default function PortfolioWrite() {
           <PSSection />
         </section>
       </div>
+      <Footer showPDF showLink showPreview showDone />
     </div>
   );
 }
