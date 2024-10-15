@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   content: [
@@ -8,7 +10,7 @@ const config: Config = {
   ],
   theme: {
     screens: {
-      sm: '576px', // 가로 px이 각각 576px, 768px, 882px 이상일 때의 스타일을 지정
+      sm: '360px',
       md: '768px',
       lg: '882px',
       xl: '1088px',
@@ -30,6 +32,11 @@ const config: Config = {
           2: '#D2D2D2',
           3: '#A6A6A6',
           4: '#F3F3F3',
+          5: '#494949',
+        },
+        blue: {
+          0: '#4992FF',
+          1: '#007FFF',
         },
         white: {
           0: '#FFFFFF',
@@ -53,6 +60,39 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addComponents, theme }) {
+      addComponents({
+        '.pre-3xl-semibold': {
+          fontSize: '32px',
+          fontWeight: theme('fontWeight.semibold'),
+        },
+        '.pre-2xl-medium': {
+          fontSize: '20px',
+          fontWeight: theme('fontWeight.medium'),
+        },
+        '.pre-2xl-semibold': {
+          fontSize: '20px',
+          fontWeight: theme('fontWeight.semibold'),
+        },
+        '.pre-2xl-bold': {
+          fontSize: '20px',
+          fontWeight: theme('fontWeight.bold'),
+        },
+        '.pre-xl-medium': {
+          fontSize: '15px',
+          fontWeight: theme('fontWeight.medium'),
+        },
+        '.pre-xl-semibold': {
+          fontSize: '15px',
+          fontWeight: theme('fontWeight.semibold'),
+        },
+        '.pre-xl-bold': {
+          fontSize: '15px',
+          fontWeight: theme('fontWeight.bold'),
+        },
+      });
+    }),
+  ],
 };
 export default config;
