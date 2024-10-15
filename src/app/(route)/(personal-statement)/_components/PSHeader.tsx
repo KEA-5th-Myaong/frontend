@@ -42,8 +42,8 @@ export default function PSHeader({ title, mode, onButtonClick, handleDeleteClick
 
   return (
     <div className="flex flex-col w-full items-center">
-      <div className="flex justify-between w-full ">
-        <p className="font-semibold pt-3">{getTitleText()}</p>
+      <div className="flex items-center justify-between w-full">
+        <p className="font-semibold">{getTitleText()}</p>
         {onButtonClick && (
           <button
             type="button"

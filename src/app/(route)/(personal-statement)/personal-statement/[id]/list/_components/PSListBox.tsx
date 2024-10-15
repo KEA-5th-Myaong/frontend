@@ -62,7 +62,9 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
       >
         <div className="flex items-center gap-4">
           <p className="font-semibold text-lg sm:text-xl line-clamp-2">{title}</p>
-          <div className="hidden sm:block bg-primary-1 rounded-md px-5 py-1 text-xs text-white-0">지원직무 : {job}</div>
+          <div className="hidden sm:block bg-primary-1 rounded-md px-5 py-1 text-[11px] text-white-0">
+            지원직무 : {job}
+          </div>
         </div>
 
         <p className="text-gray-0 text-sm line-clamp-5">{content}</p>
