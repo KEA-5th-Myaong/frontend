@@ -11,7 +11,7 @@ export default function PSReadContent({ label, content }: PSReadContentProps) {
         <p className="font-semibold text-xl">{label}</p>
       </div>
 
-      <p className="text-sm whitespace-pre-wrap">{content}</p>
+      <p className="text-sm whitespace-pre-wrap leading-7">{content}</p>
     </div>
   );
 }

@@ -43,7 +43,7 @@ export default function PSListContainer() {
         ) : (
           <div className="flex flex-col gap-3 mt-44">
             <Image className="animate-bounce" src="/mascot.png" alt="마스코트" width={204} height={193} />
-            <p>자기소개서를 작성해보세요</p>
+            <p className="text-gray-0">자기소개서를 작성해보세요</p>
           </div>
         )}
       </div>

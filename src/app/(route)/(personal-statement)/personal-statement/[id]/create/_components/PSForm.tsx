@@ -11,7 +11,7 @@ interface FormFieldProps {
   value?: string;
 }
 
-export default function PSForm({ name, label, isTextarea, value, maxLength, register, placeholder }: FormFieldProps) {
+export default function PSForm({ name, label, isTextarea, maxLength, register, placeholder, value }: FormFieldProps) {
   return (
     <label htmlFor={name} className="ps-label">
       <div className="flex justify-between w-full">
