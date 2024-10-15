@@ -104,9 +104,9 @@ export default function Header() {
     return (
       <div className="flex gap-1 w-full h-16 relative items-center">
         {/* 블로그 메뉴 */}
-        <div ref={blogMenuRef} className="w-28 h-9 relative items-center">
+        <div ref={blogMenuRef} className="w-28 h-9 relative">
           <div className="w-full h-1.5 justify-center items-center">
-            <div className="flex w-28 h-full items-center justify-center">
+            <div className="flex-center w-28 h-full">
               {hoverText === 'blog' && <div className="bg-primary-0 w-1.5 h-1.5 rounded-lg "></div>}
             </div>
           </div>
@@ -143,7 +143,7 @@ export default function Header() {
         {/* 구직 메뉴 */}
         <div ref={jobMenuRef} className="w-28 h-9 relative items-center">
           <div className="w-full h-1.5 justify-center items-center">
-            <div className="flex w-28 h-full items-center justify-center">
+            <div className="flex-center w-28 h-full ">
               {hoverText === 'job' && <div className="bg-primary-0 w-1.5 h-1.5 rounded-lg "></div>}
             </div>
           </div>
@@ -186,6 +186,7 @@ export default function Header() {
     <div className="flex text-white-0 px-4 gap-1 w-full bg-white-0 border-b-2 h-20 relative items-center ">
       <div className="w-40 h-full items-center justify-center md:flex hidden">
         <button
+          type="button"
           onClick={() => {
             alert('로고 이미지 클릭');
           }}
@@ -213,9 +214,9 @@ export default function Header() {
       </div>
       {isLogined ? (
         //로그인 상태
-        <div className="hidden w-64 h-14 absolute right-4 mt-3 items-center justify-center md:flex">
+        <div className="hidden md:flex-center w-64 h-14 absolute right-4 mt-3  ">
           <button
-            className=""
+            type="button"
             onClick={() => {
               alert('검색 아이콘 클릭');
             }}
@@ -248,9 +249,9 @@ export default function Header() {
                 )}
               </button>
             </div>
-            <div className="flex text-black-0 font-medium justify-center items-center">{userName} 님</div>
+            <div className="flex-center text-black-0 font-medium">{userName} 님</div>
           </div>
-          <div className="flex w-10 h-10 justify-center items-center">
+          <div className="flex-center w-10 h-10">
             <div className="w-7 h-7 text-xs relative" ref={alarmMenuRef}>
               <button
                 type="button"
@@ -282,23 +283,32 @@ export default function Header() {
                             <div className="flex items-center h-12 w-[260px]">
                               {/* 조건부로 bg 설정 */}
                               <div
-                                className={`rounded-xl w-1.5 h-1.5 mx-2 ${
-                                  item.state === 'read'
-                                    ? 'bg-gray-1'
-                                    : item.state === 'comment' || item.state === 'follow'
-                                      ? 'bg-green-0'
-                                      : item.state === 'notice'
-                                        ? 'bg-red-0'
-                                        : ''
-                                }`}
-                              ></div>
+                                className={`rounded-xl w-1.5 h-1.5 mx-2 ${(() => {
+                                  let bgColor = '';
+                                  switch (item.state) {
+                                    case 'read':
+                                      bgColor = 'bg-gray-1';
+                                      break;
+                                    case 'comment':
+                                    case 'follow':
+                                      bgColor = 'bg-green-0';
+                                      break;
+                                    case 'notice':
+                                      bgColor = 'bg-red-0';
+                                      break;
+                                    default:
+                                      bgColor = '';
+                                  }
+                                  return bgColor;
+                                })()}`}
+                              />
                               <div>{item.contents}</div>
                             </div>
                           </button>
                           <div className="absolute right-4">
                             <button
-                              className="flex right-2 mt-2 w-5 h-5 justify-center items-center"
                               type="button"
+                              className="flex-center right-2 mt-2 w-5 h-5"
                               onClick={() => {
                                 alert('알림 닫기');
                               }}
@@ -317,9 +327,9 @@ export default function Header() {
         </div>
       ) : (
         //비로그인 상태
-        <div className="flex w-64 h-14 absolute right-4 mt-2 items-center justify-center">
+        <div className="flex-center w-64 h-14 absolute right-4 mt-2 ">
           <button
-            className=""
+            type="button"
             onClick={() => {
               alert('검색 아이콘 클릭');
             }}
@@ -328,6 +338,7 @@ export default function Header() {
           </button>
           <div className="ml-6">
             <button
+              type="button"
               className="text-black-0"
               onClick={() => {
                 router.push(`/log-in`);
@@ -338,6 +349,7 @@ export default function Header() {
           </div>
           <div className="ml-6">
             <button
+              type="button"
               className="text-black-0"
               onClick={() => {
                 router.push(`/sign-up`);
@@ -350,8 +362,9 @@ export default function Header() {
       )}
 
       {/* Mobile 스크린 */}
-      <div className="relative flex w-full items-center justify-center md:hidden">
+      <div className="relative flex-center w-full md:hidden">
         <button
+          type="button"
           className="absolute left-4 mt-2"
           onClick={() => {
             alert('메뉴 아이콘 클릭');
@@ -361,6 +374,7 @@ export default function Header() {
         </button>
         <Image src="/LOGO(mobile).png" alt="로고" width={50} height={50} className="block md:hidden pt-2" />
         <button
+          type="button"
           className="absolute right-4 mt-2"
           onClick={() => {
             alert('검색 아이콘 클릭');
