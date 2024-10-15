@@ -1,6 +1,6 @@
 import { PostProps } from '../(route)/(blog)/blog/[userId]/_types/blog';
 import Icons from './ui/Icon';
-import { FavorIcon } from './ui/iconPath';
+import { BookmarkIcon, FavorIcon } from './ui/iconPath';
 
 export default function Post({
   userName,
@@ -17,7 +17,8 @@ export default function Post({
 }: PostProps) {
   return (
     <div
-      className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] rounded-2xl border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out ${className}`}
+      className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] rounded-2xl 
+        border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out ${className}`}
     >
       <div className="flex flex-col w-full">
         <div
@@ -34,7 +35,7 @@ export default function Post({
           <div id="profile" className="min-w-[42px] h-[42px] bg-black-3 rounded-full mr-5" />
           <div className="flex justify-between w-full">
             <p>{userName}</p>
-            <div className={`w-5 h-5 border border-primary-1 mr-5 ${isBookmarked ? 'bg-primary-1' : ''}`} />
+            <Icons name={isBookmarked ? { ...BookmarkIcon, fill: '#41AED9' } : BookmarkIcon} />
           </div>
         </div>
         <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
