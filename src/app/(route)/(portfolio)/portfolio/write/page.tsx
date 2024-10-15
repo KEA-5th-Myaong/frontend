@@ -61,7 +61,7 @@ export default function PortfolioWrite() {
                 label="이름"
                 size="sm"
                 type="text"
-                color="white"
+                color="transparent"
                 placeholder="이름을 입력해주세요"
                 required
               />
@@ -70,7 +70,7 @@ export default function PortfolioWrite() {
                 label="휴대폰 번호"
                 size="sm"
                 type="tel"
-                color="white"
+                color="transparent"
                 placeholder="휴대폰 번호를 입력해주세요"
                 required
               />
@@ -79,7 +79,7 @@ export default function PortfolioWrite() {
                 label="이메일"
                 size="lg"
                 type="email"
-                color="white"
+                color="transparent"
                 placeholder="이메일을 입력해주세요"
                 required
               />
@@ -88,7 +88,7 @@ export default function PortfolioWrite() {
                 label="관심 직무"
                 size="lg"
                 type="text"
-                color="white"
+                color="transparent"
                 placeholder="관심직무를 입력해주세요"
               />
             </form>
