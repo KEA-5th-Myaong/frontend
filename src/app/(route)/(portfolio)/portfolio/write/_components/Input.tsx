@@ -7,7 +7,7 @@ interface InputProps {
   size: 'sm' | 'lg';
   color?: 'transparent' | 'white';
   type: React.HTMLInputTypeAttribute | 'date';
-  placeholder: string;
+  placeholder?: string;
   required?: boolean;
 }
 
