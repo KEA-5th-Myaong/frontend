@@ -8,8 +8,10 @@ export interface PostProps {
   postDate: string;
   isLoved: boolean;
   lovedCount: string | number;
+  isBookmarked?: boolean;
   onUserClick: () => void;
   onContentClick: () => void;
+  className?: string;
 }
 
 export interface UserProfileProps {
