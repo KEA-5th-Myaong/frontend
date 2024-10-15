@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import PSFooter from '../../../../_components/PSFooter';
 import PSHeader from '../../../../_components/PSHeader';
@@ -14,8 +14,21 @@ export default function PSCreateContainer() {
   const router = useRouter();
   const { psData, setPSData, resetPSData } = usePSStore();
 
-  const { register, handleSubmit, watch, setValue } = useForm<PSFormData>({
+  const { register, handleSubmit, control, setValue, getValues } = useForm<PSFormData>({
     defaultValues: psData, // Zustand 스토어의 데이터로 폼 초기화
+  });
+
+  // 필드의 값 변화에 실시간으로 접근
+  const watchedReason = useWatch({
+    control, // react-hook-form의 내부상태와 메서드에 접근
+    name: 'reason',
+    defaultValue: psData.reason || '',
+  });
+
+  const watchedContent = useWatch({
+    control,
+    name: 'content',
+    defaultValue: psData.content || '',
   });
 
   // 컴포넌트 마운트 시 스토어의 데이터로 폼 필드 설정
@@ -37,13 +50,12 @@ export default function PSCreateContainer() {
   };
 
   const handlePreviewClick = () => {
-    const data = watch(); // 인자 없이 watch()를 호출하면, 폼의 모든 등록된 필드의 현재 값을 포함하는 객체를 반환
+    const data = getValues(); // 인자 없이 getValues()를 호출하면, 폼의 모든 등록된 필드의 현재 값을 포함하는 객체를 반환
+
     setPSData(data);
     router.push('/personal-statement/1/preview');
   };
 
-  const reasonContent = watch('reason', ''); // 글자수 확인 위해
-  const contentContent = watch('content', ''); // 글자수 확인 위해
   return (
     <>
       <BackButton className="self-start pb-4" />
@@ -72,10 +84,10 @@ export default function PSCreateContainer() {
             name="reason"
             label="지원사유"
             isTextarea
-            value={reasonContent}
             maxLength={500}
             register={register}
             placeholder="지원 사유를 입력해주세요"
+            value={watchedReason}
           />
 
           {/* 자기소개 */}
@@ -83,10 +95,10 @@ export default function PSCreateContainer() {
             name="content"
             label="자기소개"
             isTextarea
-            value={contentContent}
             maxLength={2000}
             register={register}
             placeholder="자기소개서 내용을 입력해주세요"
+            value={watchedContent}
           />
         </div>
 
