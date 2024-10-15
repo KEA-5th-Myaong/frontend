@@ -32,6 +32,7 @@ const config: Config = {
           2: '#D2D2D2',
           3: '#A6A6A6',
           4: '#F3F3F3',
+          5: '#D9D9D9',
           5: '#494949',
         },
         blue: {
@@ -47,6 +48,7 @@ const config: Config = {
           0: '#4DFF94',
           1: '#00D154',
           2: '#23B581',
+          4: '#41AED9',
         },
         yellow: {
           0: '#FFC83C',
