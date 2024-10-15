@@ -60,7 +60,7 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
               </p>
 
               {allJobs.includes(selectJob) && selectJob === job ? (
-                <div className="flex-center w-5 h-5 border-2 ml-2 border-primary-1 rounded-full">
+                <div className="flex-shrink-0 flex-center w-5 h-5 border-2 ml-2 border-primary-1 rounded-full">
                   <div className="w-[10px] h-[10px] min-w-[10px] max-h-[10px] bg-primary-1 rounded-full" />
                 </div>
               ) : (
