@@ -6,7 +6,7 @@ export default function BlogPosts() {
   return (
     <section className="flex justify-center pt-[100px] pb-12">
       <div className="w-full min-w-[375px] max-w-[1000px] px-11 sm:px-[108px]">
-        <BackButton />
+        <BackButton className="pb-6" />
 
         {/* 포스트 컨텐츠 */}
         <PostContent />
