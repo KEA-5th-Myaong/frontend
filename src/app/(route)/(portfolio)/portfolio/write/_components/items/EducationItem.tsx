@@ -24,7 +24,15 @@ function EducationItem() {
         />
       </div>
       <Input element="input" label="졸업 일자" size="lg" type="date" color="white" required />
-      <Input element="input" label="학점" size="lg" type="text" color="white" placeholder="학점/기준학점" />
+      <Input
+        element="input"
+        label="학점"
+        size="lg"
+        type="text"
+        pattern="grade"
+        color="white"
+        placeholder="학점/기준학점"
+      />
     </section>
   );
 }
