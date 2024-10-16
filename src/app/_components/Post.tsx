@@ -35,7 +35,7 @@ export default function Post({
           <div id="profile" className="min-w-[42px] h-[42px] bg-black-3 rounded-full mr-5" />
           <div className="flex justify-between w-full">
             <p>{userName}</p>
-            <Icons name={isBookmarked ? { ...BookmarkIcon, fill: '#41AED9' } : BookmarkIcon} />
+            <Icons name={isBookmarked ? { ...BookmarkIcon, fill: '#41AED9' } : BookmarkIcon} className="mr-5" />
           </div>
         </div>
         <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
