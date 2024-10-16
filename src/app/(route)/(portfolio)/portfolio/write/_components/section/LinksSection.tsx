@@ -4,11 +4,27 @@ import { useState } from 'react';
 import Image from 'next/image';
 import LinkItem from '../items/LinkItem';
 
+interface LinkItemState {
+  id: number;
+  component: JSX.Element;
+}
+
 export default function LinksSection() {
-  const [linkItems, setLinkItems] = useState([<LinkItem key={0} />]);
+  const deleteLinkItem = (id: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    setLinkItems(linkItems.filter((item) => item.id !== id));
+  };
+
+  const [linkItems, setLinkItems] = useState<LinkItemState[]>([
+    { id: 0, component: <LinkItem key={0} id={0} onDelete={deleteLinkItem} /> },
+  ]);
 
   const addLinkItem = () => {
-    setLinkItems([...linkItems, <LinkItem key={linkItems.length} />]);
+    const newItemId = linkItems.length;
+    setLinkItems([
+      ...linkItems,
+      { id: newItemId, component: <LinkItem key={newItemId} id={newItemId} onDelete={deleteLinkItem} /> },
+    ]);
   };
 
   return (
@@ -18,7 +34,7 @@ export default function LinksSection() {
       </div>
       <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
       <div className="flex flex-col items-center">
-        {linkItems}
+        {linkItems.map((item) => item.component)}
         <Image
           src="/assets/add-button.svg"
           alt="링크 추가"

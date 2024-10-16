@@ -4,12 +4,29 @@ import { useState } from 'react';
 import Image from 'next/image';
 import ExperienceItem from '../items/ExperienceItem';
 
+interface ExperienceItemState {
+  id: number;
+  component: JSX.Element;
+}
+
 export default function ExperienceSection() {
-  const [experienceItems, setExperienceItems] = useState([<ExperienceItem key={0} />]);
+  const deleteExperienceItem = (id: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    setExperienceItems(experienceItems.filter((item) => item.id !== id));
+  };
+
+  const [experienceItems, setExperienceItems] = useState<ExperienceItemState[]>([
+    { id: 0, component: <ExperienceItem key={0} id={0} onDelete={deleteExperienceItem} /> },
+  ]);
 
   const addExperienceItem = () => {
-    setExperienceItems([...experienceItems, <ExperienceItem key={experienceItems.length} />]);
+    const newItemId = experienceItems.length;
+    setExperienceItems([
+      ...experienceItems,
+      { id: newItemId, component: <ExperienceItem key={newItemId} id={newItemId} onDelete={deleteExperienceItem} /> },
+    ]);
   };
+
   return (
     <div className="mt-5">
       <div className="flex justify-between items-center">
@@ -26,7 +43,8 @@ export default function ExperienceSection() {
         </button>
       </div>
       <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-      {experienceItems}
+
+      {experienceItems.map((item) => item.component)}
     </div>
   );
 }

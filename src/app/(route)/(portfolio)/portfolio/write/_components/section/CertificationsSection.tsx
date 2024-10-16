@@ -4,11 +4,30 @@ import { useState } from 'react';
 import Image from 'next/image';
 import CertificationItem from '../items/CertificationItem';
 
+interface CertificationItemState {
+  id: number;
+  component: JSX.Element;
+}
+
 export default function CertificationsSection() {
-  const [certificationItems, setCertificationItems] = useState([<CertificationItem key={0} />]);
+  const deleteCertificationItem = (id: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    setCertificationItems(certificationItems.filter((item) => item.id !== id));
+  };
+
+  const [certificationItems, setCertificationItems] = useState<CertificationItemState[]>([
+    { id: 0, component: <CertificationItem key={0} id={0} onDelete={deleteCertificationItem} /> },
+  ]);
 
   const addCertificationItem = () => {
-    setCertificationItems([...certificationItems, <CertificationItem key={certificationItems.length} />]);
+    const newItemId = certificationItems.length;
+    setCertificationItems([
+      ...certificationItems,
+      {
+        id: newItemId,
+        component: <CertificationItem key={newItemId} id={newItemId} onDelete={deleteCertificationItem} />,
+      },
+    ]);
   };
   return (
     <div className="mt-5">
@@ -26,7 +45,7 @@ export default function CertificationsSection() {
         </button>
       </div>
       <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-      {certificationItems}
+      {certificationItems.map((item) => item.component)}
     </div>
   );
 }

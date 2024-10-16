@@ -4,11 +4,27 @@ import { useState } from 'react';
 import Image from 'next/image';
 import EducationItem from '../items/EducationItem';
 
+interface EducationItemState {
+  id: number;
+  component: JSX.Element;
+}
+
 export default function EducationSection() {
-  const [educationItems, setEducationItems] = useState([<EducationItem key={0} />]);
+  const deleteEducationItem = (id: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    setEducationItems(educationItems.filter((item) => item.id !== id));
+  };
+
+  const [educationItems, setEducationItems] = useState<EducationItemState[]>([
+    { id: 0, component: <EducationItem key={0} id={0} onDelete={deleteEducationItem} /> },
+  ]);
 
   const addEducationItem = () => {
-    setEducationItems([...educationItems, <EducationItem key={educationItems.length} />]);
+    const newItemId = educationItems.length;
+    setEducationItems([
+      ...educationItems,
+      { id: newItemId, component: <EducationItem key={newItemId} id={newItemId} onDelete={deleteEducationItem} /> },
+    ]);
   };
 
   return (
@@ -27,7 +43,7 @@ export default function EducationSection() {
         </button>
       </div>
       <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-      {educationItems}
+      {educationItems.map((item) => item.component)}
     </div>
   );
 }
