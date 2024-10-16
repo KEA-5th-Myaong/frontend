@@ -15,10 +15,12 @@ import PSSection from './_components/section/PSSection';
 import Input from './_components/Input';
 import Footer from './_components/Footer';
 import ItemToggle from './_components/ItemToggle';
+import useToggleStore from '@/app/_store/portfolioToggle';
 
 export default function PortfolioWrite() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
   const [isShowDropdown, setIsShowDropdown] = useState(false);
+  const { toggles } = useToggleStore();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside({
@@ -27,7 +29,7 @@ export default function PortfolioWrite() {
   });
 
   return (
-    <div className="flex px-[50px] md:px-0">
+    <div className="flex px-[50px] md:px-0 mb-[100px]">
       <div className="m-0 fixed top-[100px] left-[100px] bg-white z-10">
         <ItemToggle />
       </div>
@@ -101,12 +103,12 @@ export default function PortfolioWrite() {
             </form>
           </section>
           <EducationSection />
-          <ExperienceSection />
-          <LinksSection />
-          <SkillsSection />
-          <CertificationsSection />
-          <ActivitiesSection />
-          <PSSection />
+          {toggles.experience && <ExperienceSection />}
+          {toggles.links && <LinksSection />}
+          {toggles.skills && <SkillsSection />}
+          {toggles.certifications && <CertificationsSection />}
+          {toggles.activities && <ActivitiesSection />}
+          {toggles.personalStatement && <PSSection />}
         </section>
       </div>
       <Footer showPDF showLink showPreview showDone />
