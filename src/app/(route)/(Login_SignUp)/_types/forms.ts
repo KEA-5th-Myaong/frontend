@@ -30,4 +30,5 @@ export interface FormInputProps<T extends FieldValues> {
   maxLength?: number;
   minLength?: number;
   infoText?: string;
+  isEdit?: boolean;
 }

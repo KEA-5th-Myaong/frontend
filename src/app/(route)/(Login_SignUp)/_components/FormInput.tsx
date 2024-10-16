@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FieldValues, Path } from 'react-hook-form';
 import { FormInputProps } from '../_types/forms';
 import Icons from '../../../_components/ui/Icon';
-import { EyeIcon, EyeSlashIcon } from '../../../_components/ui/iconPath';
+import { EditIcon, EyeIcon, EyeSlashIcon } from '../../../_components/ui/iconPath';
 
 export default function FormInput<T extends FieldValues>({
   id,
@@ -17,6 +17,7 @@ export default function FormInput<T extends FieldValues>({
   maxLength = undefined,
   minLength = 1,
   infoText = '',
+  isEdit,
 }: FormInputProps<T>) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === 'password';
@@ -48,6 +49,8 @@ export default function FormInput<T extends FieldValues>({
           <Icons name={showPassword ? EyeIcon : EyeSlashIcon} />
         </button>
       )}
+
+      {isEdit && <Icons className="absolute right-4 top-[62px] transform -translate-y-1/2" name={EditIcon} />}
       {error ? (
         <p className="form-error-text">{error.message}</p>
       ) : (

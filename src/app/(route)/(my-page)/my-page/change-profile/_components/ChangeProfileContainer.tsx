@@ -54,6 +54,7 @@ export default function ChangeProfileContainer() {
           register={register}
           required="이름을 입력해주세요"
           isEssential={false}
+          isEdit
         />
         <FormInput
           id="userEmail"
@@ -62,6 +63,7 @@ export default function ChangeProfileContainer() {
           register={register}
           required="이메일을 입력해주세요"
           isEssential={false}
+          isEdit
         />
 
         <button type="submit" className="mt-5 primary-1-btn py-5">
