@@ -54,7 +54,7 @@ export default function InterviewQuestion() {
             <QuestionBox
               question={`Q. ${question.question}`}
               onClick={() => {
-                router.push(`/interview/${id}/${corp}/${question.id}`);
+                router.push(`/interview/${id}/${corp}/${question.id}/chat`);
               }}
             />
           </motion.div>
