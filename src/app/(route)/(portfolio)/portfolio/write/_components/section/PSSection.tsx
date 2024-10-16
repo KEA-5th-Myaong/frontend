@@ -3,7 +3,7 @@ import Input from '../Input';
 
 export default function PSSection() {
   return (
-    <div className="mt-5">
+    <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">자기소개서</h1>
         <button type="button" className="flex-center text-[16px] hover:text-primary-4 ">

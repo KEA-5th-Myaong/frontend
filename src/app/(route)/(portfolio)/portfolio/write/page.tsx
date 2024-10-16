@@ -14,6 +14,7 @@ import ActivitiesSection from './_components/section/ActivitiesSection';
 import PSSection from './_components/section/PSSection';
 import Input from './_components/Input';
 import Footer from './_components/Footer';
+import ItemToggle from './_components/ItemToggle';
 
 export default function PortfolioWrite() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
@@ -26,7 +27,10 @@ export default function PortfolioWrite() {
   });
 
   return (
-    <div className="px-[50px] md:px-0">
+    <div className="flex px-[50px] md:px-0">
+      <div className="m-0 fixed top-[100px] left-[100px] bg-white z-10">
+        <ItemToggle />
+      </div>
       <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] lg:px-0 lg:mx-auto">
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
@@ -57,24 +61,26 @@ export default function PortfolioWrite() {
         <section className="mt-5 mb-[50px]">
           <section>
             <form>
-              <Input
-                element="input"
-                label="이름"
-                size="sm"
-                type="text"
-                color="transparent"
-                placeholder="이름을 입력해주세요"
-                required
-              />
-              <Input
-                element="input"
-                label="휴대폰 번호"
-                size="sm"
-                type="tel"
-                color="transparent"
-                placeholder="휴대폰 번호를 입력해주세요"
-                required
-              />
+              <div className="grid grid-flow-col justify-stretch gap-[20px]">
+                <Input
+                  element="input"
+                  label="이름"
+                  size="lg"
+                  type="text"
+                  color="transparent"
+                  placeholder="이름을 입력해주세요"
+                  required
+                />
+                <Input
+                  element="input"
+                  label="휴대폰 번호"
+                  size="lg"
+                  type="tel"
+                  color="transparent"
+                  placeholder="휴대폰 번호를 입력해주세요"
+                  required
+                />
+              </div>
               <Input
                 element="input"
                 label="이메일"
