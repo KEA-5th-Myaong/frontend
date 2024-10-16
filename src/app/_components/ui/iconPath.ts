@@ -131,6 +131,32 @@ export const PictureIcon: IconPathTypes = {
   height: 25,
 };
 
+// 북마크 아이콘
+export const BookmarkIcon: IconPathTypes = {
+  path: 'M10 2c-1.716 0-3.408.106-5.07.31C3.806 2.45 3 3.414 3 4.517V17.25a.75.75 0 0 0 1.075.676L10 15.082l5.925 2.844A.75.75 0 0 0 17 17.25V4.517c0-1.103-.806-2.068-1.93-2.207A41.403 41.403 0 0 0 10 2Z',
+  fill: 'none',
+  width: 20,
+  height: 20,
+  options: {
+    stroke: '#41AED9',
+    fillRule: 'evenodd',
+    clipRule: 'evenodd',
+  },
+};
+
+// 댓글 아이콘
+export const CommentIcon: IconPathTypes = {
+  path: 'M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z',
+  fill: 'none',
+  width: 20,
+  height: 20,
+  options: {
+    stroke: '#41AED9',
+    fillRule: 'evenodd',
+    clipRule: 'evenodd',
+  },
+};
+
 // 편집 아이콘
 export const EditIcon: IconPathTypes = {
   path: 'm16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10',

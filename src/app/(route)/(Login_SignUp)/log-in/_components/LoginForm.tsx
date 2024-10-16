@@ -2,12 +2,14 @@
 
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { LoginState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
 
 export default function LoginForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -25,7 +27,8 @@ export default function LoginForm() {
       await onSubmit(data);
     } catch (error) {
       setErrorMessage(FORM_ERROR[2]);
-      console.log(errorMessage); // api 연결 후, 모달로 수정
+      console.log('에러 메시지', errorMessage); // api 연결 후, 모달로 수정
+      router.push('/main');
     }
   };
 

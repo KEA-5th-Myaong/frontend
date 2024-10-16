@@ -1,12 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import testFollower from './_follow/follow.json';
 import { UserProfileProps, FollowProps } from '../_types/blog';
 import FollowButton from './_follow/FollowButton';
 import FollowModal from './_follow/FollowModal';
 
 export default function UserProfile({ userName, follower, following, isFollowed }: UserProfileProps) {
+  const router = useRouter();
+  const params = useParams();
+  console.log();
+
   const [followerList, setFollowerList] = useState<FollowProps[]>([]);
   const [followingList, setFollowingList] = useState<FollowProps[]>([]);
 
@@ -54,11 +59,14 @@ export default function UserProfile({ userName, follower, following, isFollowed 
 
             <button
               type="button"
+              onClick={() => {
+                router.push(`/${params.userId}/write`);
+              }}
               className={`${isFollowed ? 'bg-gray-0' : 'bg-primary-1'} ml-0 sm:ml-10 
             md:ml-0 self-stretch text-lg h-fit py-[4.5px] 
             sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold primary-1-btn`}
             >
-              팔로우
+              글 작성하기
             </button>
           </div>
 
