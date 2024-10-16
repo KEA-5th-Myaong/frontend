@@ -25,6 +25,16 @@
     "react/jsx-one-expression-per-line": 0,
     "no-nested-ternary": 0,
     "react/jsx-props-no-spreading": 0,
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
   }
 }

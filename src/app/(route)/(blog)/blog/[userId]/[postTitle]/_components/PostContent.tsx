@@ -1,27 +1,36 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Icons from '../../../../../../_components/ui/Icon';
 import { FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
 import testPosts from '../../_components/test.json';
-import PostDropDown from './PostDropDown';
+import MoreOptions from '../../../../../../_components/MoreOptions';
+import useClickOutside from '../../../../../../_hooks/useClickOutside';
 
 export default function PostContent() {
   const [showDropDown, setShowDropDown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside({
+    ref: dropdownRef,
+    callback: () => setShowDropDown(false),
+  });
+
   return (
     <>
       {/* 제목과 더보기 아이콘 */}
       <div className="flex justify-between items-center">
         <span className="text-[22px] font-semibold">{testPosts[0].postTitle}</span>
-        <div className="cursor-pointer relative">
+        <div className="relative" ref={dropdownRef}>
           <Icons
             onClick={() => {
               setShowDropDown((prev) => !prev);
             }}
+            className="cursor-pointer"
             name={MoreIcon}
           />
 
-          {showDropDown && <PostDropDown />}
+          {showDropDown && <MoreOptions />}
         </div>
       </div>
 

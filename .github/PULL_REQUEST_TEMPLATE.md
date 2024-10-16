@@ -33,3 +33,7 @@
 ## ➕ 추가 코멘트
 
 <br/>
+
+## 🤔 Issue Ticket
+
+- [Ticket](https://JIRA)

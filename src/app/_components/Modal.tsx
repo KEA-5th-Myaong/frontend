@@ -17,6 +17,22 @@ const modalMotion = {
   },
 };
 
+export const initailModalState = {
+  open: false,
+  topText: '',
+  subText: '',
+  btnText: '',
+  onBtnClick: () => {},
+  hasSubBtn: false,
+  subBtnText: '',
+  onSubBtnClick: () => {},
+  isWarn: false,
+  onOverlayClick: () => {},
+  hasInput: false,
+  value: '',
+  onChange: () => {},
+};
+
 export default function Modal({
   topText,
   subText = '',
@@ -41,7 +57,7 @@ export default function Modal({
       <motion.div
         onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 Overlay까지 전달되지 않도록
         {...modalMotion}
-        className="flex m-4 min-w-[300px] max-w-[510px] w-full p-8 flex-col items-start gap-8 rounded-2xl bg-white-0 shadow-md"
+        className="flex m-4 min-w-[300px] max-w-[510px] w-full pb-6 px-10 pt-10 flex-col items-start gap-12 rounded-2xl bg-white-0 shadow-md"
       >
         {/* 텍스트 */}
         <div className="flex items-center flex-col gap-2 self-stretch ">
@@ -65,7 +81,7 @@ export default function Modal({
             <button
               type="button"
               onClick={onSubBtnClick}
-              className="bg-gray-0 text-white-0 w-full mx-auto py-[22px] rounded-lg"
+              className="bg-gray-3 text-white-0 w-full mx-auto py-4 rounded-lg"
             >
               {subBtnText}
             </button>
@@ -75,7 +91,7 @@ export default function Modal({
           <button
             type="button"
             onClick={onBtnClick}
-            className={`w-full ${isWarn ? 'bg-yellow-0' : 'bg-primary-1'} mx-auto py-[22px] rounded-lg text-white-0`}
+            className={`w-full ${isWarn ? 'bg-red-0' : 'bg-primary-1'} mx-auto py-4 rounded-lg text-white-0`}
           >
             {btnText}
           </button>

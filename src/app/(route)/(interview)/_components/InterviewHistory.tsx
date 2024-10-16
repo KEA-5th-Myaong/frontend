@@ -26,14 +26,20 @@ export default function InterviewHistory() {
       </div>
 
       <div className={`${showMore ? 'flex' : 'hidden'} sm:flex flex-col gap-1 mb-14`}>
-        {historyLists.map((item, index) => (
-          <div
+        {historyLists.map((item) => (
+          <button
+            type="button"
             key={item}
-            className={`${index === 0 ? 'bg-[#F3F3F3]' : ''} rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between`}
+            className="text-start bg-white-0 hover:bg-[#F3F3F3] 
+            rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between"
+            onClick={() => {
+              console.log(item);
+            }}
           >
             <span className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow">{item}</span>
+            {/* Icons에 이벤트 달고 stopproppregation 추가해야됨 */}
             <Icons name={XIcon} className="flex-shrink-0 ml-2" />
-          </div>
+          </button>
         ))}
       </div>
 

@@ -4,8 +4,8 @@ export interface QuestionBoxProps {
   onClick: () => void;
 }
 
-export interface IntroductionBoxProps {
+export interface PersonalStatementBoxProps {
   id?: number;
-  introduction: string;
+  content: string;
   onClick: () => void;
 }
