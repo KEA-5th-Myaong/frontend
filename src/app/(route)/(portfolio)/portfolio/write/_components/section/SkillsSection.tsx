@@ -34,6 +34,7 @@ export default function SkillsSection() {
         value={skill}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
+        maxLength={50}
         placeholder="기술 스택을 입력해주세요"
         className="w-full bg-white-0 mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-[1px] border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]"
       />

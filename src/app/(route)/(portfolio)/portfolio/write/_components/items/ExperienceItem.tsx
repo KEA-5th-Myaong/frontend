@@ -16,6 +16,7 @@ function ExperienceItem({ id, onDelete }: ExperienceItemProps) {
           size="lg"
           type="text"
           color="white"
+          maxLength={50}
           placeholder="회사명을 입력해주세요"
           required
         />
@@ -25,6 +26,7 @@ function ExperienceItem({ id, onDelete }: ExperienceItemProps) {
           size="lg"
           type="text"
           color="white"
+          maxLength={50}
           placeholder="직책을 입력해주세요"
           required
         />
@@ -37,6 +39,7 @@ function ExperienceItem({ id, onDelete }: ExperienceItemProps) {
         size="lg"
         type="text"
         color="white"
+        maxLength={2000}
         placeholder="주요 업무/성과를 입력해주세요"
       />
       <button type="button" onClick={() => onDelete(id)} className="absolute top-[20px] right-10">
