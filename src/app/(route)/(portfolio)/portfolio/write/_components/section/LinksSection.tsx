@@ -28,7 +28,7 @@ export default function LinksSection() {
   };
 
   return (
-    <div className="mt-5">
+    <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">링크</h1>
       </div>

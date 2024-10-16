@@ -28,7 +28,7 @@ export default function EducationSection() {
   };
 
   return (
-    <div className="mt-5">
+    <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">학력</h1>
         <button type="button" onClick={addEducationItem} className="flex-center text-[16px] hover:text-primary-4 ">

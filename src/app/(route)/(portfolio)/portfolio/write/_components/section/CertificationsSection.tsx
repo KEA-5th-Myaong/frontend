@@ -30,7 +30,7 @@ export default function CertificationsSection() {
     ]);
   };
   return (
-    <div className="mt-5">
+    <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">자격증</h1>
         <button type="button" onClick={addCertificationItem} className="flex-center text-[16px] hover:text-primary-4 ">
