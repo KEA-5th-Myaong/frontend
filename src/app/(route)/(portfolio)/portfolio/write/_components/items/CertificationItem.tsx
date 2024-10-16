@@ -16,6 +16,7 @@ function CertificationItem({ id, onDelete }: CertificationItemProps) {
           size="lg"
           type="text"
           color="white"
+          maxLength={50}
           placeholder="자격증명을 입력해주세요"
         />
         <Input element="input" label="취득 일자" size="lg" type="date" color="white" />

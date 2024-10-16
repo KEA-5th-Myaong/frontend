@@ -16,6 +16,7 @@ function EducationItem({ id, onDelete }: EducationItemProps) {
           size="lg"
           type="text"
           color="white"
+          maxLength={50}
           placeholder="학교명을 입력해주세요"
           required
         />
@@ -25,6 +26,7 @@ function EducationItem({ id, onDelete }: EducationItemProps) {
           size="lg"
           type="text"
           color="white"
+          maxLength={50}
           placeholder="학과를 입력해주세요"
           required
         />

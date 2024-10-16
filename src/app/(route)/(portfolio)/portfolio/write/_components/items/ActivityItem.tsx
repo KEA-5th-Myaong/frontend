@@ -17,6 +17,7 @@ function ActivityItem({ id, onDelete }: ActivityItemProps) {
           size="lg"
           type="text"
           color="white"
+          maxLength={50}
           placeholder="활동 및 교육명을 입력해주세요"
         />
         <Input
@@ -25,6 +26,7 @@ function ActivityItem({ id, onDelete }: ActivityItemProps) {
           size="lg"
           type="text"
           color="white"
+          maxLength={50}
           placeholder="교육기관명을 입력해주세요"
         />
       </div>
@@ -36,6 +38,7 @@ function ActivityItem({ id, onDelete }: ActivityItemProps) {
         size="lg"
         type="text"
         color="white"
+        maxLength={2000}
         placeholder="활동 상세 내용을 입력해주세요"
       />
 

@@ -10,9 +10,20 @@ interface InputProps {
   pattern?: 'grade' | string;
   placeholder?: string;
   required?: boolean;
+  maxLength?: number; // maxLength 추가
 }
 
-export default function Input({ element, label, size, color, type, pattern, placeholder, required }: InputProps) {
+export default function Input({
+  element,
+  label,
+  size,
+  color,
+  type,
+  pattern,
+  placeholder,
+  maxLength,
+  required,
+}: InputProps) {
   const inputWidth = size === 'sm' ? 'w-[260px]' : 'w-full';
   const background = color === 'white' ? 'bg-white-0' : 'bg-transparent';
 
@@ -30,6 +41,7 @@ export default function Input({ element, label, size, color, type, pattern, plac
           type={type}
           placeholder={placeholder}
           pattern={pattern === 'grade' ? gradePattern : pattern || undefined}
+          maxLength={maxLength}
           required={required}
           className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-[1px] border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
         />
@@ -37,6 +49,7 @@ export default function Input({ element, label, size, color, type, pattern, plac
         <textarea
           placeholder={placeholder}
           required={required}
+          maxLength={maxLength}
           className={`${inputWidth} ${background} h-[110px] mt-[8px] px-[20px] py-[12px] text-black-0 border border-[1px] border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
         />
       )}
