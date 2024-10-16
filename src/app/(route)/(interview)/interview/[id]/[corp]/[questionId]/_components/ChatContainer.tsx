@@ -51,7 +51,7 @@ export default function ChatContainer() {
                     수정
                   </button>
                 )}
-                <div className={`break-words chat-msg-text ${msg.isAI ? 'bg-gray-4' : 'bg-white-2 text-white'}`}>
+                <div className={`break-words chat-msg-text ${msg.isAI ? 'bg-gray-4' : 'bg-primary-0 text-white'}`}>
                   {msg.text}
                 </div>
               </div>

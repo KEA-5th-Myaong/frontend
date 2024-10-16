@@ -9,7 +9,7 @@ export default function InterviewHistory() {
   const router = useRouter();
   const { id } = useParams();
 
-  const [historyLists, setHistoryLists] = useState(['위블린', '카카오엔터프라이즈', '위블린']);
+  const [historyLists, setHistoryLists] = useState(['디케이테크인', '카카오엔터프라이즈', '엑슨투']);
   const [showMore, setShowMore] = useState(false);
 
   return (

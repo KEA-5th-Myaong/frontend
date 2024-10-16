@@ -21,7 +21,7 @@ export default function MainPage() {
     setPosts(postTest);
   }, []);
   return (
-    <section className="flex justify-center pt-[100px] pb-12">
+    <section className="flex justify-center pt-10 sm:pt-11 md:pt-14 pb-12">
       <div className="w-full min-w-[360px] max-w-[982px] px-[42px]">
         <div id="캐러셀" className="w-full h-[214px] md:h-[280px] rounded-[10px] relative overflow-hidden">
           <Image src="/assets/carousel1.png" alt="캐러셀 1" layout="fill" objectFit="cover" className="w-full h-full" />

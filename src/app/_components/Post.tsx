@@ -61,9 +61,9 @@ export default function Post({
 
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-1">{postDate}</span>
-          <div className="cursor-default blog-favor-frame">
-            <Icons name={FavorIcon} className={`${isLoved ? 'text-primary-2' : 'text-gray-1'}`} />
-            <span className={`${isLoved ? 'text-primary-2' : 'text-gray-1'} text-sm`}>{lovedCount}</span>
+          <div className="blog-favor-frame">
+            <Icons name={FavorIcon} className={`${isLoved ? 'text-primary-1' : 'text-gray-1'}`} />
+            <span className={`${isLoved ? 'text-primary-1' : 'text-gray-1'} text-sm mt-[1.5px]`}>{lovedCount}</span>
           </div>
         </div>
       </div>

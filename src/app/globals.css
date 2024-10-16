@@ -46,7 +46,7 @@ body {
   }
   /* primary-1 버튼 */
   .primary-1-btn {
-    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg hover:bg-primary-2;
+    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg hover-animation;
   }
 
   /*hover 애니메이션*/
@@ -75,7 +75,7 @@ body {
 
   /* 블로그 */
   .blog-favor-frame {
-    @apply flex items-center gap-[5px] bg-black-2 px-3 py-[6px] rounded-3xl cursor-pointer hover:bg-opacity-90;
+    @apply flex items-center gap-[5px] px-3 py-[6px] cursor-pointer;
   }
 
   /* 모의 면접 */
@@ -106,6 +106,6 @@ body {
     @apply flex-center flex-col p-[10px] bg-white-0 text-[14px] rounded-[8px] border-[1px] border-gray-5;
   }
   .dropdown-item {
-    @apply py-[6px] px-[30px] hover:bg-primary-4 hover:text-white-0 rounded-[6px];
+    @apply py-[6px] px-[30px] hover:bg-primary-1 hover:text-white-0 rounded-[6px];
   }
 }

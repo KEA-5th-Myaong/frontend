@@ -37,10 +37,10 @@ export default function UserProfile({ userName, follower, following, isFollowed 
     <>
       <div className="pt-[51px] pb-[41px] xl:px-5 px-2 rounded-2xl bg-white-0 md:border md:border-gray-2 h-fit">
         <div className="flex items-center sm:gap-0 gap-8">
-          <div className="flex flex-col sm:flex-row  md:flex-col items-center gap-3 sm:gap-10 ">
+          <div className="flex flex-col sm:flex-row  md:flex-col items-center gap-3 sm:gap-3 md:gap-10 ">
             <div className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] bg-pink-300 rounded-full" />
 
-            <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 md:w-[300px] gap-3">
+            <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
               <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
                 {userName}
                 <span className="inline md:hidden">님의 블로그</span>
@@ -71,7 +71,7 @@ export default function UserProfile({ userName, follower, following, isFollowed 
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:hidden md:gap-5 md:w-[300px] md:items-center">
-            <span className="text-2xl font-semibold md:text-primary-1 text-black-1">
+            <span className="text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1">
               {userName}
               <span className="inline md:hidden">님의 블로그</span>
             </span>
