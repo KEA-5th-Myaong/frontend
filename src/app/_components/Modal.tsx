@@ -91,7 +91,7 @@ export default function Modal({
           <button
             type="button"
             onClick={onBtnClick}
-            className={`w-full ${isWarn ? 'bg-yellow-0' : 'bg-primary-1'} mx-auto py-4 rounded-lg text-white-0`}
+            className={`w-full ${isWarn ? 'bg-red-0' : 'bg-primary-1'} mx-auto py-4 rounded-lg text-white-0`}
           >
             {btnText}
           </button>

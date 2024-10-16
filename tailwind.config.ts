@@ -33,7 +33,6 @@ const config: Config = {
           3: '#A6A6A6',
           4: '#F3F3F3',
           5: '#D9D9D9',
-          5: '#494949',
         },
         blue: {
           0: '#4992FF',
