@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import MessageForm from './MessageForm';
-import Icons from '../../../../../../../_components/ui/Icon';
-import { ArrowIcon } from '../../../../../../../_components/ui/iconPath';
-import useContainerHeight from '../../../../../_hooks/useContainerHeight';
-import useScrollToBottom from '../../../../../../../_hooks/useScrollToBottom';
+import Icons from '../../../../../../../../_components/ui/Icon';
+import { ArrowIcon } from '../../../../../../../../_components/ui/iconPath';
+import useContainerHeight from '../../../../../../_hooks/useContainerHeight';
+import useScrollToBottom from '../../../../../../../../_hooks/useScrollToBottom';
 
 export default function ChatContainer() {
   const [messages, setMessages] = useState([
@@ -37,9 +37,9 @@ export default function ChatContainer() {
   return (
     <div
       ref={chatContainerRef}
-      className="flex flex-col w-full relative min-w-[375px] max-w-[735px] border-t border-gray-2"
+      className="flex flex-col w-full relative min-w-[360px] max-w-[735px] border-t border-gray-2"
     >
-      <div className="flex-1 overflow-y-auto pt-5 pb-4 hide-scrollbar">
+      <div className="flex-shrink overflow-y-auto pt-5 pb-4 hide-scrollbar">
         <div className="flex flex-col gap-7">
           {messages.map((msg) => (
             <div className={`flex flex-col ${msg.isAI ? 'items-start' : 'items-end'}`}>
