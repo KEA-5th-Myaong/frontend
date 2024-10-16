@@ -1,8 +1,15 @@
+import Image from 'next/image';
+import React from 'react';
 import Input from '../Input';
 
-function ActivityItem() {
+interface ActivityItemProps {
+  id: number;
+  onDelete: (id: number) => void;
+}
+
+function ActivityItem({ id, onDelete }: ActivityItemProps) {
   return (
-    <section className="w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
+    <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
       <div className="grid grid-flow-col justify-stretch gap-[20px]">
         <Input
           element="input"
@@ -31,6 +38,10 @@ function ActivityItem() {
         color="white"
         placeholder="활동 상세 내용을 입력해주세요"
       />
+
+      <button type="button" onClick={() => onDelete(id)} className="absolute top-[20px] right-10">
+        <Image src="/assets/ic-delete.svg" alt="삭제" width={25} height={25} />
+      </button>
     </section>
   );
 }

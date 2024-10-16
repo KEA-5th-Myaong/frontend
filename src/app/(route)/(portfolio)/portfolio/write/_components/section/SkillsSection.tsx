@@ -1,6 +1,8 @@
-import Icons from '@/app/_components/ui/Icon';
-import { XIcon } from '@/app/_components/ui/iconPath';
 import { useState, ChangeEvent, KeyboardEvent } from 'react';
+// eslint-disable-next-line import/extensions
+import Icons from '@/app/_components/ui/Icon';
+// eslint-disable-next-line import/extensions
+import { XIcon } from '@/app/_components/ui/iconPath';
 
 export default function SkillsSection() {
   const [skill, setSkill] = useState<string>('');

@@ -1,8 +1,14 @@
+import Image from 'next/image';
 import Input from '../Input';
 
-function EducationItem() {
+interface EducationItemProps {
+  id: number;
+  onDelete: (id: number) => void;
+}
+
+function EducationItem({ id, onDelete }: EducationItemProps) {
   return (
-    <section className="w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
+    <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
       <div className="grid grid-flow-col justify-stretch gap-[20px]">
         <Input
           element="input"
@@ -33,6 +39,9 @@ function EducationItem() {
         color="white"
         placeholder="학점/기준학점"
       />
+      <button type="button" onClick={() => onDelete(id)} className="absolute top-[20px] right-10">
+        <Image src="/assets/ic-delete.svg" alt="삭제" width={25} height={25} />
+      </button>
     </section>
   );
 }
