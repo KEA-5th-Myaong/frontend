@@ -1,6 +1,8 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
@@ -21,12 +23,21 @@ export default function PortfolioWrite() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
+  const router = useRouter();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside({
     ref: dropdownRef,
     callback: () => setIsShowDropdown(false),
   });
+
+  const handleDoneClick = () => {
+    router.push('/portfolio/read');
+  };
+
+  const handlePreviewClick = () => {
+    router.push('/portfolio/preview');
+  };
 
   return (
     <div className="flex px-[50px] md:px-0 mb-[100px]">
@@ -39,12 +50,14 @@ export default function PortfolioWrite() {
             <h1 className="font-semibold text-left ">포트폴리오 작성</h1>
             <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
           </div>
-          <button
-            type="button"
-            className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-4 rounded-[30px] hover-animation"
-          >
-            작성 완료
-          </button>
+          <Link href="/portfolio/read">
+            <button
+              type="button"
+              className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-4 rounded-[30px] hover-animation"
+            >
+              작성 완료
+            </button>
+          </Link>
         </div>
         <div className="relative flex justify-between items-center mt-5">
           <h1 className="pre-3xl-semibold">{title}</h1>
@@ -111,7 +124,7 @@ export default function PortfolioWrite() {
           {toggles.personalStatement && <PSSection />}
         </section>
       </div>
-      <Footer showPDF showLink showPreview showDone />
+      <Footer showPreview showDone handlePreviewClick={handlePreviewClick} handleDoneClick={handleDoneClick} />
     </div>
   );
 }
