@@ -1,4 +1,4 @@
-import BackButton from '@/app/_components/BackButton';
+import BackButton from '../../../../../_components/BackButton';
 import PostInput from './_components/PostInput';
 
 export default function PostWrite() {
@@ -8,7 +8,7 @@ export default function PostWrite() {
         <div className="flex w-full h-12 px-5 mb-2">
           <BackButton />
         </div>
-        <div className="flex-col w-full h-[120px] px-10">
+        <div className="flex-col w-full py-3 px-10">
           <div className="my-1">
             <p>포스트 작성</p>
           </div>
@@ -16,19 +16,16 @@ export default function PostWrite() {
             <input
               type="text"
               placeholder="제목을 입력해주세요"
-              className="text-3xl bg-inherit font-semibold outline-none w-full"
+              className="text-3xl font-semibold outline-none w-full"
               maxLength={42}
             />
           </div>
         </div>
-        <div className="flex-center w-full h-[550px] px-10">
+        <div className="flex-center w-full py-3 px-10">
           <PostInput />
         </div>
-        <div className="relative w-[920px] h-11">
-          <button
-            type="button"
-            className="absolute items-center justify-center w-32 h-12 text-sm rounded-3xl bg-primary-1 text-white-0  right-0"
-          >
+        <div className="relative w-[920px] h-13">
+          <button type="button" className="absolute w-32 h-12 text-sm rounded-3xl bg-primary-1 text-white-0  right-0">
             작성 완료
           </button>
         </div>
