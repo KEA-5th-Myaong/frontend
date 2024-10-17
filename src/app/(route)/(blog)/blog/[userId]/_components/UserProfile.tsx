@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import testFollower from './_follow/follow.json';
 import { UserProfileProps, FollowProps } from '../_types/blog';
 import FollowButton from './_follow/FollowButton';
 import FollowModal from './_follow/FollowModal';
 
 export default function UserProfile({ userName, follower, following, isFollowed }: UserProfileProps) {
-  const router = useRouter();
   const params = useParams();
 
   const [followerList, setFollowerList] = useState<FollowProps[]>([]);
@@ -56,17 +56,15 @@ export default function UserProfile({ userName, follower, following, isFollowed 
               <FollowButton count={following} label="팔로잉" onClick={() => setIsFollowingOpen(true)} />
             </div>
 
-            <button
+            <Link
               type="button"
-              onClick={() => {
-                router.push(`/blog/${params.userId}/write`);
-              }}
+              href={`/blog/${params.userId}/write`}
               className={`${isFollowed ? 'bg-gray-0' : 'bg-primary-1'} ml-0 sm:ml-10 
             md:ml-0 self-stretch text-lg h-fit py-[4.5px] 
             sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold primary-1-btn`}
             >
               글 작성하기
-            </button>
+            </Link>
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:hidden md:gap-5 md:w-[300px] md:items-center">

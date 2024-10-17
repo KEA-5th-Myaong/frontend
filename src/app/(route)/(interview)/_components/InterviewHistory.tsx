@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams, useRouter, usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import Icons from '../../../_components/ui/Icon';
 import { PlusIcon, TriangleIcon, XIcon } from '../../../_components/ui/iconPath';
 
 export default function InterviewHistory() {
-  const router = useRouter();
   const { id } = useParams();
   const pathname = usePathname();
 
@@ -50,16 +50,13 @@ export default function InterviewHistory() {
         ))}
       </div>
 
-      <button
-        onClick={() => {
-          router.push(`/interview/${id}/select`);
-        }}
-        type="button"
+      <Link
+        href={`/interview/${id}/select`}
         className={`${showMore ? 'flex' : 'hidden'} sm:flex items-center gap-2 pl-[13px]`}
       >
         <Icons name={PlusIcon} className="mb-1" />
         면접 생성
-      </button>
+      </Link>
     </section>
   );
 }
