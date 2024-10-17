@@ -7,6 +7,7 @@ import PortfolioHeader from './_components/PortfolioHeader';
 import useClickOutside from '@/app/_hooks/useClickOutside';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import PortfolioWriteDropdown from '../_components/PortfolioWriteDropdown';
+import Footer from '../_components/Footer';
 
 export default function PortfolioRead() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
@@ -46,6 +47,7 @@ export default function PortfolioRead() {
         </section>
         <PortfolioContainer />
       </div>
+      <Footer showPDF showLink />
     </div>
   );
 }
