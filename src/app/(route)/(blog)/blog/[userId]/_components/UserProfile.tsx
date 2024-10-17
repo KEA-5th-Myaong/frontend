@@ -10,7 +10,6 @@ import FollowModal from './_follow/FollowModal';
 export default function UserProfile({ userName, follower, following, isFollowed }: UserProfileProps) {
   const router = useRouter();
   const params = useParams();
-  console.log();
 
   const [followerList, setFollowerList] = useState<FollowProps[]>([]);
   const [followingList, setFollowingList] = useState<FollowProps[]>([]);
@@ -60,7 +59,7 @@ export default function UserProfile({ userName, follower, following, isFollowed 
             <button
               type="button"
               onClick={() => {
-                router.push(`/${params.userId}/write`);
+                router.push(`/blog/${params.userId}/write`);
               }}
               className={`${isFollowed ? 'bg-gray-0' : 'bg-primary-1'} ml-0 sm:ml-10 
             md:ml-0 self-stretch text-lg h-fit py-[4.5px] 

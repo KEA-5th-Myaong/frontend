@@ -18,9 +18,10 @@ export default function EditCommentInput({ initialContent, onSubmit }: EditComme
   return (
     <div className="flex flex-col mt-4 gap-[10px] ml-10">
       <textarea
-        className="resize-none px-[18px] py-[10px] w-full border min-h-[104px] rounded-lg placeholder:text-gray-3 focus:outline-none"
+        className="resize-none px-[18px] py-[10px] w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3 focus:outline-none"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        maxLength={255}
       />
       <button type="button" className="self-end px-[21.5px] py-[7.5px] primary-1-btn" onClick={handleSubmit}>
         수정 완료

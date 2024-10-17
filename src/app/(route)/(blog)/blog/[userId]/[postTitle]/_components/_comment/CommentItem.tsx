@@ -1,3 +1,5 @@
+import Icons from '../../../../../../../_components/ui/Icon';
+import { ReplyIcon } from '../../../../../../../_components/ui/iconPath';
 import { CommentProps } from '../../_types/post';
 import EditCommentInput from './EditCommentInput';
 
@@ -22,7 +24,7 @@ export default function CommentItem({
     <div className={`flex flex-col py-6 px-[6px] border-b ${isReply && 'pl-6'}`}>
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-[10px]">
-          {isReply && <p>ㄴ</p>}
+          {isReply && <Icons name={ReplyIcon} />}
           <div id="프로필 사진" className="min-w-[29px] min-h-[29px] bg-pink-300 rounded-full" />
           <p>{comment.userName}</p>
         </div>
@@ -41,7 +43,9 @@ export default function CommentItem({
         <EditCommentInput initialContent={comment.comment} onSubmit={(content) => onEditSubmit(comment.id, content)} />
       ) : (
         <>
-          <div className={`${isReply ? 'ml-16' : 'ml-10'} mb-[18px] py-2 text-[13px]`}>{comment.comment}</div>
+          <div className={`${isReply ? 'ml-16' : 'ml-10'} mb-[18px] py-2 text-[13px] break-words`}>
+            {comment.comment}
+          </div>
           <div className={`${isReply ? 'ml-16' : 'ml-10'} text-xs text-gray-0`}>{comment.updatedAt}</div>
         </>
       )}
