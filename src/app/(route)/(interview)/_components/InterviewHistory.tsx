@@ -1,29 +1,36 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import Icons from '../../../_components/ui/Icon';
 import { PlusIcon, TriangleIcon, XIcon } from '../../../_components/ui/iconPath';
 
 export default function InterviewHistory() {
-  const router = useRouter();
   const { id } = useParams();
+  const pathname = usePathname();
 
-  const [historyLists, setHistoryLists] = useState(['위블린', '카카오엔터프라이즈', '위블린']);
+  // includes를 사용하지 않은 이유는, 사용자의 아이디에 chat이 들어갈 경우도 true를 반환해서
+  const isChat = pathname.endsWith('/chat');
+
+  const [historyLists, setHistoryLists] = useState(['디케이테크인', '카카오엔터프라이즈', '엑슨투']);
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <section className="bg-white-0 sm:max-w-[253px] sm:w-full self-stretch max-h-fit border-2 pt-[29px] pb-[22px] px-5 sm:px-2 md:px-5 rounded-2xl font-semibold z-10">
-      <div className="flex justify-between">
+    <section
+      className={`bg-white-0 sm:max-w-[253px] sm:w-full self-stretch max-h-fit border-2 
+    ${!isChat && !showMore && 'mt-10 sm:mt-0'} pt-[29px] pb-[22px] px-5 sm:px-2 md:px-5 rounded-2xl font-semibold z-10`}
+    >
+      <button
+        type="button"
+        onClick={() => {
+          setShowMore((prev) => !prev);
+        }}
+        className="flex justify-between w-full"
+      >
         <p className={`pl-[13px] ${showMore ? 'mb-5' : 'mb-0'} sm:mb-5`}>면접 기록</p>
-        <Icons
-          onClick={() => {
-            setShowMore((prev) => !prev);
-          }}
-          name={TriangleIcon}
-          className={`${showMore ? '' : 'rotate-180'} mt-[6px] block sm:hidden`}
-        />
-      </div>
+        <Icons name={TriangleIcon} className={`${showMore ? '' : 'rotate-180'} mt-[6px] block sm:hidden`} />
+      </button>
 
       <div className={`${showMore ? 'flex' : 'hidden'} sm:flex flex-col gap-1 mb-14`}>
         {historyLists.map((item) => (
@@ -43,16 +50,13 @@ export default function InterviewHistory() {
         ))}
       </div>
 
-      <button
-        onClick={() => {
-          router.push(`/interview/${id}/select`);
-        }}
-        type="button"
+      <Link
+        href={`/interview/${id}/select`}
         className={`${showMore ? 'flex' : 'hidden'} sm:flex items-center gap-2 pl-[13px]`}
       >
         <Icons name={PlusIcon} className="mb-1" />
         면접 생성
-      </button>
+      </Link>
     </section>
   );
 }

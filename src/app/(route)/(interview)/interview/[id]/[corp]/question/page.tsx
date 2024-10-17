@@ -23,7 +23,7 @@ export default function InterviewQuestion() {
   }, []);
   return (
     <section className="interview-container">
-      <ProgressBar progress={67} />
+      <ProgressBar progress={63} />
       <p className="font-semibold">모의 면접</p>
 
       <div className="flex flex-col self-stretch pt-2 w-full">
@@ -54,7 +54,7 @@ export default function InterviewQuestion() {
             <QuestionBox
               question={`Q. ${question.question}`}
               onClick={() => {
-                router.push(`/interview/${id}/${corp}/${question.id}`);
+                router.push(`/interview/${id}/${corp}/${question.id}/chat`);
               }}
             />
           </motion.div>

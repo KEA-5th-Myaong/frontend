@@ -44,10 +44,10 @@ const config: Config = {
           2: '#F5FFF9',
         },
         primary: {
-          0: '#41AED9',
-          1: '#D8E6F1',
-          2: '#23B581',
-          4: '#41AED9',
+          0: '#D8E6F2',
+          1: '#41AED9',
+          2: '#3BBCD9',
+          3: '#52E2F2',
         },
         yellow: {
           0: '#FFC83C',

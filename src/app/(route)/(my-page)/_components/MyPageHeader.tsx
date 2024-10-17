@@ -11,8 +11,8 @@ export default function MyPageHeader({ currentPage }: MyPageHeaderProps) {
   };
 
   return (
-    <div className="hidden sm:flex items-center sm:gap-8 md:gap-16 w-full pt-4 pb-6 max-w-[1300px] border-b border-[#d9d9d9]">
-      <p className="font-semibold sm:text-[22px] md:text-[32px]">김현중 님</p>
+    <div className="hidden sm:flex items-center sm:gap-8 md:gap-16 w-full pt-10 sm:pt-11 pb-6 max-w-[1300px] border-b border-[#d9d9d9]">
+      <p className="font-semibold sm:text-[22px] md:text-[32px] whitespace-nowrap">김현중 님</p>
 
       <div className="flex gap-12 whitespace-nowrap">
         <Link href="/my-page/change-profile" className={getLinkStyle('change-profile')}>

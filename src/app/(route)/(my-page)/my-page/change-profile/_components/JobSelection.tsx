@@ -33,7 +33,7 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
             <button
               type="button"
               onClick={() => setSelectJobCategory(category)}
-              className={`flex justify-between w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
+              className={`flex justify-between items-center w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
                 selectJobCategory === category ? 'bg-primary-0' : 'text-gray-0'
               }`}
             >
@@ -54,7 +54,7 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
               className="flex justify-between w-full py-1"
             >
               <p
-                className={`w-full text-center font-medium line-clamp-2 ${allJobs.includes(selectJob) && selectJob === job ? '' : 'text-gray-0'}`}
+                className={`w-full text-center font-medium text-sm md:text-base line-clamp-2 ${allJobs.includes(selectJob) && selectJob === job ? '' : 'text-gray-0'}`}
               >
                 {job}
               </p>
