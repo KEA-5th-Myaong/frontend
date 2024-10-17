@@ -103,9 +103,14 @@ body {
   }
   /*드롭다운 스타일*/
   .dropdown {
-    @apply flex-center flex-col p-[10px] bg-white-0 text-[14px] rounded-[8px] border-[1px] border-gray-5;
+    @apply flex-center flex-col p-[10px] bg-white-0 text-[14px] rounded-[8px] border border-gray-5;
   }
   .dropdown-item {
-    @apply py-[6px] px-[30px] hover:bg-primary-4 hover:text-white-0 rounded-[6px];
+    @apply py-[6px] px-[30px] hover:bg-primary-4 hover:text-white-0 rounded-[6px] cursor-pointer;
+  }
+
+  /*아이템 토글 스타일*/
+  .item-toggle {
+    @apply flex justify-between items-center pl-[10px] py-[10px];
   }
 }
