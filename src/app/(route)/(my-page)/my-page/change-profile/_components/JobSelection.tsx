@@ -54,7 +54,7 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
               className="flex justify-between w-full py-1"
             >
               <p
-                className={`w-full text-center font-medium line-clamp-2 ${allJobs.includes(selectJob) && selectJob === job ? '' : 'text-gray-0'}`}
+                className={`w-full text-center font-medium text-sm md:text-base line-clamp-2 ${allJobs.includes(selectJob) && selectJob === job ? '' : 'text-gray-0'}`}
               >
                 {job}
               </p>

@@ -30,5 +30,9 @@ export interface FormInputProps<T extends FieldValues> {
   maxLength?: number;
   minLength?: number;
   infoText?: string;
-  isEdit?: boolean;
+  value?: string | number | undefined;
+
+  isEdit?: boolean; // 수정 아이콘
+  isDisabled?: boolean;
+  onEditClick?: () => void;
 }
