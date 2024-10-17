@@ -33,7 +33,7 @@ export default function JobSelection({ jobData, onJobSelect }: JobSelectionProps
             <button
               type="button"
               onClick={() => setSelectJobCategory(category)}
-              className={`flex justify-between w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
+              className={`flex justify-between items-center w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
                 selectJobCategory === category ? 'bg-primary-0' : 'text-gray-0'
               }`}
             >
