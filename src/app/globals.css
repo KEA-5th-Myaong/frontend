@@ -46,7 +46,7 @@ body {
   }
   /* primary-1 버튼 */
   .primary-1-btn {
-    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg hover-animation;
+    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg;
   }
 
   /*hover 애니메이션*/
@@ -106,7 +106,7 @@ body {
     @apply flex-center flex-col p-[10px] bg-white-0 text-[14px] rounded-[8px] border border-gray-5;
   }
   .dropdown-item {
-    @apply py-[6px] px-[30px] hover:bg-primary-4 hover:text-white-0 rounded-[6px] cursor-pointer;
+    @apply py-[6px] px-[30px] hover:bg-primary-3 hover:text-white-0 rounded-[6px] cursor-pointer;
   }
 
   /*아이템 토글 스타일*/
