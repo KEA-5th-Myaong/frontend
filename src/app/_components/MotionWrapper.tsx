@@ -5,7 +5,7 @@ interface MotionWrapperProps {
   children: React.ReactNode; // 자식 요소를 받을 프로퍼티
 }
 
-function MotionWrapper({ children }: MotionWrapperProps) {
+export default function MotionWrapper({ children }: MotionWrapperProps) {
   return (
     <motion.section
       initial={{ opacity: 0, y: 10 }} // 초기 상태: 투명하고 아래에 위치
@@ -18,5 +18,3 @@ function MotionWrapper({ children }: MotionWrapperProps) {
     </motion.section>
   );
 }
-
-export default MotionWrapper;

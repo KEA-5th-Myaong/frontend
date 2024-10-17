@@ -32,7 +32,7 @@ export default function PortfolioCard({ id, title, date, memo }: PortfolioCardPr
   };
 
   return (
-    <div className=" relative w-[320px] h-[200px] bg-white-0 border border-[1px] border-gray-5 rounded-[12px] pt-[30px] px-[30px]">
+    <div className=" relative w-[320px] h-[200px] bg-white-0 border border-gray-5 rounded-[12px] pt-[30px] px-[30px]">
       <div className="flex justify-between">
         <h1 className="max-w-[15ch] font-semibold text-base whitespace-nowrap text-ellipsis overflow-hidden">
           {title}

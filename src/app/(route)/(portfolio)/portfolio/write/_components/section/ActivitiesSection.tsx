@@ -9,7 +9,7 @@ interface ActivityItemState {
   component: JSX.Element;
 }
 
-function ActivitiesSection() {
+export default function ActivitiesSection() {
   const deleteActivityItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setActivityItems(activityItems.filter((item) => item.id !== id));
@@ -31,7 +31,7 @@ function ActivitiesSection() {
     <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">교육 | 대외활동</h1>
-        <button type="button" onClick={addActivityItem} className="flex-center text-[16px] hover:text-primary-4">
+        <button type="button" onClick={addActivityItem} className="flex-center  hover:text-primary-4">
           <Image
             src="/assets/add-button.svg"
             alt="교육 및 대외활동 추가"
@@ -48,5 +48,3 @@ function ActivitiesSection() {
     </div>
   );
 }
-
-export default ActivitiesSection;

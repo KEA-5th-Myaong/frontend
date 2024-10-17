@@ -15,13 +15,13 @@ export default function PortfolioList() {
     <div className="px-[50px] md:px-0">
       <div className="mt-[60px] flex justify-between items-center w-full max-w-[1000px] md:px-[60px] lg:px-0 lg:mx-auto">
         <div className="flex flex-col">
-          <h1 className="font-semibold text-left text-[16px]">포트폴리오 관리</h1>
+          <h1 className="font-semibold text-left">포트폴리오 관리</h1>
           <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
         </div>
         <Link href="/portfolio/write">
           <button
             type="button"
-            className="flex items-center font-bold text-white-0 text-[16px] py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-4 rounded-[30px] hover-animation"
+            className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-4 rounded-[30px] hover-animation"
           >
             <Icons
               className="mr-[10px]"

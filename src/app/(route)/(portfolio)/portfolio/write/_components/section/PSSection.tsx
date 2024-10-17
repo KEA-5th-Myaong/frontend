@@ -6,7 +6,7 @@ export default function PSSection() {
     <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">자기소개서</h1>
-        <button type="button" className="flex-center text-[16px] hover:text-primary-4 ">
+        <button type="button" className="flex-center hover:text-primary-4 ">
           <Image
             src="/assets/add-button.svg"
             alt="자기소개서 추가"
