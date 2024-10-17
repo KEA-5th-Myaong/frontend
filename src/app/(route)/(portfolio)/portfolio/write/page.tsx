@@ -36,12 +36,12 @@ export default function PortfolioWrite() {
       <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] lg:px-0 lg:mx-auto">
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
-            <h1 className="font-semibold text-left text-[16px]">포트폴리오 작성</h1>
+            <h1 className="font-semibold text-left ">포트폴리오 작성</h1>
             <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
           </div>
           <button
             type="button"
-            className="flex items-center font-bold text-white-0 text-[16px] py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-4 rounded-[30px] hover-animation"
+            className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-4 rounded-[30px] hover-animation"
           >
             작성 완료
           </button>

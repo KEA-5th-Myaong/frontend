@@ -31,7 +31,7 @@ export default function ExperienceSection() {
     <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">경력</h1>
-        <button type="button" onClick={addExperienceItem} className="flex-center text-[16px] hover:text-primary-4 ">
+        <button type="button" onClick={addExperienceItem} className="flex-center hover:text-primary-4 ">
           <Image
             src="/assets/add-button.svg"
             alt="경력 추가"

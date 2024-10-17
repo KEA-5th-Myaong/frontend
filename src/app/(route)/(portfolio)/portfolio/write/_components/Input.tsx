@@ -10,7 +10,8 @@ interface InputProps {
   pattern?: 'grade' | string;
   placeholder?: string;
   required?: boolean;
-  maxLength?: number; // maxLength 추가
+  maxLength?: number;
+  onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
 }
 
 export default function Input({
@@ -22,6 +23,7 @@ export default function Input({
   pattern,
   placeholder,
   maxLength,
+  onClick,
   required,
 }: InputProps) {
   const inputWidth = size === 'sm' ? 'w-[260px]' : 'w-full';
@@ -42,15 +44,18 @@ export default function Input({
           placeholder={placeholder}
           pattern={pattern === 'grade' ? gradePattern : pattern || undefined}
           maxLength={maxLength}
+          onClick={(event: React.MouseEvent<HTMLInputElement>) => {
+            if (onClick) onClick(event);
+          }}
           required={required}
-          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-[1px] border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
+          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
         />
       ) : (
         <textarea
           placeholder={placeholder}
           required={required}
           maxLength={maxLength}
-          className={`${inputWidth} ${background} h-[110px] mt-[8px] px-[20px] py-[12px] text-black-0 border border-[1px] border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
+          className={`${inputWidth} ${background}  resize-none h-[110px] mt-[8px] px-[20px] py-[12px] text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
         />
       )}
     </div>

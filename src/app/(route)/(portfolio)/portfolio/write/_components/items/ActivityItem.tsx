@@ -32,7 +32,14 @@ function ActivityItem({ id, onDelete }: ActivityItemProps) {
             placeholder="교육기관명을 입력해주세요"
           />
         </div>
-        <Input element="input" label="시작 일자" size="lg" type="date" color="white" />
+        <Input
+          element="input"
+          label="시작 일자"
+          size="lg"
+          type="date"
+          color="white"
+          onClick={(event: React.MouseEvent<HTMLInputElement>) => console.log('Input clicked', event)}
+        />
         <Input element="input" label="종료 일자" size="lg" type="date" color="white" />
         <Input
           element="textarea"
