@@ -62,9 +62,7 @@ export default function PSCreateContainer() {
       <PSHeader title="" mode="create" onButtonClick={handleDoneClick} />
 
       <div className="self-start w-full mt-0 sm:mt-12">
-        <p className="w-full font-semibold text-xl sm:text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">
-          자기소개서
-        </p>
+        <p className="w-full pre-2xl-semibold sm:text-[28px] pb-5 mb-9 border-b-2 border-gray-5">자기소개서</p>
 
         <div className="flex flex-col gap-[18px] bg-gray-4 pt-5 px-4 sm:px-14 pb-10 rounded-[10px]">
           {/* 제목 */}

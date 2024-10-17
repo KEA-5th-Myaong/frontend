@@ -38,7 +38,7 @@ export default function ImageChange({ setProfileImage }: ImageChangeProps) {
   return (
     <div className="flex flex-col max-w-[160px]">
       <p className="font-semibold pb-[18px]">프로필 사진</p>
-      <div className="w-[160px] h-[160px] rounded-[10px] bg-[#FBFBFB] border border-[#D9D9D9]">
+      <div className="w-[160px] h-[160px] rounded-[10px] bg-[#FBFBFB] border border-gray-5">
         {previewUrl ? (
           <img src={previewUrl} alt="Profile" className="w-full h-full object-cover rounded-[10px]" />
         ) : (
