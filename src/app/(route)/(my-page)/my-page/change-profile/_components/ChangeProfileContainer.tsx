@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import jobData from './jobTest.json';
-import FormInput from '../../../../(Login_SignUp)/_components/FormInput';
+import FormInput from '../../../../(log-in_sign-up)/_components/FormInput';
 import Modal from '../../../../../_components/Modal';
 import ImageChange from './ImageChange';
 import JobSelection from './JobSelection';

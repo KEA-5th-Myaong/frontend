@@ -116,6 +116,7 @@ export default function SignUpForm() {
           register={register}
           required={FORM_ERROR[3]}
           error={errors.userName}
+          maxLength={20}
         />
 
         {/* 닉네임 input */}

@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, FieldValues } from 'react-hook-form';
-import FormInput from '../../../../(Login_SignUp)/_components/FormInput';
-import { FORM_TEXT, FORM_PLACEHOLDER, FORM_ERROR } from '../../../../(Login_SignUp)/_constants/forms';
+import FormInput from '../../../../(log-in_sign-up)/_components/FormInput';
+import { FORM_TEXT, FORM_PLACEHOLDER, FORM_ERROR } from '../../../../(log-in_sign-up)/_constants/forms';
 import Modal from '../../../../../_components/Modal';
 
 export default function CheckPwdContainer() {
