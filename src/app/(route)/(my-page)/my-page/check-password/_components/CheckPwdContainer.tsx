@@ -31,7 +31,7 @@ export default function CheckPwdContainer() {
     <>
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
-        className="flex flex-col justify-center gap-14 w-full min-w-[360px] max-w-[600px] px-5"
+        className="flex flex-col justify-center gap-14 w-full min-w-[360px] max-w-[600px] px-5 mt-40 sm:mt-60"
       >
         <p className="font-medium text-base sm:text-2xl text-gray-0 text-center">
           개인정보 보호를 위해 비밀번호를 재확인합니다.
