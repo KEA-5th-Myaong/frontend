@@ -46,7 +46,7 @@ body {
   }
   /* primary-1 버튼 */
   .primary-1-btn {
-    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg hover:bg-primary-2;
+    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg;
   }
 
   /*hover 애니메이션*/
@@ -75,12 +75,12 @@ body {
 
   /* 블로그 */
   .blog-favor-frame {
-    @apply flex items-center gap-[5px] bg-black-2 px-3 py-[6px] rounded-3xl cursor-pointer hover:bg-opacity-90;
+    @apply flex items-center gap-[5px] px-3 py-[6px] cursor-pointer;
   }
 
   /* 모의 면접 */
   .interview-container {
-    @apply relative w-full max-w-[800px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-11;
+    @apply relative w-full max-w-[800px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-8;
   }
   .corp-block {
     @apply py-[6px] px-1 sm:px-4 md:px-6 lg:px-8 text-black-0 rounded-lg w-1/3 hover:bg-primary-0 cursor-pointer my-2;
@@ -106,7 +106,7 @@ body {
     @apply flex-center flex-col p-[10px] bg-white-0 text-[14px] rounded-[8px] border border-gray-5;
   }
   .dropdown-item {
-    @apply py-[6px] px-[30px] hover:bg-primary-4 hover:text-white-0 rounded-[6px] cursor-pointer;
+    @apply py-[6px] px-[30px] hover:bg-primary-0 hover:text-white-0 rounded-[6px] cursor-pointer;
   }
 
   /*포트폴리오 아이템 토글 스타일*/
