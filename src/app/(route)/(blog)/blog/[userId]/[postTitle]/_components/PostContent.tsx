@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Icons from '../../../../../../_components/ui/Icon';
-import { FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
+import { CommentIcon, FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
 import testPosts from '../../_components/test.json';
 import MoreOptions from '../../../../../../_components/MoreOptions';
 import useClickOutside from '../../../../../../_hooks/useClickOutside';
@@ -55,7 +55,7 @@ export default function PostContent() {
         <span className="text-sm text-gray-0">{testPosts[0].postDate}</span>
         <div className="flex gap-3">
           <div className="text-primary-1 blog-favor-frame">
-            <div id="commentIcon" className="bg-primary-1 w-[18px] h-[18px] rounded-full" />
+            <Icons name={CommentIcon} />
             <p className="text-sm">10</p>
           </div>
           <div className="text-gray-1 blog-favor-frame">
