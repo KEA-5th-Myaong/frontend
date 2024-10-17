@@ -20,14 +20,19 @@ export default function CertificationsSection() {
   ]);
 
   const addCertificationItem = () => {
-    const newItemId = certificationItems.length;
-    setCertificationItems([
-      ...certificationItems,
-      {
-        id: newItemId,
-        component: <CertificationItem key={newItemId} id={newItemId} onDelete={deleteCertificationItem} />,
-      },
-    ]);
+    if (certificationItems.length < 50) {
+      // 최대 50개로 제한
+      const newItemId = certificationItems.length;
+      setCertificationItems([
+        ...certificationItems,
+        {
+          id: newItemId,
+          component: <CertificationItem key={newItemId} id={newItemId} onDelete={deleteCertificationItem} />,
+        },
+      ]);
+    } else {
+      alert('자격증은 최대 50개까지 추가할 수 있습니다.'); // 경고 메시지
+    }
   };
   return (
     <div className="mt-10">

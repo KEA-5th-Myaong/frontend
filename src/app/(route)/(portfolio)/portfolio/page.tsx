@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import Icons from '@/app/_components/ui/Icon';
-import { PlusIcon } from '@/app/_components/ui/iconPath';
+import Icons from '../../../_components/ui/Icon';
+import { PlusIcon } from '../../../_components/ui/iconPath';
 import PortfolioCard from '../_components/PortfolioCard';
 import PortfolioAddCard from '../_components/PortfolioAddCard';
-import usePortfolioStore from '@/app/_store/portfolio';
-import { PortfolioCardProps } from '@/app/_types/portfolio';
+import usePortfolioStore from '../../../_store/portfolio';
+import { PortfolioCardProps } from '../../../_types/portfolio';
 
 export default function PortfolioList() {
   const { portfolio } = usePortfolioStore();

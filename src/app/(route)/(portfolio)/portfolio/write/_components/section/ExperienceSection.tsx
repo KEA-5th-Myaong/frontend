@@ -18,13 +18,15 @@ export default function ExperienceSection() {
   const [experienceItems, setExperienceItems] = useState<ExperienceItemState[]>([
     { id: 0, component: <ExperienceItem key={0} id={0} onDelete={deleteExperienceItem} /> },
   ]);
-
   const addExperienceItem = () => {
-    const newItemId = experienceItems.length;
-    setExperienceItems([
-      ...experienceItems,
-      { id: newItemId, component: <ExperienceItem key={newItemId} id={newItemId} onDelete={deleteExperienceItem} /> },
-    ]);
+    if (experienceItems.length < 20) {
+      // 최대 20개로 제한
+      const newItemId = experienceItems.length;
+      setExperienceItems([
+        ...experienceItems,
+        { id: newItemId, component: <ExperienceItem key={newItemId} id={newItemId} onDelete={deleteExperienceItem} /> },
+      ]);
+    }
   };
 
   return (

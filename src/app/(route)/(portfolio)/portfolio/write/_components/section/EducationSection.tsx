@@ -20,13 +20,15 @@ export default function EducationSection() {
   ]);
 
   const addEducationItem = () => {
-    const newItemId = educationItems.length;
-    setEducationItems([
-      ...educationItems,
-      { id: newItemId, component: <EducationItem key={newItemId} id={newItemId} onDelete={deleteEducationItem} /> },
-    ]);
+    if (educationItems.length < 20) {
+      // 최대 20개로 제한
+      const newItemId = educationItems.length;
+      setEducationItems([
+        ...educationItems,
+        { id: newItemId, component: <EducationItem key={newItemId} id={newItemId} onDelete={deleteEducationItem} /> },
+      ]);
+    }
   };
-
   return (
     <div className="mt-10">
       <div className="flex justify-between items-center">

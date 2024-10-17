@@ -20,11 +20,16 @@ export default function ActivitiesSection() {
   ]);
 
   const addActivityItem = () => {
-    const newItemId = activityItems.length;
-    setActivityItems([
-      ...activityItems,
-      { id: newItemId, component: <ActivityItem key={newItemId} id={newItemId} onDelete={deleteActivityItem} /> },
-    ]);
+    if (activityItems.length < 20) {
+      // 최대 20개로 제한
+      const newItemId = activityItems.length;
+      setActivityItems([
+        ...activityItems,
+        { id: newItemId, component: <ActivityItem key={newItemId} id={newItemId} onDelete={deleteActivityItem} /> },
+      ]);
+    } else {
+      alert('활동은 최대 20개까지 추가할 수 있습니다.'); // 경고 메시지
+    }
   };
 
   return (

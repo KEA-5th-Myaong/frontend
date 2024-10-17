@@ -20,11 +20,16 @@ export default function LinksSection() {
   ]);
 
   const addLinkItem = () => {
-    const newItemId = linkItems.length;
-    setLinkItems([
-      ...linkItems,
-      { id: newItemId, component: <LinkItem key={newItemId} id={newItemId} onDelete={deleteLinkItem} /> },
-    ]);
+    if (linkItems.length < 50) {
+      // 최대 20개로 제한
+      const newItemId = linkItems.length;
+      setLinkItems([
+        ...linkItems,
+        { id: newItemId, component: <LinkItem key={newItemId} id={newItemId} onDelete={deleteLinkItem} /> },
+      ]);
+    } else {
+      alert('링크 항목은 최대 50개까지 추가할 수 있습니다.'); // 경고 메시지
+    }
   };
 
   return (
