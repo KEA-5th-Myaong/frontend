@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
-import PortfolioWriteDropdown from './_components/PortfolioWriteDropdown';
+import PortfolioWriteDropdown from '../_components/PortfolioWriteDropdown';
 import EducationSection from './_components/section/EducationSection';
 import ExperienceSection from './_components/section/ExperienceSection';
 import LinksSection from './_components/section/LinksSection';
@@ -13,7 +13,7 @@ import CertificationsSection from './_components/section/CertificationsSection';
 import ActivitiesSection from './_components/section/ActivitiesSection';
 import PSSection from './_components/section/PSSection';
 import Input from './_components/Input';
-import Footer from './_components/Footer';
+import Footer from '../_components/Footer';
 import ItemToggle from './_components/ItemToggle';
 import useToggleStore from '@/app/_store/portfolioToggle';
 
