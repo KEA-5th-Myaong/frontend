@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import MessageForm from './MessageForm';
 import Icons from '../../../../../../../../_components/ui/Icon';
 import { ArrowIcon } from '../../../../../../../../_components/ui/iconPath';
 import useContainerHeight from '../../../../../../_hooks/useContainerHeight';
 import useScrollToBottom from '../../../../../../../../_hooks/useScrollToBottom';
+import messageVariants from '../_utils/messageVariants';
 
 export default function ChatContainer() {
   const [messages, setMessages] = useState([
@@ -42,7 +44,12 @@ export default function ChatContainer() {
       <div className="flex-shrink overflow-y-auto pt-5 pb-4 hide-scrollbar">
         <div className="flex flex-col gap-7">
           {messages.map((msg) => (
-            <div className={`flex flex-col ${msg.isAI ? 'items-start' : 'items-end'}`}>
+            <motion.div
+              variants={messageVariants}
+              initial="hidden"
+              animate="visible"
+              className={`flex flex-col ${msg.isAI ? 'items-start' : 'items-end'}`}
+            >
               {msg.isAI && <p className="font-semibold pb-3">면접관</p>}
 
               <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
@@ -66,7 +73,7 @@ export default function ChatContainer() {
                   </button>
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
           <div ref={messagesEndRef} />
         </div>
