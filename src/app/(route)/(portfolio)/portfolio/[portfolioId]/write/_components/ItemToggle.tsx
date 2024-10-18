@@ -6,7 +6,7 @@ import useToggleStore from '@/app/_store/portfolioToggle';
 export default function ItemToggle() {
   const { toggles, setToggle } = useToggleStore();
   return (
-    <div className="w-[250px] h-auto y-[20px] px-[30px] py-[20px] bg-white-0 rounded-[10px] border border-gray-5 ">
+    <div className="w-[300px] h-[500px] y-[20px] px-[30px] py-[20px] bg-white-0 rounded-[10px] border border-gray-5 z-10">
       <div className="px-[10px] py-[10px] font-semibold  bg-gray-4 rounded-[10px]">항목 편집</div>
       <div className="px-[10px] py-[10px] flex items-center gap-[10px]">
         <Icons name={RequiredIcon} />
