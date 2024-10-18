@@ -18,6 +18,8 @@ import ItemToggle from './_components/ItemToggle';
 import useToggleStore from '@/app/_store/portfolioToggle';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import Footer from '../../../_components/Footer';
+import Image from 'next/image';
+import UploadImage from './_components/UploadImage';
 
 export default function PortfolioWrite() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
@@ -81,6 +83,7 @@ export default function PortfolioWrite() {
           <section className="mt-5 mb-[50px]">
             <section>
               <form>
+                <UploadImage />
                 <div className="grid grid-flow-col justify-stretch gap-[20px]">
                   <Input
                     element="input"

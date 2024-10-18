@@ -6,7 +6,13 @@ export default function PortfolioContainer() {
   return (
     <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] px-5 py-10  lg:mx-auto border rounded-[10px]">
       <section className="flex items-center">
-        <Image alt="포트폴리오 사용자 이미지" src="/profile.png" width={120} height={120} />
+        <Image
+          alt="포트폴리오 사용자 기본 이미지"
+          src="/profile.png"
+          width={120}
+          height={120}
+          className="rounded-[20px]"
+        />
         <div className="flex ml-10 text-left my-3">
           <div className="flex flex-col my-5 gap-2">
             <p className="font-semibold ">이름</p>
