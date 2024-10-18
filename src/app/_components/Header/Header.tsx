@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import MainMenu from './_components/MainMenu';
@@ -12,13 +12,10 @@ import useClickOutside from '../../_hooks/useClickOutside';
 import MyMenu from './_components/MyMenu';
 
 export default function Header() {
-  const router = useRouter();
-
   // 상태 관리
   const [openMenu, setOpenMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
   const [openBlogMenu, setOpenBlogMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
   const [openJobMenu, setOpenJobMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
-  const [hoverText, setHoverText] = useState<string | null>(null); // 마우스 호버 시의 텍스트 관리
   const [isSideMenuOpen, setSideMenuOpen] = useState(false); // 사이드 메뉴 상태
 
   const toggleMenuRef = useRef<HTMLDivElement>(null);
@@ -28,20 +25,12 @@ export default function Header() {
     setOpenMenu(menu === openMenu ? null : menu); // 클릭된 메뉴를 열거나 닫기
   };
 
-  const handleCircleTrue = (menu: string) => {
-    setHoverText(menu);
-  };
-
   const handleBlogOpen = (menu: string | null) => {
     setOpenBlogMenu(menu === openMenu ? null : menu); // 클릭된 메뉴를 열거나 닫기
   };
 
   const handleJobOpen = (menu: string | null) => {
     setOpenJobMenu(menu === openMenu ? null : menu); // 클릭된 메뉴를 열거나 닫기
-  };
-
-  const handleCircleFalse = () => {
-    setHoverText(null);
   };
 
   const toggleSideMenuOpen = () => {
@@ -61,16 +50,11 @@ export default function Header() {
 
   return (
     <div className="fixed md:relative flex text-white-0 px-8 gap-1 w-full bg-white-0 border-b-2 h-20 items-center z-50">
-      <div className="hidden md:flex w-full items-center ">
+      <div className="hidden md:flex w-full items-cente ">
         {/* 로고 버튼 */}
-        <div className="pl-4">
-          <button
-            type="button"
-            onClick={() => {
-              router.push(`/main`);
-            }}
-          >
-            <Image src="/assets/logo-lg.svg" alt="로고" width={117} height={30} className="hidden lg:flex" />
+        <div className="pl-4 w-44">
+          <Link href="/main">
+            <Image src="/assets/logo-lg.svg" alt="로고" width={117} height={30} className="hidden lg:flex pt-2 mr-3" />
             <Image
               src="/assets/logo-md.svg"
               alt="로고"
@@ -78,38 +62,30 @@ export default function Header() {
               height={30}
               className="hidden md:flex pt-1 lg:hidden"
             />
-          </button>
+          </Link>
         </div>
         {/* PC 및 Tablet 스크린 */}
-        <div className="hidden lg:flex px-8">
+        <div className="hidden md:flex">
           <MainMenu
             handleBlogOpen={handleBlogOpen}
             handleJobOpen={handleJobOpen}
             openBlogMenu={openBlogMenu}
             openJobMenu={openJobMenu}
-            hoverText={hoverText}
-            handleCircleTrue={handleCircleTrue}
-            handleCircleFalse={handleCircleFalse}
           />
         </div>
       </div>
-      <div className="flex  w-full h-full ">
+      <div className="hidden md:flex  w-full h-full">
         <MyMenu openMenu={openMenu} handleMenuOpen={handleMenuOpen} />
       </div>
 
       {/* Mobile 스크린 */}
-      <div className="flex-center md:hidden w-full h-full">
+      <div className="flex-center md:hidden w-full h-full ">
         <div className="absolute left-1 p-4 w-10 h-12">
           <button type="button" onClick={toggleSideMenuOpen}>
             <Icons name={MenuIcon} />
           </button>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            router.push(`/main`);
-          }}
-        >
+        <Link href="/main" className="">
           {!isSideMenuOpen && (
             <motion.div layoutId="smallLogo" className="flex">
               <Image
@@ -121,7 +97,7 @@ export default function Header() {
               />
             </motion.div>
           )}
-        </button>
+        </Link>
       </div>
       <div ref={toggleMenuRef}>
         {/* SideMenu 컴포넌트 */}
