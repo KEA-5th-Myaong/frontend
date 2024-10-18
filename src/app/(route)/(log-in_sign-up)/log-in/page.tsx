@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { FORM_TEXT } from '../_constants/forms';
 import LoginForm from './_components/LoginForm';
 
@@ -23,8 +24,20 @@ export default function Login() {
             <span className="mb-4 text-gray-3">{FORM_TEXT[5]}</span>
 
             <div className="flex gap-5">
-              <div className="bg-yellow-300 rounded-full p-6 cursor-pointer" />
-              <div className="bg-white-0 rounded-full border-2 p-6 cursor-pointer" />
+              <Image
+                width={50}
+                height={50}
+                src="/assets/log-in/kakao-login.png"
+                alt="카카오로그인"
+                className="rounded-full"
+              />
+              <Image
+                width={50}
+                height={50}
+                src="/assets/log-in/google-login.png"
+                alt="구글로그인"
+                className="rounded-full"
+              />
             </div>
           </div>
         </div>
