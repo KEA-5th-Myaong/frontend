@@ -29,14 +29,14 @@ export default function Login() {
                 height={50}
                 src="/assets/log-in/kakao-login.png"
                 alt="카카오로그인"
-                className="rounded-full"
+                className="rounded-full cursor-pointer"
               />
               <Image
                 width={50}
                 height={50}
                 src="/assets/log-in/google-login.png"
                 alt="구글로그인"
-                className="rounded-full"
+                className="rounded-full cursor-pointer"
               />
             </div>
           </div>
