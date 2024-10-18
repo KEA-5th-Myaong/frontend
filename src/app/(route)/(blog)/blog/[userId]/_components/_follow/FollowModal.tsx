@@ -44,7 +44,7 @@ export default function FollowModal({ isOpen, onClose, title, list }: FollowModa
                 </p>
               </div>
 
-              <button type="button" className="text-xl font-semibold primary-1-btn py-2 px-6 rounded-[10px]">
+              <button type="button" className="pre-2xl-medium primary-1-btn py-2 px-6 rounded-[10px]">
                 팔로잉
               </button>
             </div>

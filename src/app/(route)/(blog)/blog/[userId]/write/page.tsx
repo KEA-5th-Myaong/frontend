@@ -3,33 +3,29 @@ import PostInput from './_components/PostInput';
 
 export default function PostWrite() {
   return (
-    <div className="flex-center flex-col">
-      <div className="flex-center flex-col w-[1000px] h-[800px] ">
-        <div className="flex w-full h-12 px-5 mb-2">
-          <BackButton />
+    <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5">
+      <div className="w-full">
+        <BackButton className="flex w-full pt-12 px-5 mb-2" />
+
+        <div className="flex-col w-full py-3 px-[10px]">
+          <p className="py-1">포스트 작성</p>
+
+          <input
+            type="text"
+            placeholder="제목을 입력해주세요"
+            className="text-3xl font-semibold outline-none w-full my-3"
+            maxLength={42}
+          />
         </div>
-        <div className="flex-col w-full py-3 px-10">
-          <div className="my-1">
-            <p>포스트 작성</p>
-          </div>
-          <div className="my-3 w-full">
-            <input
-              type="text"
-              placeholder="제목을 입력해주세요"
-              className="text-3xl font-semibold outline-none w-full"
-              maxLength={42}
-            />
-          </div>
-        </div>
-        <div className="flex-center w-full py-3 px-10">
-          <PostInput />
-        </div>
-        <div className="relative w-[920px] h-13">
-          <button type="button" className="absolute w-32 h-12 text-sm rounded-3xl bg-primary-1 text-white-0  right-0">
+
+        <PostInput />
+
+        <div className="flex justify-end w-full pt-16">
+          <button type="button" className="py-[18px] px-6 rounded-[28px] primary-1-btn">
             작성 완료
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

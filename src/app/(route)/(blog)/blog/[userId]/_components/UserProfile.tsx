@@ -1,16 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import testFollower from './_follow/follow.json';
 import { UserProfileProps, FollowProps } from '../_types/blog';
 import FollowButton from './_follow/FollowButton';
 import FollowModal from './_follow/FollowModal';
 
 export default function UserProfile({ userName, follower, following, isFollowed }: UserProfileProps) {
-  const router = useRouter();
   const params = useParams();
-  console.log();
 
   const [followerList, setFollowerList] = useState<FollowProps[]>([]);
   const [followingList, setFollowingList] = useState<FollowProps[]>([]);
@@ -37,10 +36,10 @@ export default function UserProfile({ userName, follower, following, isFollowed 
     <>
       <div className="pt-[51px] pb-[41px] xl:px-5 px-2 rounded-2xl bg-white-0 md:border md:border-gray-2 h-fit">
         <div className="flex items-center sm:gap-0 gap-8">
-          <div className="flex flex-col sm:flex-row  md:flex-col items-center gap-3 sm:gap-10 ">
+          <div className="flex flex-col sm:flex-row  md:flex-col items-center gap-3 sm:gap-3 md:gap-10 ">
             <div className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] bg-pink-300 rounded-full" />
 
-            <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 md:w-[300px] gap-3">
+            <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
               <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
                 {userName}
                 <span className="inline md:hidden">님의 블로그</span>
@@ -57,21 +56,19 @@ export default function UserProfile({ userName, follower, following, isFollowed 
               <FollowButton count={following} label="팔로잉" onClick={() => setIsFollowingOpen(true)} />
             </div>
 
-            <button
+            <Link
               type="button"
-              onClick={() => {
-                router.push(`/${params.userId}/write`);
-              }}
-              className={`${isFollowed ? 'bg-gray-0' : 'bg-primary-1'} ml-0 sm:ml-10 
+              href={`/blog/${params.userId}/write`}
+              className={`${isFollowed ? 'bg-gray-0' : 'bg-primary-1'} flex justify-center ml-0 sm:ml-10 
             md:ml-0 self-stretch text-lg h-fit py-[4.5px] 
             sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold primary-1-btn`}
             >
               글 작성하기
-            </button>
+            </Link>
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:hidden md:gap-5 md:w-[300px] md:items-center">
-            <span className="text-2xl font-semibold md:text-primary-1 text-black-1">
+            <span className="text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1">
               {userName}
               <span className="inline md:hidden">님의 블로그</span>
             </span>

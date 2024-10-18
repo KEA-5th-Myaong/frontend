@@ -20,10 +20,25 @@ export default function ImageChange({ setProfileImage }: ImageChangeProps) {
       reader.readAsDataURL(file); // 파일을 DataURL로 읽기 시작
     }
   };
+
+  console.log(previewUrl);
+
+  const handleDefaultImage = () => {
+    const defaultImagePath = '/mascot.png';
+    setPreviewUrl(defaultImagePath);
+    // 기본 이미지 파일을 File 객체로 변환하여 setProfileImage에 전달
+    fetch(defaultImagePath)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const file = new File([blob], 'mascot.png', { type: 'image/png' });
+        setProfileImage(file);
+      });
+  };
+
   return (
     <div className="flex flex-col max-w-[160px]">
       <p className="font-semibold pb-[18px]">프로필 사진</p>
-      <div className="w-[160px] h-[160px] rounded-[10px] bg-[#FBFBFB] border border-[#D9D9D9]">
+      <div className="w-[160px] h-[160px] rounded-[10px] bg-[#FBFBFB] border border-gray-5">
         {previewUrl ? (
           <img src={previewUrl} alt="Profile" className="w-full h-full object-cover rounded-[10px]" />
         ) : (
@@ -34,6 +49,9 @@ export default function ImageChange({ setProfileImage }: ImageChangeProps) {
       <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/*" className="hidden" />
       <button type="button" onClick={() => fileInputRef.current?.click()} className="py-2 mt-[14px] primary-1-btn">
         프로필 수정
+      </button>
+      <button type="button" onClick={handleDefaultImage} className="py-1 mt-2 primary-1-btn">
+        기본 이미지로 변경
       </button>
     </div>
   );

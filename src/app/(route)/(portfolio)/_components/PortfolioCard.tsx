@@ -40,7 +40,8 @@ export default function PortfolioCard({ id, title, date, memo }: PortfolioCardPr
         <button
           type="button"
           onClick={handleSetMain}
-          className={`${isMainPortfolio === id ? 'bg-primary-1' : 'bg-gray-5'} flex-center w-[42px] h-[20px] px-[10px] py-[5px] rounded-[5px] font-semibold text-[11px] text-white-0`}
+          className={`${isMainPortfolio === id ? 'bg-primary-4' : 'bg-gray-5'} flex-center w-[42px] h-[20px] 
+          px-[10px] py-[5px] rounded-[5px] font-semibold text-[11px] text-white-0`}
         >
           대표
         </button>

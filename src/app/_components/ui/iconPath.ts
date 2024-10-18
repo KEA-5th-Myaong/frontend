@@ -1,4 +1,3 @@
-import path from 'path';
 import { IconPathTypes } from '../../_types/icon';
 
 // 눈 모양 아이콘
@@ -38,6 +37,18 @@ export const FavorIcon: IconPathTypes = {
   width: 16,
   height: 15,
   fill: 'currentColor',
+};
+
+// 답글 ㄴ> 아이콘
+export const ReplyIcon: IconPathTypes = {
+  path: 'M2.75 2a.75.75 0 0 1 .75.75v6.5h7.94l-.97-.97a.75.75 0 0 1 1.06-1.06l2.25 2.25a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 1 1-1.06-1.06l.97-.97H2.75A.75.75 0 0 1 2 10V2.75A.75.75 0 0 1 2.75 2Z',
+  fill: 'currentColor',
+  width: 16,
+  height: 16,
+  options: {
+    fillRule: 'evenodd',
+    clipRule: 'evenodd',
+  },
 };
 
 // 더보기 아이콘
@@ -169,6 +180,7 @@ export const EditIcon: IconPathTypes = {
     strokeLinejoin: 'round',
   },
 };
+
 // required (필수 항목) 아이콘
 export const RequiredIcon: IconPathTypes = {
   path: 'M2.23622 2.5a2.23622 2.23622 0 1 1 4.47244 0 2.23622 2.23622 0 1 1-4.47244 0z',

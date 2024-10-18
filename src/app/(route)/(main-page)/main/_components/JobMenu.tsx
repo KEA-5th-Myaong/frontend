@@ -21,7 +21,7 @@ export default function JobMenu({ className }: JobMenuProps) {
 
   return (
     <div
-      className={`${className} items-center md:items-start flex-row md:flex-col gap-2 w-full md:max-w-[136px] pt-6 md:pt-[46px] whitespace-nowrap overflow-scroll`}
+      className={`${className} items-center md:items-start flex-row md:flex-col gap-2 w-full md:max-w-[136px] pt-6 md:pt-[46px] whitespace-nowrap overflow-scroll hide-scrollbar`}
     >
       {jobs.map((job) => (
         <button
