@@ -9,14 +9,17 @@ import Icons from '../ui/Icon';
 import { MenuIcon } from '../ui/iconPath';
 import SideMenu from './_components/SideMenu';
 import useClickOutside from '../../_hooks/useClickOutside';
+import MyMenu from './_components/MyMenu';
 
 export default function Header() {
   const router = useRouter();
 
   // 상태 관리
   const [openMenu, setOpenMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
+  const [openBlogMenu, setOpenBlogMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
+  const [openJobMenu, setOpenJobMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
   const [hoverText, setHoverText] = useState<string | null>(null); // 마우스 호버 시의 텍스트 관리
-  const [isSideMenuOpen, setSideMenuOpen] = useState(false); // 사이드 메뉴 상태 추가
+  const [isSideMenuOpen, setSideMenuOpen] = useState(false); // 사이드 메뉴 상태
 
   const toggleMenuRef = useRef<HTMLDivElement>(null);
 
@@ -25,9 +28,16 @@ export default function Header() {
     setOpenMenu(menu === openMenu ? null : menu); // 클릭된 메뉴를 열거나 닫기
   };
 
-  // 서클 표시 핸들러
   const handleCircleTrue = (menu: string) => {
     setHoverText(menu);
+  };
+
+  const handleBlogOpen = (menu: string | null) => {
+    setOpenBlogMenu(menu === openMenu ? null : menu); // 클릭된 메뉴를 열거나 닫기
+  };
+
+  const handleJobOpen = (menu: string | null) => {
+    setOpenJobMenu(menu === openMenu ? null : menu); // 클릭된 메뉴를 열거나 닫기
   };
 
   const handleCircleFalse = () => {
@@ -73,14 +83,20 @@ export default function Header() {
         {/* PC 및 Tablet 스크린 */}
         <div className="hidden lg:flex px-8">
           <MainMenu
-            openMenu={openMenu}
+            handleBlogOpen={handleBlogOpen}
+            handleJobOpen={handleJobOpen}
+            openBlogMenu={openBlogMenu}
+            openJobMenu={openJobMenu}
             hoverText={hoverText}
             handleCircleTrue={handleCircleTrue}
             handleCircleFalse={handleCircleFalse}
-            handleMenuOpen={handleMenuOpen}
           />
         </div>
       </div>
+      <div className="flex  w-full h-full ">
+        <MyMenu openMenu={openMenu} handleMenuOpen={handleMenuOpen} />
+      </div>
+
       {/* Mobile 스크린 */}
       <div className="flex-center md:hidden w-full h-full">
         <div className="absolute left-1 p-4 w-10 h-12">

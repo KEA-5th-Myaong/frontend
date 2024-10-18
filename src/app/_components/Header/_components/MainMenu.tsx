@@ -7,19 +7,23 @@ import SubMenu from './SubMenu';
 import menuData from '../menuData.json';
 
 interface MainMenuProps {
-  openMenu: string | null;
   hoverText: string | null;
   handleCircleTrue: (menu: string) => void;
   handleCircleFalse: () => void;
-  handleMenuOpen: (menu: string | null) => void;
+  handleBlogOpen: (menu: string | null) => void;
+  handleJobOpen: (menu: string | null) => void;
+  openBlogMenu: string | null;
+  openJobMenu: string | null;
 }
 
 export default function MainMenu({
-  openMenu,
   hoverText,
   handleCircleTrue,
   handleCircleFalse,
-  handleMenuOpen,
+  handleBlogOpen,
+  handleJobOpen,
+  openBlogMenu,
+  openJobMenu,
 }: MainMenuProps) {
   const blogMenuRef = useRef<HTMLDivElement>(null);
   const jobMenuRef = useRef<HTMLDivElement>(null);
@@ -27,14 +31,14 @@ export default function MainMenu({
   useClickOutside({
     ref: blogMenuRef,
     callback: () => {
-      handleMenuOpen(null);
+      handleBlogOpen(null);
     },
   });
 
   useClickOutside({
     ref: jobMenuRef,
     callback: () => {
-      handleMenuOpen(null);
+      handleJobOpen(null);
     },
   });
 
@@ -50,13 +54,13 @@ export default function MainMenu({
           type="button"
           onMouseEnter={() => handleCircleTrue('blog')}
           onMouseLeave={() => {
-            if (openMenu === 'blog') {
+            if (openBlogMenu === 'blog') {
               handleCircleTrue('blog');
             } else {
               handleCircle();
             }
           }}
-          onClick={() => handleMenuOpen('blog')}
+          onClick={() => handleBlogOpen('blog')}
           className="relative text-black-1 text-sm font-semibold w-full h-full pb-2"
         >
           <div className="w-full h-1.5 flex-center">
@@ -67,7 +71,7 @@ export default function MainMenu({
             </div>
           </div>
           블로그
-          {openMenu === 'blog' && <SubMenu menuItems={menuData.blogSubMenuItems} />}
+          {openBlogMenu === 'blog' && <SubMenu menuItems={menuData.blogSubMenuItems} />}
         </button>
       </div>
 
@@ -77,13 +81,13 @@ export default function MainMenu({
           type="button"
           onMouseEnter={() => handleCircleTrue('job')}
           onMouseLeave={() => {
-            if (openMenu === 'blog') {
+            if (openBlogMenu === 'blog') {
               handleCircleTrue('blog');
             } else {
               handleCircle();
             }
           }}
-          onClick={() => handleMenuOpen('job')}
+          onClick={() => handleJobOpen('job')}
           className="relative text-black-1 text-sm font-semibold w-full h-full pb-2 "
         >
           <div className="flex -center w-full h-1.5">
@@ -94,7 +98,7 @@ export default function MainMenu({
             </div>
           </div>
           구직
-          {openMenu === 'job' && <SubMenu menuItems={menuData.jobSubMenuItems} />}
+          {openJobMenu === 'job' && <SubMenu menuItems={menuData.jobSubMenuItems} />}
         </button>
       </div>
     </div>
