@@ -54,11 +54,11 @@ export default function PostContent() {
       <div className="flex items-center justify-between mt-20 pb-10 border-b">
         <span className="text-sm text-gray-0">{testPosts[0].postDate}</span>
         <div className="flex gap-3">
-          <div className="text-primary-1 blog-favor-frame">
+          <div className="text-primary-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame">
             <Icons name={CommentIcon} />
             <p className="text-sm">10</p>
           </div>
-          <div className="text-gray-1 blog-favor-frame">
+          <div className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame">
             <Icons name={FavorIcon} />
             <span className="text-sm">{testPosts[0].lovedCount}</span>
           </div>

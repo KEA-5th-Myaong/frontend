@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import FormInput from '../../../../(Login_SignUp)/_components/FormInput';
-import { ChangePwdProps } from '../../../../(Login_SignUp)/_types/forms';
-import { validateCheckPwd, validatePwd } from '../../../../(Login_SignUp)/_utils/validation';
+import FormInput from '../../../../(log-in_sign-up)/_components/FormInput';
+import { ChangePwdProps } from '../../../../(log-in_sign-up)/_types/forms';
+import { validateCheckPwd, validatePwd } from '../../../../(log-in_sign-up)/_utils/validation';
 import Modal from '../../../../../_components/Modal';
 
 export default function ChangePwdContainer() {

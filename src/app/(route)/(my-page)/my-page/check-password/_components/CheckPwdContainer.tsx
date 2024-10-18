@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, FieldValues } from 'react-hook-form';
-import FormInput from '../../../../(Login_SignUp)/_components/FormInput';
-import { FORM_TEXT, FORM_PLACEHOLDER, FORM_ERROR } from '../../../../(Login_SignUp)/_constants/forms';
+import FormInput from '../../../../(log-in_sign-up)/_components/FormInput';
+import { FORM_TEXT, FORM_PLACEHOLDER, FORM_ERROR } from '../../../../(log-in_sign-up)/_constants/forms';
 import Modal from '../../../../../_components/Modal';
 
 export default function CheckPwdContainer() {
@@ -31,7 +31,7 @@ export default function CheckPwdContainer() {
     <>
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
-        className="flex flex-col justify-center gap-14 w-full min-w-[360px] max-w-[600px] px-5"
+        className="flex flex-col justify-center gap-14 w-full min-w-[360px] max-w-[600px] px-5 mt-40 sm:mt-60"
       >
         <p className="font-medium text-base sm:text-2xl text-gray-0 text-center">
           개인정보 보호를 위해 비밀번호를 재확인합니다.
@@ -50,7 +50,7 @@ export default function CheckPwdContainer() {
           확인
         </button>
       </form>
-      {showModal && (
+      {/* {showModal && (
         <Modal
           topText="비밀번호가 일치하지 않습니다."
           btnText="확인"
@@ -58,7 +58,7 @@ export default function CheckPwdContainer() {
             setShowModal(false);
           }}
         />
-      )}
+      )} */}
     </>
   );
 }

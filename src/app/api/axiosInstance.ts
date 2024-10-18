@@ -8,7 +8,7 @@ const config = {
 
 const server = config.backend.baseURL;
 
-const axiosInstance: AxiosInstance = axios.create({
+const api: AxiosInstance = axios.create({
   baseURL: server,
   withCredentials: true,
   headers: {
@@ -16,4 +16,4 @@ const axiosInstance: AxiosInstance = axios.create({
   },
 });
 
-export default axiosInstance;
+export default api;

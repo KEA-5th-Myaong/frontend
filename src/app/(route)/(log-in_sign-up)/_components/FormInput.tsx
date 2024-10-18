@@ -17,7 +17,10 @@ export default function FormInput<T extends FieldValues>({
   maxLength = undefined,
   minLength = 1,
   infoText = '',
-  isEdit,
+  isEdit = false,
+  isDisabled = false,
+  onEditClick,
+  value,
 }: FormInputProps<T>) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === 'password';
@@ -38,6 +41,8 @@ export default function FormInput<T extends FieldValues>({
         {...register(id as Path<T>, { required, onBlur })}
         className="mt-2 form-input"
         placeholder={placeholder}
+        disabled={isDisabled}
+        value={value}
       />
       {isPassword && (
         <button
@@ -50,7 +55,13 @@ export default function FormInput<T extends FieldValues>({
         </button>
       )}
 
-      {isEdit && <Icons className="absolute right-4 top-[62px] transform -translate-y-1/2" name={EditIcon} />}
+      {isEdit && (
+        <Icons
+          onClick={onEditClick}
+          className="absolute right-4 top-[62px] transform -translate-y-1/2"
+          name={EditIcon}
+        />
+      )}
       {error ? (
         <p className="form-error-text">{error.message}</p>
       ) : (
