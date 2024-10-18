@@ -46,7 +46,7 @@ body {
   }
   /* primary-1 버튼 */
   .primary-1-btn {
-    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg hover:bg-primary-2;
+    @apply bg-primary-1 text-white-0 font-bold whitespace-nowrap rounded-lg;
   }
 
   /*hover 애니메이션*/
@@ -109,8 +109,13 @@ body {
     @apply py-[6px] px-[30px] hover:bg-primary-3 hover:text-white-0 rounded-[6px] cursor-pointer;
   }
 
-  /*아이템 토글 스타일*/
+  /*포트폴리오 아이템 토글 스타일*/
   .item-toggle {
     @apply flex justify-between items-center pl-[10px] py-[10px];
+  }
+
+  /*포트폴리오*/
+  .pf-read-section {
+    @apply flex flex-col my-10;
   }
 }

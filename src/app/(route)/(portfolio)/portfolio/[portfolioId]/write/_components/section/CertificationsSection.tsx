@@ -38,7 +38,7 @@ export default function CertificationsSection() {
     <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">자격증</h1>
-        <button type="button" onClick={addCertificationItem} className="flex-center  hover:text-primary-4 ">
+        <button type="button" onClick={addCertificationItem} className="flex-center  hover:text-primary-1 ">
           <Image
             src="/assets/add-button.svg"
             alt="자격증 추가"

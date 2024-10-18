@@ -63,7 +63,7 @@ export default function Footer({
           <button
             type="button"
             onClick={handleDoneClick}
-            className="bg-primary-4 text-white-0 rounded-[10px] border border-[#E1E1E1] py-2 px-6"
+            className="bg-primary-1 text-white-0 rounded-[10px] border border-[#E1E1E1] py-2 px-6"
           >
             작성 완료
           </button>
