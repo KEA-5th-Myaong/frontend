@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Overlay from './Overlay';
 import { ModalProps } from '../_types/common';
 
-const modalMotion = {
+export const modalMotion = {
   variants: {
     hidden: { y: 50, opacity: 0 },
     visible: { y: 0, opacity: 1 },

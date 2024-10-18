@@ -55,7 +55,7 @@ body {
   }
   /* 로그인/회원가입 */
   .form-title {
-    @apply mb-12 text-[32px] font-semibold text-center;
+    @apply mb-12 pre-3xl-semibold text-center;
   }
   .form-error-text {
     @apply absolute pl-4 mt-[6px] font-medium text-xs text-red-0;
@@ -76,6 +76,8 @@ body {
   /* 블로그 */
   .blog-favor-frame {
     @apply flex items-center gap-[5px] px-3 py-[6px] cursor-pointer;
+    @apply flex items-center gap-[5px] px-3 py-[5px] cursor-pointer;
+
   }
 
   /* 모의 면접 */
@@ -83,7 +85,7 @@ body {
     @apply relative w-full max-w-[800px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-8;
   }
   .corp-block {
-    @apply py-[6px] px-1 sm:px-4 md:px-6 lg:px-8 text-black-0 rounded-lg w-1/3 hover:bg-primary-0 cursor-pointer my-2;
+    @apply py-[6px] px-1 sm:px-4 md:px-6 lg:px-8 text-black-0 rounded-lg w-1/3 bg-white-0 hover:bg-primary-0 cursor-pointer my-2;
   }
   .chat-msg-text {
     @apply min-w-[20%] font-semibold border border-gray-0 
@@ -99,7 +101,7 @@ body {
     @apply flex flex-col gap-[6px] w-full text-[13px] font-semibold;
   }
   .ps-input {
-    @apply bg-[#fcfcfc] px-5 border border-[#D9D9D9] rounded-[10px] placeholder:text-[#DEDEDE] font-normal focus:outline-none;
+    @apply bg-[#fcfcfc] px-5 border border-gray-5 rounded-[10px] placeholder:text-[#DEDEDE] font-normal focus:outline-none;
   }
   /*드롭다운 스타일*/
   .dropdown {
@@ -109,8 +111,13 @@ body {
     @apply py-[6px] px-[30px] hover:bg-primary-3 hover:text-white-0 rounded-[6px] cursor-pointer;
   }
 
-  /*아이템 토글 스타일*/
+  /*포트폴리오 아이템 토글 스타일*/
   .item-toggle {
     @apply flex justify-between items-center pl-[10px] py-[10px];
+  }
+
+  /*포트폴리오*/
+  .pf-read-section {
+    @apply flex flex-col my-10;
   }
 }

@@ -27,12 +27,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <link rel="icon" href="/favicon.ico" sizes="any" />
-      <Providers>
-        <body className={`${pretendard.variable} font-pretendard`}>
+      <body className={`${pretendard.variable} font-pretendard`}>
+        <Providers>
           <Header />
           {children}
-        </body>
-      </Providers>
+        </Providers>
+      </body>
     </html>
   );
 }

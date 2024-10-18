@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { usePDF } from 'react-to-pdf';
+import { usePDF, Margin } from 'react-to-pdf';
 import psReadTest from './psReadTest.json';
 import BackButton from '../../../../../../_components/BackButton';
 import Modal, { initailModalState } from '../../../../../../_components/Modal';
@@ -50,7 +50,7 @@ export default function PSReadContainer() {
 
   const { toPDF, targetRef } = usePDF({
     filename: '자기소개서.pdf',
-    page: { format: 'A4' },
+    page: { margin: Margin.SMALL, format: 'A4' },
     method: 'save',
   });
 
@@ -67,7 +67,7 @@ export default function PSReadContainer() {
       />
 
       <div ref={targetRef} className="self-start w-full mt-8 sm:mt-20">
-        <p className="w-full font-semibold text-[28px] pb-5 mb-9 border-b-2 border-gray-[#D9D9D9]">자기소개서</p>
+        <p className="w-full font-semibold text-[28px] pb-5 mb-9 border-b-2 border-5">자기소개서</p>
 
         <div className="flex flex-col gap-11">
           <PSReadContent label="지원 직무" content={psState.position} />
