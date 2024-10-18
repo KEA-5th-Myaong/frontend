@@ -1,9 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import useClickOutside from '../../../_hooks/useClickOutside';
-import SubMenu from './SubMenu'; // 새로 만든 SubMenu 컴포넌트 불러오기
+import SubMenu from './SubMenu';
+import menuData from '../menuData.json';
 
 interface MainMenuProps {
   openMenu: string | null;
@@ -20,27 +21,13 @@ export default function MainMenu({
   handleCircleFalse,
   handleMenuOpen,
 }: MainMenuProps) {
-  const router = useRouter();
-
   const blogMenuRef = useRef<HTMLDivElement>(null);
   const jobMenuRef = useRef<HTMLDivElement>(null);
-
-  const blogSubMenuItems = [
-    { id: 1, name: '내 블로그', onClick: () => router.push(`/blog/1`) },
-    { id: 2, name: '글쓰기', onClick: () => router.push(`/blog/1/write`) },
-  ];
-
-  const jobSubMenuItems = [
-    { id: 1, name: '모의 면접', onClick: () => router.push(`/interview/1/select`) },
-    { id: 2, name: '자소서 첨삭', onClick: () => router.push(`/personal-statement/1/list`) },
-    { id: 3, name: '내 포트폴리오', onClick: () => router.push(`/portfolio`) },
-  ];
 
   useClickOutside({
     ref: blogMenuRef,
     callback: () => {
       handleMenuOpen(null);
-      handleCircleFalse();
     },
   });
 
@@ -48,47 +35,66 @@ export default function MainMenu({
     ref: jobMenuRef,
     callback: () => {
       handleMenuOpen(null);
-      handleCircleFalse();
     },
   });
 
+  function handleCircle() {
+    handleCircleFalse();
+  }
+
   return (
-    <div className="flex gap-1 w-full h-16 relative items-center">
+    <div className="flex w-full h-16 relative items-center">
       {/* 블로그 메뉴 */}
-      <div ref={blogMenuRef} className="w-28 h-9 relative">
-        <div className="w-full h-1.5 justify-center items-center">
-          <div className="flex-center w-28 h-full">
-            {hoverText === 'blog' && <div className="bg-primary-1 w-1.5 h-1.5 rounded-lg " />}
-          </div>
-        </div>
+      <div ref={blogMenuRef} className="w-28 h-16 relative">
         <button
           type="button"
           onMouseEnter={() => handleCircleTrue('blog')}
-          onMouseLeave={() => handleCircleFalse()}
+          onMouseLeave={() => {
+            if (openMenu === 'blog') {
+              handleCircleTrue('blog');
+            } else {
+              handleCircle();
+            }
+          }}
           onClick={() => handleMenuOpen('blog')}
-          className="relative text-black-1 text-sm font-semibold w-full"
+          className="relative text-black-1 text-sm font-semibold w-full h-full pb-2"
         >
+          <div className="w-full h-1.5 flex-center">
+            <div className="flex-center w-28 h-full">
+              {(hoverText || handleCircleTrue) === 'blog' && (
+                <motion.div layoutId="circle" className="bg-primary-1 w-1.5 h-1.5 rounded-lg " />
+              )}
+            </div>
+          </div>
           블로그
-          {openMenu === 'blog' && <SubMenu menuItems={blogSubMenuItems} />}
+          {openMenu === 'blog' && <SubMenu menuItems={menuData.blogSubMenuItems} />}
         </button>
       </div>
 
       {/* 구직 메뉴 */}
-      <div ref={jobMenuRef} className="w-28 h-9 relative items-center">
-        <div className="w-full h-1.5 justify-center items-center">
-          <div className="flex-center w-28 h-full">
-            {hoverText === 'job' && <div className="bg-primary-1 w-1.5 h-1.5 rounded-lg " />}
-          </div>
-        </div>
+      <div ref={jobMenuRef} className="w-28 h-16 relative items-center">
         <button
           type="button"
           onMouseEnter={() => handleCircleTrue('job')}
-          onMouseLeave={() => handleCircleFalse()}
+          onMouseLeave={() => {
+            if (openMenu === 'blog') {
+              handleCircleTrue('blog');
+            } else {
+              handleCircle();
+            }
+          }}
           onClick={() => handleMenuOpen('job')}
-          className="relative text-black-1 text-sm font-semibold w-full"
+          className="relative text-black-1 text-sm font-semibold w-full h-full pb-2 "
         >
+          <div className="flex -center w-full h-1.5">
+            <div className="flex-center w-28 h-full">
+              {hoverText === 'job' && (
+                <motion.div layoutId="circle" className="bg-primary-1 w-1.5 h-1.5 rounded-lg pb-1" />
+              )}
+            </div>
+          </div>
           구직
-          {openMenu === 'job' && <SubMenu menuItems={jobSubMenuItems} />}
+          {openMenu === 'job' && <SubMenu menuItems={menuData.jobSubMenuItems} />}
         </button>
       </div>
     </div>
