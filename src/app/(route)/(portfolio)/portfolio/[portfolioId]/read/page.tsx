@@ -9,10 +9,12 @@ import { MoreIcon } from '@/app/_components/ui/iconPath';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import PortfolioContainer from './_components/PortfolioContainer';
 import Footer from '../../../_components/Footer';
+import Modal from '@/app/_components/Modal';
 
 export default function PortfolioRead() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
   const [isLogined, setIsLogined] = useState<boolean | null>(true);
+  const [showModal, setShowModal] = useState(false);
 
   const [isShowDropdown, setIsShowDropdown] = useState(false);
 
@@ -22,11 +24,24 @@ export default function PortfolioRead() {
     callback: () => setIsShowDropdown(false),
   });
 
+  // PDF 생성 클릭 시
   const { toPDF, targetRef } = usePDF({
     filename: '포트폴리오.pdf',
     page: { margin: Margin.SMALL, format: 'A4' },
     method: 'save',
   });
+  // 링크 공유 클릭 시
+  const handleLinkClick = () => {
+    setShowModal(true);
+  };
+
+  // 포트폴리오 URL 복사
+  const handleCopyLink = async () => {
+    const currentUrl = window.location.href; // 현재 URL 가져오기
+    await navigator.clipboard.writeText(currentUrl); // 클립보드에 복사
+    setShowModal(false); // 모달 닫기
+    alert('링크가 복사되었습니다!'); // 사용자에게 알림
+  };
 
   return (
     <div className="flex px-[50px] md:px-0 mb-[100px]">
@@ -55,7 +70,10 @@ export default function PortfolioRead() {
           <PortfolioContainer />
         </section>
       </div>
-      <Footer showPDF showLink handlePdfClick={toPDF} />
+      <Footer showPDF showLink handlePdfClick={toPDF} handleLinkClick={handleLinkClick} />
+      {showModal && (
+        <Modal topText="포트폴리오 공유 링크가 생성되었습니다" btnText="링크 복사" onBtnClick={handleCopyLink} />
+      )}
     </div>
   );
 }
