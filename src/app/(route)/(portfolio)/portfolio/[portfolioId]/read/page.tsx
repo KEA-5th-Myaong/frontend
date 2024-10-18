@@ -3,12 +3,12 @@
 import { useRef, useState } from 'react';
 import { Margin, usePDF } from 'react-to-pdf';
 import Icons from '@/app/_components/ui/Icon';
-import PortfolioContainer from './_components/PortfolioContainer';
-import PortfolioHeader from './_components/PortfolioHeader';
 import useClickOutside from '@/app/_hooks/useClickOutside';
+import PortfolioHeader from './_components/PortfolioHeader';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
-import PortfolioWriteDropdown from '../_components/PortfolioWriteDropdown';
-import Footer from '../_components/Footer';
+import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
+import PortfolioContainer from './_components/PortfolioContainer';
+import Footer from '../../../_components/Footer';
 
 export default function PortfolioRead() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');

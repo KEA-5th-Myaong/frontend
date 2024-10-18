@@ -18,7 +18,7 @@ export default function PortfolioList() {
           <h1 className="font-semibold text-left">포트폴리오 관리</h1>
           <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
         </div>
-        <Link href="/portfolio/write">
+        <Link href="/portfolio/1/write">
           <button
             type="button"
             className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation"
@@ -34,7 +34,9 @@ export default function PortfolioList() {
       <div className="flex flex-col items-center mt-[30px] mb-[100px] px-[50px]">
         <div className="w-full lg:max-w-[1000px] grid justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[20px] gap-y-[25px] gap-4">
           {portfolio.map((item: PortfolioCardProps) => (
-            <PortfolioCard key={item.id} id={item.id} title={item.title} date="2024.10.17" />
+            <Link href={`/portfolio/${item.id}/write`}>
+              <PortfolioCard key={item.id} id={item.id} title={item.title} date="2024.10.17" />
+            </Link>
           ))}
           <PortfolioAddCard />
         </div>

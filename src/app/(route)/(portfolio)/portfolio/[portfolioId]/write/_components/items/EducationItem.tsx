@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Input from '../Input';
-import MotionWrapper from '../../../../../../_components/MotionWrapper';
+import MotionWrapper from '@/app/_components/MotionWrapper';
 
 interface EducationItemProps {
   id: number;

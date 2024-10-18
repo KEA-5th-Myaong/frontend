@@ -1,5 +1,5 @@
-import Icons from '../../../../../_components/ui/Icon';
-import { RequiredIcon } from '../../../../../_components/ui/iconPath';
+import Icons from '@/app/_components/ui/Icon';
+import { RequiredIcon } from '@/app/_components/ui/iconPath';
 
 interface InputProps {
   element: 'input' | 'textarea';

@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import Icons from '@/app/_components/ui/Icon';
 import { RequiredIcon } from '@/app/_components/ui/iconPath';
-import Image from 'next/image';
 
 export default function PortfolioContainer() {
   return (

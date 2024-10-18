@@ -1,14 +1,19 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import Footer from '../_components/Footer';
+import { useParams, useRouter } from 'next/navigation';
 import PortfolioContainer from '../read/_components/PortfolioContainer';
+import Footer from '../../../_components/Footer';
 
 export default function PortfolioPreview() {
   const router = useRouter();
 
+  const params = useParams();
+  const { portfolioId } = params;
+
   const handleDoneClick = () => {
-    router.push('/portfolio/read');
+    if (portfolioId) {
+      router.push(`/portfolio/${portfolioId}/read`);
+    }
   };
 
   return (

@@ -2,11 +2,10 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
-import PortfolioWriteDropdown from '../_components/PortfolioWriteDropdown';
 import EducationSection from './_components/section/EducationSection';
 import ExperienceSection from './_components/section/ExperienceSection';
 import LinksSection from './_components/section/LinksSection';
@@ -15,15 +14,18 @@ import CertificationsSection from './_components/section/CertificationsSection';
 import ActivitiesSection from './_components/section/ActivitiesSection';
 import PSSection from './_components/section/PSSection';
 import Input from './_components/Input';
-import Footer from '../_components/Footer';
 import ItemToggle from './_components/ItemToggle';
 import useToggleStore from '@/app/_store/portfolioToggle';
+import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
+import Footer from '../../../_components/Footer';
 
 export default function PortfolioWrite() {
   const [title, setTitle] = useState('곽서연 포트폴리오1');
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
   const router = useRouter();
+  const params = useParams();
+  const { portfolioId } = params;
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside({
@@ -32,11 +34,15 @@ export default function PortfolioWrite() {
   });
 
   const handleDoneClick = () => {
-    router.push('/portfolio/read');
+    if (portfolioId) {
+      router.push(`/portfolio/${portfolioId}/read`);
+    }
   };
 
   const handlePreviewClick = () => {
-    router.push('/portfolio/preview');
+    if (portfolioId) {
+      router.push(`/portfolio/${portfolioId}/preview`);
+    }
   };
 
   return (
@@ -50,7 +56,7 @@ export default function PortfolioWrite() {
             <h1 className="font-semibold text-left ">포트폴리오 작성</h1>
             <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
           </div>
-          <Link href="/portfolio/read">
+          <Link href={`/portfolio/${portfolioId}/read`}>
             <button
               type="button"
               className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation"
