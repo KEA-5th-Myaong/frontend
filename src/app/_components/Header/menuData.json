@@ -7,5 +7,9 @@
     { "id": 1, "name": "모의 면접", "path": "/interview/1/select" },
     { "id": 2, "name": "자소서 첨삭", "path": "/personal-statement/1/list" },
     { "id": 3, "name": "내 포트폴리오", "path": "/portfolio" }
+  ],
+  "myPageMenuItems": [
+    { "id": 1, "name": "마이페이지", "path": "/my-page/check-password" },
+    { "id": 2, "name": "로그아웃", "path": "/main" }
   ]
 }
