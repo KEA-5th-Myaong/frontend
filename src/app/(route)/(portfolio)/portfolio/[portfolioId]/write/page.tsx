@@ -18,7 +18,6 @@ import ItemToggle from './_components/ItemToggle';
 import useToggleStore from '@/app/_store/portfolioToggle';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import Footer from '../../../_components/Footer';
-import Image from 'next/image';
 import UploadImage from './_components/UploadImage';
 
 export default function PortfolioWrite() {
@@ -57,13 +56,11 @@ export default function PortfolioWrite() {
               <h1 className="font-semibold text-left ">포트폴리오 작성</h1>
               <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
             </div>
-            <Link href={`/portfolio/${portfolioId}/read`}>
-              <button
-                type="button"
-                className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation"
-              >
-                작성 완료
-              </button>
+            <Link
+              href={`/portfolio/${portfolioId}/read`}
+              className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation"
+            >
+              작성 완료
             </Link>
           </div>
           <div className="relative flex justify-between items-center mt-5">

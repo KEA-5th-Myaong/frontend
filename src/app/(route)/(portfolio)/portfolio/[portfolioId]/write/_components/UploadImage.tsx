@@ -37,7 +37,7 @@ export default function UploadImage() {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            style={{ display: 'none' }}
+            className="display-none"
           />
           <Image
             src="/assets/add-button.svg"
