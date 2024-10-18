@@ -12,11 +12,15 @@ interface SideMenuProps {
   onClose: () => void;
 }
 
-function SideMenu({ isOpen, onClose }: SideMenuProps) {
+export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <Overlay onClick={onClose}>
+        <Overlay
+          onClick={() => {
+            onClose();
+          }}
+        >
           <motion.div
             animate={{ x: 0.1 }} // 나타날 때 왼쪽에서 오른쪽으로 슬라이드
             transition={{ duration: 0.1 }} // 전환 애니메이션 속도
@@ -67,5 +71,3 @@ function SideMenu({ isOpen, onClose }: SideMenuProps) {
     </AnimatePresence>
   );
 }
-
-export default SideMenu;

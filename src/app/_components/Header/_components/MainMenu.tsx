@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import useClickOutside from '../../../_hooks/useClickOutside';
 import SubMenu from './SubMenu';
@@ -16,14 +17,22 @@ interface MainMenuProps {
 export default function MainMenu({ handleBlogOpen, handleJobOpen, openBlogMenu, openJobMenu }: MainMenuProps) {
   const blogMenuRef = useRef<HTMLDivElement>(null);
   const jobMenuRef = useRef<HTMLDivElement>(null);
-  const [hoverBlogText, setHoverBlogHoverText] = useState<true | false>(false); // 마우스 호버 시의 텍스트 관리
-  const [hoverJobText, setHoverJobHoverText] = useState<true | false>(false); // 마우스 호버 시의 텍스트 관리
+  const [hoverBlogText, setHoverBlogText] = useState<true | false>(false); // 마우스 호버 시의 텍스트 관리
+  const [hoverJobText, setHoverJobText] = useState<true | false>(false); // 마우스 호버 시의 텍스트 관리
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    handleJobOpen(null);
+    handleBlogOpen(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, searchParams]);
 
   useClickOutside({
     ref: blogMenuRef,
     callback: () => {
       handleBlogOpen(null);
-      setHoverBlogHoverText(false);
+      setHoverBlogText(false);
     },
   });
 
@@ -31,22 +40,22 @@ export default function MainMenu({ handleBlogOpen, handleJobOpen, openBlogMenu, 
     ref: jobMenuRef,
     callback: () => {
       handleJobOpen(null);
-      setHoverJobHoverText(false);
+      setHoverJobText(false);
     },
   });
 
   const handleBlogCircleTrue = () => {
-    setHoverBlogHoverText(true);
+    setHoverBlogText(true);
   };
   const handleJobCircleTrue = () => {
-    setHoverJobHoverText(true);
+    setHoverJobText(true);
   };
 
   const handleBlogCircleFalse = () => {
-    setHoverBlogHoverText(false);
+    setHoverBlogText(false);
   };
   const handleJobCircleFalse = () => {
-    setHoverJobHoverText(false);
+    setHoverJobText(false);
   };
 
   return (

@@ -49,12 +49,12 @@ export default function Header() {
   });
 
   return (
-    <div className="fixed md:relative flex text-white-0 px-8 gap-1 w-full bg-white-0 border-b-2 h-20 items-center z-50">
-      <div className="hidden md:flex w-full items-cente ">
+    <div className="fixed md:relative flex text-white-0 px-8 gap-1 w-full min-w-[360px] bg-white-0 border-b-2 h-20 items-center z-50">
+      <div className="hidden md:flex w-full items-center">
         {/* 로고 버튼 */}
         <div className="pl-4 w-44">
           <Link href="/main">
-            <Image src="/assets/logo-lg.svg" alt="로고" width={117} height={30} className="hidden lg:flex pt-2 mr-3" />
+            <Image src="/assets/logo-lg.svg" alt="로고" width={117} height={30} className="hidden lg:flex mr-3" />
             <Image
               src="/assets/logo-md.svg"
               alt="로고"
