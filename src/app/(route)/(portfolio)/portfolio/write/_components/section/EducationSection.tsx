@@ -33,7 +33,7 @@ export default function EducationSection() {
     <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">학력</h1>
-        <button type="button" onClick={addEducationItem} className="flex-center hover:text-primary-4 ">
+        <button type="button" onClick={addEducationItem} className="flex-center hover:text-primary-1 ">
           <Image
             src="/assets/add-button.svg"
             alt="학력 추가"

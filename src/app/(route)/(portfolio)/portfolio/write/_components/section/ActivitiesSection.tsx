@@ -36,7 +36,7 @@ export default function ActivitiesSection() {
     <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">교육 | 대외활동</h1>
-        <button type="button" onClick={addActivityItem} className="flex-center  hover:text-primary-4">
+        <button type="button" onClick={addActivityItem} className="flex-center  hover:text-primary-1">
           <Image
             src="/assets/add-button.svg"
             alt="교육 및 대외활동 추가"

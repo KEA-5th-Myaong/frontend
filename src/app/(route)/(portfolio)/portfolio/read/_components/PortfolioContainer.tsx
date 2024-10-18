@@ -1,9 +1,27 @@
 import Icons from '@/app/_components/ui/Icon';
 import { RequiredIcon } from '@/app/_components/ui/iconPath';
+import Image from 'next/image';
 
 export default function PortfolioContainer() {
   return (
     <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] px-5 py-10  lg:mx-auto border rounded-[10px]">
+      <section className="flex items-center">
+        <Image alt="포트폴리오 사용자 이미지" src="/profile.png" width={120} height={120} />
+        <div className="flex ml-10 text-left my-3">
+          <div className="flex flex-col my-5 gap-2">
+            <p className="font-semibold ">이름</p>
+            <p className="font-semibold">휴대폰 번호</p>
+            <p className="font-semibold">이메일 주소</p>
+            <p className="font-semibold">관심 직무</p>
+          </div>
+          <div className="flex flex-col ml-10 my-5 gap-2">
+            <p className="text-left">곽서연</p>
+            <p>010-0000-0000</p>
+            <p>yeonyeon@email.com</p>
+            <p>프론트엔드 개발자</p>
+          </div>
+        </div>
+      </section>
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">학력</h1>
         <div className="h-[2px] w-full bg-gray-5 my-[20px]" />

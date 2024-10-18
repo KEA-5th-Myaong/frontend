@@ -36,7 +36,7 @@ export default function SkillsSection() {
         onKeyDown={handleKeyDown}
         maxLength={50}
         placeholder="기술 스택을 입력해주세요"
-        className="w-full bg-white-0 mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]"
+        className="w-full bg-white-0 mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]"
       />
       <ul className="flex gap-[10px] mt-4">
         {skills.map((skillItem) => (

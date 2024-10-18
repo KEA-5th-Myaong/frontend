@@ -21,7 +21,7 @@ export default function PortfolioList() {
         <Link href="/portfolio/write">
           <button
             type="button"
-            className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-4 rounded-[30px] hover-animation"
+            className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation"
           >
             <Icons
               className="mr-[10px]"

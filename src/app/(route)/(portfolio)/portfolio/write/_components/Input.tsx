@@ -48,14 +48,14 @@ export default function Input({
             if (onClick) onClick(event);
           }}
           required={required}
-          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
+          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
         />
       ) : (
         <textarea
           placeholder={placeholder}
           required={required}
           maxLength={maxLength}
-          className={`${inputWidth} ${background}  resize-none h-[110px] mt-[8px] px-[20px] py-[12px] text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-4 focus:border-[2px]`}
+          className={`${inputWidth} ${background}  resize-none h-[110px] mt-[8px] px-[20px] py-[12px] text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
         />
       )}
     </div>
