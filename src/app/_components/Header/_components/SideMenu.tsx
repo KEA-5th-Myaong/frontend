@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import Overlay from '../../Overlay';
-
+import testData from '../test.json';
 import menuData from '../menuData.json';
 
 interface SideMenuProps {
@@ -28,24 +28,8 @@ function SideMenu({ isOpen, onClose }: SideMenuProps) {
                   <Image src="/assets/logo-sm.svg" alt="모바일로고" width={80} height={40} className="flex pt-6 pr-3" />
                 </motion.div>
               </div>
-              <div className="pl-6 font-semibold">
-                <Link
-                  href="/log-in"
-                  onClick={() => {
-                    onClose();
-                  }}
-                >
-                  로그인
-                </Link>
-                <Link
-                  href="/sign-up"
-                  className="px-3"
-                  onClick={() => {
-                    onClose();
-                  }}
-                >
-                  회원가입
-                </Link>
+              <div className="pl-6 font-semibold text-xl">
+                <Link href="/my-page/check-password">{testData.userData.userName} 님</Link>
                 <div className="flex bg-gray-5 w-36 h-[1px] mt-3" />
               </div>
             </div>
