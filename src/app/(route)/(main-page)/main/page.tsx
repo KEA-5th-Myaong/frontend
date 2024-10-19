@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import Post from '../../../_components/Post';
 import JobMenu from './_components/JobMenu';
 // import InterestedJob from './_components/InterestedJob';
@@ -11,6 +10,8 @@ import { fetchBookmark, fetchFollowing, fetchPosts, fetchPreJob } from './_servi
 import { PostProps } from './_types/main-page';
 import formatDate from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../public/mascot.png';
+import Carousel from './_components/Carousel';
+import MainTabMenu from './_components/MainTabMenu';
 
 export default function MainPage() {
   const router = useRouter();
@@ -64,13 +65,13 @@ export default function MainPage() {
     setSelectedJob(jobId);
     setPreJob([jobId]);
     setActiveTab('직군');
-    setLastId('0');
+    setLastId('10');
     setPosts([]);
   };
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-    setLastId('0');
+    setLastId('10');
     setPosts([]);
   };
 
@@ -98,16 +99,7 @@ export default function MainPage() {
     <>
       <section className="flex justify-center pt-14 pb-12">
         <div className="w-full min-w-[360px] max-w-[982px] px-[42px]">
-          <div id="캐러셀" className="w-full aspect-[16/9] max-h-[280px] rounded-[10px] relative overflow-hidden">
-            <Image
-              src="/assets/carousel1.png"
-              alt="캐러셀 1"
-              layout="fill"
-              objectFit="contain"
-              sizes="(max-width: 768px) 100vw, 982px"
-              className="w-full h-full"
-            />
-          </div>
+          <Carousel />
 
           <div className="flex flex-col md:flex-row w-full gap-[14px]">
             {/* 직군 메뉴 */}
@@ -115,24 +107,7 @@ export default function MainPage() {
 
             <div className="flex flex-col items-center w-full pt-4 md:pt-5">
               {/* 추천 팔로잉 가로 북마크 */}
-              <div className="flex flex-col w-full max-w-[254px] sm:max-w-[416px] ">
-                <div className="flex justify-around w-full relative">
-                  {['추천', '팔로잉', '북마크'].map((tab) => (
-                    <button key={tab} type="button" onClick={() => handleTabChange(tab)} className="pb-2">
-                      {tab}
-                    </button>
-                  ))}
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gray-300 rounded-[10px]" />
-                  {activeTab !== '직군' && (
-                    <div
-                      className="absolute bottom-0 h-[2px] bg-primary-1 transition-all duration-300 ease-in-out rounded-[10px] w-1/3"
-                      style={{
-                        left: `${(['추천', '팔로잉', '북마크'].indexOf(activeTab) / 3) * 100}%`,
-                      }}
-                    />
-                  )}
-                </div>
-              </div>
+              <MainTabMenu activeTab={activeTab} onTabChange={handleTabChange} />
 
               {/* 직군 메뉴 */}
               <JobMenu className="flex md:hidden" onJobSelect={handleJobSelect} selectedJob={selectedJob} />
