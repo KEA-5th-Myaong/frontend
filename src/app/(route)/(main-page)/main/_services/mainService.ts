@@ -7,8 +7,9 @@ export async function fetchPosts(lastId: string) {
 }
 
 // (GET)메인페이지 선호 직업별 포스트 목록
-export async function fetchRecommend(lastId: string, preJob: string[]) {
-  const { data } = await api.get(`/blog/recommend/${lastId}`);
+export async function fetchPreJob(lastId: string, preJob: string[]) {
+  const preJobString = preJob.join(',');
+  const { data } = await api.get(`/blog/recommend/${lastId}?preJob=${preJobString}`);
   return data;
 }
 

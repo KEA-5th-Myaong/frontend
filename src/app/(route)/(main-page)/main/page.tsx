@@ -7,7 +7,7 @@ import Post from '../../../_components/Post';
 import JobMenu from './_components/JobMenu';
 // import InterestedJob from './_components/InterestedJob';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { fetchBookmark, fetchFollowing, fetchPosts } from './_services/mainService';
+import { fetchBookmark, fetchFollowing, fetchPosts, fetchPreJob } from './_services/mainService';
 import { PostProps } from './_types/main-page';
 import formatDate from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../public/mascot.png';
@@ -19,6 +19,8 @@ export default function MainPage() {
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   const [activeTab, setActiveTab] = useState('추천'); // 활성화된 탭
   // const [showInterestedJob, setShowInterestedJob] = useState(true); // 첫 로그인 시 관심 직군 모달 보여주기
+  const [preJob, setPreJob] = useState<string[]>([]); // 선호 직업을 저장할 상태
+  const [selectedJob, setSelectedJob] = useState<string | null>(null); // 선택한 직업
 
   const { data: recommendData, isLoading: isRecommendLoading } = useCustomQuery(['recommendPosts', lastId], () =>
     fetchPosts(lastId),
@@ -28,6 +30,9 @@ export default function MainPage() {
   );
   const { data: bookmarkData, isLoading: isBookmarkLoading } = useCustomQuery(['bookmarkPosts', lastId], () =>
     fetchBookmark(lastId),
+  );
+  const { data: preJobData, isLoading: isPreJobLoading } = useCustomQuery(['preJobPosts', lastId, preJob], () =>
+    fetchPreJob(lastId, preJob),
   );
 
   useEffect(() => {
@@ -42,6 +47,9 @@ export default function MainPage() {
       case '북마크':
         currentData = bookmarkData;
         break;
+      case '직군':
+        currentData = preJobData;
+        break;
       default:
         currentData = recommendData;
     }
@@ -50,7 +58,15 @@ export default function MainPage() {
       setPosts(currentData.data.posts);
       setLastId(currentData.data.lastId);
     }
-  }, [activeTab, recommendData, followingData, bookmarkData]);
+  }, [activeTab, recommendData, followingData, preJobData, bookmarkData]);
+
+  const handleJobSelect = (jobId: string) => {
+    setSelectedJob(jobId);
+    setPreJob([jobId]);
+    setActiveTab('직군');
+    setLastId('0');
+    setPosts([]);
+  };
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -66,6 +82,8 @@ export default function MainPage() {
         return isFollowingLoading;
       case '북마크':
         return isBookmarkLoading;
+      case '직군':
+        return isPreJobLoading;
       default:
         return isRecommendLoading;
     }
@@ -93,7 +111,7 @@ export default function MainPage() {
 
           <div className="flex flex-col md:flex-row w-full gap-[14px]">
             {/* 직군 메뉴 */}
-            <JobMenu className="hidden md:flex" />
+            <JobMenu className="hidden md:flex" onJobSelect={handleJobSelect} selectedJob={selectedJob} />
 
             <div className="flex flex-col items-center w-full pt-4 md:pt-5">
               {/* 추천 팔로잉 가로 북마크 */}
@@ -105,17 +123,19 @@ export default function MainPage() {
                     </button>
                   ))}
                   <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gray-300 rounded-[10px]" />
-                  <div
-                    className="absolute bottom-0 h-[2px] bg-primary-1 transition-all duration-300 ease-in-out rounded-[10px] w-1/3"
-                    style={{
-                      left: `${(['추천', '팔로잉', '북마크'].indexOf(activeTab) / 3) * 100}%`,
-                    }}
-                  />
+                  {activeTab !== '직군' && (
+                    <div
+                      className="absolute bottom-0 h-[2px] bg-primary-1 transition-all duration-300 ease-in-out rounded-[10px] w-1/3"
+                      style={{
+                        left: `${(['추천', '팔로잉', '북마크'].indexOf(activeTab) / 3) * 100}%`,
+                      }}
+                    />
+                  )}
                 </div>
               </div>
 
               {/* 직군 메뉴 */}
-              <JobMenu className="flex md:hidden" />
+              <JobMenu className="flex md:hidden" onJobSelect={handleJobSelect} selectedJob={selectedJob} />
               {/* 피드 */}
               <div className="flex flex-col gap-6 w-full pt-5">
                 {isLoading
