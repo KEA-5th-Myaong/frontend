@@ -2,11 +2,158 @@ import api from '@/app/api/axiosInstance';
 
 // (GET) 사용자의 포스트 목록 조회
 export async function fetchPost(memberId: string, lastId: string) {
-  const { data } = await api.get(`/blog/posts/members/${memberId}/${lastId}`);
-  return data;
+  try {
+    const { data } = await api.get(`/blog/posts/members/${memberId}/${lastId}`);
+    return data;
+  } catch (error) {
+    console.error('사용자의 포스트 목록 조회 실패:', error);
+    throw error;
+  }
 }
 
 // (POST) 포스트 작성
 export async function postPost(postData: unknown) {
-  api.post(`/blog/posts`, postData);
+  try {
+    const { data } = await api.post('/blog/posts', postData);
+    return data;
+  } catch (error) {
+    console.error('포스트 작성 실패:', error);
+    throw error;
+  }
+}
+
+// (POST) 포스트 이미지 업로드
+export async function postPic(postData: unknown) {
+  try {
+    const { data } = await api.post('/blog/posts/pic', postData);
+    return data;
+  } catch (error) {
+    console.error('포스트 이미지 업로드 실패:', error);
+    throw error;
+  }
+}
+
+// (DELETE) 포스트 이미지 삭제
+export async function deletePic(picUrl: string): Promise<void> {
+  try {
+    await api.delete(`/blog/posts/pic?url=${picUrl}`);
+  } catch (error) {
+    console.error('포스트 이미지 삭제 실패:', error);
+    throw error;
+  }
+}
+
+// (PUT) 포스트 수정
+export async function putPost(postId: string, postData: unknown) {
+  try {
+    await api.put(`/blog/posts/${postId}`, postData);
+  } catch (error) {
+    console.error('포스트 수정 실패:', error);
+    throw error;
+  }
+}
+
+// (DELETE) 포스트 삭제
+export async function deletePost(postId: string) {
+  try {
+    await api.delete(`/blog/posts/${postId}`);
+  } catch (error) {
+    console.error('포스트 삭제 실패:', error);
+    throw error;
+  }
+}
+
+// (POST) 댓글 작성
+export async function postComments(commentData: unknown) {
+  try {
+    const { data } = await api.post('/blog/comments', commentData);
+    return data;
+  } catch (error) {
+    console.error('댓글 작성 실패:', error);
+    throw error;
+  }
+}
+
+// (PUT) 댓글 수정
+export async function putComments(commentId: string, commentData: unknown) {
+  try {
+    await api.put(`/blog/comments/${commentId}`, commentData);
+  } catch (error) {
+    console.error('댓글 수정 실패:', error);
+    throw error;
+  }
+}
+
+// (DELETE) 댓글 삭제
+export async function deleteComments(commentId: string) {
+  try {
+    await api.delete(`/blog/comments/${commentId}`);
+  } catch (error) {
+    console.error('댓글 삭제 실패:', error);
+    throw error;
+  }
+}
+
+// (POST) 답글 작성
+export async function postReplies(repliesData: unknown) {
+  try {
+    const { data } = await api.post('/blog/replies', repliesData);
+    return data;
+  } catch (error) {
+    console.error('답글 작성 실패:', error);
+    throw error;
+  }
+}
+
+// (PUT) 답글 수정
+export async function putReplies(replyId: string, repliesData: unknown) {
+  try {
+    const { data } = await api.put(`/blog/replies/${replyId}`, repliesData);
+    return data;
+  } catch (error) {
+    console.error('답글 수정 실패', error);
+    throw error;
+  }
+}
+
+// (DELETE) 답글 삭제
+export async function deleteReplies(replyId: string) {
+  try {
+    await api.delete(`/blog/replies/${replyId}`);
+  } catch (error) {
+    console.error('답글 삭제 실패:', error);
+    throw error;
+  }
+}
+
+// (PUT) 좋아요 표시
+export async function putLike(postId: string) {
+  try {
+    const { data } = await api.put(`/blog/posts/${postId}/like`);
+    return data;
+  } catch (error) {
+    console.error('좋아요 표시 실패:', error);
+    throw error;
+  }
+}
+
+// (PUT) 북마크 표시
+export async function putBookmark(postId: string) {
+  try {
+    const { data } = await api.put(`/blog/posts/${postId}/bookmark`);
+    return data;
+  } catch (error) {
+    console.error('북마크 표시 실패:', error);
+    throw error;
+  }
+}
+
+// (PUT) 신고하기
+export async function putReport(postId: string) {
+  try {
+    await api.put(`/blog/posts/${postId}/report`);
+  } catch (error) {
+    console.error('신고하기 실패:', error);
+    throw error;
+  }
 }
