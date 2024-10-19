@@ -10,7 +10,7 @@ import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchBookmark, fetchFollowing, fetchPosts } from './_services/mainService';
 import { PostProps } from './_types/main-page';
 import formatDate from '@/app/_utils/formatDate';
-import defaultProfilePic from '../../public/mascot.png';
+import defaultProfilePic from '../../../../../public/mascot.png';
 
 export default function MainPage() {
   const router = useRouter();
@@ -137,7 +137,7 @@ export default function MainPage() {
                           router.push(`/blog/${post.title}/${post.postId}`);
                         }}
                         thumbnail={null}
-                        profilePicUrl={post.profilePicUrl || defaultProfilePic}
+                        profilePicUrl={post.profilePicUrl || defaultProfilePic.src} // 여기를 수정
                         content={post.content}
                         timestamp={formatDate(post.timestamp)}
                         userJob="프론트엔드 개발자"

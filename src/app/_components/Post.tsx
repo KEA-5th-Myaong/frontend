@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { PostDetailProps } from '../(route)/(main-page)/main/_types/main-page';
 import Icons from './ui/Icon';
 import { BookmarkIcon, FavorIcon } from './ui/iconPath';
+import defaultProfilePic from '../../../public/mascot.png'; // 기본 프로필 이미지 import
 
 export default function Post({
   title,
@@ -21,6 +22,7 @@ export default function Post({
   isLoved,
   lovedCount,
 }: PostDetailProps) {
+  const imageSource = profilePicUrl || defaultProfilePic;
   return (
     <div
       className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] rounded-2xl 
@@ -38,7 +40,7 @@ export default function Post({
           }}
           tabIndex={0}
         >
-          <Image src={profilePicUrl} alt="프로필사진" width={42} height={42} unoptimized />
+          <Image className="rounded-full mr-5" src={imageSource} alt="프로필사진" width={42} height={42} unoptimized />
           <div className="flex justify-between w-full">
             <p>{nickname}</p>
             <Icons name={isBookmarked ? { ...BookmarkIcon, fill: '#41AED9' } : BookmarkIcon} className="mr-5" />
