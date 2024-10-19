@@ -1,5 +1,38 @@
 import api from '@/app/api/axiosInstance';
 
+// (POST) 사용자 팔로우
+export async function postFollow(memberId: string) {
+  try {
+    const { data } = await api.post(`/members/${memberId}/follow`);
+    return data;
+  } catch (error) {
+    console.error('사용자 팔로우 실패:', error);
+    throw error;
+  }
+}
+
+// (GET) 팔로잉 목록 조회
+export async function fetchFollowing(memberId: string, lastId: string) {
+  try {
+    const { data } = await api.get(`/members/${memberId}/following/${lastId}`);
+    return data;
+  } catch (error) {
+    console.error('팔로잉 목록 조회 실패:', error);
+    throw error;
+  }
+}
+
+// (GET) 팔로워 목록 조회
+export async function fetchFollowed(memberId: string, lastId: string) {
+  try {
+    const { data } = await api.get(`/members/${memberId}/followed/${lastId}`);
+    return data;
+  } catch (error) {
+    console.error('팔로워 목록 조회 실패:', error);
+    throw error;
+  }
+}
+
 // (GET) 사용자의 포스트 목록 조회
 export async function fetchPost(memberId: string, lastId: string) {
   try {
