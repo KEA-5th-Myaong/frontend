@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import JobMenu from './_components/JobMenu';
-// import InterestedJob from './_components/InterestedJob';
+import InterestedJob from './_components/InterestedJob';
 import Carousel from './_components/Carousel';
 import MainTabMenu from './_components/MainTabMenu';
 import PostFeed from './_components/PostFeed';
@@ -11,7 +11,7 @@ export default function MainPage() {
   const [lastId, setLastId] = useState('1'); // 마지막 포스트의 ID, 무한스크롤 구현에 사용
 
   const [activeTab, setActiveTab] = useState('추천'); // 활성화된 탭
-  // const [showInterestedJob, setShowInterestedJob] = useState(true); // 첫 로그인 시 관심 직군 모달 보여주기
+  const [showInterestedJob, setShowInterestedJob] = useState(true); // 첫 로그인 시 관심 직군 모달 보여주기
   const [preJob, setPreJob] = useState<string[]>([]); // 선호 직업을 저장할 상태
   const [selectedJob, setSelectedJob] = useState<string | null>(null); // 선택한 직업
 
@@ -31,9 +31,9 @@ export default function MainPage() {
     setLastId(newLastId);
   };
 
-  // const handleInterestedJobClose = () => {
-  //   setShowInterestedJob(false);
-  // };
+  const handleInterestedJobClose = () => {
+    setShowInterestedJob(false);
+  };
 
   return (
     <>
@@ -58,7 +58,7 @@ export default function MainPage() {
           </div>
         </div>
       </section>
-      {/* {showInterestedJob && <InterestedJob onClose={handleInterestedJobClose} />} */}
+      {showInterestedJob && <InterestedJob onClose={handleInterestedJobClose} />}
     </>
   );
 }
