@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Post from '../../../_components/Post';
 import JobMenu from './_components/JobMenu';
-import InterestedJob from './_components/InterestedJob';
+// import InterestedJob from './_components/InterestedJob';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { fetchPosts } from './_services/mainService';
+import { fetchBookmark, fetchFollowing, fetchPosts } from './_services/mainService';
 import { PostProps } from './_types/main-page';
+import formatDate from '@/app/_utils/formatDate';
 
 export default function MainPage() {
   const router = useRouter();
@@ -16,24 +17,62 @@ export default function MainPage() {
 
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   const [activeTab, setActiveTab] = useState('추천'); // 활성화된 탭
-  const [showInterestedJob, setShowInterestedJob] = useState(true); // 첫 로그인 시 관심 직군 모달 보여주기
+  // const [showInterestedJob, setShowInterestedJob] = useState(true); // 첫 로그인 시 관심 직군 모달 보여주기
 
-  const { data } = useCustomQuery(['posts', lastId], () => fetchPosts(lastId));
+  const { data: recommendData, isLoading: isRecommendLoading } = useCustomQuery(['recommendPosts', lastId], () =>
+    fetchPosts(lastId),
+  );
+  const { data: followingData, isLoading: isFollowingLoading } = useCustomQuery(['followingPosts', lastId], () =>
+    fetchFollowing(lastId),
+  );
+  const { data: bookmarkData, isLoading: isBookmarkLoading } = useCustomQuery(['bookmarkPosts', lastId], () =>
+    fetchBookmark(lastId),
+  );
 
   useEffect(() => {
-    if (data && data.success && data.data && Array.isArray(data.data.posts)) {
-      setPosts(data.data.posts);
-      setLastId(data.data.lastId);
+    let currentData;
+    switch (activeTab) {
+      case '추천':
+        currentData = recommendData;
+        break;
+      case '팔로잉':
+        currentData = followingData;
+        break;
+      case '북마크':
+        currentData = bookmarkData;
+        break;
+      default:
+        currentData = recommendData;
     }
-  }, [data]);
+
+    if (currentData && currentData.success && currentData.data && Array.isArray(currentData.data.posts)) {
+      setPosts(currentData.data.posts);
+      setLastId(currentData.data.lastId);
+    }
+  }, [activeTab, recommendData, followingData, bookmarkData]);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
+    setLastId('0');
+    setPosts([]);
   };
 
-  const handleInterestedJobClose = () => {
-    setShowInterestedJob(false);
-  };
+  const isLoading = (() => {
+    switch (activeTab) {
+      case '추천':
+        return isRecommendLoading;
+      case '팔로잉':
+        return isFollowingLoading;
+      case '북마크':
+        return isBookmarkLoading;
+      default:
+        return isRecommendLoading;
+    }
+  })();
+
+  // const handleInterestedJobClose = () => {
+  //   setShowInterestedJob(false);
+  // };
 
   console.log(posts);
   return (
@@ -78,35 +117,39 @@ export default function MainPage() {
               <JobMenu className="flex md:hidden" />
               {/* 피드 */}
               <div className="flex flex-col gap-6 w-full pt-5">
-                {posts.map((post) => (
-                  <Post
-                    key={post.postId}
-                    postId={post.postId}
-                    title={post.title}
-                    nickname={post.nickname || ''}
-                    memberId={post.memberId || ''}
-                    isBookmarked={post.isBookmarked}
-                    onUserClick={() => {
-                      router.push(`/blog/${post.nickname}`);
-                    }}
-                    onContentClick={() => {
-                      router.push(`/blog/${post.nickname}/${post.postId}`);
-                    }}
-                    thumbnail={null}
-                    profilePicUrl={null}
-                    content={post.content}
-                    timestamp={post.timestamp}
-                    userJob="프론트엔드 개발자"
-                    isLoved={false}
-                    lovedCount={0}
-                  />
-                ))}
+                {isLoading
+                  ? Array.from({ length: 5 }).map(() => (
+                      <div className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
+                    ))
+                  : posts.map((post) => (
+                      <Post
+                        key={post.postId}
+                        postId={post.postId}
+                        title={post.title}
+                        nickname={post.nickname || ''}
+                        memberId={post.memberId || ''}
+                        isBookmarked={post.isBookmarked}
+                        onUserClick={() => {
+                          router.push(`/blog/${post.nickname}`);
+                        }}
+                        onContentClick={() => {
+                          router.push(`/blog/${post.title}/${post.postId}`);
+                        }}
+                        thumbnail={null}
+                        profilePicUrl={null}
+                        content={post.content}
+                        timestamp={formatDate(post.timestamp)}
+                        userJob="프론트엔드 개발자"
+                        isLoved={false}
+                        lovedCount={0}
+                      />
+                    ))}
               </div>
             </div>
           </div>
         </div>
       </section>
-      {showInterestedJob && <InterestedJob onClose={handleInterestedJobClose} />}
+      {/* {showInterestedJob && <InterestedJob onClose={handleInterestedJobClose} />} */}
     </>
   );
 }
