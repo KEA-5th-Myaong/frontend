@@ -7,5 +7,6 @@ export async function fetchPost(memberId: string, lastId: string) {
 }
 
 // (POST) 포스트 작성
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-export async function postPost() {}
+export async function postPost(postData: unknown) {
+  api.post(`/blog/posts`, postData);
+}
