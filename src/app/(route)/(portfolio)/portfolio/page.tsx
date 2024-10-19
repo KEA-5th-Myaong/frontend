@@ -12,16 +12,16 @@ export default function PortfolioList() {
   const { portfolio } = usePortfolioStore();
 
   return (
-    <div className="px-[50px] md:px-0">
-      <div className="mt-[60px] flex justify-between items-center w-full max-w-[1000px] md:px-[60px] lg:px-0 lg:mx-auto">
-        <div className="flex flex-col">
+    <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full pt-14 md:pt-0">
+      <div className="pt-[60px] flex justify-between items-center w-full max-w-[1000px] md:px-[60px] lg:px-[50px] ">
+        <div className="flex flex-col justify-center w-full">
           <h1 className="font-semibold text-left">포트폴리오 관리</h1>
           <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
         </div>
         <Link href="/portfolio/1/write">
           <button
             type="button"
-            className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation"
+            className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 whitespace-nowrap rounded-[30px] hover-animation"
           >
             <Icons
               className="mr-[10px]"

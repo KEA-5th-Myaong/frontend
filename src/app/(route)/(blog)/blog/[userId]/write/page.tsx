@@ -3,7 +3,7 @@ import PostInput from './_components/PostInput';
 
 export default function PostWrite() {
   return (
-    <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5">
+    <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5 pt-14 md:pt-0">
       <div className="w-full">
         <BackButton className="flex w-full pt-12 px-5 mb-2" />
 
