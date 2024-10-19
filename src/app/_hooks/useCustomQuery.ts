@@ -1,14 +1,13 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import api from '../api/axiosInstance';
+import { useQuery, UseQueryOptions, QueryFunction } from '@tanstack/react-query';
 
-export default function useCustomQuery<T>(key: string[], url: string, options?: UseQueryOptions<T>) {
+export default function useCustomQuery<T>(
+  key: string[],
+  queryFn: QueryFunction<T>,
+  options?: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>,
+) {
   return useQuery<T>({
     queryKey: key,
-    // 쿼리 함수
-    queryFn: async () => {
-      const { data } = await api.get<T>(url);
-      return data;
-    },
+    queryFn,
     ...options,
   });
 }

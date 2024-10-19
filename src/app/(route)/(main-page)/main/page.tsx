@@ -5,30 +5,40 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Post from '../../../_components/Post';
 import JobMenu from './_components/JobMenu';
-import postTest from '../../(blog)/blog/[userId]/_components/test.json';
-import { PostProps } from '../../(blog)/blog/[userId]/_types/blog';
 import InterestedJob from './_components/InterestedJob';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchPosts } from './_services/mainService';
+import { PostProps } from './_types/main-page';
 
 export default function MainPage() {
   const router = useRouter();
-  const [posts, setPosts] = useState<PostProps[]>([]);
-  const [activeTab, setActiveTab] = useState('추천');
-  const [showInterestedJob, setShowInterestedJob] = useState(true);
+  const [lastId, setLastId] = useState('0'); // 마지막 포스트의 ID, 무한스크롤 구현에 사용
+
+  const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
+  const [activeTab, setActiveTab] = useState('추천'); // 활성화된 탭
+  const [showInterestedJob, setShowInterestedJob] = useState(true); // 첫 로그인 시 관심 직군 모달 보여주기
+
+  const { data } = useCustomQuery(['posts', lastId], () => fetchPosts(lastId));
+
+  useEffect(() => {
+    if (data && data.success && data.data && Array.isArray(data.data.posts)) {
+      setPosts(data.data.posts);
+      setLastId(data.data.lastId);
+    }
+  }, [data]);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
 
-  useEffect(() => {
-    setPosts(postTest);
-  }, []);
-
   const handleInterestedJobClose = () => {
     setShowInterestedJob(false);
   };
+
+  console.log(posts);
   return (
     <>
-      <section className="flex justify-center pt-0 sm:pt-2 md:pt-14 pb-12">
+      <section className="flex justify-center pt-14 pb-12">
         <div className="w-full min-w-[360px] max-w-[982px] px-[42px]">
           <div id="캐러셀" className="w-full aspect-[16/9] max-h-[280px] rounded-[10px] relative overflow-hidden">
             <Image
@@ -70,22 +80,25 @@ export default function MainPage() {
               <div className="flex flex-col gap-6 w-full pt-5">
                 {posts.map((post) => (
                   <Post
-                    id={post.id}
-                    userName={post.userName}
-                    userId={post.userId}
-                    userJob={post.userJob}
-                    postTitle={post.postTitle}
-                    postContent={post.postContent}
-                    postDate={post.postDate}
-                    isLoved={post.isLoved}
-                    lovedCount={post.lovedCount}
+                    key={post.postId}
+                    postId={post.postId}
+                    title={post.title}
+                    nickname={post.nickname || ''}
+                    memberId={post.memberId || ''}
                     isBookmarked={post.isBookmarked}
                     onUserClick={() => {
-                      router.push(`/blog/${post.userId}`);
+                      router.push(`/blog/${post.nickname}`);
                     }}
                     onContentClick={() => {
-                      router.push(`/blog/${post.userId}/${post.id}`);
+                      router.push(`/blog/${post.nickname}/${post.postId}`);
                     }}
+                    thumbnail={null}
+                    profilePicUrl={null}
+                    content={post.content}
+                    timestamp={post.timestamp}
+                    userJob="프론트엔드 개발자"
+                    isLoved={false}
+                    lovedCount={0}
                   />
                 ))}
               </div>
