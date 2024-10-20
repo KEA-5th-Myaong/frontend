@@ -25,7 +25,8 @@ export async function fetchPortfolio(portfolioId: string) {
 // (POST) 포트폴리오 작성
 export async function postPorfolios(portfolioData: unknown) {
   try {
-    const { data } = await api.post('/portfolios', portfolioData);
+    const stringifiedData = JSON.stringify(portfolioData);
+    const { data } = await api.post('/portfolios', stringifiedData);
     return data;
   } catch (error) {
     console.error('포트폴리오 작성 실패:', error);
