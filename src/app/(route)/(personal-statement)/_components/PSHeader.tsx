@@ -55,7 +55,7 @@ export default function PSHeader({ title, mode, onButtonClick, handleDeleteClick
         )}
       </div>
 
-      <div className="flex justify-between items-center w-full mt-[10px]">
+      <div className="flex justify-between items-center w-full mt-2.5">
         <p className="font-semibold text-2xl sm:text-[32px]">{title}</p>
         {mode === 'read' && (
           <div className="relative mr-5" ref={dropdownRef}>

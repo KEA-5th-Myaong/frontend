@@ -21,9 +21,9 @@ export default function CommentItem({
   isEditing,
 }: CommentItemProps) {
   return (
-    <div className={`flex flex-col py-6 px-[6px] border-b ${isReply && 'pl-6'}`}>
+    <div className={`flex flex-col py-6 px-1.5 border-b ${isReply && 'pl-6'}`}>
       <div className="flex items-center justify-between ">
-        <div className="flex items-center gap-[10px]">
+        <div className="flex items-center gap-2.5">
           {isReply && <Icons name={ReplyIcon} />}
           <div id="프로필 사진" className="min-w-[29px] min-h-[29px] bg-pink-300 rounded-full" />
           <p>{comment.userName}</p>

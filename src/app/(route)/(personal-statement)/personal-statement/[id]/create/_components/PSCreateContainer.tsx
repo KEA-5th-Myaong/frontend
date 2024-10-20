@@ -102,7 +102,7 @@ export default function PSCreateContainer() {
 
         {/* 안내문구 */}
         <div className="mt-4 mb-24 px-11 py-5 bg-[#F3F3F3] text-gray-0 text-xs flex gap-4">
-          <p id="임시" className="text-white-0 bg-gray-0 rounded-full px-[6px]">
+          <p id="임시" className="text-white-0 bg-gray-0 rounded-full px-1.5">
             !
           </p>
           자기소개서는 최대 2000자까지 입력 가능합니다.

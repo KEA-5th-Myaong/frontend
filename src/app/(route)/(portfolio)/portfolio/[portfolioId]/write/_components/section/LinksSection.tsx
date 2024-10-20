@@ -45,7 +45,7 @@ export default function LinksSection() {
           alt="링크 추가"
           width={40}
           height={40}
-          className="hover-animation mr-[10px] mt-[20px]"
+          className="hover-animation mr-2.5 mt-[20px]"
           onClick={addLinkItem}
         />
       </div>

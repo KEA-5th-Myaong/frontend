@@ -36,7 +36,7 @@ export default function PostContent() {
 
       {/* 작성자 프로필 */}
       <div className="flex items-center justify-between self-stretch mt-[7px] py-[22px] border-b border-gray">
-        <div className="flex items-center gap-[10px]">
+        <div className="flex items-center gap-2.5">
           <div id="profile" className="min-w-[29px] min-h-[29px] bg-pink-300 rounded-full" />
           <span>{testPosts[0].userName}</span>
         </div>

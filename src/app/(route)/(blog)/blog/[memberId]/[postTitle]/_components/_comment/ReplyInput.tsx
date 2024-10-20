@@ -15,9 +15,9 @@ export default function ReplyInput({ onSubmit }: ReplyInputProps) {
   };
 
   return (
-    <div className="flex flex-col mt-4 gap-[10px] ml-10">
+    <div className="flex flex-col mt-4 gap-2.5 ml-10">
       <textarea
-        className="resize-none px-[18px] py-[10px] w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3"
+        className="resize-none px-[18px] py-2.5 w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3"
         placeholder="답글을 작성해주세요"
         value={content}
         onChange={(e) => setContent(e.target.value)}

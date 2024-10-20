@@ -33,7 +33,7 @@ export default function Input({
   const gradePattern = '^\\d(\\.\\d{1,2})?/[0-4](\\.\\d{1,2})?$';
 
   return (
-    <div className="my-[10px]">
+    <div className="my-2.5">
       <div className="flex items-center">
         {required && <Icons name={RequiredIcon} />}
         <label className="text-[14px] font-semibold ml-[5px]">{label}</label>

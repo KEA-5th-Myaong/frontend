@@ -58,9 +58,9 @@ export default function PostComment() {
       {commentLists.filter((comment) => comment.parent_comment_id === null).map(renderCommentWithReplies)}
 
       {/* 댓글 입력 인풋 */}
-      <div className="flex flex-col mt-10 gap-[10px]">
+      <div className="flex flex-col mt-10 gap-2.5">
         <textarea
-          className="resize-none px-[18px] py-[10px] w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3"
+          className="resize-none px-[18px] py-2.5 w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3"
           placeholder="댓글을 작성해주세요"
           maxLength={255}
         />

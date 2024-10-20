@@ -51,7 +51,7 @@ export default function PSEditingContainer() {
       </div>
       {/* 안내문구 */}
       <div className="flex gap-4 items-center w-full text-[10px] sm:text-base mt-4 px-11 py-5 bg-[#F3F3F3] text-gray-0">
-        <p id="임시" className="h-4 text-xs text-white-0 bg-gray-0 rounded-full px-[6px]">
+        <p id="임시" className="h-4 text-xs text-white-0 bg-gray-0 rounded-full px-1.5">
           !
         </p>
         <div>

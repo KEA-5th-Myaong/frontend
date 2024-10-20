@@ -56,7 +56,7 @@ export default function PostWrite() {
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <BackButton onBtnClick={handleBackBtnClick} className="flex w-full pt-12 px-5 mb-2" />
 
-        <div className="flex-col w-full py-3 px-[10px]">
+        <div className="flex-col w-full py-3 px-2.5">
           <p className="py-1">포스트 작성</p>
 
           <input

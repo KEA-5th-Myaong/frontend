@@ -3,17 +3,12 @@ import Link from 'next/link';
 
 export default function PortfolioAddCard() {
   return (
-    <Link href="/portfolio/write">
-      <div className="flex flex-col items-center justify-center w-[320px] h-[200px] bg-white-0 border border-gray-5 rounded-[12px]">
-        <Image
-          src="/assets/add-button.svg"
-          alt="포트폴리오 추가"
-          width={50}
-          height={50}
-          className=" hover-animation "
-        />
-        <p className="mt-[10px] text-gray-0  cursor-pointer">포트폴리오를 추가해보세요</p>
-      </div>
+    <Link
+      href="/portfolio/write"
+      className="flex-center flex-col w-[320px] py-[51px] bg-white-0 border border-gray-5 rounded-xl"
+    >
+      <Image src="/assets/add-button.svg" alt="포트폴리오 추가" width={50} height={50} className="hover-animation" />
+      <p className="mt-2.5 text-gray-0">포트폴리오를 추가해보세요</p>
     </Link>
   );
 }

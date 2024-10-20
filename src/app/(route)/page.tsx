@@ -78,7 +78,7 @@ export default function Home() {
             <p className="sm:pre-xl-semibold md:pre-2xl-semibold"> AI 첨삭으로 개선 방안을 제안받아 보세요</p>
             <button
               type="button"
-              className="sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 sm:mt-[20px] md:mt-[55px] sm:py-[10px] md:py-[15px] px-[35px] rounded-[100px] hover:scale-105 transform transition-transform duration-200 ease-out"
+              className="sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 sm:mt-[20px] md:mt-[55px] sm:py-2.5 md:py-[15px] px-[35px] rounded-[100px] hover:scale-105 transform transition-transform duration-200 ease-out"
             >
               {/* //TODO: 자소서 첨삭 링크 어디로 연결할지 논의 필요 */}
               바로가기
@@ -89,7 +89,7 @@ export default function Home() {
             alt="AI 자소서 첨삭 이미지"
             width={220}
             height={200}
-            className="sm:ml-[8px] md:ml-[30px] mr-[10px] sm:w-[170px] sm:h-[170px] md:w-[220px] md:h-[220px] lg:w-[300px] lg:h-[300px]"
+            className="sm:ml-[8px] md:ml-[30px] mr-2.5 sm:w-[170px] sm:h-[170px] md:w-[220px] md:h-[220px] lg:w-[300px] lg:h-[300px]"
           />
         </motion.div>
         <motion.div
@@ -108,7 +108,7 @@ export default function Home() {
             <p className="sm:pre-xl-semibold md:pre-2xl-semibold">기업 맞춤형 모의 면접을 통해 철저히 준비하세요</p>
             <button
               type="button"
-              className="sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 sm:mt-[20px] md:mt-[40px] lg:mt-[55px] sm:py-[10px] md:py-[15px] px-[35px] rounded-[100px] hover:scale-105 transform transition-transform duration-200 ease-out"
+              className="sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 sm:mt-[20px] md:mt-[40px] lg:mt-[55px] sm:py-2.5 md:py-[15px] px-[35px] rounded-[100px] hover:scale-105 transform transition-transform duration-200 ease-out"
             >
               {/* //TODO: 모의 면접 링크 어디로 연결할지 논의 필요 */}
               바로가기
@@ -119,7 +119,7 @@ export default function Home() {
             alt="AI 모의 면접 이미지"
             width={180}
             height={180}
-            className="sm:ml-[8px] md:ml-[30px] mr-[10px] sm:w-[130px] sm:h-[130px] md:w-[170px] md:h-[170px] lg:w-[200px] lg:h-[200px]"
+            className="sm:ml-2 md:ml-[30px] mr-2.5 sm:w-[130px] sm:h-[130px] md:w-[170px] md:h-[170px] lg:w-[200px] lg:h-[200px]"
           />
         </motion.div>
       </section>
@@ -262,28 +262,22 @@ export default function Home() {
           <div className="flex mt-[55px] ">
             <button
               type="button"
-              className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 mx-[10px] py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
+              className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 mx-2.5 py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
             >
-              <Image
-                src="/assets/landing-page/ic-eye.svg"
-                alt="눈 아이콘"
-                width={20}
-                height={20}
-                className="mr-[10px]"
-              />
+              <Image src="/assets/landing-page/ic-eye.svg" alt="눈 아이콘" width={20} height={20} className="mr-2.5" />
               구경해보기
             </button>
             <Link href="/log-in">
               <button
                 type="button"
-                className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-black-0 text-white-0 mx-[10px] py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
+                className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-black-0 text-white-0 mx-2.5 py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
               >
                 <Image
                   src="/assets/landing-page/ic-lightning.svg"
                   alt="번개 아이콘"
                   width={20}
                   height={20}
-                  className="mr-[10px] "
+                  className="mr-2.5"
                 />
                 간편 회원가입
               </button>

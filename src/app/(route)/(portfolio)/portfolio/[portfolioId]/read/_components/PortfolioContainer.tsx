@@ -33,7 +33,7 @@ export default function PortfolioContainer() {
         <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
         <div className="flex items-center gap-4">
           <Icons
-            className="mr-[10px]"
+            className="mr-2.5"
             name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
           />
           <p className="grow font-semibold">대학교</p>
@@ -48,7 +48,7 @@ export default function PortfolioContainer() {
         <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
         <div className="flex items-center gap-4">
           <Icons
-            className="mr-[10px]"
+            className="mr-2.5"
             name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
           />
           <p className="grow font-semibold">ABC Corp</p>
@@ -85,7 +85,7 @@ export default function PortfolioContainer() {
         <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
         <div className="flex items-center gap-4">
           <Icons
-            className="mr-[10px]"
+            className="mr-2.5"
             name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
           />
           <p className="grow font-semibold">프론트엔드 부트캠프</p>
@@ -100,7 +100,7 @@ export default function PortfolioContainer() {
         <div className="flex justify-between">
           <div className="flex-center">
             <Icons
-              className="mr-[10px]"
+              className="mr-2.5"
               name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
             />
             <p className=" font-semibold">정보처리기사</p>

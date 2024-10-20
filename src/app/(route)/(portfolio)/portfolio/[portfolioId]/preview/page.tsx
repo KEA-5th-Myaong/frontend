@@ -18,7 +18,7 @@ export default function PortfolioPreview() {
 
   return (
     <div className="flex px-[50px] md:px-0 mb-[100px]">
-      <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] lg:px-0 lg:mx-auto">
+      <div className="mt-[60px] w-full max-w-[1000px] md:px-[60px] lg:px-0 lg:mx-auto">
         <PortfolioContainer />
       </div>
       <Footer showDone handleDoneClick={handleDoneClick} />

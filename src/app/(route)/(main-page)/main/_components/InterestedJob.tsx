@@ -49,7 +49,7 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
   const onSubmit = () => {
     const data = { preJob };
     console.log(data);
-    // 여기에 데이터를 서버로 전송하는 로직을 추가할 수 있습니다.
+
     onClose();
   };
 

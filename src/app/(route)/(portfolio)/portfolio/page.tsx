@@ -7,10 +7,15 @@ import PortfolioCard from '../_components/PortfolioCard';
 import PortfolioAddCard from '../_components/PortfolioAddCard';
 import usePortfolioStore from '../../../_store/portfolio';
 import { PortfolioCardProps } from '../../../_types/portfolio';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchPortfolios } from '../_services/portfolioServices';
 
 export default function PortfolioList() {
   const { portfolio } = usePortfolioStore();
 
+  const { data } = useCustomQuery(['pf'], () => fetchPortfolios());
+
+  console.log(data);
   return (
     <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full pt-14 md:pt-0">
       <div className="pt-[60px] flex justify-between items-center w-full max-w-[1000px] md:px-[60px] lg:px-[50px] ">
@@ -21,18 +26,15 @@ export default function PortfolioList() {
         <Link href="/portfolio/1/write">
           <button
             type="button"
-            className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 whitespace-nowrap rounded-[30px] hover-animation"
+            className="flex items-center py-[13px] gap-2.5 md:py-[19px] px-5 md:px-7 rounded-[30px] primary-1-btn hover-animation"
           >
-            <Icons
-              className="mr-[10px]"
-              name={{ ...PlusIcon, fill: '#fff', options: { ...PlusIcon.options, stroke: '#fff' } }}
-            />
+            <Icons name={{ ...PlusIcon, fill: '#fff', options: { ...PlusIcon.options, stroke: '#fff' } }} />
             포트폴리오 추가
           </button>
         </Link>
       </div>
       <div className="flex flex-col items-center mt-[30px] mb-[100px] px-[50px]">
-        <div className="w-full lg:max-w-[1000px] grid justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[20px] gap-y-[25px] gap-4">
+        <div className="w-full lg:max-w-[1000px] grid justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[25px] gap-4">
           {portfolio.map((item: PortfolioCardProps) => (
             <Link href={`/portfolio/${item.id}/write`}>
               <PortfolioCard key={item.id} id={item.id} title={item.title} date="2024.10.17" />
