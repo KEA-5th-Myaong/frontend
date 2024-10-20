@@ -17,7 +17,7 @@ interface Category {
 interface CategoryData extends Array<Category> {}
 
 export default function JobSelection() {
-  const { data: jobData } = useCustomQuery(['pre-jobs'], () => fetchAllPreJobs());
+  const { data: jobData } = useCustomQuery(['pre-jobs-list'], () => fetchAllPreJobs());
 
   const categoryData: CategoryData = useMemo(() => {
     return jobData && jobData.success ? jobData.data : [];

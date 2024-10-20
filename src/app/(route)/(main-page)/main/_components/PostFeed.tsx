@@ -12,14 +12,14 @@ import defaultProfilePic from '../../../../../../public/mascot.png';
 
 interface PostFeedProps {
   activeTab: string;
-  lastId: string;
   preJob: string[];
-  onLastIdChange: (newLastId: string) => void;
 }
 
-export default function PostFeed({ activeTab, lastId, preJob, onLastIdChange }: PostFeedProps) {
+export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   const router = useRouter();
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
+
+  const [lastId, setLastId] = useState('1'); // 포스트의 마지막 아이디(나중에 무한스크롤 구현에 사용)
 
   const { data: recommendData, isLoading: isRecommendLoading } = useCustomQuery(
     ['recommendPosts', lastId], // 키 값, 캐싱을 위해 사용
@@ -40,12 +40,17 @@ export default function PostFeed({ activeTab, lastId, preJob, onLastIdChange }: 
   );
 
   const { data: preJobData, isLoading: isPreJobLoading } = useCustomQuery(
-    ['preJobPosts', lastId],
+    ['preJobPosts', lastId, preJob],
     () => fetchPreJob(lastId, preJob),
     { enabled: activeTab === '직군' && preJob.length > 0 },
   );
 
   useEffect(() => {
+    // 나중에 무한 스크롤 구현할 때 수정
+    const handleLastIdChange = (newLastId: string) => {
+      setLastId(newLastId);
+    };
+
     let currentData;
     switch (activeTab) {
       case '추천':
@@ -66,9 +71,9 @@ export default function PostFeed({ activeTab, lastId, preJob, onLastIdChange }: 
 
     if (currentData && currentData.success && currentData.data && Array.isArray(currentData.data.posts)) {
       setPosts(currentData.data.posts);
-      onLastIdChange(currentData.data.lastId);
+      handleLastIdChange(currentData.data.lastId);
     }
-  }, [activeTab, recommendData, followingData, preJobData, bookmarkData, onLastIdChange]);
+  }, [activeTab, recommendData, followingData, preJobData, bookmarkData]);
 
   const isLoading = (() => {
     switch (activeTab) {

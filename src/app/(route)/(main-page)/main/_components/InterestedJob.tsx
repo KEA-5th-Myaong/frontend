@@ -29,7 +29,7 @@ interface CategoryData extends Array<Category> {}
 
 export default function InterestedJob({ onClose }: InterestedJobProps) {
   const { handleSubmit } = useForm({});
-  const { data: jobData } = useCustomQuery(['pre-jobs'], () => fetchAllPreJobs());
+  const { data: jobData } = useCustomQuery(['pre-jobs-list'], () => fetchAllPreJobs());
 
   const [selectJobCategory, setSelectJobCategory] = useState('직군 전체');
   const [preJob, setPreJob] = useState<number[]>([]);
