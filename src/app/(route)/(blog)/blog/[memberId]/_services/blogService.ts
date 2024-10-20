@@ -23,7 +23,7 @@ export async function postFollow(memberId: string) {
 }
 
 // (GET) 팔로잉 목록 조회
-export async function fetchFollowing(memberId: string, lastId: string) {
+export async function fetchFollowing(memberId: string | string[], lastId: number) {
   try {
     const { data } = await api.get(`/members/${memberId}/following/${lastId}`);
     return data;
@@ -34,7 +34,7 @@ export async function fetchFollowing(memberId: string, lastId: string) {
 }
 
 // (GET) 팔로워 목록 조회
-export async function fetchFollowed(memberId: string, lastId: string) {
+export async function fetchFollowed(memberId: string | string[], lastId: string) {
   try {
     const { data } = await api.get(`/members/${memberId}/followed/${lastId}`);
     return data;

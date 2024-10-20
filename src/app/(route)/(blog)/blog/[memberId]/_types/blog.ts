@@ -5,7 +5,26 @@ export interface UserProfileProps {
   isFollowed: boolean;
 }
 
-export interface FollowProps {
-  id: number;
-  name: string;
+export interface FollowingProps {
+  lastId: number;
+  following: [
+    {
+      memberId: number;
+      nickname: string;
+      profilePicUrl: string;
+      isFollowed: boolean;
+    },
+  ];
+}
+
+export interface FollowedProps {
+  lastId: number;
+  followed: [
+    {
+      memberId: number;
+      nickname: string;
+      profilePicUrl: string;
+      isFollowed: boolean;
+    },
+  ];
 }

@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-import { FollowProps } from '../../_types/blog';
 import Overlay from '../../../../../../_components/Overlay';
+import { FollowingProps } from '../../_types/blog';
 
 interface FollowModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  list: FollowProps[];
+  list: unknown[];
 }
 
 const followMotion = {
@@ -35,7 +35,7 @@ export default function FollowModal({ isOpen, onClose, title, list }: FollowModa
         <p className="font-semibold text-2xl">{title}</p>
 
         <div className="flex flex-col gap-6 w-full h-[514px] overflow-scroll pb-2 hide-scrollbar">
-          {list.map((followList) => (
+          {list?.map((followList) => (
             <div key={followList.id} className="flex items-center justify-between">
               <div className="flex items-center gap-5">
                 <div className="w-[52px] h-[52px] min-w-[52px] max-h-[52px] bg-purple-300 rounded-full " />

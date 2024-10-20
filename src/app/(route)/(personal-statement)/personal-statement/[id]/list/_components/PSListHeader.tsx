@@ -15,7 +15,10 @@ export default function PSListHeader({ psLength }: { psLength: number }) {
           className="flex items-center gap-3 py-4 px-7 rounded-[28px] text-xs sm:text-base primary-1-btn"
         >
           <Icons name={{ ...PlusIcon, fill: '#fff', options: { ...PlusIcon.options, stroke: '#fff' } }} />
-          자기소개서 추가
+
+          <div className="flex">
+            <p className="hidden sm:block">자기소개서</p> 추가
+          </div>
         </Link>
       )}
     </div>
