@@ -23,9 +23,9 @@ export async function fetchPreJobs() {
 }
 
 // (POST) 관심 직군 등록/수정
-export async function postPreJobs() {
+export async function postPreJobs(preJobData: unknown) {
   try {
-    const { data } = await api.post('/pre-jobs');
+    const { data } = await api.post('/pre-jobs', preJobData);
     return data;
   } catch (error) {
     console.error('관심 직군 등록/수정 실패:', error);
