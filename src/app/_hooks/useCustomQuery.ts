@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions, QueryFunction } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions, QueryFunction, QueryKey } from '@tanstack/react-query';
 
 const defaultQueryOptions = {
   refetchOnMount: false, // 다른 탭에 갔다오거나
@@ -6,7 +6,7 @@ const defaultQueryOptions = {
 };
 
 export default function useCustomQuery<T>(
-  key: string[],
+  key: QueryKey,
   queryFn: QueryFunction<T>,
   options?: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>,
 ) {
