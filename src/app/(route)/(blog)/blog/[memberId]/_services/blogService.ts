@@ -1,5 +1,16 @@
 import api from '@/app/api/axiosInstance';
 
+// (GET) 회원 정보 조회(블로그 접속 시)
+export async function fetchMemberInfo(memberId: string) {
+  try {
+    const { data } = await api.get(`/members/${memberId}/info`);
+    return data;
+  } catch (error) {
+    console.error('회원 정보 조회 실패:', error);
+    throw error;
+  }
+}
+
 // (POST) 사용자 팔로우
 export async function postFollow(memberId: string) {
   try {
