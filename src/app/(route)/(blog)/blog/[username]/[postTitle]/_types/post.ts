@@ -1,7 +1,22 @@
 export interface CommentProps {
-  id: number;
+  profilePicUrl: string;
+  memberId: number | null;
+  nickname: string | null;
+  commentId: number;
   parent_comment_id: number | null;
-  userName: string;
   comment: string;
-  updatedAt: string;
+  timestamp: string;
+}
+
+export interface BlogPost {
+  title: string;
+  content: string;
+  timestamp: string;
+  memberId: number | null;
+  nickname: string | null;
+  profilePic: string | null;
+  likeCount: number;
+  isBookmarked: boolean;
+  commentCount: number;
+  comments: CommentProps[];
 }
