@@ -105,7 +105,7 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
               memberId={post.memberId || ''}
               isBookmarked={post.isBookmarked}
               onUserClick={() => {
-                router.push(`/blog/${post.nickname}`);
+                router.push(`/blog/${post.username}`);
               }}
               onContentClick={() => {
                 router.push(`/blog/${post.title}/${post.postId}`);
