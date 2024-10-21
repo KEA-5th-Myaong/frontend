@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Icons from '../../../../../../../_components/ui/Icon';
 import { ReplyIcon } from '../../../../../../../_components/ui/iconPath';
 import { CommentProps } from '../../_types/post';
@@ -25,14 +26,21 @@ export default function CommentItem({
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-2.5">
           {isReply && <Icons name={ReplyIcon} />}
-          <div id="프로필 사진" className="min-w-[29px] min-h-[29px] bg-pink-300 rounded-full" />
-          <p>{comment.userName}</p>
+          <Image
+            className="min-w-[29px] min-h-[29px] rounded-full"
+            src={comment.profilePicUrl}
+            alt="프로필 사진"
+            width={29}
+            height={29}
+            unoptimized
+          />
+          <p>{comment.nickname}</p>
         </div>
         <div className="flex gap-2 text-xs text-gray-0">
-          <button type="button" onClick={() => onReplyClick(comment.id)}>
+          <button type="button" onClick={() => onReplyClick(comment.commentId)}>
             답글
           </button>
-          <button type="button" onClick={() => onEditClick(comment.id)}>
+          <button type="button" onClick={() => onEditClick(comment.commentId)}>
             수정
           </button>
           <div>삭제</div>
@@ -40,13 +48,16 @@ export default function CommentItem({
         </div>
       </div>
       {isEditing ? (
-        <EditCommentInput initialContent={comment.comment} onSubmit={(content) => onEditSubmit(comment.id, content)} />
+        <EditCommentInput
+          initialContent={comment.comment}
+          onSubmit={(content) => onEditSubmit(comment.commentId, content)}
+        />
       ) : (
         <>
           <div className={`${isReply ? 'ml-16' : 'ml-10'} mb-[18px] py-2 text-[13px] break-words`}>
             {comment.comment}
           </div>
-          <div className={`${isReply ? 'ml-16' : 'ml-10'} text-xs text-gray-0`}>{comment.updatedAt}</div>
+          <div className={`${isReply ? 'ml-16' : 'ml-10'} text-xs text-gray-0`}>{comment.timestamp}</div>
         </>
       )}
     </div>

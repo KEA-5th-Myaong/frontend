@@ -23,7 +23,7 @@ export async function postFollow(memberId: string) {
 }
 
 // (GET) 팔로잉 목록 조회
-export async function fetchFollowing(memberId: string | string[], lastId: number) {
+export async function fetchFollowing(memberId: string | string[], lastId: string) {
   try {
     const { data } = await api.get(`/members/${memberId}/following/${lastId}`);
     return data;

@@ -6,6 +6,7 @@ export interface PostProps {
   timestamp: string;
   memberId: string | null;
   nickname: string | null;
+  username?: string | null;
   profilePicUrl: string | null;
   isBookmarked: boolean;
 }

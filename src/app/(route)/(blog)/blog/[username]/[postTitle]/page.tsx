@@ -1,5 +1,4 @@
 import PostContent from './_components/PostContent';
-import PostComment from './_components/_comment/PostComment';
 import BackButton from '../../../../../_components/BackButton';
 
 export default function BlogPosts() {
@@ -10,9 +9,6 @@ export default function BlogPosts() {
 
         {/* 포스트 컨텐츠 */}
         <PostContent />
-
-        {/* 댓글 */}
-        <PostComment />
       </div>
     </section>
   );
