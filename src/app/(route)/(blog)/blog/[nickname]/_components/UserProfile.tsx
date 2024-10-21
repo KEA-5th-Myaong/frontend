@@ -13,8 +13,17 @@ import { fetchFollowed, fetchFollowing } from '../_services/blogService';
 export default function UserProfile() {
   const params = useParams();
 
-  const { data: followingData } = useCustomQuery(['following', params.userId], () => fetchFollowing(params.userId, 10));
-  const { data: followedData } = useCustomQuery(['followed', params.userId], () => fetchFollowed(params.userId, 10));
+  const getMemberId = (param: string | string[]): string => {
+    if (Array.isArray(param)) {
+      return param[0]; // 배열인 경우 첫 번째 요소를 사용
+    }
+    return param;
+  };
+
+  const memberId = decodeURI(getMemberId(params.memberId));
+
+  const { data: followingData } = useCustomQuery(['following', memberId], () => fetchFollowing(1, 10));
+  const { data: followedData } = useCustomQuery(['followed', memberId], () => fetchFollowed(1, 10));
 
   const [followerList, setFollowerList] = useState<FollowedProps[]>([]);
   const [followingList, setFollowingList] = useState<FollowingProps[]>([]);
