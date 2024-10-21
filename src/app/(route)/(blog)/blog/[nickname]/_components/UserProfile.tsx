@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-// import testFollower from './_follow/follow.json';
-import { FollowedProps, FollowingProps } from '../_types/blog';
 import FollowButton from './_follow/FollowButton';
 import FollowModal from './_follow/FollowModal';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
@@ -22,11 +20,11 @@ export default function UserProfile() {
 
   const memberId = decodeURI(getMemberId(params.memberId));
 
-  const { data: followingData } = useCustomQuery(['following', memberId], () => fetchFollowing(1, 10));
-  const { data: followedData } = useCustomQuery(['followed', memberId], () => fetchFollowed(1, 10));
+  const { data: followedData } = useCustomQuery(['followed', memberId], () => fetchFollowed('1', '10'));
+  const { data: followingData } = useCustomQuery(['following', memberId], () => fetchFollowing('1', '10'));
 
-  const [followerList, setFollowerList] = useState<FollowedProps[]>([]);
-  const [followingList, setFollowingList] = useState<FollowingProps[]>([]);
+  const [followedList, setFollowedList] = useState([]);
+  const [followingList, setFollowingList] = useState([]);
 
   const [isFollowerOpen, setIsFollowerOpen] = useState(false);
   const [isFollowingOpen, setIsFollowingOpen] = useState(false);
@@ -37,17 +35,17 @@ export default function UserProfile() {
     const fetchData = async () => {
       try {
         // 팔로워 데이터 가져오기
-        setFollowerList(followingData?.following);
+        setFollowedList(followedData?.data.followedDTOList);
 
         // 팔로잉 데이터 가져오기
-        setFollowingList(followedData?.followed);
+        setFollowingList(followingData?.data.followingDTOList);
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchData();
-  }, [followedData?.followed, followingData?.following]);
+  }, [followedData?.data.followedDTOList, followingData?.data.followingDTOList]);
   return (
     <>
       <div className="pt-[51px] pb-[41px] xl:px-5 px-2 rounded-2xl bg-white-0 md:border md:border-gray-2 h-fit">
@@ -65,11 +63,19 @@ export default function UserProfile() {
             </div>
 
             <div className="hidden md:flex justify-between self-stretch px-[58px] md:w-auto">
-              <FollowButton count={123} label="팔로워" onClick={() => setIsFollowerOpen(true)} />
+              <FollowButton
+                count={followedData?.data.followedDTOList.length}
+                label="팔로워"
+                onClick={() => setIsFollowerOpen(true)}
+              />
 
               <div className="h-[53px] bg-gray-0 w-[2px]" />
 
-              <FollowButton count={456} label="팔로잉" onClick={() => setIsFollowingOpen(true)} />
+              <FollowButton
+                count={followingData?.data.followingDTOList.length}
+                label="팔로잉"
+                onClick={() => setIsFollowingOpen(true)}
+              />
             </div>
 
             <Link
@@ -100,7 +106,7 @@ export default function UserProfile() {
         isOpen={isFollowerOpen}
         onClose={() => setIsFollowerOpen(false)}
         title="김현중님을 팔로우하는 유저"
-        list={followerList}
+        list={followedList}
       />
 
       <FollowModal

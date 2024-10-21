@@ -1,12 +1,20 @@
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Overlay from '../../../../../../_components/Overlay';
-import { FollowingProps } from '../../_types/blog';
+import defaultProfilePic from '../../../../../../../../public/mascot.png';
+
+interface FollowUserProps {
+  followed: boolean;
+  memberId: number;
+  nickname: string;
+  profilePicUrl: string;
+}
 
 interface FollowModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  list: unknown[];
+  list: FollowUserProps[];
 }
 
 const followMotion = {
@@ -36,11 +44,18 @@ export default function FollowModal({ isOpen, onClose, title, list }: FollowModa
 
         <div className="flex flex-col gap-6 w-full h-[514px] overflow-scroll pb-2 hide-scrollbar">
           {list?.map((followList) => (
-            <div key={followList.id} className="flex items-center justify-between">
+            <div key={followList.memberId} className="flex items-center justify-between">
               <div className="flex items-center gap-5">
-                <div className="w-[52px] h-[52px] min-w-[52px] max-h-[52px] bg-purple-300 rounded-full " />
+                <Image
+                  className="rounded-full mr-5"
+                  src={followList.profilePicUrl || defaultProfilePic.src}
+                  alt="프로필사진"
+                  width={52}
+                  height={52}
+                  unoptimized
+                />
                 <p className="font-medium min-w-[180px] max-w-[240px] text-lg overflow-hidden text-ellipsis whitespace-nowrap flex-grow">
-                  {followList.name}
+                  {followList.nickname}
                 </p>
               </div>
 
