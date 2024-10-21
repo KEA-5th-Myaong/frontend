@@ -50,7 +50,7 @@ export default function PostContainer() {
                 router.push(`/blog/${post.username}`);
               }}
               onContentClick={() => {
-                router.push(`/blog/${post.title}/${post.postId}`);
+                router.push(`/blog/${post.username}/${post.postId}`);
               }}
               thumbnail={null}
               profilePicUrl={post.profilePicUrl}

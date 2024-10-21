@@ -3,16 +3,25 @@
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
+import { useParams } from 'next/navigation';
 import Icons from '../../../../../../_components/ui/Icon';
 import { CommentIcon, FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
-import testPosts from '../../_components/test.json';
+import testPosts from '../../_components/test.json'; // 나중에 대체
 import MoreOptions from '../../../../../../_components/MoreOptions';
 import useClickOutside from '../../../../../../_hooks/useClickOutside';
 import PostComment from './_comment/PostComment';
 import formatDate from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchPostPostId } from '../../_services/blogService';
 
 export default function PostContent() {
+  const params = useParams();
+  const { postId } = params;
+
+  const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId));
+  console.log(postId, data);
+
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 

@@ -55,6 +55,17 @@ export async function fetchPost(memberId: string, lastId: string) {
   }
 }
 
+// (GET) 사용자의 특정 포스트 조회
+export async function fetchPostPostId(postId: string) {
+  try {
+    const { data } = await api.get(`/blog/posts/${postId}`);
+    return data;
+  } catch (error) {
+    console.error('사용자의 특정 포스트 조회 실패:', error);
+    throw error;
+  }
+}
+
 // (POST) 포스트 작성
 export async function postPost(postData: unknown) {
   try {
