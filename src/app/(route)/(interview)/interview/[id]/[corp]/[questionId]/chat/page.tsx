@@ -10,7 +10,7 @@ export default function Chatting() {
   const corp = decodeURI(selectedCorp);
 
   return (
-    <section className="flex flex-col pb-8 pt-6 sm:pt-[14px] interview-container">
+    <section className="flex flex-col pb-8 pt-6 sm:pt-3.5 interview-container">
       <p className="font-semibold">모의 면접</p>
 
       <div className="flex flex-col self-stretch pt-2 w-full pb-8">

@@ -38,7 +38,7 @@ export default function MainPage() {
         <div className="w-full min-w-[360px] max-w-[982px] px-[42px]">
           <Carousel />
 
-          <div className="flex flex-col md:flex-row w-full gap-[14px]">
+          <div className="flex flex-col md:flex-row w-full gap-3.5">
             {/* 직군 메뉴 */}
             <JobMenu
               className="hidden md:flex"

@@ -47,7 +47,7 @@ export default function ImageChange({ setProfileImage }: ImageChangeProps) {
       </div>
       {/* 숨겨진 파일 입력 요소 */}
       <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/*" className="hidden" />
-      <button type="button" onClick={() => fileInputRef.current?.click()} className="py-2 mt-[14px] primary-1-btn">
+      <button type="button" onClick={() => fileInputRef.current?.click()} className="py-2 mt-3.5 primary-1-btn">
         프로필 수정
       </button>
       <button type="button" onClick={handleDefaultImage} className="py-1 mt-2 primary-1-btn">
