@@ -7,14 +7,20 @@ import { PSListBoxProps } from '../_types/psList';
 import PSListBox from './PSListBox';
 import pstests from './PStest.json';
 import PSListHeader from './PSListHeader';
+import { fetchPSList, fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
 
 export default function PSListContainer() {
   const [personalStatement, setPersonalStatement] = useState<PSListBoxProps[]>([]);
   const psLength = personalStatement.length;
 
+  const { data: psListData } = useCustomQuery(['psList'], () => fetchPSList());
+  const { data: psData } = useCustomQuery(['ps'], () => fetchPS('1'));
+
   useEffect(() => {
     setPersonalStatement(pstests.pstests);
   }, []);
+
   return (
     <>
       {/* 자소서 관리 헤더 */}

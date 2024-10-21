@@ -32,16 +32,14 @@ export default function PortfolioCard({ id, title, date, memo }: PortfolioCardPr
   };
 
   return (
-    <div className=" relative w-[320px] h-[200px] bg-white-0 border border-gray-5 rounded-[12px] pt-[30px] px-[30px]">
+    <div className=" relative w-[320px] bg-white-0 border border-gray-5 rounded-xl pt-[30px] pb-2.5 px-[30px]">
       <div className="flex justify-between">
-        <h1 className="max-w-[15ch] font-semibold text-base whitespace-nowrap text-ellipsis overflow-hidden">
-          {title}
-        </h1>
+        <h1 className="max-w-[15ch] font-semibold whitespace-nowrap text-ellipsis overflow-hidden">{title}</h1>
         <button
           type="button"
           onClick={handleSetMain}
-          className={`${isMainPortfolio === id ? 'bg-primary-4' : 'bg-gray-5'} flex-center w-[42px] h-[20px] 
-          px-[10px] py-[5px] rounded-[5px] font-semibold text-[11px] text-white-0`}
+          className={`${isMainPortfolio === id ? 'bg-primary-4' : 'bg-gray-5'} flex-center 
+          px-2.5 rounded-[5px] font-semibold text-[11px] text-white-0`}
         >
           대표
         </button>
@@ -57,17 +55,17 @@ export default function PortfolioCard({ id, title, date, memo }: PortfolioCardPr
 
         {isShowDropdown && <PortfolioDropdown />}
       </div>
-      <form className="bg-gray-4 rounded-[6px] mt-5 py-[15px] px-[15px]">
-        <h1 className="font-semibold text-[14px]">MEMO</h1>
+      <form className="bg-gray-4 rounded-md mt-5 py-[15px] px-[15px]">
+        <h1 className="font-semibold text-sm">MEMO</h1>
         <input
           type="text"
           placeholder="메모 입력"
           value={currentMemo}
           onChange={handleMemoChange}
-          className="whitespace-nowrap overflow-hidden mt-[10px] bg-gray-4 text-gray-0 text-[14px] "
+          className="whitespace-nowrap overflow-hidden mt-2.5 bg-gray-4 text-gray-0 text-sm"
         />
       </form>
-      <p className="text-right mt-[10px] text-gray-0  text-[12px]">{date} 등록</p>
+      <p className="text-right mt-2.5 text-gray-0 text-xs">{date} 등록</p>
     </div>
   );
 }

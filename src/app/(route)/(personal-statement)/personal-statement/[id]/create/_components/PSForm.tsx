@@ -28,7 +28,7 @@ export default function PSForm({ name, label, isTextarea, maxLength, register, p
           {...register(name, { required: true })}
           id={name}
           maxLength={maxLength}
-          className="py-[10px] ps-input"
+          className="py-2.5 ps-input"
           placeholder={placeholder}
         />
       ) : (

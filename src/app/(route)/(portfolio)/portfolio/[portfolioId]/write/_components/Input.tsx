@@ -33,10 +33,10 @@ export default function Input({
   const gradePattern = '^\\d(\\.\\d{1,2})?/[0-4](\\.\\d{1,2})?$';
 
   return (
-    <div className="my-[10px]">
+    <div className="my-2.5">
       <div className="flex items-center">
         {required && <Icons name={RequiredIcon} />}
-        <label className="text-[14px] font-semibold ml-[5px]">{label}</label>
+        <label className="text-sm font-semibold ml-[5px]">{label}</label>
       </div>
       {element === 'input' ? (
         <input
@@ -48,7 +48,7 @@ export default function Input({
             if (onClick) onClick(event);
           }}
           required={required}
-          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-[14px] font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
+          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-sm font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
         />
       ) : (
         <textarea

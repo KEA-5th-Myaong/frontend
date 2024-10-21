@@ -1,14 +1,19 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import api from '../api/axiosInstance';
+import { useQuery, UseQueryOptions, QueryFunction, QueryKey } from '@tanstack/react-query';
 
-export default function useCustomQuery<T>(key: string[], url: string, options?: UseQueryOptions<T>) {
+const defaultQueryOptions = {
+  refetchOnMount: false, // 다른 탭에 갔다오거나
+  refetchOnWindowFocus: false, // 마우스를 다시 클릭 했을 때 fetch하는거 false로
+};
+
+export default function useCustomQuery<T>(
+  key: QueryKey,
+  queryFn: QueryFunction<T>,
+  options?: Omit<UseQueryOptions<T>, 'queryKey' | 'queryFn'>,
+) {
   return useQuery<T>({
     queryKey: key,
-    // 쿼리 함수
-    queryFn: async () => {
-      const { data } = await api.get<T>(url);
-      return data;
-    },
+    queryFn,
+    ...defaultQueryOptions, // 기본 옵션 추가
     ...options,
   });
 }

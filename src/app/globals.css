@@ -58,7 +58,7 @@ body {
     @apply mb-12 pre-3xl-semibold text-center;
   }
   .form-error-text {
-    @apply absolute pl-4 mt-[6px] font-medium text-xs text-red-0;
+    @apply absolute pl-4 mt-1.5 font-medium text-xs text-red-0;
   }
   .form-input {
     @apply w-full p-4 border-2 rounded-lg border-primary-1 text-black-0 font-medium focus:outline-none;
@@ -67,7 +67,7 @@ body {
     @apply border-none text-white-0 bg-primary-1 form-input;
   }
   .form-label {
-    @apply block pb-[10px];
+    @apply block pb-2.5;
   }
   .form-red-dot {
     @apply bg-red-0 w-[5px] h-[5px] rounded-full;
@@ -75,9 +75,8 @@ body {
 
   /* 블로그 */
   .blog-favor-frame {
-    @apply flex items-center gap-[5px] px-3 py-[6px] cursor-pointer;
+    @apply flex items-center gap-[5px] px-3 py-1.5 cursor-pointer;
     @apply flex items-center gap-[5px] px-3 py-[5px] cursor-pointer;
-
   }
 
   /* 모의 면접 */
@@ -85,7 +84,7 @@ body {
     @apply relative w-full max-w-[800px] pl-0 sm:pl-7 md:pl-16 lg:pl-20 xl:pl-24 pt-8;
   }
   .corp-block {
-    @apply py-[6px] px-1 sm:px-4 md:px-6 lg:px-8 text-black-0 rounded-lg w-1/3 bg-white-0 hover:bg-primary-0 cursor-pointer my-2;
+    @apply py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 text-black-0 rounded-lg w-1/3 bg-white-0 hover:bg-primary-0 cursor-pointer my-2;
   }
   .chat-msg-text {
     @apply min-w-[20%] font-semibold border border-gray-0 
@@ -98,22 +97,22 @@ body {
 
   /* 자소서 */
   .ps-label {
-    @apply flex flex-col gap-[6px] w-full text-[13px] font-semibold;
+    @apply flex flex-col gap-1.5 w-full text-[13px] font-semibold;
   }
   .ps-input {
     @apply bg-[#fcfcfc] px-5 border border-gray-5 rounded-[10px] placeholder:text-[#DEDEDE] font-normal focus:outline-none;
   }
   /*드롭다운 스타일*/
   .dropdown {
-    @apply flex-center flex-col p-[10px] bg-white-0 text-[14px] rounded-[8px] border border-gray-5;
+    @apply flex-center flex-col p-2.5 bg-white-0 text-sm rounded-lg border border-gray-5;
   }
   .dropdown-item {
-    @apply py-[6px] px-[30px] hover:bg-primary-3 hover:text-white-0 rounded-[6px] cursor-pointer;
+    @apply py-1.5 px-[30px] hover:bg-primary-3 hover:text-white-0 rounded-md cursor-pointer;
   }
 
   /*포트폴리오 아이템 토글 스타일*/
   .item-toggle {
-    @apply flex justify-between items-center pl-[10px] py-[10px];
+    @apply flex justify-between items-center pl-2.5 py-2.5;
   }
 
   /*포트폴리오*/

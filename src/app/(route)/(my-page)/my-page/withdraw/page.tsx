@@ -3,7 +3,7 @@ import WithdrawContainer from './_components/WithdrawContainer';
 
 export default function Withdraw() {
   return (
-    <div className="flex flex-col items-center w-full px-14">
+    <div className="flex flex-col items-center w-full px-14 pt-14">
       <MyPageHeader currentPage="withdraw" />
       <div className="flex flex-col items-center w-full">
         <p className="pt-14 pre-2xl-semibold sm:text-[32px]">회원 탈퇴</p>

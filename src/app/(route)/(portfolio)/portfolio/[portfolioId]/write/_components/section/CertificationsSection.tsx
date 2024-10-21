@@ -44,7 +44,7 @@ export default function CertificationsSection() {
             alt="자격증 추가"
             width={30}
             height={30}
-            className=" hover-animation mr-[10px] "
+            className=" hover-animation mr-2.5 "
           />
           자격증 추가
         </button>

@@ -29,7 +29,7 @@ export default function InterviewHistory() {
         className="flex justify-between w-full"
       >
         <p className={`pl-[13px] ${showMore ? 'mb-5' : 'mb-0'} sm:mb-5`}>면접 기록</p>
-        <Icons name={TriangleIcon} className={`${showMore ? '' : 'rotate-180'} mt-[6px] block sm:hidden`} />
+        <Icons name={TriangleIcon} className={`${showMore ? '' : 'rotate-180'} mt-1.5 block sm:hidden`} />
       </button>
 
       <div className={`${showMore ? 'flex' : 'hidden'} sm:flex flex-col gap-1 mb-14`}>
