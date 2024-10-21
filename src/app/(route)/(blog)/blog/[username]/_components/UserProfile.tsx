@@ -122,14 +122,14 @@ export default function UserProfile() {
       <FollowModal
         isOpen={isFollowerOpen}
         onClose={() => setIsFollowerOpen(false)}
-        title="김현중님을 팔로우하는 유저"
+        title={`${blogUserData?.data.nickname}님을 팔로우하는 유저`}
         list={followedList}
       />
 
       <FollowModal
         isOpen={isFollowingOpen}
         onClose={() => setIsFollowingOpen(false)}
-        title="김현중님이 팔로우하는 유저"
+        title={`${blogUserData?.data.nickname}님이 팔로우하는 유저`}
         list={followingList}
       />
     </>
