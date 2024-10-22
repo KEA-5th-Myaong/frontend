@@ -3,6 +3,7 @@ import Icons from '../../../../../../../_components/ui/Icon';
 import { ReplyIcon } from '../../../../../../../_components/ui/iconPath';
 import { CommentProps } from '../../_types/post';
 import EditCommentInput from './EditCommentInput';
+import { formatTime } from '@/app/_utils/formatDate';
 
 interface CommentItemProps {
   comment: CommentProps;
@@ -57,7 +58,7 @@ export default function CommentItem({
           <div className={`${isReply ? 'ml-16' : 'ml-10'} mb-[18px] py-2 text-[13px] break-words`}>
             {comment.comment}
           </div>
-          <div className={`${isReply ? 'ml-16' : 'ml-10'} text-xs text-gray-0`}>{comment.timestamp}</div>
+          <div className={`${isReply ? 'ml-16' : 'ml-10'} text-xs text-gray-0`}>{formatTime(comment.timestamp)}</div>
         </>
       )}
     </div>

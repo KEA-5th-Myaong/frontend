@@ -7,7 +7,7 @@ import { PostProps } from '../_types/main-page';
 import { fetchBookmark, fetchFollowing, fetchPosts, fetchPreJob } from '../_services/mainService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import Post from '@/app/_components/Post';
-import formatDate from '@/app/_utils/formatDate';
+import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
 
 interface PostFeedProps {

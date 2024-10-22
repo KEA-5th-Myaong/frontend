@@ -6,7 +6,7 @@ import Post from '../../../../../_components/Post';
 import { fetchPost } from '../_services/blogService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { PostProps } from '@/app/(route)/(main-page)/main/_types/main-page';
-import formatDate from '@/app/_utils/formatDate';
+import { formatDate } from '@/app/_utils/formatDate';
 
 export default function PostContainer() {
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function PostContainer() {
   const [lastId, setLastId] = useState('0');
 
   const { data, isLoading } = useCustomQuery(['post', memberId], () => fetchPost(memberId, lastId));
-  console.log(data);
+
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   useEffect(() => {
     if (data && data.success && data.data && Array.isArray(data.data.posts)) {

@@ -3,7 +3,7 @@ export interface CommentProps {
   memberId: number | null;
   nickname: string | null;
   commentId: number;
-  parent_comment_id: number | null;
+  parentCommentId: number | null;
   comment: string;
   timestamp: string;
 }
