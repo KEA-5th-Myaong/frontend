@@ -16,6 +16,7 @@ import {
 } from '@/app/(route)/(interview)/_services/interviewService';
 import useInterviewStore from '../../../_store/interviewStore';
 import { Message } from '../_types/messageType';
+import MsgEditBtn from './MsgEditBtn';
 
 const MAX_MESSAGES = 10;
 
@@ -71,7 +72,6 @@ export default function ChatContainer() {
       addMessage(tailQData?.data.content, true, tailQData?.data.messageId);
     }
   };
-
   // 새 질문 생성
   const handleNewQuestion = () => {
     if (!isMaxMessages) {
@@ -88,31 +88,34 @@ export default function ChatContainer() {
     }
   }, [editingMessageId]);
 
+  // 수정 버튼 누르면
   const handleEdit = (messageId: string, text: string) => {
-    setEditingMessageId(messageId);
-    setEditedText(text);
+    setEditingMessageId(messageId); // 현재 수정하는 메시지id
+    setEditedText(text); // 수정 전 텍스트
   };
 
+  // 저장 버튼 누르면
   const handleSaveEdit = async (messageId: string) => {
     const content = {
-      content: editedText,
+      content: editedText, // put에 들어가는거
     };
     try {
-      await putInterviewMessage(messageId, content);
+      await putInterviewMessage(messageId, content); // put api 호출
       setMessages((prevMessages) =>
+        // 수정한 id의 메시지만 editedText로 업데이트
         prevMessages.map((msg) => (msg.messageId === messageId ? { ...msg, text: editedText } : msg)),
       );
-      setEditingMessageId(null);
+      setEditingMessageId(null); // 수정 끝나면 메시지id 비워주기
     } catch (error) {
       console.error('클라이언트) 메시지 수정 실패:', error);
     }
   };
 
+  // 취소 버튼 누르면
   const handleCancelEdit = () => {
-    setEditingMessageId(null);
-    setEditedText('');
+    setEditingMessageId(null); // 수정 끝나면 메시지id 비워주기
+    setEditedText(''); // 수정 전 텍스트도 비워주기
   };
-
   return (
     <div
       ref={chatContainerRef}
@@ -134,34 +137,12 @@ export default function ChatContainer() {
                 className={`flex gap-3 ${editingMessageId === msg.messageId ? 'w-full' : 'max-w-[90%] sm:max-w-[80%] '}`}
               >
                 {!msg.isAI && index === messages.length - 1 && (
-                  <div className="flex gap-2">
-                    {editingMessageId === msg.messageId ? (
-                      <>
-                        <button
-                          type="button"
-                          onClick={handleCancelEdit}
-                          className="text-xs text-gray-0 self-end pb-2 whitespace-nowrap"
-                        >
-                          취소
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleSaveEdit(msg.messageId)}
-                          className="text-xs text-gray-0 self-end pb-2 whitespace-nowrap"
-                        >
-                          저장
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => handleEdit(msg.messageId, msg.text)}
-                        className="text-xs text-gray-0 self-end pb-2 whitespace-nowrap"
-                      >
-                        수정
-                      </button>
-                    )}
-                  </div>
+                  <MsgEditBtn
+                    isEdit={editingMessageId === msg.messageId}
+                    onEdit={() => handleEdit(msg.messageId, msg.text)}
+                    onCancel={handleCancelEdit}
+                    onSave={() => handleSaveEdit(msg.messageId)}
+                  />
                 )}
                 {editingMessageId === msg.messageId ? (
                   <textarea
