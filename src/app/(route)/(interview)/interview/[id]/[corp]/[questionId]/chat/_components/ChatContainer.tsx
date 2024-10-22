@@ -15,6 +15,14 @@ import {
 } from '@/app/(route)/(interview)/_services/interviewService';
 import useInterviewStore from '../../../_store/interviewStore';
 
+interface Message {
+  text: string;
+  isAI: boolean;
+  messageId: string;
+}
+
+const MAX_MESSAGES = 10;
+
 export default function ChatContainer() {
   const interviewId = '1'; // 나중에 실제 아이디로 대체
   // 이 전에 고른 첫 번째 질문
@@ -25,35 +33,52 @@ export default function ChatContainer() {
   // 꼬리 질문
   const { data: tailQData } = useCustomQuery(['tail-q', interviewId], () => fetchInterviewTailQuestion(interviewId));
 
-  const [messages, setMessages] = useState([]); // 채팅 내용 다 담김
+  const [messages, setMessages] = useState<Message[]>([]); // 채팅 내용 다 담김
+  const [isMaxMessages, setIsMaxMessages] = useState(false); // 최대 채팅 수 도달
+  const [isLastMessageUser, setIsLastMessageUser] = useState(false); // 마지막 메시지가 사용자인지
 
   // firstQData가 로드되면 첫 메시지로 설정
   useEffect(() => {
     if (storeQData) {
-      setMessages([{ text: storeQData, isAI: true, messageId: 1 }]);
+      setMessages([{ text: String(storeQData), isAI: true, messageId: '1' }]);
     }
   }, [storeQData]);
+  // 최대 메시지 도달 확인
+  useEffect(() => {
+    setIsMaxMessages(messages.length >= MAX_MESSAGES);
+    setIsLastMessageUser(messages.length > 0 && !messages[messages.length - 1].isAI);
+  }, [messages]);
 
   // 채팅 컨테이너에 대한 참조를 생성(DOM 요소에 접근)
   const chatContainerRef = useContainerHeight();
   const messagesEndRef = useScrollToBottom(messages); // 메시지 보내면 하단으로 스크롤
 
   const addMessage = (message: string, isAI: boolean, messageId?: string) => {
-    setMessages((prevMessages) => [...prevMessages, { text: message, isAI, messageId }]);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: message, isAI, messageId: messageId || String(Date.now()) },
+    ]);
   };
 
+  // 메시지 전송 함수
   const handleSubmit = (newMessage: string) => {
-    if (newMessage.trim()) {
+    if (newMessage.trim() && !isMaxMessages) {
       addMessage(newMessage, false);
     }
   };
 
+  // 꼬리 질문 생성
   const handleTailQuestion = () => {
-    addMessage(tailQData?.data.content, true, tailQData?.data.messageId);
+    if (!isMaxMessages) {
+      addMessage(tailQData?.data.content, true, tailQData?.data.messageId);
+    }
   };
 
+  // 새 질문 생성
   const handleNewQuestion = () => {
-    addMessage(newQData?.data.content, true, newQData?.data.messageId);
+    if (!isMaxMessages) {
+      addMessage(newQData?.data.content, true, newQData?.data.messageId);
+    }
   };
 
   return (
@@ -63,8 +88,9 @@ export default function ChatContainer() {
     >
       <div className="flex-shrink overflow-y-auto pt-5 pb-4 hide-scrollbar">
         <div className="flex flex-col gap-7">
-          {messages.map((msg) => (
+          {messages.map((msg, index) => (
             <motion.div
+              key={msg.messageId}
               variants={messageVariants}
               initial="hidden"
               animate="visible"
@@ -83,7 +109,7 @@ export default function ChatContainer() {
                 </div>
               </div>
 
-              {!msg.isAI && (
+              {!msg.isAI && index === messages.length - 1 && !isMaxMessages && (
                 <div className="flex items-center gap-4 pt-4">
                   <button type="button" className="chat-msg-btn" onClick={handleTailQuestion}>
                     꼬리 질문 받기 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
@@ -100,7 +126,11 @@ export default function ChatContainer() {
       </div>
 
       {/* 메시지 입력 폼 */}
-      <MessageForm onSubmit={handleSubmit} />
+      {!isMaxMessages ? (
+        <MessageForm onSubmit={handleSubmit} disabled={isMaxMessages || isLastMessageUser} />
+      ) : (
+        <div className="text-center py-4 rounded-b-3xl bg-gray-4 font-bold">모의 면접이 종료되었습니다.</div>
+      )}
     </div>
   );
 }

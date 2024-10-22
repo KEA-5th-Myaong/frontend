@@ -4,9 +4,10 @@ import { ArrowIcon } from '../../../../../../../../_components/ui/iconPath';
 
 interface MessageFormProps {
   onSubmit: (message: string) => void;
+  disabled: boolean;
 }
 
-export default function MessageForm({ onSubmit }: MessageFormProps) {
+export default function MessageForm({ onSubmit, disabled }: MessageFormProps) {
   const [newMessage, setNewMessage] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -46,9 +47,10 @@ export default function MessageForm({ onSubmit }: MessageFormProps) {
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
         onKeyDown={handleKeyDown}
+        disabled={disabled}
         className="flex-grow pl-5 md:pl-8 pr-2 py-2 focus:outline-none rounded-xl resize-none hide-scrollbar
          max-h-[160px] overflow-y-auto"
-        placeholder="답변을 입력해주세요"
+        placeholder={disabled ? '다음 질문을 생성해주세요' : '답변을 입력해주세요'}
       />
       <button type="submit" tabIndex={-1} className="pr-2 sm:pr-3 md:pr-4 cursor-pointer">
         <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
