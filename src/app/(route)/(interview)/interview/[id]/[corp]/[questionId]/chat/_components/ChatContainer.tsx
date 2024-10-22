@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import MessageForm from './MessageForm';
 import Icons from '../../../../../../../../_components/ui/Icon';
@@ -12,14 +12,10 @@ import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import {
   fetchInterviewTailQuestion,
   fetchInterviewNewQuestion,
+  putInterviewMessage,
 } from '@/app/(route)/(interview)/_services/interviewService';
 import useInterviewStore from '../../../_store/interviewStore';
-
-interface Message {
-  text: string;
-  isAI: boolean;
-  messageId: string;
-}
+import { Message } from '../_types/messageType';
 
 const MAX_MESSAGES = 10;
 
@@ -36,6 +32,8 @@ export default function ChatContainer() {
   const [messages, setMessages] = useState<Message[]>([]); // 채팅 내용 다 담김
   const [isMaxMessages, setIsMaxMessages] = useState(false); // 최대 채팅 수 도달
   const [isLastMessageUser, setIsLastMessageUser] = useState(false); // 마지막 메시지가 사용자인지
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
+  const [editedText, setEditedText] = useState<string>(''); // 수정한 메시지
 
   // firstQData가 로드되면 첫 메시지로 설정
   useEffect(() => {
@@ -81,10 +79,44 @@ export default function ChatContainer() {
     }
   };
 
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [editingMessageId]);
+
+  const handleEdit = (messageId: string, text: string) => {
+    setEditingMessageId(messageId);
+    setEditedText(text);
+  };
+
+  const handleSaveEdit = async (messageId: string) => {
+    const content = {
+      content: editedText,
+    };
+    try {
+      await putInterviewMessage(messageId, content);
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) => (msg.messageId === messageId ? { ...msg, text: editedText } : msg)),
+      );
+      setEditingMessageId(null);
+    } catch (error) {
+      console.error('클라이언트) 메시지 수정 실패:', error);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingMessageId(null);
+    setEditedText('');
+  };
+
   return (
     <div
       ref={chatContainerRef}
-      className="flex flex-col w-full relative min-w-[360px] max-w-[735px] border-t border-gray-2"
+      className="flex flex-col w-full relative min-w-[360px] max-w-[735px] px-4 border-t border-gray-2"
     >
       <div className="flex-shrink overflow-y-auto pt-5 pb-4 hide-scrollbar">
         <div className="flex flex-col gap-7">
@@ -98,18 +130,54 @@ export default function ChatContainer() {
             >
               {msg.isAI && <p className="font-semibold pb-3">면접관</p>}
 
-              <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
-                {!msg.isAI && (
-                  <button type="button" className="text-xs text-gray-0 self-end pb-2 whitespace-nowrap">
-                    수정
-                  </button>
+              <div
+                className={`flex gap-3 ${editingMessageId === msg.messageId ? 'w-full' : 'max-w-[90%] sm:max-w-[80%] '}`}
+              >
+                {!msg.isAI && index === messages.length - 1 && (
+                  <div className="flex gap-2">
+                    {editingMessageId === msg.messageId ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={handleCancelEdit}
+                          className="text-xs text-gray-0 self-end pb-2 whitespace-nowrap"
+                        >
+                          취소
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleSaveEdit(msg.messageId)}
+                          className="text-xs text-gray-0 self-end pb-2 whitespace-nowrap"
+                        >
+                          저장
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleEdit(msg.messageId, msg.text)}
+                        className="text-xs text-gray-0 self-end pb-2 whitespace-nowrap"
+                      >
+                        수정
+                      </button>
+                    )}
+                  </div>
                 )}
-                <div className={`break-words chat-msg-text ${msg.isAI ? 'bg-gray-4' : 'bg-primary-0 text-white'}`}>
-                  {msg.text}
-                </div>
+                {editingMessageId === msg.messageId ? (
+                  <textarea
+                    ref={textareaRef}
+                    className="break-words w-full chat-msg-text bg-primary-0 bg-opacity-35 hide-scrollbar resize-none focus:outline-none mr-0.5"
+                    value={editedText}
+                    onChange={(e) => setEditedText(e.target.value)}
+                  />
+                ) : (
+                  <div className={`break-words chat-msg-text ${msg.isAI ? 'bg-gray-4' : 'bg-primary-0'}`}>
+                    {msg.text}
+                  </div>
+                )}
               </div>
 
-              {!msg.isAI && index === messages.length - 1 && !isMaxMessages && (
+              {!msg.isAI && index === messages.length - 1 && !isMaxMessages && editingMessageId !== msg.messageId && (
                 <div className="flex items-center gap-4 pt-4">
                   <button type="button" className="chat-msg-btn" onClick={handleTailQuestion}>
                     꼬리 질문 받기 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
