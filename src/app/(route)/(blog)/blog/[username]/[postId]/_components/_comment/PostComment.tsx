@@ -29,7 +29,7 @@ export default function PostComment({ comments }: PostCommentProps) {
     if (content.trim()) {
       const newComment: CommentProps = {
         commentId: Math.max(...commentLists.map((c) => c.commentId)) + 1,
-        parent_comment_id: parentId,
+        parentCommentId: parentId,
         nickname: '김현중',
         comment: content,
         timestamp: '방금 전',
@@ -61,7 +61,7 @@ export default function PostComment({ comments }: PostCommentProps) {
   // 댓글과 그에 대한 답글을 렌더링
   const renderCommentWithReplies = (comment: CommentProps) => {
     // 현재 댓글에 대한 답글들을 필터링해서 새 배열로 받음
-    const replies = commentLists.filter((reply) => reply.parent_comment_id === comment.commentId);
+    const replies = commentLists.filter((reply) => reply.parentCommentId === comment.commentId);
 
     // 현재 댓글에 답글을 다는지, 답글에 답글을 다는지
     const isReplyInputVisible =
@@ -98,7 +98,7 @@ export default function PostComment({ comments }: PostCommentProps) {
   return (
     <div className="px-[9px]">
       {/* 최상위 댓글만 렌더링, 답글은 렌더링 함수 속에 있음 */}
-      {commentLists.filter((comment) => comment.parent_comment_id === null).map(renderCommentWithReplies)}
+      {commentLists?.filter((comment) => comment.parentCommentId === null).map(renderCommentWithReplies)}
 
       {/* 댓글 입력 인풋 */}
       <div className="flex flex-col mt-10 gap-2.5">

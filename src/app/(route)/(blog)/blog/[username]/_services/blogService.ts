@@ -56,7 +56,7 @@ export async function fetchPost(memberId: string, lastId: string) {
 }
 
 // (GET) 사용자의 특정 포스트 조회
-export async function fetchPostPostId(postId: string) {
+export async function fetchPostPostId(postId: string | undefined) {
   try {
     const { data } = await api.get(`/blog/posts/${postId}`);
     return data;
