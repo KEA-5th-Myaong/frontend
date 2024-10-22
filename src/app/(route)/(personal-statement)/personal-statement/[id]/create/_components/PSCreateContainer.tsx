@@ -1,18 +1,21 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import Modal, { initailModalState } from '../../../../../../_components/Modal';
 import PSFooter from '../../../../_components/PSFooter';
 import PSHeader from '../../../../_components/PSHeader';
 import usePSStore from '../../../../_store/psStore';
 import BackButton from '../../../../../../_components/BackButton';
 import { PSFormData } from '../_types/psCreate';
 import PSForm from './PSForm';
+import { postPS } from '@/app/(route)/(personal-statement)/_services/psServices';
 
 export default function PSCreateContainer() {
   const router = useRouter();
   const { psData, setPSData, resetPSData } = usePSStore();
+  const [modalState, setModalState] = useState(initailModalState);
 
   const { register, handleSubmit, control, setValue, getValues } = useForm<PSFormData>({
     defaultValues: psData, // Zustand 스토어의 데이터로 폼 초기화
@@ -39,9 +42,22 @@ export default function PSCreateContainer() {
     });
   }, [psData, setValue]);
 
+  // 완료시 완료 모달
+  const createDone = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '자기소개서가 작성되었습니다',
+      btnText: '확인',
+      onBtnClick: () => router.push('/personal-statement/1/list'),
+    }));
+  };
+
   // 폼 제출
-  const onSubmit = (data: PSFormData) => {
-    console.log(data);
+  const onSubmit = async (data: PSFormData) => {
+    await postPS(data);
+    createDone();
     resetPSData();
   };
 
@@ -51,7 +67,6 @@ export default function PSCreateContainer() {
 
   const handlePreviewClick = () => {
     const data = getValues(); // 인자 없이 getValues()를 호출하면, 폼의 모든 등록된 필드의 현재 값을 포함하는 객체를 반환
-
     setPSData(data);
     router.push('/personal-statement/1/preview');
   };
@@ -109,6 +124,9 @@ export default function PSCreateContainer() {
         </div>
       </div>
       <PSFooter showPreview showDone handlePreviewClick={handlePreviewClick} handleDoneClick={handleDoneClick} />
+      {modalState.open && (
+        <Modal topText={modalState.topText} btnText={modalState.btnText} onBtnClick={modalState.onBtnClick} />
+      )}
     </>
   );
 }
