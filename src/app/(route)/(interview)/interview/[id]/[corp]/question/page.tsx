@@ -9,6 +9,7 @@ import { QuestionBoxProps } from '../_types/corp';
 import ListVariants from '../_utils/listVariants';
 import { fetchCompanyQuestions } from '@/app/(route)/(interview)/_services/interviewService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import useInterviewStore from '../_store/interviewStore';
 
 export default function InterviewQuestion() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function InterviewQuestion() {
   const { id } = params;
   const selectedCorp = params.corp as string;
   const corp = decodeURI(selectedCorp);
+  const { setFirstQData } = useInterviewStore();
 
   const { data, refetch } = useCustomQuery(['interview-q', 1], () => fetchCompanyQuestions('1'));
 
@@ -60,6 +62,7 @@ export default function InterviewQuestion() {
             <QuestionBox
               question={`Q. ${question}`}
               onClick={() => {
+                setFirstQData(question);
                 router.push(`/interview/${id}/${corp}/${question.id}/chat`);
               }}
             />

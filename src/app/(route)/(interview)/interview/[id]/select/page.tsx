@@ -39,7 +39,7 @@ export default function InterviewSelect() {
         </motion.button>
       </div>
 
-      <div className="flex flex-wrap justify-center pt-5 w-full min-w-[263px] max-w-[440px]">
+      <div className="flex flex-wrap mx-auto pt-5 w-full min-w-[263px] max-w-[440px]">
         {corpList?.map((corp) => (
           <motion.button
             type="button"

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import MessageForm from './MessageForm';
 import Icons from '../../../../../../../../_components/ui/Icon';
@@ -8,34 +8,54 @@ import { ArrowIcon } from '../../../../../../../../_components/ui/iconPath';
 import useContainerHeight from '../../../../../../_hooks/useContainerHeight';
 import useScrollToBottom from '../../../../../../../../_hooks/useScrollToBottom';
 import messageVariants from '../_utils/messageVariants';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import {
+  fetchInterviewTailQuestion,
+  fetchInterviewNewQuestion,
+} from '@/app/(route)/(interview)/_services/interviewService';
+import useInterviewStore from '../../../_store/interviewStore';
 
 export default function ChatContainer() {
-  const [messages, setMessages] = useState([
-    { text: '위볼린이 속한 산업에서의 최신 기술 트렌드를 어떻게 따라가고 계신가요?', isAI: true },
-  ]);
+  const interviewId = '1'; // 나중에 실제 아이디로 대체
+  // 이 전에 고른 첫 번째 질문
+  const storeQData = useInterviewStore((state) => state.storeQData);
+
+  // 새 질문
+  const { data: newQData } = useCustomQuery(['new-q', interviewId], () => fetchInterviewNewQuestion(interviewId));
+  // 꼬리 질문
+  const { data: tailQData } = useCustomQuery(['tail-q', interviewId], () => fetchInterviewTailQuestion(interviewId));
+
+  const [messages, setMessages] = useState([]); // 채팅 내용 다 담김
+
+  // firstQData가 로드되면 첫 메시지로 설정
+  useEffect(() => {
+    if (storeQData) {
+      setMessages([{ text: storeQData, isAI: true, messageId: 1 }]);
+    }
+  }, [storeQData]);
 
   // 채팅 컨테이너에 대한 참조를 생성(DOM 요소에 접근)
   const chatContainerRef = useContainerHeight();
   const messagesEndRef = useScrollToBottom(messages); // 메시지 보내면 하단으로 스크롤
 
-  const addMessage = (message: string, isAI: boolean) => {
-    setMessages((prevMessages) => [...prevMessages, { text: message, isAI }]);
+  const addMessage = (message: string, isAI: boolean, messageId?: string) => {
+    setMessages((prevMessages) => [...prevMessages, { text: message, isAI, messageId }]);
   };
 
   const handleSubmit = (newMessage: string) => {
     if (newMessage.trim()) {
       addMessage(newMessage, false);
-      console.log('메시지 전송됨');
     }
   };
 
   const handleTailQuestion = () => {
-    console.log('꼬리 질문 생성');
+    addMessage(tailQData?.data.content, true, tailQData?.data.messageId);
   };
 
   const handleNewQuestion = () => {
-    console.log('새 질문 생성');
+    addMessage(newQData?.data.content, true, newQData?.data.messageId);
   };
+
   return (
     <div
       ref={chatContainerRef}

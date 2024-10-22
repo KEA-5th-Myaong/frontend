@@ -67,7 +67,7 @@ export async function putInterviewMessage(messageId: string, interviewData: unkn
 }
 
 // (GET) 새 질문 생성
-export async function fetchInterviewQuestion(interviewId: string) {
+export async function fetchInterviewNewQuestion(interviewId: string) {
   try {
     const { data } = await api.get(`/interviews/${interviewId}/q`);
     return data;
@@ -78,7 +78,7 @@ export async function fetchInterviewQuestion(interviewId: string) {
 }
 
 // (GET) 꼬리 질문 생성
-export async function fetchInterviewFollowUpQuestion(interviewId: string) {
+export async function fetchInterviewTailQuestion(interviewId: string) {
   try {
     const { data } = await api.get(`/interviews/${interviewId}/follow-up-q`);
     return data;
