@@ -4,6 +4,7 @@ import { ReplyIcon } from '../../../../../../../_components/ui/iconPath';
 import { CommentProps } from '../../_types/post';
 import EditCommentInput from './EditCommentInput';
 import { formatTime } from '@/app/_utils/formatDate';
+import defaultProfilePic from '../../../../../../../../../public/mascot.png';
 
 interface CommentItemProps {
   comment: CommentProps;
@@ -29,7 +30,7 @@ export default function CommentItem({
           {isReply && <Icons name={ReplyIcon} />}
           <Image
             className="min-w-[29px] min-h-[29px] rounded-full"
-            src={comment.profilePicUrl}
+            src={comment.profilePicUrl || defaultProfilePic.src}
             alt="프로필 사진"
             width={29}
             height={29}

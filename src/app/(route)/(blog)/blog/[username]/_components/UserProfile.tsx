@@ -76,7 +76,7 @@ export default function UserProfile() {
                 <span className="inline md:hidden">님의 블로그</span>
               </span>
               <div className="hidden sm:inline md:hidden w-full h-[1px] bg-gray-1" />
-              <span>회원2의 블로그입니다.</span>
+              <span> {blogUserData?.data.nickname}의 블로그입니다.</span>
             </div>
 
             <div className="hidden md:flex justify-between self-stretch px-[58px] md:w-auto">

@@ -1,6 +1,6 @@
 {
   "blogSubMenuItems": [
-    { "id": 1, "name": "내 블로그", "path": "/blog/1" },
+    { "id": 1, "name": "내 블로그", "path": "/blog/member2" },
     { "id": 2, "name": "글쓰기", "path": "/blog/1/write" }
   ],
   "jobSubMenuItems": [
