@@ -42,7 +42,7 @@ export default function PSEditingContainer() {
   useEffect(() => {
     console.log(edData?.data);
     setEdtate(edData?.data);
-  }, [edData]);
+  }, [edData?.data]);
 
   const handleBackClick = () => {
     setModalState((prev) => ({
