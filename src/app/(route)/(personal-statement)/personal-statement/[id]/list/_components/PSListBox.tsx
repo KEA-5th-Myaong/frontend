@@ -9,7 +9,7 @@ import { MoreIcon } from '../../../../../../_components/ui/iconPath';
 import useClickOutside from '../../../../../../_hooks/useClickOutside';
 import { PSListBoxProps } from '../_types/psList';
 
-export default function PSListBox({ id, title, job, content, created_at }: PSListBoxProps) {
+export default function PSListBox({ psId, title, position, content, timestamp }: PSListBoxProps) {
   const router = useRouter();
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -20,7 +20,7 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
   });
 
   const handlePSListBoxClick = () => {
-    router.push(`/personal-statement/${id}/read`);
+    router.push(`/personal-statement/${psId}/read`);
   };
 
   const [modalState, setModalState] = useState(initailModalState);
@@ -63,12 +63,12 @@ export default function PSListBox({ id, title, job, content, created_at }: PSLis
         <div className="flex items-center gap-4">
           <p className="font-semibold text-lg sm:text-xl line-clamp-2">{title}</p>
           <div className="hidden sm:block bg-primary-1 rounded-md px-5 py-1 text-[11px] text-white-0">
-            지원직무 : {job}
+            지원직무 : {position}
           </div>
         </div>
 
         <p className="text-gray-0 text-sm line-clamp-5">{content}</p>
-        <p className="text-gray-0 text-xs sm:text-sm pt-4">{created_at} 등록</p>
+        <p className="text-gray-0 text-xs sm:text-sm pt-4">{timestamp} 등록</p>
       </div>
 
       <div className="relative" ref={dropdownRef}>
