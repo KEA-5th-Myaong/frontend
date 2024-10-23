@@ -151,13 +151,13 @@ export default function ChatContainer() {
       <div className="fixed left-12 bottom-12 z-50">
         <video
           ref={videoRef}
-          className={`${showFace ? 'block' : 'hidden'} w-64 h-64 bg-gray-3 -scale-x-100`}
+          className={`${showFace ? 'block' : 'hidden'} w-70 h-64 bg-gray-0 -scale-x-100 rounded-xl drop-shadow-xl`}
           autoPlay
         />
 
         <button
           type="button"
-          className="py-4  px-6 rounded-[28px] primary-1-btn mt-2"
+          className="py-4  px-6 rounded-[28px] primary-1-btn mt-2 md:block hidden"
           onClick={() => {
             setShowFace((prev) => !prev);
           }}
