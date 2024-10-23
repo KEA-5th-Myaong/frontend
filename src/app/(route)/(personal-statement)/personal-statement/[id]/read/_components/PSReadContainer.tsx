@@ -13,13 +13,12 @@ import { fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 
 export default function PSReadContainer() {
-  // const params = useParams();
   const router = useRouter();
   const params = useParams();
 
   const getPostId = (param: string | string[]): string => {
     if (Array.isArray(param)) {
-      return param[1]; // 배열인 경우 첫 번째 요소를 사용
+      return param[1];
     }
     return param;
   };
