@@ -1,20 +1,31 @@
 'use client';
 
-import { useState } from 'react';
-import { useParams, usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Icons from '../../../_components/ui/Icon';
 import { PlusIcon, TriangleIcon, XIcon } from '../../../_components/ui/iconPath';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchInterviewHistoryLists } from '../_services/interviewService';
 
 export default function InterviewHistory() {
   const { id } = useParams();
   const pathname = usePathname();
 
+  const { data } = useCustomQuery(['interview-history', id], () => fetchInterviewHistoryLists());
+
   // includes를 사용하지 않은 이유는, 사용자의 아이디에 chat이 들어갈 경우도 true를 반환해서
   const isChat = pathname.endsWith('/chat');
 
-  const [historyLists, setHistoryLists] = useState(['디케이테크인', '카카오엔터프라이즈', '엑슨투']);
+  const [historyLists, setHistoryLists] = useState([]);
   const [showMore, setShowMore] = useState(false);
+
+  useEffect(() => {
+    if (data?.data) {
+      const titles = data.data.map((item: { title: string }) => item.title);
+      setHistoryLists(titles.slice(1, 4));
+    }
+  }, [data]);
 
   return (
     <section
@@ -33,7 +44,7 @@ export default function InterviewHistory() {
       </button>
 
       <div className={`${showMore ? 'flex' : 'hidden'} md:flex flex-col gap-1 mb-14`}>
-        {historyLists.map((item) => (
+        {historyLists?.map((item) => (
           <button
             type="button"
             key={item}
