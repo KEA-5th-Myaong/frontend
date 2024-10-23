@@ -23,7 +23,7 @@ export default function InterviewPersonalStatement() {
   const [psList, setPSList] = useState([]); // 자소서 배열
 
   useEffect(() => {
-    if (psData?.data) {
+    if (psData?.data && Array.isArray(psData.data)) {
       setPSList(psData.data.slice(0, 5)); // 자소서 목록 로드
     }
   }, [psData]);
