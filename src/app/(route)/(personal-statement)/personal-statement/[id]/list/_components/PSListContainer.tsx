@@ -18,7 +18,7 @@ export default function PSListContainer() {
 
   useEffect(() => {
     setPersonalStatement(psListData?.data);
-  }, [psListData]);
+  }, [psListData?.data]);
 
   return (
     <>
