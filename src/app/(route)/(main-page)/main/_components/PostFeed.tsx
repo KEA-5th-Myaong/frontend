@@ -7,7 +7,7 @@ import { PostProps } from '../_types/main-page';
 import { fetchBookmark, fetchFollowing, fetchPosts, fetchPreJob } from '../_services/mainService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import Post from '@/app/_components/Post';
-import formatDate from '@/app/_utils/formatDate';
+import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
 
 interface PostFeedProps {
@@ -105,10 +105,10 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
               memberId={post.memberId || ''}
               isBookmarked={post.isBookmarked}
               onUserClick={() => {
-                router.push(`/blog/${post.nickname}`);
+                router.push(`/blog/${post.username}`);
               }}
               onContentClick={() => {
-                router.push(`/blog/${post.title}/${post.postId}`);
+                router.push(`/blog/${post.username}/${post.postId}`);
               }}
               thumbnail={null}
               profilePicUrl={post.profilePicUrl || defaultProfilePic.src} // 여기를 수정

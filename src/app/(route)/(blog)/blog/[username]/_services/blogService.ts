@@ -23,7 +23,7 @@ export async function postFollow(memberId: string) {
 }
 
 // (GET) 팔로잉 목록 조회
-export async function fetchFollowing(memberId: string | string[], lastId: number) {
+export async function fetchFollowing(memberId: string | string[], lastId: string) {
   try {
     const { data } = await api.get(`/members/${memberId}/following/${lastId}`);
     return data;
@@ -51,6 +51,17 @@ export async function fetchPost(memberId: string, lastId: string) {
     return data;
   } catch (error) {
     console.error('사용자의 포스트 목록 조회 실패:', error);
+    throw error;
+  }
+}
+
+// (GET) 사용자의 특정 포스트 조회
+export async function fetchPostPostId(postId: string | undefined) {
+  try {
+    const { data } = await api.get(`/blog/posts/${postId}`);
+    return data;
+  } catch (error) {
+    console.error('사용자의 특정 포스트 조회 실패:', error);
     throw error;
   }
 }
