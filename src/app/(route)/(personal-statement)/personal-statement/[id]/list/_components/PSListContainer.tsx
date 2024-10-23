@@ -17,7 +17,8 @@ export default function PSListContainer() {
   const { data: psListData } = useCustomQuery(['psList'], () => fetchPSList());
 
   useEffect(() => {
-    setPersonalStatement(psListData?.data);
+    // 임시 2개 제한, 삭제 API 적용 이후 3개로 변경 필요
+    setPersonalStatement(psListData?.data.slice(0, 2));
   }, [psListData?.data]);
 
   return (
