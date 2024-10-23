@@ -40,7 +40,7 @@ export default function MessageForm({ onSubmit, disabled }: MessageFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex items-center py-2 w-full border border-primary-1 rounded-xl mt-auto bg-white-0"
+      className={`flex items-center py-2 w-full border border-primary-1 rounded-xl mt-auto ${disabled ? 'bg-gray-4' : 'bg-white-0'}`}
     >
       <textarea
         ref={textareaRef}

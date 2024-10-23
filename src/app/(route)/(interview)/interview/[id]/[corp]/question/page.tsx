@@ -19,13 +19,13 @@ export default function InterviewQuestion() {
   const corp = decodeURI(selectedCorp);
   const { setFirstQData } = useInterviewStore();
 
-  const { data, refetch } = useCustomQuery(['interview-q', 1], () => fetchCompanyQuestions('1'));
+  const { data, isLoading, refetch } = useCustomQuery(['interview-q', 1], () => fetchCompanyQuestions('1'));
 
   const [questionList, setQuestionList] = useState([]); // 질문목록 배열
 
   useEffect(() => {
     if (data?.data) {
-      setQuestionList(data.data.slice(0, 4));
+      setQuestionList(data?.data?.slice(0, 4));
     }
   }, [data?.data]);
 
@@ -37,12 +37,7 @@ export default function InterviewQuestion() {
       <div className="flex flex-col self-stretch pt-2 w-full">
         <p className="text-sm">선택 기업</p>
         <div className="flex gap-3 pt-3 whitespace-nowrap">
-          <motion.div
-            className="w-full max-w-64 py-4 px-5 bg-gray-4 font-bold rounded-[28px]"
-            layoutId={`corp-${corp}`}
-          >
-            {corp}
-          </motion.div>
+          <motion.div className="w-full max-w-64 py-4 px-5 bg-gray-4 font-bold rounded-[28px]">{corp}</motion.div>
           <motion.button
             type="button"
             layoutId="select"
@@ -57,17 +52,19 @@ export default function InterviewQuestion() {
       </div>
 
       <div className="flex flex-col self-stretch gap-5 w-full pb-12">
-        {questionList?.map((question: QuestionBoxProps, index) => (
-          <motion.div key={question.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
-            <QuestionBox
-              question={`Q. ${question}`}
-              onClick={() => {
-                setFirstQData(question);
-                router.push(`/interview/${id}/${corp}/${question.id}/chat`);
-              }}
-            />
-          </motion.div>
-        ))}
+        {isLoading
+          ? Array.from({ length: 4 }).map(() => <div className="w-full h-32 bg-gray-200 rounded-md animate-pulse" />)
+          : questionList?.map((question: QuestionBoxProps, index) => (
+              <motion.div key={question.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
+                <QuestionBox
+                  question={`Q. ${question}`}
+                  onClick={() => {
+                    setFirstQData(question);
+                    router.push(`/interview/${id}/${corp}/${question.id}/chat`);
+                  }}
+                />
+              </motion.div>
+            ))}
 
         <button
           type="button"

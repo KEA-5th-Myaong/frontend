@@ -18,12 +18,14 @@ export default function InterviewPersonalStatement() {
   const selectedCorp = params.corp as string;
   const corp = decodeURI(selectedCorp);
 
-  const { data: psData } = useCustomQuery(['ps'], () => fetchPSList());
+  const { data: psData, isLoading } = useCustomQuery(['ps'], () => fetchPSList());
 
   const [psList, setPSList] = useState([]); // 자소서 배열
 
   useEffect(() => {
-    setPSList(psData?.data.slice(0, 5)); // 자소서 목록 로드
+    if (psData?.data) {
+      setPSList(psData.data.slice(0, 5)); // 자소서 목록 로드
+    }
   }, [psData]);
 
   return (
@@ -35,12 +37,7 @@ export default function InterviewPersonalStatement() {
         <p className="text-sm">선택 기업</p>
 
         <div className="flex gap-3 pt-3 whitespace-nowrap">
-          <motion.div
-            className="w-full max-w-64 py-4 px-5 bg-gray-4 font-bold rounded-[28px]"
-            layoutId={`corp-${corp}`}
-          >
-            {corp}
-          </motion.div>
+          <motion.div className="w-full max-w-64 py-4 px-5 bg-gray-4 font-bold rounded-[28px]">{corp}</motion.div>
           <motion.button
             type="button"
             layoutId="select"
@@ -56,15 +53,17 @@ export default function InterviewPersonalStatement() {
       </div>
 
       <div className="flex flex-col self-stretch gap-5 w-full pb-12">
-        {psList?.map((ps: PSBoxProps, index) => (
-          <motion.div key={ps.psId} variants={ListVariants} custom={index} initial="hidden" animate="visible">
-            <InterviewPSBox
-              title={ps.title}
-              timestamp={ps.timestamp}
-              onClick={() => router.push(`/interview/${id}/${corp}/question`)}
-            />
-          </motion.div>
-        ))}
+        {isLoading
+          ? Array.from({ length: 5 }).map(() => <div className="w-full h-32 bg-gray-200 rounded-md animate-pulse" />)
+          : psList?.map((ps: PSBoxProps, index) => (
+              <motion.div key={ps.psId} variants={ListVariants} custom={index} initial="hidden" animate="visible">
+                <InterviewPSBox
+                  title={ps.title}
+                  timestamp={ps.timestamp}
+                  onClick={() => router.push(`/interview/${id}/${corp}/question`)}
+                />
+              </motion.div>
+            ))}
       </div>
     </section>
   );
