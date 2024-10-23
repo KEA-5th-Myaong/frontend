@@ -14,7 +14,7 @@ export async function fetchCompanies() {
 // (GET) 선택 가능한 기업 검색
 export async function fetchCompaniesSearch(search: unknown) {
   try {
-    const { data } = await api.get(`/interviews/companies/${search}`);
+    const { data } = await api.get(`/interviews/companies/search?search=${search}`);
     return data;
   } catch (error) {
     console.error('선택 가능한 기업 검색 실패:', error);
@@ -67,7 +67,7 @@ export async function putInterviewMessage(messageId: string, interviewData: unkn
 }
 
 // (GET) 새 질문 생성
-export async function fetchInterviewQuestion(interviewId: string) {
+export async function fetchInterviewNewQuestion(interviewId: string) {
   try {
     const { data } = await api.get(`/interviews/${interviewId}/q`);
     return data;
@@ -78,7 +78,7 @@ export async function fetchInterviewQuestion(interviewId: string) {
 }
 
 // (GET) 꼬리 질문 생성
-export async function fetchInterviewFollowUpQuestion(interviewId: string) {
+export async function fetchInterviewTailQuestion(interviewId: string) {
   try {
     const { data } = await api.get(`/interviews/${interviewId}/follow-up-q`);
     return data;

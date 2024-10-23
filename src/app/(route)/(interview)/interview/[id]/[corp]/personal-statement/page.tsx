@@ -3,40 +3,41 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import personalStatement from '../_components/personalStatement.json';
-import { PersonalStatementBoxProps } from '../_types/corp';
+import { PSBoxProps } from '../_types/corp';
 import ProgressBar from '../../../../_components/ProgressBar';
-import PersonalStatementBox from '../_components/PersonalStatementBox';
+import InterviewPSBox from '../_components/interviewPSBox';
 import ListVariants from '../_utils/listVariants';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
 
 export default function InterviewPersonalStatement() {
   const router = useRouter();
   const params = useParams();
+
   const { id } = params;
   const selectedCorp = params.corp as string;
   const corp = decodeURI(selectedCorp);
 
-  const [personalStatementList, setPersonalStatementList] = useState([]); // 자소서 배열
+  const { data: psData, isLoading } = useCustomQuery(['ps'], () => fetchPSList());
+
+  const [psList, setPSList] = useState([]); // 자소서 배열
 
   useEffect(() => {
-    setPersonalStatementList(personalStatement.contents); // 자소서 목록 로드
-  }, []);
+    if (psData?.data) {
+      setPSList(psData.data.slice(0, 5)); // 자소서 목록 로드
+    }
+  }, [psData]);
 
   return (
     <section className="interview-container">
       <ProgressBar progress={33} />
-      <p className="font-semibold">모의 면접</p>
+      <p className="font-semibold self-start">모의 면접</p>
 
       <div className="flex flex-col self-stretch pt-2 w-full">
         <p className="text-sm">선택 기업</p>
 
         <div className="flex gap-3 pt-3 whitespace-nowrap">
-          <motion.div
-            className="w-full max-w-64 py-4 px-5 bg-gray-4 font-bold rounded-[28px]"
-            layoutId={`corp-${corp}`}
-          >
-            {corp}
-          </motion.div>
+          <motion.div className="w-full max-w-64 py-4 px-5 bg-gray-4 font-bold rounded-[28px]">{corp}</motion.div>
           <motion.button
             type="button"
             layoutId="select"
@@ -52,14 +53,17 @@ export default function InterviewPersonalStatement() {
       </div>
 
       <div className="flex flex-col self-stretch gap-5 w-full pb-12">
-        {personalStatementList.map((ps: PersonalStatementBoxProps, index) => (
-          <motion.div key={ps.id} variants={ListVariants} custom={index} initial="hidden" animate="visible">
-            <PersonalStatementBox
-              content={ps.content}
-              onClick={() => router.push(`/interview/${id}/${corp}/question`)}
-            />
-          </motion.div>
-        ))}
+        {isLoading
+          ? Array.from({ length: 5 }).map(() => <div className="w-full h-32 bg-gray-200 rounded-md animate-pulse" />)
+          : psList?.map((ps: PSBoxProps, index) => (
+              <motion.div key={ps.psId} variants={ListVariants} custom={index} initial="hidden" animate="visible">
+                <InterviewPSBox
+                  title={ps.title}
+                  timestamp={ps.timestamp}
+                  onClick={() => router.push(`/interview/${id}/${corp}/question`)}
+                />
+              </motion.div>
+            ))}
       </div>
     </section>
   );

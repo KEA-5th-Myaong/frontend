@@ -1,25 +1,36 @@
 'use client';
 
-import { useState } from 'react';
-import { useParams, usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Icons from '../../../_components/ui/Icon';
 import { PlusIcon, TriangleIcon, XIcon } from '../../../_components/ui/iconPath';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchInterviewHistoryLists } from '../_services/interviewService';
 
 export default function InterviewHistory() {
   const { id } = useParams();
   const pathname = usePathname();
 
+  const { data } = useCustomQuery(['interview-history', id], () => fetchInterviewHistoryLists());
+
   // includes를 사용하지 않은 이유는, 사용자의 아이디에 chat이 들어갈 경우도 true를 반환해서
   const isChat = pathname.endsWith('/chat');
 
-  const [historyLists, setHistoryLists] = useState(['디케이테크인', '카카오엔터프라이즈', '엑슨투']);
+  const [historyLists, setHistoryLists] = useState([]);
   const [showMore, setShowMore] = useState(false);
+
+  useEffect(() => {
+    if (data?.data) {
+      const titles = data.data.map((item: { title: string }) => item.title);
+      setHistoryLists(titles.slice(1, 4));
+    }
+  }, [data]);
 
   return (
     <section
-      className={`bg-white-0 sm:max-w-[253px] sm:w-full self-stretch max-h-fit border-2 
-    ${!isChat && !showMore && 'mt-10 sm:mt-0'} pt-[29px] pb-[22px] px-5 sm:px-2 md:px-5 rounded-2xl font-semibold z-10`}
+      className={`bg-white-0 md:max-w-[253px] md:w-full self-stretch max-h-fit border-2 
+    ${!isChat && !showMore && 'mt-10 md:mt-0'} pt-[29px] pb-[22px] px-5 md:px-2 lg:px-5 rounded-2xl font-semibold z-10`}
     >
       <button
         type="button"
@@ -28,12 +39,12 @@ export default function InterviewHistory() {
         }}
         className="flex justify-between w-full"
       >
-        <p className={`pl-[13px] ${showMore ? 'mb-5' : 'mb-0'} sm:mb-5`}>면접 기록</p>
-        <Icons name={TriangleIcon} className={`${showMore ? '' : 'rotate-180'} mt-1.5 block sm:hidden`} />
+        <p className={`pl-[13px] ${showMore ? 'mb-5' : 'mb-0'} md:mb-5`}>면접 기록</p>
+        <Icons name={TriangleIcon} className={`${showMore ? '' : 'rotate-180'} mt-1.5 block md:hidden`} />
       </button>
 
-      <div className={`${showMore ? 'flex' : 'hidden'} sm:flex flex-col gap-1 mb-14`}>
-        {historyLists.map((item) => (
+      <div className={`${showMore ? 'flex' : 'hidden'} md:flex flex-col gap-1 mb-14`}>
+        {historyLists?.map((item) => (
           <button
             type="button"
             key={item}
@@ -52,7 +63,7 @@ export default function InterviewHistory() {
 
       <Link
         href={`/interview/${id}/select`}
-        className={`${showMore ? 'flex' : 'hidden'} sm:flex items-center gap-2 pl-[13px]`}
+        className={`${showMore ? 'flex' : 'hidden'} md:flex items-center gap-2 pl-[13px]`}
       >
         <Icons name={PlusIcon} className="mb-1" />
         면접 생성

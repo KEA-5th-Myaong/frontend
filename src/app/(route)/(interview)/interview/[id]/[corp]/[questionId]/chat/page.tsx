@@ -11,7 +11,7 @@ export default function Chatting() {
 
   return (
     <section className="flex flex-col pb-8 pt-6 sm:pt-3.5 interview-container">
-      <p className="font-semibold">모의 면접</p>
+      <p className="font-semibold self-start">모의 면접</p>
 
       <div className="flex flex-col self-stretch pt-2 w-full pb-8">
         <p className="text-sm">선택 기업</p>
