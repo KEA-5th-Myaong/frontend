@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import MessageForm from './MessageForm';
 import Icons from '../../../../../../../../_components/ui/Icon';
@@ -17,6 +17,7 @@ import {
 import useInterviewStore from '../../../_store/interviewStore';
 import { Message } from '../_types/messageType';
 import MsgEditBtn from './MsgEditBtn';
+import Video from './Video';
 
 const MAX_MESSAGES = 10;
 
@@ -117,54 +118,12 @@ export default function ChatContainer() {
     setEditedText(''); // 수정 전 텍스트도 비워주기
   };
 
-  // 테스트 화면 녹화하기
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const getMediaPermission = useCallback(async () => {
-    try {
-      const videoConstraints = {
-        audio: false,
-        video: true,
-      };
-
-      const videoStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = videoStream;
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-
-  useEffect(() => {
-    getMediaPermission();
-  }, [getMediaPermission]);
-
-  const [showFace, setShowFace] = useState(false);
-
   return (
     <div
       ref={chatContainerRef}
       className="flex flex-col w-full relative min-w-[360px] max-w-[735px] px-4 border-t border-gray-2"
     >
-      <div className="fixed left-12 bottom-12 z-50">
-        <video
-          ref={videoRef}
-          className={`${showFace ? 'block' : 'hidden'} w-70 h-64 bg-gray-0 -scale-x-100 rounded-xl drop-shadow-xl`}
-          autoPlay
-        />
-
-        <button
-          type="button"
-          className="py-4  px-6 rounded-[28px] primary-1-btn mt-2 md:block hidden"
-          onClick={() => {
-            setShowFace((prev) => !prev);
-          }}
-        >
-          {showFace ? 'AI 표정 분석 종료' : 'AI 표정 분석'}
-        </button>
-      </div>
+      <Video />
 
       <div className="flex-shrink overflow-y-auto pt-5 pb-4 hide-scrollbar">
         <div className="flex flex-col gap-7">
