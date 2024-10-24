@@ -11,12 +11,12 @@ import { fetchCompanies, fetchCompaniesSearch } from '../../../_services/intervi
 
 export default function InterviewSelect() {
   const router = useRouter();
-  const id = useParams();
+  const params = useParams();
 
   const { data, isLoading } = useCustomQuery(['corps'], () => fetchCompanies());
 
-  const [corpList, setCorpList] = useState([]);
-  const [searchCorp, setSearchCorp] = useState('');
+  const [corpList, setCorpList] = useState([]); // 기업 목록
+  const [searchCorp, setSearchCorp] = useState(''); // 검색어
 
   // 기업 목록 불러와서 저장
   useEffect(() => {
@@ -39,6 +39,10 @@ export default function InterviewSelect() {
     if (e.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handleCorpClick = (corp: { companyName: string }) => {
+    router.push(`/interview/${params.username}/${corp.companyName}/personal-statement`);
   };
 
   return (
@@ -72,14 +76,8 @@ export default function InterviewSelect() {
           ? Array.from({ length: 28 }).map(() => (
               <div className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 animate-pulse" />
             ))
-          : corpList?.map((corp) => (
-              <motion.button
-                type="button"
-                onClick={() => {
-                  router.push(`/interview/${id.id}/${corp.companyName}/personal-statement`);
-                }}
-                className="corp-block"
-              >
+          : corpList?.map((corp: { companyName: string }) => (
+              <motion.button type="button" onClick={() => handleCorpClick(corp)} className="corp-block">
                 {corp.companyName}
               </motion.button>
             ))}
