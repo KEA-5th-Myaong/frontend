@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import MessageForm from './MessageForm';
-import Icons from '../../../../../../../../_components/ui/Icon';
-import { ArrowIcon } from '../../../../../../../../_components/ui/iconPath';
-import useContainerHeight from '../../../../../../_hooks/useContainerHeight';
-import useScrollToBottom from '../../../../../../../../_hooks/useScrollToBottom';
+import Icons from '../../../../../../../_components/ui/Icon';
+import { ArrowIcon } from '../../../../../../../_components/ui/iconPath';
+import useContainerHeight from '../../../../../_hooks/useContainerHeight';
+import useScrollToBottom from '../../../../../../../_hooks/useScrollToBottom';
 import messageVariants from '../_utils/messageVariants';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import {
@@ -14,7 +14,7 @@ import {
   fetchInterviewNewQuestion,
   putInterviewMessage,
 } from '@/app/(route)/(interview)/_services/interviewService';
-import useInterviewStore from '../../../_store/interviewStore';
+import useInterviewStore from '../../_store/interviewStore';
 import { Message } from '../_types/messageType';
 import MsgEditBtn from './MsgEditBtn';
 import Video from './Video';

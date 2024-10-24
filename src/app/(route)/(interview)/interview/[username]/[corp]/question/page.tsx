@@ -60,7 +60,7 @@ export default function InterviewQuestion() {
                   question={`Q. ${question}`}
                   onClick={() => {
                     setFirstQData(question);
-                    router.push(`/interview/${id}/${corp}/${question.id}/chat`);
+                    router.push(`/interview/${id}/${corp}/chat`);
                   }}
                 />
               </motion.div>
