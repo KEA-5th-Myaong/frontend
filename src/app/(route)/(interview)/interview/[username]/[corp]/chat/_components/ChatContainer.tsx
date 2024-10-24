@@ -14,7 +14,7 @@ import {
   fetchInterviewNewQuestion,
   putInterviewMessage,
 } from '@/app/(route)/(interview)/_services/interviewService';
-import useInterviewStore from '../../_store/interviewStore';
+import useChatStore from '../../_store/chatStore';
 import { Message } from '../_types/messageType';
 import MsgEditBtn from './MsgEditBtn';
 import Video from './Video';
@@ -24,7 +24,7 @@ const MAX_MESSAGES = 10;
 export default function ChatContainer() {
   const interviewId = '1'; // 나중에 실제 아이디로 대체
   // 이 전에 고른 첫 번째 질문
-  const storeQData = useInterviewStore((state) => state.storeQData);
+  const storeQData = useChatStore((state) => state.storeQData);
 
   // 새 질문
   const { data: newQData } = useCustomQuery(['new-q', interviewId], () => fetchInterviewNewQuestion(interviewId));
