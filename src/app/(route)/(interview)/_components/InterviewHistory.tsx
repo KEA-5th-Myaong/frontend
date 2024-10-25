@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Icons from '../../../_components/ui/Icon';
 import { PlusIcon, TriangleIcon, XIcon } from '../../../_components/ui/iconPath';
@@ -9,10 +9,11 @@ import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchInterviewHistoryLists } from '../_services/interviewService';
 
 export default function InterviewHistory() {
-  const { id } = useParams();
+  const params = useParams();
+  const { username } = params;
   const pathname = usePathname();
 
-  const { data } = useCustomQuery(['interview-history', id], () => fetchInterviewHistoryLists());
+  const { data } = useCustomQuery(['interview-history', username], () => fetchInterviewHistoryLists());
 
   // includes를 사용하지 않은 이유는, 사용자의 아이디에 chat이 들어갈 경우도 true를 반환해서
   const isChat = pathname.endsWith('/chat');
@@ -62,7 +63,7 @@ export default function InterviewHistory() {
       </div>
 
       <Link
-        href={`/interview/${id}/select`}
+        href={`/interview/${username}/select`}
         className={`${showMore ? 'flex' : 'hidden'} md:flex items-center gap-2 pl-[13px]`}
       >
         <Icons name={PlusIcon} className="mb-1" />

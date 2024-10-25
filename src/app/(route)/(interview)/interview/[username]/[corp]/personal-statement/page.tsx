@@ -45,8 +45,8 @@ export default function InterviewPersonalStatement() {
 
   // 튜토리얼 끝나고 시작하기 버튼을 눌렀을 때
   const handleTutorialBtnClick = async () => {
-    const data = await postInterview(interviewData);
-    const interviewId = data?.data.interviewId;
+    const response = await postInterview(interviewData);
+    const interviewId = response?.data.interviewId;
     setInterviewId(interviewId); // store에 저장하는 인터뷰 id
 
     // 상태 업데이트가 반영될 때까지 기다림

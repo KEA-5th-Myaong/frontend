@@ -8,35 +8,32 @@ import { ArrowIcon } from '../../../../../../../_components/ui/iconPath';
 import useContainerHeight from '../../../../../_hooks/useContainerHeight';
 import useScrollToBottom from '../../../../../../../_hooks/useScrollToBottom';
 import messageVariants from '../_utils/messageVariants';
-import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import {
-  fetchInterviewTailQuestion,
-  fetchInterviewNewQuestion,
+  fetchNewQuestion,
+  fetchTailQuestion,
+  postInterviewMessage,
   putInterviewMessage,
 } from '@/app/(route)/(interview)/_services/interviewService';
 import { Message } from '../_types/messageType';
 import MsgEditBtn from './MsgEditBtn';
-import Video from './Video';
+import Video from './Video'; // 사용자 비디오 컴포넌트
+import { useInterviewIdStore } from '@/app/(route)/(interview)/_store/interviewStore';
 
 const MAX_MESSAGES = 10;
 
 export default function ChatContainer() {
-  const interviewId = '1'; // 나중에 실제 아이디로 대체
-
-  // 새 질문
-  const { data: newQData } = useCustomQuery(['new-q', interviewId], () => fetchInterviewNewQuestion(interviewId));
-  // 꼬리 질문
-  const { data: tailQData } = useCustomQuery(['tail-q', interviewId], () => fetchInterviewTailQuestion(interviewId));
+  const interviewId = useInterviewIdStore((state) => state.interviewId);
 
   const [messages, setMessages] = useState<Message[]>([]); // 채팅 내용 다 담김
   const [isMaxMessages, setIsMaxMessages] = useState(false); // 최대 채팅 수 도달
   const [isLastMessageUser, setIsLastMessageUser] = useState(false); // 마지막 메시지가 사용자인지
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editedText, setEditedText] = useState<string>(''); // 수정한 메시지
+  console.log(messages);
 
   // 첫 질문이 로드되면 첫 메시지로 설정
   useEffect(() => {
-    setMessages([{ text: '첫 질문', isAI: true, messageId: '1' }]);
+    setMessages([{ text: '첫 질문', isAI: true }]);
   }, []);
   // 최대 메시지 도달 확인
   useEffect(() => {
@@ -56,22 +53,38 @@ export default function ChatContainer() {
   };
 
   // 메시지 전송 함수
-  const handleSubmit = (newMessage: string) => {
+  const handleSubmit = async (newMessage: string) => {
     if (newMessage.trim() && !isMaxMessages) {
+      const response = await postInterviewMessage({
+        sender: 'interviewee',
+        content: newMessage,
+      });
+      console.log(response);
+
       addMessage(newMessage, false);
     }
   };
 
   // 꼬리 질문 생성
-  const handleTailQuestion = () => {
+  const handleTailQuestion = async () => {
     if (!isMaxMessages) {
-      addMessage(tailQData?.data.content, true, tailQData?.data.messageId);
+      try {
+        const response = await fetchTailQuestion(interviewId);
+        addMessage(response.data.content, true, response.data.messageId);
+      } catch (error) {
+        console.error('꼬리 질문 생성 실패:', error);
+      }
     }
   };
   // 새 질문 생성
-  const handleNewQuestion = () => {
+  const handleNewQuestion = async () => {
     if (!isMaxMessages) {
-      addMessage(newQData?.data.content, true, newQData?.data.messageId);
+      try {
+        const response = await fetchNewQuestion(interviewId);
+        addMessage(response.data.content, true, response.data.messageId);
+      } catch (error) {
+        console.error('새 질문 생성 실패:', error);
+      }
     }
   };
 
