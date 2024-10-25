@@ -7,6 +7,7 @@ import Icons from '../../../../../_components/ui/Icon';
 import { SearchIcon } from '../../../../../_components/ui/iconPath';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchCompanies, fetchCompaniesSearch } from '../../../_services/interviewService';
+import { useCompanyIdStore } from '../../../_store/interviewStore';
 
 export default function InterviewSelect() {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function InterviewSelect() {
   const { username } = params;
 
   const { data, isLoading } = useCustomQuery(['corps'], () => fetchCompanies());
+  const { setCompanyId } = useCompanyIdStore(); // 기업 아이디 저장
 
   const [corpList, setCorpList] = useState([]); // 기업 목록
   const [searchCorp, setSearchCorp] = useState(''); // 검색어
@@ -41,7 +43,8 @@ export default function InterviewSelect() {
     }
   };
 
-  const handleCorpClick = (corp: { companyName: string }) => {
+  const handleCorpClick = (corp: { companyId: string; companyName: string }) => {
+    setCompanyId(corp.companyId);
     router.push(`/interview/${username}/${corp.companyName}/personal-statement`);
   };
 
@@ -75,7 +78,7 @@ export default function InterviewSelect() {
           ? Array.from({ length: 28 }).map(() => (
               <div className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 animate-pulse" />
             ))
-          : corpList?.map((corp: { companyName: string }) => (
+          : corpList?.map((corp: { companyId: string; companyName: string }) => (
               <motion.button type="button" onClick={() => handleCorpClick(corp)} className="corp-block">
                 {corp.companyName}
               </motion.button>

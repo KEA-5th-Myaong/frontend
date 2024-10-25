@@ -3,29 +3,63 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { useQueryClient } from '@tanstack/react-query';
 import { PSBoxProps } from '../_types/corp';
 import InterviewPSBox from '../_components/interviewPSBox';
 import ListVariants from '../_utils/listVariants';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
+import { useCompanyIdStore, useInterviewIdStore } from '@/app/(route)/(interview)/_store/interviewStore';
+import TutorialBox from '../_components/TutorialBox';
+import { postInterview } from '@/app/(route)/(interview)/_services/interviewService';
 
 export default function InterviewPersonalStatement() {
   const router = useRouter();
   const params = useParams();
-
   const { username } = params;
   const selectedCorp = params.corp as string;
-  const corp = decodeURI(selectedCorp);
+  const corp = decodeURI(selectedCorp); // 기업명은 url에서 가져옴
 
+  // 자소서 목록 가져오기와, 쿼리 무효화 함수
   const { data: psData, isLoading } = useCustomQuery(['ps'], () => fetchPSList());
+  const queryClient = useQueryClient();
+
+  const companyId = useCompanyIdStore((state) => state.companyId); // 기업 id
+  const { setInterviewId } = useInterviewIdStore(); // 인터뷰 id store에 저장
 
   const [psList, setPSList] = useState([]); // 자소서 배열
+  const [showTutorial, setShowTutorial] = useState(false); // 튜토리얼 보이기
 
   useEffect(() => {
     if (psData?.data && Array.isArray(psData.data)) {
       setPSList(psData.data.slice(0, 5)); // 자소서 목록 로드
     }
   }, [psData]);
+
+  // post에 전송할 데이터, content는 나중에 실제 질문으로 대체
+  const interviewData = {
+    sender: 'interviewer',
+    content: '첫 번째 질문',
+    companyId,
+  };
+
+  // 튜토리얼 끝나고 시작하기 버튼을 눌렀을 때
+  const handleTutorialBtnClick = async () => {
+    const data = await postInterview(interviewData);
+    const interviewId = data?.data.interviewId;
+    setInterviewId(interviewId); // store에 저장하는 인터뷰 id
+
+    // 상태 업데이트가 반영될 때까지 기다림
+    await new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
+    // 면접 기록 쿼리 무효화(왼쪽에 바로 업데이트 됨)
+    await queryClient.invalidateQueries({
+      queryKey: ['interview-history', username],
+    });
+
+    router.push(`/interview/${username}/${corp}/chat`);
+  };
 
   return (
     <section className="interview-container">
@@ -55,14 +89,12 @@ export default function InterviewPersonalStatement() {
           ? Array.from({ length: 5 }).map(() => <div className="w-full h-32 bg-gray-200 rounded-md animate-pulse" />)
           : psList?.map((ps: PSBoxProps, index) => (
               <motion.div key={ps.psId} variants={ListVariants} custom={index} initial="hidden" animate="visible">
-                <InterviewPSBox
-                  title={ps.title}
-                  timestamp={ps.timestamp}
-                  onClick={() => router.push(`/interview/${username}/${corp}/chat`)}
-                />
+                <InterviewPSBox title={ps.title} timestamp={ps.timestamp} onClick={() => setShowTutorial(true)} />
               </motion.div>
             ))}
       </div>
+
+      {showTutorial && <TutorialBox onBtnClick={handleTutorialBtnClick} />}
     </section>
   );
 }
