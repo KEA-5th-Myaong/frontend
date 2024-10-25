@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { PSBoxProps } from '../_types/corp';
-import ProgressBar from '../../../../_components/ProgressBar';
 import InterviewPSBox from '../_components/interviewPSBox';
 import ListVariants from '../_utils/listVariants';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
@@ -14,7 +13,7 @@ export default function InterviewPersonalStatement() {
   const router = useRouter();
   const params = useParams();
 
-  const { id } = params;
+  const { username } = params;
   const selectedCorp = params.corp as string;
   const corp = decodeURI(selectedCorp);
 
@@ -30,7 +29,6 @@ export default function InterviewPersonalStatement() {
 
   return (
     <section className="interview-container">
-      <ProgressBar progress={33} />
       <p className="font-semibold self-start">모의 면접</p>
 
       <div className="flex flex-col self-stretch pt-2 w-full">
@@ -60,7 +58,7 @@ export default function InterviewPersonalStatement() {
                 <InterviewPSBox
                   title={ps.title}
                   timestamp={ps.timestamp}
-                  onClick={() => router.push(`/interview/${id}/${corp}/question`)}
+                  onClick={() => router.push(`/interview/${username}/${corp}/chat`)}
                 />
               </motion.div>
             ))}

@@ -1,15 +1,17 @@
-import { create } from 'zustand';
+// 사용하지 않는 첫 질문
 
-interface ChatStore {
-  storeQData: string;
-  setFirstQData: (data: string) => void;
-  resetFirstData: () => void;
-}
+// import { create } from 'zustand';
 
-const useChatStore = create<ChatStore>((set) => ({
-  storeQData: '',
-  setFirstQData: (data) => set({ storeQData: data }),
-  resetFirstData: () => set({ storeQData: '' }),
-}));
+// interface ChatStore {
+//   storeQData: string;
+//   setFirstQData: (data: string) => void;
+//   resetFirstData: () => void;
+// }
 
-export default useChatStore;
+// const useChatStore = create<ChatStore>((set) => ({
+//   storeQData: '',
+//   setFirstQData: (data) => set({ storeQData: data }),
+//   resetFirstData: () => set({ storeQData: '' }),
+// }));
+
+// export default useChatStore;

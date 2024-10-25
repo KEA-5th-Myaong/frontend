@@ -5,13 +5,13 @@ import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Icons from '../../../../../_components/ui/Icon';
 import { SearchIcon } from '../../../../../_components/ui/iconPath';
-import ProgressBar from '../../../_components/ProgressBar';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchCompanies, fetchCompaniesSearch } from '../../../_services/interviewService';
 
 export default function InterviewSelect() {
   const router = useRouter();
   const params = useParams();
+  const { username } = params;
 
   const { data, isLoading } = useCustomQuery(['corps'], () => fetchCompanies());
 
@@ -42,12 +42,11 @@ export default function InterviewSelect() {
   };
 
   const handleCorpClick = (corp: { companyName: string }) => {
-    router.push(`/interview/${params.username}/${corp.companyName}/personal-statement`);
+    router.push(`/interview/${username}/${corp.companyName}/personal-statement`);
   };
 
   return (
     <section className="interview-container">
-      <ProgressBar progress={3} />
       <p className="font-semibold self-start">모의 면접</p>
 
       <div className="flex gap-4 self-stretch pt-6 min-w-[318px] w-full">

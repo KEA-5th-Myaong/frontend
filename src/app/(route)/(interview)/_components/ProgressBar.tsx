@@ -1,3 +1,5 @@
+// 사용되지 않는 프로그레스바
+
 export default function ProgressBar({ progress }: { progress: number }) {
   return (
     <div

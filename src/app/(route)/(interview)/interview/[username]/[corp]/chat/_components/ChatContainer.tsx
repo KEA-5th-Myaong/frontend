@@ -14,7 +14,6 @@ import {
   fetchInterviewNewQuestion,
   putInterviewMessage,
 } from '@/app/(route)/(interview)/_services/interviewService';
-import useChatStore from '../../_store/chatStore';
 import { Message } from '../_types/messageType';
 import MsgEditBtn from './MsgEditBtn';
 import Video from './Video';
@@ -23,8 +22,6 @@ const MAX_MESSAGES = 10;
 
 export default function ChatContainer() {
   const interviewId = '1'; // 나중에 실제 아이디로 대체
-  // 이 전에 고른 첫 번째 질문
-  const storeQData = useChatStore((state) => state.storeQData);
 
   // 새 질문
   const { data: newQData } = useCustomQuery(['new-q', interviewId], () => fetchInterviewNewQuestion(interviewId));
@@ -37,12 +34,10 @@ export default function ChatContainer() {
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editedText, setEditedText] = useState<string>(''); // 수정한 메시지
 
-  // firstQData가 로드되면 첫 메시지로 설정
+  // 첫 질문이 로드되면 첫 메시지로 설정
   useEffect(() => {
-    if (storeQData) {
-      setMessages([{ text: String(storeQData), isAI: true, messageId: '1' }]);
-    }
-  }, [storeQData]);
+    setMessages([{ text: '첫 질문', isAI: true, messageId: '1' }]);
+  }, []);
   // 최대 메시지 도달 확인
   useEffect(() => {
     setIsMaxMessages(messages.length >= MAX_MESSAGES);
