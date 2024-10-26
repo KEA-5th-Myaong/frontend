@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { v4 } from 'uuid';
 import Icons from '../../../../../_components/ui/Icon';
 import { SearchIcon } from '../../../../../_components/ui/iconPath';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
@@ -76,10 +77,18 @@ export default function InterviewSelect() {
       <div className="flex flex-wrap mx-auto pt-5 w-full min-w-[263px] max-w-[440px]">
         {isLoading
           ? Array.from({ length: 28 }).map(() => (
-              <div className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 animate-pulse" />
+              <div
+                key={v4()}
+                className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 animate-pulse"
+              />
             ))
           : corpList?.map((corp: { companyId: string; companyName: string }) => (
-              <motion.button type="button" onClick={() => handleCorpClick(corp)} className="corp-block">
+              <motion.button
+                key={corp.companyId}
+                type="button"
+                onClick={() => handleCorpClick(corp)}
+                className="corp-block"
+              >
                 {corp.companyName}
               </motion.button>
             ))}

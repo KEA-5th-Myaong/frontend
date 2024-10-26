@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { v4 } from 'uuid';
 import { useQueryClient } from '@tanstack/react-query';
 import { PSBoxProps } from '../_types/corp';
 import InterviewPSBox from '../_components/interviewPSBox';
@@ -86,7 +87,9 @@ export default function InterviewPersonalStatement() {
 
       <div className="flex flex-col self-stretch gap-5 w-full pb-12">
         {isLoading
-          ? Array.from({ length: 5 }).map(() => <div className="w-full h-32 bg-gray-200 rounded-md animate-pulse" />)
+          ? Array.from({ length: 5 }).map(() => (
+              <div key={v4()} className="w-full h-32 bg-gray-200 rounded-md animate-pulse" />
+            ))
           : psList?.map((ps: PSBoxProps, index) => (
               <motion.div key={ps.psId} variants={ListVariants} custom={index} initial="hidden" animate="visible">
                 <InterviewPSBox title={ps.title} timestamp={ps.timestamp} onClick={() => setShowTutorial(true)} />

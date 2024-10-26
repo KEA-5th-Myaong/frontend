@@ -32,7 +32,13 @@ export default function ChatContainer() {
 
   // 첫 질문이 로드되면 첫 메시지로 설정
   useEffect(() => {
-    setMessages([{ text: '첫 질문', isAI: true }]);
+    setMessages([
+      {
+        text: '첫 질문',
+        isAI: true,
+        messageId: '',
+      },
+    ]);
   }, []);
   // 최대 메시지 도달 확인
   useEffect(() => {
@@ -54,12 +60,12 @@ export default function ChatContainer() {
   // 메시지 전송 함수
   const handleSubmit = async (newMessage: string) => {
     if (newMessage.trim() && !isMaxMessages) {
-      await postInterviewMessage(interviewId, {
+      const data = await postInterviewMessage(interviewId, {
         sender: 'interviewee',
         content: newMessage,
       });
 
-      addMessage(newMessage, false);
+      addMessage(newMessage, false, data?.data.messageId);
     }
   };
 
