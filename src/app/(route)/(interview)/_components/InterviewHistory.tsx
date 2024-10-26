@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../../_components/ui/Icon';
@@ -9,6 +9,7 @@ import { PlusIcon, TriangleIcon, XIcon } from '../../../_components/ui/iconPath'
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { deleteInterview, fetchInterviewHistoryLists } from '../_services/interviewService';
 import Modal, { initailModalState } from '@/app/_components/Modal';
+import { useInterviewIdStore } from '../_store/interviewStore';
 
 interface HistoryItem {
   interviewId: string;
@@ -16,10 +17,13 @@ interface HistoryItem {
 }
 
 export default function InterviewHistory() {
+  const router = useRouter();
   const params = useParams();
   const { username } = params;
   const pathname = usePathname();
   const queryClient = useQueryClient();
+
+  const { setInterviewId } = useInterviewIdStore();
 
   const { data, isLoading } = useCustomQuery(['interview-history', username], () => fetchInterviewHistoryLists());
 
@@ -36,6 +40,12 @@ export default function InterviewHistory() {
     }
   }, [data]);
 
+  // 과거의 면접 선택
+  const handleSelectHistory = (title: string, interviewId: string) => {
+    setInterviewId(interviewId);
+    router.push(`/interview/khj0930/history/${title}`);
+  };
+
   // 면접 기록 삭제
   const handleDeleteHistory = async (interviewId: string) => {
     try {
@@ -45,6 +55,7 @@ export default function InterviewHistory() {
       console.error('면접 기록 삭제 실패:', error);
     } finally {
       setModalState(initailModalState); // 모달 닫기
+      router.push(`/interview/${username}/select`);
     }
   };
   // 삭제 아이콘 누르면 모달 나오기
@@ -88,9 +99,7 @@ export default function InterviewHistory() {
               key={item.interviewId}
               className="text-start bg-white-0 hover:bg-[#F3F3F3] 
             rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between"
-              onClick={() => {
-                console.log(item);
-              }}
+              onClick={() => handleSelectHistory(item.title, item.interviewId)}
             >
               <span className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow">{item.title}</span>
               <Icons

@@ -102,7 +102,7 @@ export async function fetchInterviewHistoryLists() {
 // (GET) 특정 면접 기록 조회
 export async function fetchInterviewHistory(interviewId: string) {
   try {
-    const { data } = await api.get(`/interviews/${interviewId}`);
+    const { data } = await api.get(`/interviews/${interviewId}/messages`);
     return data;
   } catch (error) {
     console.error('특정 면접 기록 조회 실패:', error);

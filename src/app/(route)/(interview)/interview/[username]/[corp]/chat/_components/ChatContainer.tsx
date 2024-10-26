@@ -68,10 +68,6 @@ export default function ChatContainer() {
     if (!isMaxMessages) {
       try {
         const response = await fetchTailQuestion(interviewId);
-        await postInterviewMessage(interviewId, {
-          sender: 'interviewer',
-          content: response.data.content,
-        });
         addMessage(response.data.content, true, response.data.messageId);
       } catch (error) {
         console.error('꼬리 질문 생성 실패:', error);
@@ -83,10 +79,6 @@ export default function ChatContainer() {
     if (!isMaxMessages) {
       try {
         const response = await fetchNewQuestion(interviewId);
-        await postInterviewMessage(interviewId, {
-          sender: 'interviewer',
-          content: response.data.content,
-        });
         addMessage(response.data.content, true, response.data.messageId);
       } catch (error) {
         console.error('새 질문 생성 실패:', error);
