@@ -45,9 +45,9 @@ export async function postInterview(interviewData: unknown) {
 }
 
 // (POST) 면접 메시지 전송
-export async function postInterviewMessage(interviewData: unknown) {
+export async function postInterviewMessage(interviewId: string, interviewData: unknown) {
   try {
-    const { data } = await api.post('/interviews/messages', interviewData);
+    const { data } = await api.post(`/interviews/${interviewId}/messages`, interviewData);
     return data;
   } catch (error) {
     console.error('면접 메시지 전송 실패:', error);

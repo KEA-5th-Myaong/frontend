@@ -29,7 +29,6 @@ export default function ChatContainer() {
   const [isLastMessageUser, setIsLastMessageUser] = useState(false); // 마지막 메시지가 사용자인지
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editedText, setEditedText] = useState<string>(''); // 수정한 메시지
-  console.log(messages);
 
   // 첫 질문이 로드되면 첫 메시지로 설정
   useEffect(() => {
@@ -55,11 +54,10 @@ export default function ChatContainer() {
   // 메시지 전송 함수
   const handleSubmit = async (newMessage: string) => {
     if (newMessage.trim() && !isMaxMessages) {
-      const response = await postInterviewMessage({
+      await postInterviewMessage(interviewId, {
         sender: 'interviewee',
         content: newMessage,
       });
-      console.log(response);
 
       addMessage(newMessage, false);
     }
@@ -70,6 +68,10 @@ export default function ChatContainer() {
     if (!isMaxMessages) {
       try {
         const response = await fetchTailQuestion(interviewId);
+        await postInterviewMessage(interviewId, {
+          sender: 'interviewer',
+          content: response.data.content,
+        });
         addMessage(response.data.content, true, response.data.messageId);
       } catch (error) {
         console.error('꼬리 질문 생성 실패:', error);
@@ -81,6 +83,10 @@ export default function ChatContainer() {
     if (!isMaxMessages) {
       try {
         const response = await fetchNewQuestion(interviewId);
+        await postInterviewMessage(interviewId, {
+          sender: 'interviewer',
+          content: response.data.content,
+        });
         addMessage(response.data.content, true, response.data.messageId);
       } catch (error) {
         console.error('새 질문 생성 실패:', error);
