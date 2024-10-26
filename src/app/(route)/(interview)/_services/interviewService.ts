@@ -111,10 +111,9 @@ export async function fetchInterviewHistory(interviewId: string) {
 }
 
 // (DELETE) 면접 기록 삭제
-export async function deleteInterviews(interviewId: string) {
+export async function deleteInterview(interviewId: string) {
   try {
-    const { data } = await api.delete(`/interviews/${interviewId}`);
-    return data;
+    await api.delete(`/interviews/${interviewId}`);
   } catch (error) {
     console.error('면접 기록 삭제 실패:', error);
     throw error;
