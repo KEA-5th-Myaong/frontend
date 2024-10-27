@@ -18,17 +18,23 @@ import { Message } from '../_types/messageType';
 import MsgEditBtn from './MsgEditBtn';
 import Video from './Video'; // 사용자 비디오 컴포넌트
 import { useInterviewIdStore } from '@/app/(route)/(interview)/_store/interviewStore';
-
-const MAX_MESSAGES = 10;
+import usePostWriteStore from '@/app/_store/postWirte';
 
 export default function ChatContainer() {
   const interviewId = useInterviewIdStore((state) => state.interviewId);
+  const setMessage = usePostWriteStore((state) => state.setMessage);
 
   const [messages, setMessages] = useState<Message[]>([]); // 채팅 내용 다 담김
   const [isMaxMessages, setIsMaxMessages] = useState(false); // 최대 채팅 수 도달
   const [isLastMessageUser, setIsLastMessageUser] = useState(false); // 마지막 메시지가 사용자인지
-  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
+  const [editMessageId, setEditMessageId] = useState<string | null>(null);
   const [editedText, setEditedText] = useState<string>(''); // 수정한 메시지
+
+  useEffect(() => {
+    if (setMessage) {
+      setMessage(messages); // messages state가 변경될 때마다 store에 저장
+    }
+  }, [messages, setMessage]);
 
   // 첫 질문이 로드되면 첫 메시지로 설정
   useEffect(() => {
@@ -42,7 +48,7 @@ export default function ChatContainer() {
   }, []);
   // 최대 메시지 도달 확인
   useEffect(() => {
-    setIsMaxMessages(messages.length >= MAX_MESSAGES);
+    setIsMaxMessages(messages.length >= 10);
     setIsLastMessageUser(messages.length > 0 && !messages[messages.length - 1].isAI);
   }, [messages]);
 
@@ -99,26 +105,25 @@ export default function ChatContainer() {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [editingMessageId]);
+  }, [editMessageId]);
 
   // 수정 버튼 누르면
   const handleEdit = (messageId: string, text: string) => {
-    setEditingMessageId(messageId); // 현재 수정하는 메시지id
+    setEditMessageId(messageId); // 현재 수정하는 메시지id
     setEditedText(text); // 수정 전 텍스트
   };
 
   // 저장 버튼 누르면
   const handleSaveEdit = async (messageId: string) => {
-    const content = {
-      content: editedText, // put에 들어가는거
-    };
     try {
-      await putInterviewMessage(messageId, content); // put api 호출
+      await putInterviewMessage(messageId, {
+        content: editedText, // put에 들어가는거
+      }); // put api 호출
       setMessages((prevMessages) =>
         // 수정한 id의 메시지만 editedText로 업데이트
         prevMessages.map((msg) => (msg.messageId === messageId ? { ...msg, text: editedText } : msg)),
       );
-      setEditingMessageId(null); // 수정 끝나면 메시지id 비워주기
+      setEditMessageId(null); // 수정 끝나면 메시지id 비워주기
     } catch (error) {
       console.error('클라이언트) 메시지 수정 실패:', error);
     }
@@ -126,10 +131,9 @@ export default function ChatContainer() {
 
   // 취소 버튼 누르면
   const handleCancelEdit = () => {
-    setEditingMessageId(null); // 수정 끝나면 메시지id 비워주기
+    setEditMessageId(null); // 수정 끝나면 메시지id 비워주기
     setEditedText(''); // 수정 전 텍스트도 비워주기
   };
-
   return (
     <div
       ref={chatContainerRef}
@@ -150,17 +154,17 @@ export default function ChatContainer() {
               {msg.isAI && <p className="font-semibold pb-3">면접관</p>}
 
               <div
-                className={`flex gap-3 ${editingMessageId === msg.messageId ? 'w-full' : 'max-w-[90%] sm:max-w-[80%] '}`}
+                className={`flex gap-3 ${editMessageId === msg.messageId ? 'w-full' : 'max-w-[90%] sm:max-w-[80%] '}`}
               >
                 {!msg.isAI && index === messages.length - 1 && (
                   <MsgEditBtn
-                    isEdit={editingMessageId === msg.messageId}
+                    isEdit={editMessageId === msg.messageId}
                     onEdit={() => handleEdit(msg.messageId, msg.text)}
                     onCancel={handleCancelEdit}
                     onSave={() => handleSaveEdit(msg.messageId)}
                   />
                 )}
-                {editingMessageId === msg.messageId ? (
+                {editMessageId === msg.messageId ? (
                   <textarea
                     ref={textareaRef}
                     className="break-words w-full chat-msg-text bg-primary-0 bg-opacity-35 hide-scrollbar resize-none focus:outline-none mr-0.5"
@@ -174,7 +178,7 @@ export default function ChatContainer() {
                 )}
               </div>
 
-              {!msg.isAI && index === messages.length - 1 && !isMaxMessages && editingMessageId !== msg.messageId && (
+              {!msg.isAI && index === messages.length - 1 && !isMaxMessages && editMessageId !== msg.messageId && (
                 <div className="flex items-center gap-4 pt-4">
                   <button type="button" className="chat-msg-btn" onClick={handleTailQuestion}>
                     꼬리 질문 받기 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
