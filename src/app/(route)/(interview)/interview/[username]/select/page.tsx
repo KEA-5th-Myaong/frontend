@@ -28,13 +28,12 @@ export default function InterviewSelect() {
 
   // 기업 목록 검색해서 저장
   const handleSearch = async () => {
-    if (searchCorp.trim()) {
-      try {
-        const result = await fetchCompaniesSearch(searchCorp);
-        setCorpList(result.data);
-      } catch (error) {
-        console.error('검색 중 오류 발생:', error);
-      }
+    const trimmedSearch = searchCorp.trim();
+    try {
+      const result = await fetchCompaniesSearch(trimmedSearch);
+      setCorpList(result.data);
+    } catch (error) {
+      console.error('검색 중 오류 발생:', error);
     }
   };
 
