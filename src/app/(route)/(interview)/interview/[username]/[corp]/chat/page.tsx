@@ -24,6 +24,7 @@ export default function Chatting() {
             href="/blog/khj0930/write"
             onClick={formatAndSaveMessages}
             className="py-4 px-7 lg:px-9 rounded-[28px] primary-1-btn"
+            replace
           >
             포스트 작성
           </Link>

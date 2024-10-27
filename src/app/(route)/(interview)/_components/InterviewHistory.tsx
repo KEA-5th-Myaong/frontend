@@ -118,6 +118,7 @@ export default function InterviewHistory() {
       <Link
         href={`/interview/${username}/select`}
         className={`${showMore ? 'flex' : 'hidden'} md:flex items-center gap-2 pl-[13px]`}
+        replace
       >
         <Icons name={PlusIcon} className="mb-1" />
         면접 생성
