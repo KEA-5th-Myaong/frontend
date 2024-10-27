@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import MessageForm from './MessageForm';
-import Icons from '../../../../../../../_components/ui/Icon';
-import { ArrowIcon } from '../../../../../../../_components/ui/iconPath';
 import useContainerHeight from '../../../../../_hooks/useContainerHeight';
 import useScrollToBottom from '../../../../../../../_hooks/useScrollToBottom';
 import messageVariants from '../_utils/messageVariants';
@@ -19,6 +17,7 @@ import MsgEditBtn from './MsgEditBtn';
 import Video from './Video'; // 사용자 비디오 컴포넌트
 import { useInterviewIdStore } from '@/app/(route)/(interview)/_store/interviewStore';
 import usePostWriteStore from '@/app/_store/postWirte';
+import TailNewBtn from './TailNewBtn'; // 꼬리질문, 새질문 버튼
 
 export default function ChatContainer() {
   const interviewId = useInterviewIdStore((state) => state.interviewId);
@@ -112,7 +111,6 @@ export default function ChatContainer() {
     setEditMessageId(messageId); // 현재 수정하는 메시지id
     setEditedText(text); // 수정 전 텍스트
   };
-
   // 저장 버튼 누르면
   const handleSaveEdit = async (messageId: string) => {
     try {
@@ -121,14 +119,13 @@ export default function ChatContainer() {
       }); // put api 호출
       setMessages((prevMessages) =>
         // 수정한 id의 메시지만 editedText로 업데이트
-        prevMessages.map((msg) => (msg.messageId === messageId ? { ...msg, text: editedText } : msg)),
+        prevMessages.map((msg: Message) => (msg.messageId === messageId ? { ...msg, text: editedText } : msg)),
       );
       setEditMessageId(null); // 수정 끝나면 메시지id 비워주기
     } catch (error) {
       console.error('클라이언트) 메시지 수정 실패:', error);
     }
   };
-
   // 취소 버튼 누르면
   const handleCancelEdit = () => {
     setEditMessageId(null); // 수정 끝나면 메시지id 비워주기
@@ -140,7 +137,6 @@ export default function ChatContainer() {
       className="flex flex-col w-full relative min-w-[360px] max-w-[735px] px-4 border-t border-gray-2"
     >
       <Video />
-
       <div className="flex-shrink overflow-y-auto pt-5 pb-4 hide-scrollbar">
         <div className="flex flex-col gap-7">
           {messages.map((msg, index) => (
@@ -177,23 +173,15 @@ export default function ChatContainer() {
                   </div>
                 )}
               </div>
-
+              {/* 본인이 보낸 메시지이면서 마지막 메시지에 보이는 새 질문, 꼬리 질문 버튼 */}
               {!msg.isAI && index === messages.length - 1 && !isMaxMessages && editMessageId !== msg.messageId && (
-                <div className="flex items-center gap-4 pt-4">
-                  <button type="button" className="chat-msg-btn" onClick={handleTailQuestion}>
-                    꼬리 질문 받기 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
-                  </button>
-                  <button type="button" className="chat-msg-btn" onClick={handleNewQuestion}>
-                    새 질문 생성 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
-                  </button>
-                </div>
+                <TailNewBtn TailQuestion={handleTailQuestion} NewQuestion={handleNewQuestion} />
               )}
             </motion.div>
           ))}
           <div ref={messagesEndRef} />
         </div>
       </div>
-
       {/* 메시지 입력 폼 */}
       {!isMaxMessages ? (
         <MessageForm onSubmit={handleSubmit} disabled={isMaxMessages || isLastMessageUser} />
