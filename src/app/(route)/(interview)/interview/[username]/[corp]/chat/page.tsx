@@ -9,6 +9,7 @@ export default function Chatting() {
   const params = useParams();
   const selectedCorp = params.corp as string;
   const corp = decodeURI(selectedCorp);
+  // 채팅 메시지 포매팅 함수
   const formatAndSaveMessages = usePostWriteStore((state) => state.formatAndSaveMessages);
 
   return (
