@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
@@ -20,7 +21,65 @@ import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown'
 import Footer from '../../../_components/Footer';
 import UploadImage from './_components/UploadImage';
 
+type Education = {
+  name: string;
+  major: string;
+  graduation: string; // '0000-00' 형태의 문자열
+  gpa?: number; // nullable (선택적)
+};
+
+type Experience = {
+  name: string;
+  start: string; // '0000-00-00' 형태의 문자열
+  end?: string; // nullable (선택적)
+  position?: string; // nullable (선택적)
+  achievement?: string; // nullable (선택적)
+};
+
+type Certification = {
+  name: string;
+  date: string; // '0000-00-00' 형태의 문자열
+};
+
+type ExtraActivity = {
+  name: string;
+  start: string; // '0000-00-00' 형태의 문자열
+  end?: string; // nullable (선택적)
+  institution: string;
+  description?: string; // nullable (선택적)
+};
+
+type PersonalStatement = {
+  reason: string;
+  content: string;
+};
+
+type PortFolioFormData = {
+  firstName: string;
+  lastName: string;
+  title: string;
+  preferredJob: string;
+  tel: string;
+  email: string;
+  educations: Education[];
+  experiences: Experience[];
+  picUrl?: string; // nullable (선택적)
+  ps: PersonalStatement;
+  links?: string[]; // nullable (선택적)
+  skills?: string[]; // nullable (선택적)
+  certifications?: Certification[]; // nullable (선택적)
+  extraActivities?: ExtraActivity[]; // nullable (선택적)
+};
+
 export default function PortfolioWrite() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PortFolioFormData>();
+
+  const onSubmit = handleSubmit((data) => console.log(data));
+
   const [title, setTitle] = useState('곽서연 포트폴리오1');
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
@@ -63,71 +122,74 @@ export default function PortfolioWrite() {
               작성 완료
             </Link>
           </div>
-          <div className="relative flex justify-between items-center mt-5">
-            <h1 className="pre-3xl-semibold">{title}</h1>
-            <div ref={dropdownRef}>
-              <Icons
-                name={MoreIcon}
-                onClick={() => {
-                  setIsShowDropdown((prev) => !prev);
-                }}
-                className="cursor-pointer"
-              />
-            </div>
+          <form onSubmit={onSubmit}>
+            <div className="relative flex justify-between items-center mt-5">
+              <h1 className="pre-3xl-semibold">{title}</h1>
+              <div ref={dropdownRef}>
+                <Icons
+                  name={MoreIcon}
+                  onClick={() => {
+                    setIsShowDropdown((prev) => !prev);
+                  }}
+                  className="cursor-pointer"
+                />
+              </div>
 
-            {isShowDropdown && <PortfolioWriteDropdown />}
-          </div>
-          <section className="mt-5 mb-[50px]">
-            <section>
-              <form>
-                <UploadImage />
-                <div className="grid grid-flow-col justify-stretch gap-[20px]">
+              {isShowDropdown && <PortfolioWriteDropdown />}
+            </div>
+            <section className="mt-5 mb-[50px]">
+              <section>
+                <form>
+                  <UploadImage />
+                  <div className="grid grid-flow-col justify-stretch gap-[20px]">
+                    <Input
+                      {...register('')}
+                      element="input"
+                      label="이름"
+                      size="lg"
+                      type="text"
+                      color="transparent"
+                      placeholder="이름을 입력해주세요"
+                      required
+                    />
+                    <Input
+                      element="input"
+                      label="휴대폰 번호"
+                      size="lg"
+                      type="tel"
+                      color="transparent"
+                      placeholder="휴대폰 번호를 입력해주세요"
+                      required
+                    />
+                  </div>
                   <Input
                     element="input"
-                    label="이름"
+                    label="이메일"
+                    size="lg"
+                    type="email"
+                    color="transparent"
+                    placeholder="이메일을 입력해주세요"
+                    required
+                  />
+                  <Input
+                    element="input"
+                    label="관심 직무"
                     size="lg"
                     type="text"
                     color="transparent"
-                    placeholder="이름을 입력해주세요"
-                    required
+                    placeholder="관심직무를 입력해주세요"
                   />
-                  <Input
-                    element="input"
-                    label="휴대폰 번호"
-                    size="lg"
-                    type="tel"
-                    color="transparent"
-                    placeholder="휴대폰 번호를 입력해주세요"
-                    required
-                  />
-                </div>
-                <Input
-                  element="input"
-                  label="이메일"
-                  size="lg"
-                  type="email"
-                  color="transparent"
-                  placeholder="이메일을 입력해주세요"
-                  required
-                />
-                <Input
-                  element="input"
-                  label="관심 직무"
-                  size="lg"
-                  type="text"
-                  color="transparent"
-                  placeholder="관심직무를 입력해주세요"
-                />
-              </form>
+                </form>
+              </section>
+              <EducationSection />
+              {toggles.experience && <ExperienceSection />}
+              {toggles.links && <LinksSection />}
+              {toggles.skills && <SkillsSection />}
+              {toggles.certifications && <CertificationsSection />}
+              {toggles.activities && <ActivitiesSection />}
+              {toggles.personalStatement && <PSSection />}
             </section>
-            <EducationSection />
-            {toggles.experience && <ExperienceSection />}
-            {toggles.links && <LinksSection />}
-            {toggles.skills && <SkillsSection />}
-            {toggles.certifications && <CertificationsSection />}
-            {toggles.activities && <ActivitiesSection />}
-            {toggles.personalStatement && <PSSection />}
-          </section>
+          </form>
         </div>
       </div>
       <Footer showPreview showDone handlePreviewClick={handlePreviewClick} handleDoneClick={handleDoneClick} />
