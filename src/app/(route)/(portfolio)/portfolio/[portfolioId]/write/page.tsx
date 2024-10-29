@@ -20,56 +20,7 @@ import useToggleStore from '@/app/_store/portfolioToggle';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import Footer from '../../../_components/Footer';
 import UploadImage from './_components/UploadImage';
-
-type Education = {
-  name: string;
-  major: string;
-  graduation: string; // '0000-00' 형태의 문자열
-  gpa?: number; // nullable (선택적)
-};
-
-type Experience = {
-  name: string;
-  start: string; // '0000-00-00' 형태의 문자열
-  end?: string; // nullable (선택적)
-  position?: string; // nullable (선택적)
-  achievement?: string; // nullable (선택적)
-};
-
-type Certification = {
-  name: string;
-  date: string; // '0000-00-00' 형태의 문자열
-};
-
-type ExtraActivity = {
-  name: string;
-  start: string; // '0000-00-00' 형태의 문자열
-  end?: string; // nullable (선택적)
-  institution: string;
-  description?: string; // nullable (선택적)
-};
-
-type PersonalStatement = {
-  reason: string;
-  content: string;
-};
-
-type PortFolioFormData = {
-  firstName: string;
-  lastName: string;
-  title: string;
-  preferredJob: string;
-  tel: string;
-  email: string;
-  educations: Education[];
-  experiences: Experience[];
-  picUrl?: string; // nullable (선택적)
-  ps: PersonalStatement;
-  links?: string[]; // nullable (선택적)
-  skills?: string[]; // nullable (선택적)
-  certifications?: Certification[]; // nullable (선택적)
-  extraActivities?: ExtraActivity[]; // nullable (선택적)
-};
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 export default function PortfolioWrite() {
   const [title, setTitle] = useState('백지연 포트폴리오1');
@@ -77,7 +28,7 @@ export default function PortfolioWrite() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PortFolioFormData>();
+  } = useForm<PortfolioProps>();
 
   const onSubmit = handleSubmit((data) => console.log(data));
 
@@ -124,7 +75,12 @@ export default function PortfolioWrite() {
           </div>
           <form onSubmit={onSubmit}>
             <div className="relative flex justify-between items-center mt-5">
-              <h1 className="pre-3xl-semibold">{title}</h1>
+              <input
+                {...register('title')}
+                placeholder="포트폴리오 제목을 입력해 주세요."
+                type="text"
+                className="pre-3xl-semibold"
+              />
               <div ref={dropdownRef}>
                 <Icons
                   name={MoreIcon}
@@ -143,7 +99,8 @@ export default function PortfolioWrite() {
                   <UploadImage />
                   <div className="grid grid-flow-col justify-stretch gap-[20px]">
                     <Input
-                      {...register('')}
+                      register={register}
+                      name="name"
                       element="input"
                       label="이름"
                       size="lg"
@@ -153,6 +110,8 @@ export default function PortfolioWrite() {
                       required
                     />
                     <Input
+                      register={register}
+                      name="tel"
                       element="input"
                       label="휴대폰 번호"
                       size="lg"
@@ -163,6 +122,8 @@ export default function PortfolioWrite() {
                     />
                   </div>
                   <Input
+                    register={register}
+                    name="email"
                     element="input"
                     label="이메일"
                     size="lg"
@@ -172,6 +133,8 @@ export default function PortfolioWrite() {
                     required
                   />
                   <Input
+                    register={register}
+                    name="preferredJob"
                     element="input"
                     label="관심 직무"
                     size="lg"
@@ -189,6 +152,7 @@ export default function PortfolioWrite() {
               {toggles.activities && <ActivitiesSection />}
               {toggles.personalStatement && <PSSection />}
             </section>
+            <button type="submit">제출 테스트</button>
           </form>
         </div>
       </div>

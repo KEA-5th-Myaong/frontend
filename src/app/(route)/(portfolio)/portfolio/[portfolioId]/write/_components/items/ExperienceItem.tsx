@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import { useForm } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface ExperienceItemProps {
   id: number;
@@ -8,11 +10,14 @@ interface ExperienceItemProps {
 }
 
 function ExperienceItem({ id, onDelete }: ExperienceItemProps) {
+  const { register } = useForm<PortfolioProps>();
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
+            register={register}
+            name="experiences"
             element="input"
             label="회사명"
             size="lg"
@@ -23,6 +28,8 @@ function ExperienceItem({ id, onDelete }: ExperienceItemProps) {
             required
           />
           <Input
+            register={register}
+            name="experiences"
             element="input"
             label="직책"
             size="lg"
@@ -33,9 +40,27 @@ function ExperienceItem({ id, onDelete }: ExperienceItemProps) {
             required
           />
         </div>
-        <Input element="input" label="시작 일자" size="lg" type="date" color="white" />
-        <Input element="input" label="종료 일자" size="lg" type="date" color="white" />
         <Input
+          register={register}
+          name="experiences"
+          element="input"
+          label="시작 일자"
+          size="lg"
+          type="date"
+          color="white"
+        />
+        <Input
+          register={register}
+          name="experiences"
+          element="input"
+          label="종료 일자"
+          size="lg"
+          type="date"
+          color="white"
+        />
+        <Input
+          register={register}
+          name="experiences"
           element="textarea"
           label="주요 업무/성과"
           size="lg"
