@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import { useForm } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface EducationItemProps {
   id: number;
@@ -8,11 +10,14 @@ interface EducationItemProps {
 }
 
 function EducationItem({ id, onDelete }: EducationItemProps) {
+  const { register } = useForm<PortfolioProps>();
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
+            register={register}
+            name="educations"
             element="input"
             label="학교명"
             size="lg"
@@ -23,6 +28,8 @@ function EducationItem({ id, onDelete }: EducationItemProps) {
             required
           />
           <Input
+            register={register}
+            name="educations"
             element="input"
             label="학과"
             size="lg"
@@ -33,8 +40,19 @@ function EducationItem({ id, onDelete }: EducationItemProps) {
             required
           />
         </div>
-        <Input element="input" label="졸업 일자" size="lg" type="date" color="white" required />
         <Input
+          register={register}
+          name="educations"
+          element="input"
+          label="졸업 일자"
+          size="lg"
+          type="date"
+          color="white"
+          required
+        />
+        <Input
+          register={register}
+          name="educations"
           element="input"
           label="학점"
           size="lg"
