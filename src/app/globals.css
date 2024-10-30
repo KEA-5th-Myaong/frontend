@@ -75,7 +75,6 @@ body {
 
   /* 블로그 */
   .blog-favor-frame {
-    @apply flex items-center gap-[5px] px-3 py-1.5 cursor-pointer;
     @apply flex items-center gap-[5px] px-3 py-[5px] cursor-pointer;
   }
 
