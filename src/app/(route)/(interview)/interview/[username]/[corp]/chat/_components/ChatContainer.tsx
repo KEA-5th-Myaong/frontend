@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import MessageForm from './MessageForm';
 import useContainerHeight from '../../../../../_hooks/useContainerHeight';
@@ -52,7 +52,7 @@ export default function ChatContainer() {
   }, [messages]);
 
   // 채팅 컨테이너에 대한 참조를 생성(DOM 요소에 접근)
-  const chatContainerRef = useContainerHeight();
+  const { chatContainerRef, textareaRef } = useContainerHeight(editMessageId);
   const messagesEndRef = useScrollToBottom(messages); // 메시지 보내면 하단으로 스크롤
 
   const addMessage = (message: string, isAI: boolean, messageId?: string) => {
@@ -96,15 +96,6 @@ export default function ChatContainer() {
       }
     }
   };
-
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [editMessageId]);
 
   // 수정 버튼 누르면
   const handleEdit = (messageId: string, text: string) => {
