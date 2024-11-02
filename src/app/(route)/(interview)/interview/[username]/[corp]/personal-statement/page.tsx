@@ -11,7 +11,6 @@ import ListVariants from '../_utils/listVariants';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
 import { useCompanyIdStore, useInterviewIdStore } from '@/app/(route)/(interview)/_store/interviewStore';
-import TutorialBox from '../_components/TutorialBox';
 import { postInterview } from '@/app/(route)/(interview)/_services/interviewService';
 
 export default function InterviewPersonalStatement() {
@@ -29,7 +28,6 @@ export default function InterviewPersonalStatement() {
   const { setInterviewId } = useInterviewIdStore(); // 인터뷰 id store에 저장
 
   const [psList, setPSList] = useState([]); // 자소서 배열
-  const [showTutorial, setShowTutorial] = useState(false); // 튜토리얼 보이기
 
   useEffect(() => {
     if (psData?.data && Array.isArray(psData.data)) {
@@ -44,8 +42,8 @@ export default function InterviewPersonalStatement() {
     companyId,
   };
 
-  // 튜토리얼 끝나고 시작하기 버튼을 눌렀을 때
-  const handleTutorialBtnClick = async () => {
+  // 자소서를 선택했을 때
+  const handlePSClick = async () => {
     const response = await postInterview(interviewData);
     const interviewId = response?.data.interviewId;
     setInterviewId(interviewId); // store에 저장하는 인터뷰 id
@@ -92,12 +90,10 @@ export default function InterviewPersonalStatement() {
             ))
           : psList?.map((ps: PSBoxProps, index) => (
               <motion.div key={ps.psId} variants={ListVariants} custom={index} initial="hidden" animate="visible">
-                <InterviewPSBox title={ps.title} timestamp={ps.timestamp} onClick={() => setShowTutorial(true)} />
+                <InterviewPSBox title={ps.title} timestamp={ps.timestamp} onClick={handlePSClick} />
               </motion.div>
             ))}
       </div>
-
-      {showTutorial && <TutorialBox onBtnClick={handleTutorialBtnClick} />}
     </section>
   );
 }
