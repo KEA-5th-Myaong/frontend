@@ -90,7 +90,7 @@ body {
     border-opacity-20 p-4 sm:py-6 sm:px-6 md:px-8 text-sm text-start rounded-[30px];
   }
   .chat-msg-btn {
-    @apply flex items-center gap-4 border border-gray-0 border-opacity-20 
+    @apply flex items-center gap-4 bg-white-0 border border-gray-0 border-opacity-20 
     pl-6 pr-2 py-2 text-[10px] sm:text-xs md:text-sm rounded-[60px] whitespace-nowrap;
   }
 
