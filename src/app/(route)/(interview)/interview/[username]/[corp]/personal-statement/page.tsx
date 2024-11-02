@@ -59,7 +59,7 @@ export default function InterviewPersonalStatement() {
       queryKey: ['interview-history', username],
     });
 
-    router.replace(`/interview/${username}/${corp}/chat`);
+    router.replace(`/interview/${username}/${corp}/tutorial`);
   };
 
   return (

@@ -1,25 +1,38 @@
 'use client';
 
 import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Icons from '@/app/_components/ui/Icon';
 import { ArrowIcon, PlayIcon, PlusIcon, RefreshIcon, TriangleIcon, XIcon } from '@/app/_components/ui/iconPath';
 import Tooltip from './_components/ToolTip';
 
 export default function Tutorial() {
-  const [num, setNum] = useState(1);
+  const router = useRouter();
+  const params = useParams();
+  const { username } = params;
+  const selectedCorp = params.corp as string;
+  const corp = decodeURI(selectedCorp); // 기업명은 url에서 가져옴
+
+  const [num, setNum] = useState(1); // 모여줄 툴팁, 7되면 링크 이동
+
+  const handleClick = async () => {
+    setNum((prev) => prev + 1);
+    // setState는 비동기적으로 작동해서 num이 6일 때 체크해야 실제로 7이 되었을 때 라우팅이 발생
+    if (num === 6) {
+      router.replace(`/interview/${username}/${corp}/chat`);
+    }
+  };
   return (
     <div
       role="button"
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
-          setNum((prev) => prev + 1);
+          handleClick();
         }
       }}
       tabIndex={-1}
-      onClick={() => {
-        setNum((prev) => prev + 1);
-      }}
+      onClick={handleClick}
       className="fixed inset-0 flex-center bg-black-3 bg-opacity-25 z-50"
     >
       {/* 면접 기록 */}
