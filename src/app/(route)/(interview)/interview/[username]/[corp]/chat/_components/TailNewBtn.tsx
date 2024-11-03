@@ -10,10 +10,10 @@ export default function TailNewBtn({ TailQuestion, NewQuestion }: TailNewBtnProp
   return (
     <div className="flex items-center gap-4 pt-4">
       <button type="button" className="chat-msg-btn" onClick={TailQuestion}>
-        꼬리 질문 받기 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
+        꼬리 질문 받기 <Icons className="tail-new-facial-icon" name={ArrowIcon} />
       </button>
       <button type="button" className="chat-msg-btn" onClick={NewQuestion}>
-        새 질문 생성 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
+        새 질문 생성 <Icons className="tail-new-facial-icon" name={ArrowIcon} />
       </button>
     </div>
   );

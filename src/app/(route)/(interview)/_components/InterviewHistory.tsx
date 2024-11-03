@@ -97,11 +97,10 @@ export default function InterviewHistory() {
             <button
               type="button"
               key={item.interviewId}
-              className="text-start bg-white-0 hover:bg-[#F3F3F3] 
-            rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between"
+              className="bg-white-0 hover:bg-[#F3F3F3] interview-history"
               onClick={() => handleSelectHistory(item.title, item.interviewId)}
             >
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow">{item.title}</span>
+              <p className="interview-history-text">{item.title}</p>
               <Icons
                 onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();

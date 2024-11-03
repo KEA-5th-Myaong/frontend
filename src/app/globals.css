@@ -93,6 +93,15 @@ body {
     @apply flex items-center gap-4 bg-white-0 border border-gray-0 border-opacity-20 
     pl-6 pr-2 py-2 text-[10px] sm:text-xs md:text-sm rounded-[60px] whitespace-nowrap;
   }
+  .tail-new-facial-icon {
+    @apply rotate-180 border rounded-full;
+  }
+  .interview-history {
+    @apply text-start rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between;
+  }
+  .interview-history-text {
+    @apply overflow-hidden text-ellipsis whitespace-nowrap flex-grow;
+  }
 
   /* 자소서 */
   .ps-label {

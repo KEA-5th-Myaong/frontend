@@ -43,12 +43,12 @@ export default function Tutorial() {
         </div>
 
         <div className="md:flex flex-col gap-1 mb-14">
-          <div className="text-start rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between">
-            <p className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow">위볼린</p>
+          <div className="interview-history">
+            <p className="interview-history-text">위볼린</p>
             <Icons name={XIcon} className="flex-shrink-0 ml-2" />
           </div>
-          <div className="text-start rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between">
-            <p className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow text-gray-0">카카오 엔터프라이즈</p>
+          <div className="interview-history">
+            <p className="interview-history-text text-gray-0">카카오 엔터프라이즈</p>
             <Icons name={XIcon} className="flex-shrink-0 ml-2" />
           </div>
         </div>
@@ -148,7 +148,6 @@ export default function Tutorial() {
             {/* 면접관 질문 */}
             <div className="flex flex-col items-start">
               <p className="font-semibold pb-3 mt-4">면접관</p>
-
               <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
                 <div className="break-words chat-msg-text bg-gray-4 bg-opacity-25 ">
                   Q. 위볼린이 속한 산업에서의 최신 기술 트렌드를 어떻게 따라가고 계신가요?
@@ -171,16 +170,15 @@ export default function Tutorial() {
               <div className="flex items-center gap-4 pt-4">
                 <div className={`chat-msg-btn flex md:hidden relative ${num !== 4 && 'bg-opacity-25'}`}>
                   {num === 4 && <Tooltip msg1="입력한 답변을 말해보며" msg2="AI로 표정 분석을 받을 수 있어요" />}
-                  AI 표정 분석 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
+                  AI 표정 분석 <Icons className="tail-new-facial-icon" name={ArrowIcon} />
                 </div>
                 <div className={`chat-msg-btn ${num !== 1 && 'bg-opacity-25'} relative`}>
                   {num === 1 && <Tooltip msg1="답변에 대한" msg2="꼬리 질문을 받을 수 있어요" />}
-                  꼬리 질문 받기 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
+                  꼬리 질문 받기 <Icons className="tail-new-facial-icon" name={ArrowIcon} />
                 </div>
-
                 <div className={`chat-msg-btn relative ${num !== 2 && 'bg-opacity-25'}`}>
                   {num === 2 && <Tooltip msg1="새로운 질문 생성도" msg2="가능해요" />}
-                  새 질문 생성 <Icons className="rotate-180 border rounded-full" name={ArrowIcon} />
+                  새 질문 생성 <Icons className="tail-new-facial-icon" name={ArrowIcon} />
                 </div>
               </div>
             </div>
