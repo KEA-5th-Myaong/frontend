@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import MessageForm from './MessageForm';
 import useContainerHeight from '../../../../../_hooks/useContainerHeight';
 import useScrollToBottom from '../../../../../../../_hooks/useScrollToBottom';
-import messageVariants from '../_utils/messageVariants';
 import {
   fetchNewQuestion,
   fetchTailQuestion,
@@ -18,6 +17,7 @@ import Video from './Video'; // 사용자 비디오 컴포넌트
 import { useInterviewIdStore } from '@/app/(route)/(interview)/_store/interviewStore';
 import usePostWriteStore from '@/app/_store/postWirte';
 import TailNewBtn from './TailNewBtn'; // 꼬리질문, 새질문 버튼
+import { messageVariants } from '../../_utils/interviewVariants';
 
 export default function ChatContainer() {
   const interviewId = useInterviewIdStore((state) => state.interviewId);

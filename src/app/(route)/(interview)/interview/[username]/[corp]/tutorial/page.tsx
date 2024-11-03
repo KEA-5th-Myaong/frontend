@@ -36,7 +36,7 @@ export default function Tutorial() {
       className="fixed inset-0 flex-center bg-black-3 bg-opacity-25 z-50"
     >
       {/* 면접 기록 */}
-      <div className="hidden md:block mt-24 mr-4 md:max-w-[253px] md:w-full self-stretch max-h-fit border-2 border-gray-5 pt-[29px] pb-[22px] px-5 md:px-2 lg:px-5 rounded-2xl font-semibold">
+      <div className="hidden md:block mt-24 mr-4 md:max-w-[253px] md:w-full self-stretch max-h-fit border-2 border-gray-3 border-opacity-25 pt-[29px] pb-[22px] px-5 md:px-2 lg:px-5 rounded-2xl font-semibold">
         <div className="flex justify-between w-full">
           <p className="pl-[13px] mb-0 md:mb-5">면접 기록</p>
           <Icons name={TriangleIcon} className="mt-1.5 block md:hidden" />
@@ -44,39 +44,41 @@ export default function Tutorial() {
 
         <div className="md:flex flex-col gap-1 mb-14">
           <div className="text-start rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between">
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow">카카오 엔터프라이즈</span>
+            <p className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow">위볼린</p>
+            <Icons name={XIcon} className="flex-shrink-0 ml-2" />
+          </div>
+          <div className="text-start rounded-lg pl-[13px] pr-2 py-[7px] flex items-center justify-between">
+            <p className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow text-gray-0">카카오 엔터프라이즈</p>
             <Icons name={XIcon} className="flex-shrink-0 ml-2" />
           </div>
         </div>
-
-        <div className="flex md:flex items-center gap-2 pl-[13px]">
+        <div className="flex md:flex items-center gap-2 pl-[13px] opacity-50">
           <Icons name={PlusIcon} className="mb-1" />
           면접 생성
         </div>
       </div>
-
       {/* 본문 */}
       <section className="relative bg-[#CBCBCE] flex flex-col pb-8 pt-6 sm:pt-3.5 interview-container px-4 min-w-[360px] z-50">
         <p className="font-semibold self-start">모의 면접</p>
         <div className="flex flex-col self-stretch pt-2 w-full pb-8">
           <p className="text-sm">선택 기업</p>
-
           <div className="flex gap-3 justify-between pt-3 whitespace-nowrap">
-            <div className="relative w-full max-w-64 py-4 px-4 sm:px-5 bg-gray-4 font-bold rounded-[28px] z-30 bg-opacity-25 ">
+            <div className="relative w-full max-w-64 py-4 px-4 sm:px-5 bg-gray-4 font-bold rounded-[28px] bg-opacity-25">
               위볼린
             </div>
             <div className={`relative py-4 px-7 lg:px-9 rounded-[28px] primary-1-btn ${num !== 3 && 'bg-opacity-25'}`}>
-              {num === 3 && <Tooltip msg1="면접 내용을 바탕으로" msg2="포스트 작성이 가능해요" />}
+              {num === 3 && (
+                <Tooltip msg1="면접 내용을 바탕으로" msg2="포스트 작성이 가능해요" className="right-40 bottom-0" />
+              )}
               포스트 작성
             </div>
           </div>
         </div>
-
         {/* 여기부터 채팅창 */}
         <div className="flex flex-col w-full relative min-w-[360px] max-w-[735px] px-4 border-t border-gray-2">
           {/* 비디오 튜토리얼 */}
           {(num === 5 || num === 6) && (
-            <div className="fixed  md:left-12 md:bottom-12 min-w-[360px] z-10">
+            <div className="fixed md:left-12 md:bottom-12 min-w-[360px] z-10">
               <div className="relative bg-white-0 px-10 rounded-xl max-w-[460px] border border-gray-5 pt-5 pb-11">
                 <div className="w-full flex justify-between pb-[14px] border-b border-gray-5">
                   <p className="font-semibold">면접 연습하기</p>
@@ -86,8 +88,7 @@ export default function Tutorial() {
                   </div>
                 </div>
 
-                <Image width={360} height={208} src="/assets/videoImage.png" alt="이미지" />
-
+                <Image width={360} height={208} src="/assets/videoImage.png" alt="표정분석사람 이미지" />
                 <div className="w-full flex justify-between mt-5 ">
                   <p className="font-semibold">AI 표정 분석 결과</p>
                   <div className="flex items-center border border-primary-3 py-1 px-4 rounded-[28px]">
@@ -116,11 +117,15 @@ export default function Tutorial() {
                 <Tooltip
                   msg1="면접 영상을 녹화해"
                   msg2="다시 볼 수 있어요"
-                  className="left-12 bottom-[480px] md:bottom-[540px]"
+                  className="right-0 bottom-[480px] md:bottom-[540px]"
                 />
               )}
               {num === 6 && (
-                <Tooltip msg1="AI 표정 분석 결과도" msg2="확인 가능해요!" className="right-8 bottom-7 md:bottom-20" />
+                <Tooltip
+                  msg1="AI 표정 분석 결과도"
+                  msg2="확인 가능해요!"
+                  className="right-8 md:-right-36 bottom-7 md:bottom-20"
+                />
               )}
             </div>
           )}
@@ -129,7 +134,13 @@ export default function Tutorial() {
             <div
               className={`py-4  px-6 rounded-[28px] primary-1-btn mt-2 md:block hidden ${num !== 4 && 'bg-opacity-25'}`}
             >
-              {num === 4 && <Tooltip msg1="입력한 답변을 말해보며" msg2="AI로 표정 분석을 받을 수 있어요" />}
+              {num === 4 && (
+                <Tooltip
+                  msg1="입력한 답변을 말해보며"
+                  msg2="AI로 표정 분석을 받을 수 있어요"
+                  className="left-0 bottom-16"
+                />
+              )}
               AI 표정 분석
             </div>
           </div>
@@ -148,7 +159,7 @@ export default function Tutorial() {
             {/* 내 답변 */}
             <div className="flex flex-col items-end">
               <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
-                <div className="break-words chat-msg-text bg-primary-0 bg-opacity-25 ">
+                <div className="break-words chat-msg-text bg-primary-0 bg-opacity-25">
                   저는 위볼린이 속한 산업에서 최신 기술 트렌드를 파악하기 위해 여러 가지 방법을 활용하고 있습니다. 첫째,
                   관련 분야의 최신 논문이나 기술 블로그를 정기적으로 구독하고 읽습니다. 특히 위볼린이 속한 산업에서
                   중요한 역할을 하는 AI, 클라우드 기술, 또는 데이터 분석 관련 기술 트렌드에 주목하고 있습니다. 둘째,
