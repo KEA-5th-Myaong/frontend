@@ -1,4 +1,3 @@
-// MsgEditBtn.tsx
 import React from 'react';
 
 interface MsgEditBtnProps {

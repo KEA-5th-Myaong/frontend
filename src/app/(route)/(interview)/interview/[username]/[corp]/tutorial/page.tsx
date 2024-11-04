@@ -96,7 +96,7 @@ export default function Tutorial() {
                     다시 보기
                   </div>
                 </div>
-
+                {/* 면접 연습하기 본문 */}
                 <div className="flex gap-2">
                   <div className="w-12 h-12 flex-shrink-0">
                     <Image className="w-full h-full" width={33} height={33} src="/mascot.png" alt="이미지" />
@@ -129,10 +129,10 @@ export default function Tutorial() {
               )}
             </div>
           )}
-
+          {/* 표정 분석 툴팁 */}
           <div className="fixed left-12 bottom-12">
             <div
-              className={`py-4  px-6 rounded-[28px] primary-1-btn mt-2 md:block hidden ${num !== 4 && 'bg-opacity-25'}`}
+              className={`py-4 px-6 rounded-[28px] primary-1-btn mt-2 md:block hidden ${num !== 4 && 'bg-opacity-25'}`}
             >
               {num === 4 && (
                 <Tooltip
@@ -149,7 +149,7 @@ export default function Tutorial() {
             <div className="flex flex-col items-start">
               <p className="font-semibold pb-3 mt-4">면접관</p>
               <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
-                <div className="break-words chat-msg-text bg-gray-4 bg-opacity-25 ">
+                <div className="break-words bg-gray-4 bg-opacity-25 chat-msg-text">
                   Q. 위볼린이 속한 산업에서의 최신 기술 트렌드를 어떻게 따라가고 계신가요?
                 </div>
               </div>
@@ -184,7 +184,7 @@ export default function Tutorial() {
             </div>
 
             {/* 채팅입력 */}
-            <div className="flex items-center py-2 w-full border border-primary-1 rounded-xl mt-auto bg-white-0 bg-opacity-25 ">
+            <div className="flex items-center py-2 w-full border border-primary-1 rounded-xl mt-auto bg-white-0 bg-opacity-25">
               <textarea
                 className="flex-grow pl-5 md:pl-8 pr-2 py-2 focus:outline-none rounded-xl resize-none bg-gray-2 bg-opacity-25 "
                 placeholder="답변을 입력해주세요"
