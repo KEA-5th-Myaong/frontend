@@ -18,23 +18,25 @@ export default function PostWrite() {
   const router = useRouter();
   const postData = usePostWriteStore((state) => state.postData);
   const resetPostData = usePostWriteStore((state) => state.resetPostData);
-  const chatHistory = useChatWriteStore((state) => state.chatHistory);
-  const resetChatHistory = useChatWriteStore((state) => state.resetChatHistory);
+  const messages = useChatWriteStore((state) => state.messages);
+  const resetMessages = useChatWriteStore((state) => state.resetMessages);
+
+  const formattedMessages = messages.map((msg) => `${msg.isAI ? '면접관' : '나'}: ${msg.text}`).join('\n\n');
 
   const { register, handleSubmit } = useForm<PostWriteProps>({
     defaultValues: {
       title: '',
-      content: chatHistory || postData || '',
+      content: formattedMessages || postData || '',
     },
   });
   const [modalState, setModalState] = useState(initailModalState);
 
   useEffect(() => {
     return () => {
-      resetChatHistory();
+      resetMessages();
       resetPostData();
     };
-  }, [resetPostData, resetChatHistory]);
+  }, [resetPostData, resetMessages]);
 
   const handleBackBtnClick = () => {
     setModalState((prev) => ({

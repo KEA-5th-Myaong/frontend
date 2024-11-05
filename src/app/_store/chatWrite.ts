@@ -2,23 +2,15 @@ import { create } from 'zustand';
 import { Message } from '../(route)/(interview)/interview/[username]/[corp]/chat/_types/messageType';
 
 interface ChatHistoryStore {
-  messages: Message[];
-  chatHistory: string;
-  setMessages: (messages: Message[]) => void;
-  formatAndSaveMessages: () => void;
-  resetChatHistory: () => void;
+  messages: Message[]; // 채팅 내역 배열
+  setMessages: (messages: Message[]) => void; // 채팅 내역 배열 저장 함수
+  resetMessages: () => void; // 채팅 내역 초기화
 }
 
-const useChatWriteStore = create<ChatHistoryStore>((set, get) => ({
-  messages: [],
-  chatHistory: '',
+const useChatWriteStore = create<ChatHistoryStore>((set) => ({
+  messages: [], // 모의면접 채팅 내역
   setMessages: (messages) => set({ messages }),
-  formatAndSaveMessages: () => {
-    const { messages } = get();
-    const formattedMessages = messages.map((msg) => `${msg.isAI ? '면접관' : '나'}: ${msg.text}`).join('\n\n');
-    set({ chatHistory: formattedMessages });
-  },
-  resetChatHistory: () => set({ messages: [], chatHistory: '' }),
+  resetMessages: () => set({ messages: [] }),
 }));
 
 export default useChatWriteStore;
