@@ -15,13 +15,13 @@ import { Message } from '../_types/messageType';
 import MsgEditBtn from './MsgEditBtn';
 import Video from './Video'; // 사용자 비디오 컴포넌트
 import { useInterviewIdStore } from '@/app/(route)/(interview)/_store/interviewStore';
-import usePostWriteStore from '@/app/_store/postWirte';
 import TailNewBtn from './TailNewBtn'; // 꼬리질문, 새질문 버튼
 import { messageVariants } from '../../_utils/interviewVariants';
+import useChatWriteStore from '@/app/_store/chatWrite';
 
 export default function ChatContainer() {
   const interviewId = useInterviewIdStore((state) => state.interviewId);
-  const setMessage = usePostWriteStore((state) => state.setMessage);
+  const setMessage = useChatWriteStore((state) => state.setMessages);
 
   const [messages, setMessages] = useState<Message[]>([]); // 채팅 내용 다 담김
   const [isMaxMessages, setIsMaxMessages] = useState(false); // 최대 채팅 수 도달

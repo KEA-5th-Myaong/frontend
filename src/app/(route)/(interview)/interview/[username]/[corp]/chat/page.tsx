@@ -3,14 +3,14 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import ChatContainer from './_components/ChatContainer';
-import usePostWriteStore from '@/app/_store/postWirte';
+import useChatWriteStore from '@/app/_store/chatWrite';
 
 export default function Chatting() {
   const params = useParams();
   const selectedCorp = params.corp as string;
   const corp = decodeURI(selectedCorp);
   // 채팅 메시지 포매팅 함수
-  const formatAndSaveMessages = usePostWriteStore((state) => state.formatAndSaveMessages);
+  const formatAndSaveMessages = useChatWriteStore((state) => state.formatAndSaveMessages);
 
   return (
     <section className="flex flex-col pb-8 pt-6 sm:pt-3.5 interview-container">

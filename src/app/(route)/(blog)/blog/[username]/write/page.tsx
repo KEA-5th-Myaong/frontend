@@ -7,6 +7,7 @@ import BackButton from '../../../../../_components/BackButton';
 import { postPost } from '../_services/blogService';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import usePostWriteStore from '@/app/_store/postWirte';
+import useChatWriteStore from '@/app/_store/chatWrite';
 
 export interface PostWriteProps {
   title: string;
@@ -17,20 +18,23 @@ export default function PostWrite() {
   const router = useRouter();
   const postData = usePostWriteStore((state) => state.postData);
   const resetPostData = usePostWriteStore((state) => state.resetPostData);
+  const chatHistory = useChatWriteStore((state) => state.chatHistory);
+  const resetChatHistory = useChatWriteStore((state) => state.resetChatHistory);
 
   const { register, handleSubmit } = useForm<PostWriteProps>({
     defaultValues: {
       title: '',
-      content: postData || '',
+      content: chatHistory || postData || '',
     },
   });
   const [modalState, setModalState] = useState(initailModalState);
 
   useEffect(() => {
     return () => {
+      resetChatHistory();
       resetPostData();
     };
-  }, [resetPostData]);
+  }, [resetPostData, resetChatHistory]);
 
   const handleBackBtnClick = () => {
     setModalState((prev) => ({
