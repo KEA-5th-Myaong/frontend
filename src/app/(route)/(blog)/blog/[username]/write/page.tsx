@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import BackButton from '../../../../../_components/BackButton';
 import { postPost } from '../_services/blogService';
 import Modal, { initailModalState } from '@/app/_components/Modal';
+import usePostWriteStore from '@/app/_store/postWirte';
+import useChatWriteStore from '@/app/_store/chatWrite';
 
 export interface PostWriteProps {
   title: string;
@@ -14,13 +16,27 @@ export interface PostWriteProps {
 
 export default function PostWrite() {
   const router = useRouter();
+  const postData = usePostWriteStore((state) => state.postData);
+  const resetPostData = usePostWriteStore((state) => state.resetPostData);
+  const messages = useChatWriteStore((state) => state.messages);
+  const resetMessages = useChatWriteStore((state) => state.resetMessages);
+
+  const formattedMessages = messages.map((msg) => `${msg.isAI ? '면접관' : '나'}: ${msg.text}`).join('\n\n');
+
   const { register, handleSubmit } = useForm<PostWriteProps>({
     defaultValues: {
       title: '',
-      content: '',
+      content: formattedMessages || postData || '',
     },
   });
   const [modalState, setModalState] = useState(initailModalState);
+
+  useEffect(() => {
+    return () => {
+      resetMessages();
+      resetPostData();
+    };
+  }, [resetPostData, resetMessages]);
 
   const handleBackBtnClick = () => {
     setModalState((prev) => ({
@@ -32,13 +48,15 @@ export default function PostWrite() {
       subBtnText: '취소',
       btnText: '이동',
       onSubBtnClick: () => setModalState(initailModalState),
-      onBtnClick: () => router.back(),
+      onBtnClick: () => {
+        resetPostData();
+        router.back();
+      },
     }));
   };
 
   const onSubmit = async (data: PostWriteProps) => {
-    const response = await postPost(data);
-    console.log(response);
+    await postPost(data);
 
     setModalState((prev) => ({
       ...prev,
@@ -46,6 +64,7 @@ export default function PostWrite() {
       topText: '포스트가 작성되었습니다.',
       btnText: '닫기',
       onBtnClick: () => {
+        resetPostData();
         router.push('/main');
       },
     }));

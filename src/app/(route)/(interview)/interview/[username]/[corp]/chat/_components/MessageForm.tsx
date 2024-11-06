@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import Icons from '../../../../../../../../_components/ui/Icon';
-import { ArrowIcon } from '../../../../../../../../_components/ui/iconPath';
+import Icons from '../../../../../../../_components/ui/Icon';
+import { ArrowIcon } from '../../../../../../../_components/ui/iconPath';
 
 interface MessageFormProps {
   onSubmit: (message: string) => void;

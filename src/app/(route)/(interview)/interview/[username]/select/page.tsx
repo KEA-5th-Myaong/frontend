@@ -3,20 +3,23 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { v4 } from 'uuid';
 import Icons from '../../../../../_components/ui/Icon';
 import { SearchIcon } from '../../../../../_components/ui/iconPath';
-import ProgressBar from '../../../_components/ProgressBar';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchCompanies, fetchCompaniesSearch } from '../../../_services/interviewService';
+import { useCompanyIdStore } from '../../../_store/interviewStore';
 
 export default function InterviewSelect() {
   const router = useRouter();
-  const id = useParams();
+  const params = useParams();
+  const { username } = params;
 
   const { data, isLoading } = useCustomQuery(['corps'], () => fetchCompanies());
+  const { setCompanyId } = useCompanyIdStore(); // 기업 아이디 저장
 
-  const [corpList, setCorpList] = useState([]);
-  const [searchCorp, setSearchCorp] = useState('');
+  const [corpList, setCorpList] = useState([]); // 기업 목록
+  const [searchCorp, setSearchCorp] = useState(''); // 검색어
 
   // 기업 목록 불러와서 저장
   useEffect(() => {
@@ -25,13 +28,12 @@ export default function InterviewSelect() {
 
   // 기업 목록 검색해서 저장
   const handleSearch = async () => {
-    if (searchCorp.trim()) {
-      try {
-        const result = await fetchCompaniesSearch(searchCorp);
-        setCorpList(result.data);
-      } catch (error) {
-        console.error('검색 중 오류 발생:', error);
-      }
+    const trimmedSearch = searchCorp.trim();
+    try {
+      const result = await fetchCompaniesSearch(trimmedSearch);
+      setCorpList(result.data);
+    } catch (error) {
+      console.error('검색 중 오류 발생:', error);
     }
   };
 
@@ -41,9 +43,13 @@ export default function InterviewSelect() {
     }
   };
 
+  const handleCorpClick = (corp: { companyId: string; companyName: string }) => {
+    setCompanyId(corp.companyId);
+    router.push(`/interview/${username}/${corp.companyName}/personal-statement`);
+  };
+
   return (
     <section className="interview-container">
-      <ProgressBar progress={3} />
       <p className="font-semibold self-start">모의 면접</p>
 
       <div className="flex gap-4 self-stretch pt-6 min-w-[318px] w-full">
@@ -70,14 +76,16 @@ export default function InterviewSelect() {
       <div className="flex flex-wrap mx-auto pt-5 w-full min-w-[263px] max-w-[440px]">
         {isLoading
           ? Array.from({ length: 28 }).map(() => (
-              <div className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 animate-pulse" />
+              <div
+                key={v4()}
+                className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 animate-pulse"
+              />
             ))
-          : corpList?.map((corp) => (
+          : corpList?.map((corp: { companyId: string; companyName: string }) => (
               <motion.button
+                key={corp.companyId}
                 type="button"
-                onClick={() => {
-                  router.push(`/interview/${id.id}/${corp.companyName}/personal-statement`);
-                }}
+                onClick={() => handleCorpClick(corp)}
                 className="corp-block"
               >
                 {corp.companyName}

@@ -18,7 +18,7 @@ export default function Chatting() {
 
         <div className="flex gap-3 justify-between pt-3 whitespace-nowrap">
           <div className="w-full max-w-64 py-4 px-4 sm:px-5 bg-gray-4 font-bold rounded-[28px]">{corp}</div>
-          <Link href="/blog/khj0930/write" className="py-4 px-7 lg:px-9 rounded-[28px] primary-1-btn">
+          <Link href="/blog/khj0930/write" className="py-4 px-7 lg:px-9 rounded-[28px] primary-1-btn" replace>
             포스트 작성
           </Link>
         </div>

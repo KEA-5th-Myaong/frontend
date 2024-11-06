@@ -7,7 +7,7 @@ interface IconsProps {
   name: IconPathTypes;
   hoverFill?: string;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   fill?: string;
 }
 
