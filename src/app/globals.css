@@ -127,4 +127,12 @@ body {
   .pf-read-section {
     @apply flex flex-col my-10;
   }
+
+  /* 관리자 */
+  .manage-page-block {
+    @apply flex items-center justify-between py-6 pl-6 pr-[14px] bg-white-0 border w-full max-w-96 border-gray-3;
+  }
+  .manage-icon {
+    @apply flex gap-[14px];
+  }
 }
