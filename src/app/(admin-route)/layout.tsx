@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Link href="/main" className="block ml-16 mt-9">
+        <Link href="/main" className="absolute ml-16 pt-9">
           <Image src="/assets/adminLogo.svg" alt="로고" width={103} height={66} />
         </Link>
         {children}
