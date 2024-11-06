@@ -32,7 +32,7 @@ export default function AdminMain() {
         </div>
 
         {/* 콘텐츠 관리 */}
-        <Link href="/" className="manage-page-block">
+        <Link href="/admin/contents" className="manage-page-block">
           <div className="manage-icon">
             <Image width={20} height={20} src="./assets/admin/main-contents.svg" alt="" />
             콘텐츠 관리
@@ -40,7 +40,7 @@ export default function AdminMain() {
           <Image width={40} height={40} src="./assets/arrow-right.svg" alt=">" />
         </Link>
         {/* 기업 관리 */}
-        <Link href="/" className="manage-page-block">
+        <Link href="/admin/corp" className="manage-page-block">
           <div className="manage-icon">
             <Image width={20} height={20} src="./assets/admin/main-corp.svg" alt="" />
             기업 관리
@@ -48,7 +48,7 @@ export default function AdminMain() {
           <Image width={40} height={40} src="./assets/arrow-right.svg" alt=">" />
         </Link>
         {/* 회원 관리 */}
-        <Link href="/" className="manage-page-block">
+        <Link href="/admin/members" className="manage-page-block">
           <div className="manage-icon">
             <Image width={20} height={20} src="./assets/admin/main-member.svg" alt="" />
             회원 관리
@@ -56,7 +56,7 @@ export default function AdminMain() {
           <Image width={40} height={40} src="./assets/arrow-right.svg" alt=">" />
         </Link>
         {/* 회원 카테고리 관리 */}
-        <Link href="/" className="manage-page-block">
+        <Link href="admin/member-category" className="manage-page-block">
           <div className="manage-icon">
             <Image width={20} height={20} src="./assets/admin/main-membercategory.svg" alt="" />
             회원 카테고리 관리
@@ -64,7 +64,7 @@ export default function AdminMain() {
           <Image width={40} height={40} src="./assets/arrow-right.svg" alt=">" />
         </Link>
         {/* 문의 관리 */}
-        <Link href="/" className="manage-page-block">
+        <Link href="/admin/faq" className="manage-page-block">
           <div className="manage-icon">
             <Image width={20} height={20} src="./assets/admin/main-faq.svg" alt="" />
             문의 관리
@@ -72,7 +72,7 @@ export default function AdminMain() {
           <Image width={40} height={40} src="./assets/arrow-right.svg" alt=">" />
         </Link>
         {/* 공지 관리 */}
-        <Link href="/" className="manage-page-block">
+        <Link href="/admin/notice" className="manage-page-block">
           <div className="manage-icon">
             <Image width={20} height={20} src="./assets/admin/main-notice.svg" alt="" />
             공지 관리
