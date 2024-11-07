@@ -81,7 +81,7 @@ export default function PortfolioWrite() {
                   {...register('title')}
                   placeholder="포트폴리오 제목을 입력해 주세요."
                   type="text"
-                  className="pre-3xl-semibold"
+                  className="pre-3xl-semibold focus:outline-none"
                 />
                 <div ref={dropdownRef}>
                   <Icons
