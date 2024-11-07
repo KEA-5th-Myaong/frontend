@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import ExperienceItem from '../items/ExperienceItem';
 
 interface ExperienceItemState {
@@ -9,7 +10,11 @@ interface ExperienceItemState {
   component: JSX.Element;
 }
 
-export default function ExperienceSection() {
+interface ExperienceSectionProps<T extends FieldValues> {
+  register: UseFormRegister<T>;
+}
+
+export default function ExperienceSection<T extends FieldValues>({ register }: ExperienceSectionProps<T>) {
   const deleteExperienceItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setExperienceItems(experienceItems.filter((item) => item.id !== id));

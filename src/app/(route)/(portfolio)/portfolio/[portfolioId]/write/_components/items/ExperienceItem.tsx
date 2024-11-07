@@ -1,23 +1,22 @@
 import Image from 'next/image';
-import { useForm } from 'react-hook-form';
+import { UseFormRegister, FieldValues } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
-import { PortfolioProps } from '@/app/_types/portfolio';
 
-interface ExperienceItemProps {
+interface ExperienceItemProps<T extends FieldValues> {
   id: number;
   onDelete: (id: number) => void;
+  register: UseFormRegister<T>;
 }
 
-function ExperienceItem({ id, onDelete }: ExperienceItemProps) {
-  const { register } = useForm<PortfolioProps>();
+function ExperienceItem<T extends FieldValues>({ id, onDelete, register }: ExperienceItemProps<T>) {
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
             register={register}
-            name="experiences"
+            name={`extraActivities.${id}.name`}
             element="input"
             label="회사명"
             size="lg"

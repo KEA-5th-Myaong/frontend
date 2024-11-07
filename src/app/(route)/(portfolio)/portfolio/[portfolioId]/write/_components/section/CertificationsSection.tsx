@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import CertificationItem from '../items/CertificationItem';
 
 interface CertificationItemState {
@@ -9,7 +10,11 @@ interface CertificationItemState {
   component: JSX.Element;
 }
 
-export default function CertificationsSection() {
+interface CertificationSectionProps<T extends FieldValues> {
+  register: UseFormRegister<T>;
+}
+
+export default function CertificationsSection<T extends FieldValues>({ register }: CertificationSectionProps<T>) {
   const deleteCertificationItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setCertificationItems(certificationItems.filter((item) => item.id !== id));

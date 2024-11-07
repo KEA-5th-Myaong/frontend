@@ -1,7 +1,12 @@
 import Image from 'next/image';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 
-export default function PSSection() {
+interface PSSectionProps<T extends FieldValues> {
+  register: UseFormRegister<T>;
+}
+
+export default function PSSection<T extends FieldValues>({ register }: PSSectionProps<T>) {
   return (
     <div className="mt-10">
       <div className="flex justify-between items-center">
