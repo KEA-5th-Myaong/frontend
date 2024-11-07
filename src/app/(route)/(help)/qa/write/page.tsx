@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import BackButton from '@/app/_components/BackButton';
 import Icons from '@/app/_components/ui/Icon';
 import { CheckIcon } from '@/app/_components/ui/iconPath';
@@ -17,7 +18,7 @@ export default function QAWrite() {
   }
 
   return (
-    <div className="flex-col w-full max-w-[1000px] min-w-[360px]: mx-10 md:my-11 my-32 ">
+    <div className="relative flex-col w-full max-w-[1000px] min-w-[360px]: mx-10 md:my-7 my-32 ">
       {/* 문의작성 title */}
       <div className="flex-col h-24 py-1">
         <BackButton />
@@ -43,14 +44,14 @@ export default function QAWrite() {
           </div>
         </div>
       </div>
-      <div className="flex w-full py-8">
+      <div className="flex w-full pt-7 pb-4">
         <textarea
-          className="resize-none px-[18px] pt-6 w-full border min-h-[76px] placeholder:text-gray-3 focus:outline-none text-lg"
+          className="resize-none px-[18px] pt-5 w-full border min-h-[60px] placeholder:text-gray-3 focus:outline-none text-lg"
           placeholder="문의 제목을 입력해주세요."
           maxLength={50}
         />
       </div>
-      <div className="flex w-full py-1">
+      <div className="flex w-full pb-2">
         <textarea
           className="resize-none px-[18px] pt-6 w-full border h-[420px] placeholder:text-gray-3 focus:outline-none text-lg"
           placeholder="문의 내용을 입력해주세요."
@@ -60,6 +61,11 @@ export default function QAWrite() {
         />
       </div>
       <div>{countLength}/1000</div>
+      <div className="absolute right-1">
+        <Link href="/qa/write">
+          <div className="flex-center py-4 px-10 rounded-[28px] primary-1-btn hover-animation">작성 완료</div>
+        </Link>
+      </div>
     </div>
   );
 }
