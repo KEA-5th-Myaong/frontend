@@ -1,22 +1,23 @@
 import Image from 'next/image';
-import { UseFormRegister, FieldValues } from 'react-hook-form';
+import { Path, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
-interface ExperienceItemProps<T extends FieldValues> {
+interface ExperienceItemProps {
   id: number;
   onDelete: (id: number) => void;
-  register: UseFormRegister<T>;
+  register: UseFormRegister<PortfolioProps>;
 }
 
-function ExperienceItem<T extends FieldValues>({ id, onDelete, register }: ExperienceItemProps<T>) {
+function ExperienceItem({ id, onDelete, register }: ExperienceItemProps) {
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
             register={register}
-            name={`extraActivities.${id}.name`}
+            name={`experiences.${id}.name` as Path<PortfolioProps>}
             element="input"
             label="회사명"
             size="lg"
@@ -28,7 +29,7 @@ function ExperienceItem<T extends FieldValues>({ id, onDelete, register }: Exper
           />
           <Input
             register={register}
-            name="experiences"
+            name={`experiences.${id}.position` as Path<PortfolioProps>}
             element="input"
             label="직책"
             size="lg"
@@ -41,7 +42,7 @@ function ExperienceItem<T extends FieldValues>({ id, onDelete, register }: Exper
         </div>
         <Input
           register={register}
-          name="experiences"
+          name={`experiences.${id}.start` as Path<PortfolioProps>}
           element="input"
           label="시작 일자"
           size="lg"
@@ -50,7 +51,7 @@ function ExperienceItem<T extends FieldValues>({ id, onDelete, register }: Exper
         />
         <Input
           register={register}
-          name="experiences"
+          name={`experiences.${id}.end` as Path<PortfolioProps>}
           element="input"
           label="종료 일자"
           size="lg"
@@ -59,7 +60,7 @@ function ExperienceItem<T extends FieldValues>({ id, onDelete, register }: Exper
         />
         <Input
           register={register}
-          name="experiences"
+          name={`experiences.${id}.achievement` as Path<PortfolioProps>}
           element="textarea"
           label="주요 업무/성과"
           size="lg"
