@@ -30,11 +30,11 @@ export interface PortfolioProps {
     reason: string; // 지원 사유
     content: string; // 자기소개
   }; // 자기소개 및 지원 사유 (nullable)
-  links?: string[]; // 관련 링크 (nullable)
-  skills?: {
-    name: string; // 기술 이름
-    detail?: string; // 기술 수준 상세 설명 (nullable)
-  }; // 기술 정보 (nullable)
+  links?: {
+    name: string;
+    link: string;
+  }; // 관련 링크 (nullable)
+  skills?: string[]; // 기술 정보 (nullable)
   certifications?: {
     name: string; // 자격증 이름
     date: string; // 취득일

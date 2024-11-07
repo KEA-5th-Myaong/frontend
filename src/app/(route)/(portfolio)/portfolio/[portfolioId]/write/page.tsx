@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
@@ -27,8 +27,10 @@ export default function PortfolioWrite() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<PortfolioProps>();
+  const methods = useForm<PortfolioProps>();
 
   const onSubmit = handleSubmit((data) => console.log(data));
 
@@ -73,85 +75,87 @@ export default function PortfolioWrite() {
               작성 완료
             </Link>
           </div>
-          <form onSubmit={onSubmit}>
-            <div className="relative flex justify-between items-center mt-5">
-              <input
-                {...register('title')}
-                placeholder="포트폴리오 제목을 입력해 주세요."
-                type="text"
-                className="pre-3xl-semibold"
-              />
-              <div ref={dropdownRef}>
-                <Icons
-                  name={MoreIcon}
-                  onClick={() => {
-                    setIsShowDropdown((prev) => !prev);
-                  }}
-                  className="cursor-pointer"
+          <FormProvider {...methods}>
+            <form onSubmit={onSubmit}>
+              <div className="relative flex justify-between items-center mt-5">
+                <input
+                  {...register('title')}
+                  placeholder="포트폴리오 제목을 입력해 주세요."
+                  type="text"
+                  className="pre-3xl-semibold"
                 />
-              </div>
+                <div ref={dropdownRef}>
+                  <Icons
+                    name={MoreIcon}
+                    onClick={() => {
+                      setIsShowDropdown((prev) => !prev);
+                    }}
+                    className="cursor-pointer"
+                  />
+                </div>
 
-              {isShowDropdown && <PortfolioWriteDropdown />}
-            </div>
-            <section className="mt-5 mb-[50px]">
-              <section>
-                <UploadImage />
-                <div className="grid grid-flow-col justify-stretch gap-[20px]">
+                {isShowDropdown && <PortfolioWriteDropdown />}
+              </div>
+              <section className="mt-5 mb-[50px]">
+                <section>
+                  <UploadImage />
+                  <div className="grid grid-flow-col justify-stretch gap-[20px]">
+                    <Input
+                      register={register}
+                      name="name"
+                      element="input"
+                      label="이름"
+                      size="lg"
+                      type="text"
+                      color="transparent"
+                      placeholder="이름을 입력해주세요"
+                      required
+                    />
+                    <Input
+                      register={register}
+                      name="tel"
+                      element="input"
+                      label="휴대폰 번호"
+                      size="lg"
+                      type="tel"
+                      color="transparent"
+                      placeholder="휴대폰 번호를 입력해주세요"
+                      required
+                    />
+                  </div>
                   <Input
                     register={register}
-                    name="name"
+                    name="email"
                     element="input"
-                    label="이름"
+                    label="이메일"
+                    size="lg"
+                    type="email"
+                    color="transparent"
+                    placeholder="이메일을 입력해주세요"
+                    required
+                  />
+                  <Input
+                    register={register}
+                    name="preferredJob"
+                    element="input"
+                    label="관심 직무"
                     size="lg"
                     type="text"
                     color="transparent"
-                    placeholder="이름을 입력해주세요"
-                    required
+                    placeholder="관심직무를 입력해주세요"
                   />
-                  <Input
-                    register={register}
-                    name="tel"
-                    element="input"
-                    label="휴대폰 번호"
-                    size="lg"
-                    type="tel"
-                    color="transparent"
-                    placeholder="휴대폰 번호를 입력해주세요"
-                    required
-                  />
-                </div>
-                <Input
-                  register={register}
-                  name="email"
-                  element="input"
-                  label="이메일"
-                  size="lg"
-                  type="email"
-                  color="transparent"
-                  placeholder="이메일을 입력해주세요"
-                  required
-                />
-                <Input
-                  register={register}
-                  name="preferredJob"
-                  element="input"
-                  label="관심 직무"
-                  size="lg"
-                  type="text"
-                  color="transparent"
-                  placeholder="관심직무를 입력해주세요"
-                />
+                </section>
+                {/* <EducationSection register={register} /> */}
+                {toggles.experience && <ExperienceSection register={register} />}
+                {toggles.links && <LinksSection register={register} />}
+                {toggles.skills && <SkillsSection setValue={setValue} />}
+                {toggles.certifications && <CertificationsSection register={register} />}
+                {toggles.activities && <ActivitiesSection register={register} />}
+                {toggles.personalStatement && <PSSection register={register} />}
               </section>
-              <EducationSection register={register} />
-              {toggles.experience && <ExperienceSection register={register} />}
-              {toggles.links && <LinksSection register={register} />}
-              {toggles.skills && <SkillsSection register={register} />}
-              {toggles.certifications && <CertificationsSection register={register} />}
-              {toggles.activities && <ActivitiesSection register={register} />}
-              {toggles.personalStatement && <PSSection register={register} />}
-            </section>
-            <button type="submit">제출 테스트</button>
-          </form>
+              <button type="submit">제출 테스트</button>
+            </form>
+          </FormProvider>
         </div>
       </div>
       <Footer showPreview showDone handlePreviewClick={handlePreviewClick} handleDoneClick={handleDoneClick} />
