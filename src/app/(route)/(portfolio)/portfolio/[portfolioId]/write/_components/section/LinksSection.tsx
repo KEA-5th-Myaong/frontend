@@ -2,26 +2,27 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { UseFormRegister } from 'react-hook-form';
 import LinkItem from '../items/LinkItem';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface LinkItemState {
   id: number;
   component: JSX.Element;
 }
 
-interface LinksSectionProps<T extends FieldValues> {
-  register: UseFormRegister<T>;
+interface LinksSectionProps {
+  register: UseFormRegister<PortfolioProps>;
 }
 
-export default function LinksSection<T extends FieldValues>({ register }: LinksSectionProps<T>) {
+export default function LinksSection({ register }: LinksSectionProps) {
   const deleteLinkItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setLinkItems(linkItems.filter((item) => item.id !== id));
   };
 
   const [linkItems, setLinkItems] = useState<LinkItemState[]>([
-    { id: 0, component: <LinkItem key={0} id={0} onDelete={deleteLinkItem} /> },
+    { id: 0, component: <LinkItem register={register} key={0} id={0} onDelete={deleteLinkItem} /> },
   ]);
 
   const addLinkItem = () => {
@@ -30,7 +31,10 @@ export default function LinksSection<T extends FieldValues>({ register }: LinksS
       const newItemId = linkItems.length;
       setLinkItems([
         ...linkItems,
-        { id: newItemId, component: <LinkItem key={newItemId} id={newItemId} onDelete={deleteLinkItem} /> },
+        {
+          id: newItemId,
+          component: <LinkItem register={register} key={newItemId} id={newItemId} onDelete={deleteLinkItem} />,
+        },
       ]);
     } else {
       alert('링크 항목은 최대 50개까지 추가할 수 있습니다.'); // 경고 메시지

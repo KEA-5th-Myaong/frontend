@@ -1,13 +1,14 @@
 import { useState, ChangeEvent, KeyboardEvent } from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { UseFormSetValue } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
 import { XIcon } from '@/app/_components/ui/iconPath';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
-interface SkillSectionProps<T extends FieldValues> {
-  register: UseFormRegister<T>;
+interface SkillSectionProps {
+  setValue: UseFormSetValue<PortfolioProps>;
 }
 
-export default function SkillsSection<T extends FieldValues>({ register }: SkillSectionProps<T>) {
+export default function SkillsSection({ setValue }: SkillSectionProps) {
   const [skill, setSkill] = useState<string>('');
   const [skills, setSkills] = useState<string[]>([]);
 
@@ -17,13 +18,18 @@ export default function SkillsSection<T extends FieldValues>({ register }: Skill
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && skill.trim() !== '') {
+      e.preventDefault();
+      const newSkills = [...skills, skill];
+      setValue('skills', newSkills); // register된 필드 업데이트
       setSkills((prevSkills) => [...prevSkills, skill]);
       setSkill(''); // 입력 후 입력 필드를 비움
     }
   };
 
   const handleDeleteSkill = (skillToDelete: string) => {
-    setSkills((prevSkills) => prevSkills.filter((skillItem) => skillItem !== skillToDelete));
+    const newSkills = skills.filter((skillItem) => skillItem !== skillToDelete);
+    setSkills(newSkills);
+    setValue('skills', newSkills);
   };
 
   return (
