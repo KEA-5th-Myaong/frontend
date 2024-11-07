@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Q&A페이지',
-  description: 'Popolog Q&A페이지',
+  title: '문의페이지',
+  description: 'Popolog 문의페이지',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
