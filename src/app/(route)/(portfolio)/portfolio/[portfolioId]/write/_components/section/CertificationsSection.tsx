@@ -2,26 +2,27 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 import CertificationItem from '../items/CertificationItem';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface CertificationItemState {
   id: number;
   component: JSX.Element;
 }
 
-interface CertificationSectionProps<T extends FieldValues> {
-  register: UseFormRegister<T>;
+interface CertificationSectionProps {
+  register: UseFormRegister<PortfolioProps>;
 }
 
-export default function CertificationsSection<T extends FieldValues>({ register }: CertificationSectionProps<T>) {
+export default function CertificationsSection({ register }: CertificationSectionProps) {
   const deleteCertificationItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setCertificationItems(certificationItems.filter((item) => item.id !== id));
   };
 
   const [certificationItems, setCertificationItems] = useState<CertificationItemState[]>([
-    { id: 0, component: <CertificationItem key={0} id={0} onDelete={deleteCertificationItem} /> },
+    { id: 0, component: <CertificationItem register={register} key={0} id={0} onDelete={deleteCertificationItem} /> },
   ]);
 
   const addCertificationItem = () => {
@@ -32,7 +33,9 @@ export default function CertificationsSection<T extends FieldValues>({ register 
         ...certificationItems,
         {
           id: newItemId,
-          component: <CertificationItem key={newItemId} id={newItemId} onDelete={deleteCertificationItem} />,
+          component: (
+            <CertificationItem register={register} key={newItemId} id={newItemId} onDelete={deleteCertificationItem} />
+          ),
         },
       ]);
     } else {
