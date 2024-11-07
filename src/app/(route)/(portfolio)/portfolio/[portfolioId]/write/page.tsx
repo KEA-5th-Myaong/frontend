@@ -144,7 +144,7 @@ export default function PortfolioWrite() {
                     placeholder="관심직무를 입력해주세요"
                   />
                 </section>
-                {/* <EducationSection register={register} /> */}
+                <EducationSection register={register} />
                 {toggles.experience && <ExperienceSection register={register} />}
                 {toggles.links && <LinksSection register={register} />}
                 {toggles.skills && <SkillsSection setValue={setValue} />}
