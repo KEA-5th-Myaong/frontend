@@ -30,7 +30,7 @@ export default function LoadPSModal({ onOverlayClick }: LoadPSModalProps) {
       <motion.div
         onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 Overlay까지 전달되지 않도록
         {...modalMotion}
-        className="flex m-4 min-w-[300px]  max-w-[1000px] h-[500px] hide-scrollbar overflow-y-scroll w-full pb-6 px-[65px] pt-[58px] flex-col items-start gap-6 rounded-2xl bg-white-0 shadow-md"
+        className="flex m-4 min-w-[300px]  max-w-[1000px] hide-scrollbar overflow-y-scroll w-full pb-6 px-[65px] pt-[58px] flex-col items-start gap-6 rounded-2xl bg-white-0 shadow-md"
       >
         <h1 className="pre-2xl-semibold">자기소개서 불러오기</h1>
         {personalStatement.length === 0 ? (
