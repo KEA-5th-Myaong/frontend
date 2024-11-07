@@ -32,7 +32,7 @@ export default function QAList() {
         </div>
         <div>
           {testData.listData.inquiries.map((data) => (
-            <Link href="./select" className="flex w-full row-auto py-5 border-b-2 md:text-base text-sm border-gray-5">
+            <Link href="./1/select" className="flex w-full row-auto py-5 border-b-2 md:text-base text-sm border-gray-5">
               <div className="flex-center w-[10%] ">{data.inquiryId}</div>
               <div className="flex-center w-[50%] ">
                 <div className="w-7">{data.isSecret && <Icons name={LockIcon} className="w-4 h-4" />}</div>

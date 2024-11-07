@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { MoreIcon, LockIcon } from '@/app/_components/ui/iconPath';
 import Icons from '@/app/_components/ui/Icon';
 import MoreOptions from '@/app/_components/MoreOptions';
-import testData from '../test.json';
+import testData from '../../test.json';
 import BackButton from '@/app/_components/BackButton';
 import useClickOutside from '@/app/_hooks/useClickOutside';
 
@@ -19,8 +19,8 @@ export default function QASelect() {
   });
 
   return (
-    <div className="flex-col w-full max-w-[1000px] min-w-[360px]: mx-10 md:my-11 my-32">
-      {/* 문의게시판 title */}
+    <div className="flex-col w-full max-w-[1000px] min-w-[360px]: mx-10 md:my-7 my-32">
+      {/* 문의 title */}
       <div className="flex-col w-full py-1">
         <BackButton />
         <div className="flex-col font-semibold text-3xl pt-7">
