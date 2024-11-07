@@ -143,12 +143,12 @@ export default function PortfolioWrite() {
                 />
               </section>
               <EducationSection register={register} />
-              {/* {toggles.experience && <ExperienceSection register={register} />}
+              {toggles.experience && <ExperienceSection register={register} />}
               {toggles.links && <LinksSection register={register} />}
               {toggles.skills && <SkillsSection register={register} />}
               {toggles.certifications && <CertificationsSection register={register} />}
               {toggles.activities && <ActivitiesSection register={register} />}
-              {toggles.personalStatement && <PSSection register={register} />} */}
+              {toggles.personalStatement && <PSSection register={register} />}
             </section>
             <button type="submit">제출 테스트</button>
           </form>

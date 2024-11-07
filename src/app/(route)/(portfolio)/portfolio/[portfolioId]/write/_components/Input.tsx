@@ -58,6 +58,7 @@ export default function Input<T extends FieldValues>({
         />
       ) : (
         <textarea
+          {...register(name, { required })}
           placeholder={placeholder}
           required={required}
           maxLength={maxLength}
