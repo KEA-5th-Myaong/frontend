@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { usePDF } from 'react-to-pdf';
+import { usePDF, Margin } from 'react-to-pdf';
 import PSReadContent from '../../read/_components/PSReadContent';
 import PSFooter from '../../../../_components/PSFooter';
 import PSHeader from '../../../../_components/PSHeader';
@@ -13,7 +13,7 @@ export default function PSPreviewContainer() {
 
   const { toPDF, targetRef } = usePDF({
     filename: '자기소개서.pdf',
-    page: { format: 'A4' },
+    page: { margin: Margin.SMALL, format: 'A4' },
     method: 'save',
   });
 

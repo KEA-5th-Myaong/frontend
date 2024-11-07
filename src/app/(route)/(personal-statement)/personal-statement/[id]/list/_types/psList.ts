@@ -1,7 +1,7 @@
 export interface PSListBoxProps {
-  id: number;
+  psId: number;
   title: string;
-  job: string;
+  position: string;
   content: string;
-  created_at: string;
+  timestamp: string;
 }

@@ -1,11 +1,11 @@
 {
   "blogSubMenuItems": [
-    { "id": 1, "name": "내 블로그", "path": "/blog/1" },
-    { "id": 2, "name": "글쓰기", "path": "/blog/1/write" }
+    { "id": 1, "name": "내 블로그", "path": "/blog/member2" },
+    { "id": 2, "name": "글쓰기", "path": "/blog/member2/write" }
   ],
   "jobSubMenuItems": [
-    { "id": 1, "name": "모의 면접", "path": "/interview/1/select" },
-    { "id": 2, "name": "자소서 첨삭", "path": "/personal-statement/1/list" },
+    { "id": 1, "name": "모의 면접", "path": "/interview/member2/select" },
+    { "id": 2, "name": "자소서 첨삭", "path": "/personal-statement/member2/list" },
     { "id": 3, "name": "내 포트폴리오", "path": "/portfolio" }
   ],
   "myPageMenuItems": [

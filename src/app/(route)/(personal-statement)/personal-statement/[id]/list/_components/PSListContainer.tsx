@@ -5,21 +5,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PSListBoxProps } from '../_types/psList';
 import PSListBox from './PSListBox';
-import pstests from './PStest.json';
 import PSListHeader from './PSListHeader';
-import { fetchPSList, fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
+import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 
 export default function PSListContainer() {
   const [personalStatement, setPersonalStatement] = useState<PSListBoxProps[]>([]);
-  const psLength = personalStatement.length;
+
+  const psLength = personalStatement?.length;
 
   const { data: psListData } = useCustomQuery(['psList'], () => fetchPSList());
-  const { data: psData } = useCustomQuery(['ps'], () => fetchPS('1'));
 
   useEffect(() => {
-    setPersonalStatement(pstests.pstests);
-  }, []);
+    // 임시 2개 제한, 삭제 API 적용 이후 3개로 변경 필요
+    setPersonalStatement(psListData?.data.slice(0, 2));
+  }, [psListData?.data]);
 
   return (
     <>
@@ -28,8 +28,14 @@ export default function PSListContainer() {
       <div className="flex-center w-full h-full">
         {personalStatement ? (
           <div className="flex flex-col gap-4 w-full max-w-[1000px] mt-7">
-            {personalStatement.map((ps) => (
-              <PSListBox id={ps.id} title={ps.title} job={ps.job} content={ps.content} created_at={ps.created_at} />
+            {personalStatement?.map((ps) => (
+              <PSListBox
+                psId={ps.psId}
+                title={ps.title}
+                position={ps.position}
+                content={ps.content}
+                timestamp={ps.timestamp}
+              />
             ))}
 
             {psLength < 3 && (
