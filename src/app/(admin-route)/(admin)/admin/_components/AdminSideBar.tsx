@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Icons from '@/app/_components/ui/Icon';
-import { ArrowIcon } from '@/app/_components/ui/iconPath';
+import { ArrowIcon, LogOutIcon } from '@/app/_components/ui/iconPath';
 
 export default function AdminSideBar() {
   const handleLogoutClick = () => {};
@@ -12,7 +12,7 @@ export default function AdminSideBar() {
         <p className="mt-2">관리자</p>
         <p className="mt-2 font-medium text-xs">yeonilil@naver.com</p>
         <button type="button" onClick={handleLogoutClick} className="mt-16 flex gap-1.5 items-center">
-          <Image width={20} height={20} src="/assets/admin/main-logout.svg" alt="" />
+          <Icons name={LogOutIcon} />
           로그아웃
         </button>
       </div>

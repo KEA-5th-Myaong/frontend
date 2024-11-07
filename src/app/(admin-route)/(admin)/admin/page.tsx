@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import Icons from '@/app/_components/ui/Icon';
+import { AlertIcon, CorpIcon, LogOutIcon, MemberIcon, NoticeIcon } from '@/app/_components/ui/iconPath';
 
 export default function AdminMain() {
   const handleLogoutClick = () => {};
@@ -14,15 +16,15 @@ export default function AdminMain() {
           <p className="mt-4">관리자</p>
           <p className="mt-3 font-medium">yeonilil@naver.com</p>
           <button type="button" onClick={handleLogoutClick} className="mt-5 flex gap-1.5 items-center">
-            <Image width={20} height={20} src="/assets/admin/main-logout.svg" alt="" />
+            <Icons name={LogOutIcon} />
             로그아웃
           </button>
         </div>
 
         {/* 알림 */}
         <div className="pl-10 pr-6 pt-9 w-full h-[286px] max-w-h-96 border border-gray-3 font-semibold bg-white-0">
-          <div className="flex gap-3 pb-2.5 border-b border-gray-0">
-            <Image width={20} height={20} src="/assets/admin/main-alert.svg" alt="" />
+          <div className="flex items-center gap-3 pb-2.5 border-b border-gray-0">
+            <Icons name={AlertIcon} />
             알림
           </div>
           <div className="mt-6 w-full flex justify-between text-xs whitespace-nowrap">
@@ -42,7 +44,7 @@ export default function AdminMain() {
         {/* 기업 관리 */}
         <Link href="/admin/corp" className="manage-page-block">
           <div className="manage-icon">
-            <Image width={20} height={20} src="/assets/admin/main-corp.svg" alt="" />
+            <Icons name={CorpIcon} />
             기업 관리
           </div>
           <Image width={40} height={40} src="/assets/arrow-right.svg" alt=">" />
@@ -50,7 +52,7 @@ export default function AdminMain() {
         {/* 회원 관리 */}
         <Link href="/admin/members" className="manage-page-block">
           <div className="manage-icon">
-            <Image width={20} height={20} src="/assets/admin/main-member.svg" alt="" />
+            <Icons name={MemberIcon} />
             회원 관리
           </div>
           <Image width={40} height={40} src="/assets/arrow-right.svg" alt=">" />
@@ -74,7 +76,7 @@ export default function AdminMain() {
         {/* 공지 관리 */}
         <Link href="/admin/notice" className="manage-page-block">
           <div className="manage-icon">
-            <Image width={20} height={20} src="/assets/admin/main-notice.svg" alt="" />
+            <Icons name={NoticeIcon} />
             공지 관리
           </div>
           <Image width={40} height={40} src="/assets/arrow-right.svg" alt=">" />
