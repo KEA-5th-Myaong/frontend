@@ -119,6 +119,18 @@ export const MenuIcon: IconPathTypes = {
   height: 14,
 };
 
+// 체크 아이콘
+export const CheckIcon: IconPathTypes = {
+  path: 'M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z',
+  fill: 'currentColor',
+  width: 16,
+  height: 16,
+  options: {
+    fillRule: 'evenodd',
+    clipRule: 'evenodd',
+  },
+};
+
 export const UserIcon: IconPathTypes = {
   path: [
     'M13 15V13.0769C13 12.2609 12.6839 11.4782 12.1213 10.9012C11.5587 10.3242 10.7956 10 10 10H4C3.20435 10 2.44129 10.3242 1.87868 10.9012C1.31607 11.4782 1 12.2609 1 13.0769V15',
