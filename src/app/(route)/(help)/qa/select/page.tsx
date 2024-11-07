@@ -1,8 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useState, useRef } from 'react';
-import { MoreIcon } from '@/app/_components/ui/iconPath';
+import { MoreIcon, LockIcon } from '@/app/_components/ui/iconPath';
 import Icons from '@/app/_components/ui/Icon';
 import MoreOptions from '@/app/_components/MoreOptions';
 import testData from '../test.json';
@@ -45,11 +44,7 @@ export default function QASelect() {
           </div>
         </div>
         <div className="flex w-full pb-8 px-7 text-2xl font-semibold">
-          <div className="flex w-7 h-7">
-            {isLocked && (
-              <Image src="/assets/lock-icon.svg" alt="자물쇠이미지" width={17} height={17} className="flex" />
-            )}
-          </div>
+          <div className="flex w-7 h-7">{isLocked && <Icons name={LockIcon} className="flex-center w-5 h-8" />}</div>
           <div className="">{testData.selectData.title}</div>
         </div>
         <div className="px-14">
