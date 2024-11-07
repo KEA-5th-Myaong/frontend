@@ -8,7 +8,7 @@
         "title": "제목입니다 제목이에요 제목이랍니다",
         "isMine": false,
         "userName": "abcd123",
-        "isSecret": false,
+        "isSecret": true,
         "isReplied": true,
         "timestamp": "2024-10-10"
       },
@@ -17,7 +17,7 @@
         "title": "제목입니다 제목이에요 제목이랍니다",
         "isMine": false,
         "userName": "abcd123",
-        "isSecret": false,
+        "isSecret": true,
         "isReplied": true,
         "timestamp": "2024-10-10"
       },
