@@ -24,17 +24,7 @@ export default function Tutorial() {
     }
   };
   return (
-    <div
-      role="button"
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          handleClick();
-        }
-      }}
-      tabIndex={-1}
-      onClick={handleClick}
-      className="fixed inset-0 flex-center bg-black-3 bg-opacity-25 z-50"
-    >
+    <div onClick={handleClick} className="fixed inset-0 flex-center bg-black-3 bg-opacity-25 z-50">
       {/* 면접 기록 */}
       <div className="hidden md:block mt-24 mr-4 md:max-w-[253px] md:w-full self-stretch max-h-fit border-2 border-gray-3 border-opacity-25 pt-[29px] pb-[22px] px-5 md:px-2 lg:px-5 rounded-2xl font-semibold">
         <div className="flex justify-between w-full">
