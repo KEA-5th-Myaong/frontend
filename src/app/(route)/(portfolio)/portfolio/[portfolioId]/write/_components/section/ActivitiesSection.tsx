@@ -2,26 +2,27 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { FieldValues, useForm, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 import ActivityItem from '../items/ActivityItem';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface ActivityItemState {
   id: number;
   component: JSX.Element;
 }
 
-interface ActivitiesSectionProps<T extends FieldValues> {
-  register: UseFormRegister<T>;
+interface ActivitiesSectionProps {
+  register: UseFormRegister<PortfolioProps>;
 }
 
-export default function ActivitiesSection<T extends FieldValues>({ register }: ActivitiesSectionProps<T>) {
+export default function ActivitiesSection({ register }: ActivitiesSectionProps) {
   const deleteActivityItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setActivityItems(activityItems.filter((item) => item.id !== id));
   };
 
   const [activityItems, setActivityItems] = useState<ActivityItemState[]>([
-    { id: 0, component: <ActivityItem key={0} id={0} onDelete={deleteActivityItem} /> },
+    { id: 0, component: <ActivityItem register={register} key={0} id={0} onDelete={deleteActivityItem} /> },
   ]);
 
   const addActivityItem = () => {

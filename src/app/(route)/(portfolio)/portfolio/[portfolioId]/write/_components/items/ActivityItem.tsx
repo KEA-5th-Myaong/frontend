@@ -1,23 +1,24 @@
 import Image from 'next/image';
 import React from 'react';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { Path, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
-interface ActivityItemProps<T extends FieldValues> {
+interface ActivityItemProps {
   id: number;
   onDelete: (id: number) => void;
-  register: UseFormRegister<T>;
+  register: UseFormRegister<PortfolioProps>;
 }
 
-function ActivityItem<T extends FieldValues>({ id, onDelete, register }: ActivityItemProps) {
+function ActivityItem({ id, onDelete, register }: ActivityItemProps) {
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
-            {...register(`extraActivities.${id}.name`)}
-            name="extraActivities"
+            register={register}
+            name={`experiences.${id}.name` as Path<PortfolioProps>}
             element="input"
             label="이름"
             size="lg"
@@ -27,8 +28,8 @@ function ActivityItem<T extends FieldValues>({ id, onDelete, register }: Activit
             placeholder="활동 및 교육명을 입력해주세요"
           />
           <Input
-            {...register(`extraActivities.${id}.institution`)}
-            name="extraActivities"
+            register={register}
+            name={`experiences.${id}.institution` as Path<PortfolioProps>}
             element="input"
             label="교육기관"
             size="lg"
@@ -39,18 +40,17 @@ function ActivityItem<T extends FieldValues>({ id, onDelete, register }: Activit
           />
         </div>
         <Input
-          {...register(`extraActivities.${id}.start`)}
-          name="extraActivities"
+          register={register}
+          name={`experiences.${id}.start` as Path<PortfolioProps>}
           element="input"
           label="시작 일자"
           size="lg"
           type="date"
           color="white"
-          onClick={(event: React.MouseEvent<HTMLInputElement>) => console.log('Input clicked', event)}
         />
         <Input
-          {...register(`extraActivities.${id}.end`)}
-          name="extraActivities"
+          register={register}
+          name={`experiences.${id}.end` as Path<PortfolioProps>}
           element="input"
           label="종료 일자"
           size="lg"
@@ -58,8 +58,8 @@ function ActivityItem<T extends FieldValues>({ id, onDelete, register }: Activit
           color="white"
         />
         <Input
-          {...register(`extraActivities.${id}.description`)}
-          name="extraActivities"
+          register={register}
+          name={`experiences.${id}.description` as Path<PortfolioProps>}
           element="textarea"
           label="활동 상세 내용"
           size="lg"
