@@ -3,13 +3,18 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import LinkItem from '../items/LinkItem';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface LinkItemState {
   id: number;
   component: JSX.Element;
 }
 
-export default function LinksSection() {
+interface LinksSectionProps<T extends FieldValues> {
+  register: UseFormRegister<T>;
+}
+
+export default function LinksSection<T extends FieldValues>({ register }: LinksSectionProps<T>) {
   const deleteLinkItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setLinkItems(linkItems.filter((item) => item.id !== id));

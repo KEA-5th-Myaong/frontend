@@ -31,7 +31,6 @@ export default function PortfolioWrite() {
 
   const onSubmit = handleSubmit((data) => console.log(data));
 
-  const [title, setTitle] = useState('곽서연 포트폴리오1');
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
   const router = useRouter();
@@ -95,62 +94,60 @@ export default function PortfolioWrite() {
             </div>
             <section className="mt-5 mb-[50px]">
               <section>
-                <form>
-                  <UploadImage />
-                  <div className="grid grid-flow-col justify-stretch gap-[20px]">
-                    <Input
-                      register={register}
-                      name="name"
-                      element="input"
-                      label="이름"
-                      size="lg"
-                      type="text"
-                      color="transparent"
-                      placeholder="이름을 입력해주세요"
-                      required
-                    />
-                    <Input
-                      register={register}
-                      name="tel"
-                      element="input"
-                      label="휴대폰 번호"
-                      size="lg"
-                      type="tel"
-                      color="transparent"
-                      placeholder="휴대폰 번호를 입력해주세요"
-                      required
-                    />
-                  </div>
+                <UploadImage />
+                <div className="grid grid-flow-col justify-stretch gap-[20px]">
                   <Input
                     register={register}
-                    name="email"
+                    name="name"
                     element="input"
-                    label="이메일"
+                    label="이름"
                     size="lg"
-                    type="email"
+                    type="text"
                     color="transparent"
-                    placeholder="이메일을 입력해주세요"
+                    placeholder="이름을 입력해주세요"
                     required
                   />
                   <Input
                     register={register}
-                    name="preferredJob"
+                    name="tel"
                     element="input"
-                    label="관심 직무"
+                    label="휴대폰 번호"
                     size="lg"
-                    type="text"
+                    type="tel"
                     color="transparent"
-                    placeholder="관심직무를 입력해주세요"
+                    placeholder="휴대폰 번호를 입력해주세요"
+                    required
                   />
-                </form>
+                </div>
+                <Input
+                  register={register}
+                  name="email"
+                  element="input"
+                  label="이메일"
+                  size="lg"
+                  type="email"
+                  color="transparent"
+                  placeholder="이메일을 입력해주세요"
+                  required
+                />
+                <Input
+                  register={register}
+                  name="preferredJob"
+                  element="input"
+                  label="관심 직무"
+                  size="lg"
+                  type="text"
+                  color="transparent"
+                  placeholder="관심직무를 입력해주세요"
+                />
               </section>
-              <EducationSection />
-              {toggles.experience && <ExperienceSection />}
-              {toggles.links && <LinksSection />}
-              {toggles.skills && <SkillsSection />}
-              {toggles.certifications && <CertificationsSection />}
-              {toggles.activities && <ActivitiesSection />}
-              {toggles.personalStatement && <PSSection />}
+              <EducationSection register={register} />
+              {/* {toggles.experience && <ExperienceSection register={register} />}
+              {toggles.links && <LinksSection register={register} />}
+              {toggles.skills && <SkillsSection register={register} />}
+              {toggles.certifications && <CertificationsSection register={register} />}
+              {toggles.activities && <ActivitiesSection register={register} />}
+              {toggles.personalStatement && <PSSection register={register} />} */}
             </section>
             <button type="submit">제출 테스트</button>
           </form>

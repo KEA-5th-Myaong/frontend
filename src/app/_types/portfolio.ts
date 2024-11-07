@@ -5,13 +5,6 @@ export interface PortfolioCardProps {
   memo?: string; // 포트폴리오메모
 }
 
-export interface Education {
-  name: string; // 학교 이름
-  major: string; // 전공
-  graduation: string; // 졸업일 (미래면 졸업예정)
-  gpa?: number; // 평점 (nullable)
-}
-
 export interface Experience {
   name: string; // 기업 이름
   start: string; // 시작일
@@ -50,7 +43,12 @@ export interface PortfolioProps {
   preferredJob: string; // 관심 직무
   tel: string; // 연락처
   email: string; // 이메일 주소
-  educations: Education[]; // 학력 정보
+  educations: {
+    name: string;
+    major: string;
+    graduation: string;
+    gpa?: number;
+  }[];
   picUrl?: string; // 사진 URL (nullable)
   experiences?: Experience[]; // 경력 정보 (nullable)
   ps?: PersonalStatement; // 자기소개 및 지원 사유 (nullable)

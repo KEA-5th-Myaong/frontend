@@ -1,23 +1,22 @@
 import Image from 'next/image';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
-import { PortfolioProps } from '@/app/_types/portfolio';
 
-interface ActivityItemProps {
+interface ActivityItemProps<T extends FieldValues> {
   id: number;
   onDelete: (id: number) => void;
+  register: UseFormRegister<T>;
 }
 
-function ActivityItem({ id, onDelete }: ActivityItemProps) {
-  const { register } = useForm<PortfolioProps>();
+function ActivityItem<T extends FieldValues>({ id, onDelete, register }: ActivityItemProps) {
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
-            register={register}
+            {...register(`extraActivities.${id}.name`)}
             name="extraActivities"
             element="input"
             label="이름"
@@ -28,7 +27,7 @@ function ActivityItem({ id, onDelete }: ActivityItemProps) {
             placeholder="활동 및 교육명을 입력해주세요"
           />
           <Input
-            register={register}
+            {...register(`extraActivities.${id}.institution`)}
             name="extraActivities"
             element="input"
             label="교육기관"
@@ -40,7 +39,7 @@ function ActivityItem({ id, onDelete }: ActivityItemProps) {
           />
         </div>
         <Input
-          register={register}
+          {...register(`extraActivities.${id}.start`)}
           name="extraActivities"
           element="input"
           label="시작 일자"
@@ -50,7 +49,7 @@ function ActivityItem({ id, onDelete }: ActivityItemProps) {
           onClick={(event: React.MouseEvent<HTMLInputElement>) => console.log('Input clicked', event)}
         />
         <Input
-          register={register}
+          {...register(`extraActivities.${id}.end`)}
           name="extraActivities"
           element="input"
           label="종료 일자"
@@ -59,7 +58,7 @@ function ActivityItem({ id, onDelete }: ActivityItemProps) {
           color="white"
         />
         <Input
-          register={register}
+          {...register(`extraActivities.${id}.description`)}
           name="extraActivities"
           element="textarea"
           label="활동 상세 내용"

@@ -1,8 +1,13 @@
 import { useState, ChangeEvent, KeyboardEvent } from 'react';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
 import { XIcon } from '@/app/_components/ui/iconPath';
 
-export default function SkillsSection() {
+interface SkillSectionProps<T extends FieldValues> {
+  register: UseFormRegister<T>;
+}
+
+export default function SkillsSection<T extends FieldValues>({ register }: SkillSectionProps<T>) {
   const [skill, setSkill] = useState<string>('');
   const [skills, setSkills] = useState<string[]>([]);
 

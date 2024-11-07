@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { FieldValues, useForm, UseFormRegister } from 'react-hook-form';
 import ActivityItem from '../items/ActivityItem';
 
 interface ActivityItemState {
@@ -9,7 +10,11 @@ interface ActivityItemState {
   component: JSX.Element;
 }
 
-export default function ActivitiesSection() {
+interface ActivitiesSectionProps<T extends FieldValues> {
+  register: UseFormRegister<T>;
+}
+
+export default function ActivitiesSection<T extends FieldValues>({ register }: ActivitiesSectionProps<T>) {
   const deleteActivityItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setActivityItems(activityItems.filter((item) => item.id !== id));
@@ -25,7 +30,10 @@ export default function ActivitiesSection() {
       const newItemId = activityItems.length;
       setActivityItems([
         ...activityItems,
-        { id: newItemId, component: <ActivityItem key={newItemId} id={newItemId} onDelete={deleteActivityItem} /> },
+        {
+          id: newItemId,
+          component: <ActivityItem register={register} key={newItemId} id={newItemId} onDelete={deleteActivityItem} />,
+        },
       ]);
     } else {
       alert('활동은 최대 20개까지 추가할 수 있습니다.'); // 경고 메시지
