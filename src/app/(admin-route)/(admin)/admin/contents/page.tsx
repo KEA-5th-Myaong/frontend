@@ -62,7 +62,7 @@ export default function AdminContents() {
                     <div className="w-[20%] flex justify-center items-center relative">
                       <div
                         onClick={() => handleHideContent(content.postId)}
-                        className="w-2.5 h-2.5 cursor-pointer border border-gray-5"
+                        className="w-4 h-4 cursor-pointer border border-gray-5"
                       />
                     </div>
                   </div>
@@ -92,7 +92,7 @@ export default function AdminContents() {
                     <div className="w-[20%] flex justify-center items-center relative">
                       <div
                         onClick={() => handleHideContent(content.postId)}
-                        className="w-2.5 h-2.5 cursor-pointer border border-gray-5"
+                        className="w-4 h-4 cursor-pointer border border-gray-5"
                       >
                         {content.isHidden && (
                           <Icons
