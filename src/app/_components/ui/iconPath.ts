@@ -1,5 +1,19 @@
 import { IconPathTypes } from '../../_types/icon';
 
+// 약관 체크 아이콘
+export const TermCheckIcon: IconPathTypes = {
+  path: 'm4.5 12.75 6 6 9-13.5',
+  fill: 'none',
+  width: 24,
+  height: 24,
+  options: {
+    stroke: '#9FA6B2',
+    strokeWidth: 3,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+};
+
 // 눈 모양 아이콘
 export const EyeIcon: IconPathTypes = {
   path: [
