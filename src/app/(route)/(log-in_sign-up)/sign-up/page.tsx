@@ -4,8 +4,8 @@ import BackButton from '../../../_components/BackButton';
 
 export default function SignUp() {
   return (
-    <section className="flex flex-col pt-16 w-full min-w-[360px]">
-      <div className="flex-center flex-col self-stretch">
+    <section className="form-screen">
+      <div className="form-container">
         <div className="w-full max-w-[660px] pl-4 mt-8 md:mt-0">
           <BackButton />
         </div>

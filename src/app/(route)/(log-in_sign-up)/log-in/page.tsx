@@ -5,8 +5,8 @@ import LoginForm from './_components/LoginForm';
 
 export default function Login() {
   return (
-    <section className="flex flex-col pt-24 pb-12 w-full">
-      <div className="flex-center flex-col self-stretch">
+    <section className="pt-24 pb-12 form-screen">
+      <div className="form-container">
         <div className="flex flex-col items-center w-full min-w-[355px] max-w-[660px] px-5">
           <p className="form-title">{FORM_TEXT[0]}</p>
           <LoginForm />

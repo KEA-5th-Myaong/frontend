@@ -21,7 +21,7 @@ export default function TermsOfUse() {
   });
 
   // 체크박스 클릭 핸들러
-  const handleCheckboxClick = (name: CheckboxName) => {
+  const handleCheckClick = (name: CheckboxName) => {
     if (name === 'all') {
       const isAllChecked = !isChecked.all; // 현재 전체 동의의 반대값을 저장
       setIsChecked({
@@ -53,8 +53,8 @@ export default function TermsOfUse() {
     setIsButtonActive(terms1 && terms2 && all);
   }, [isChecked]);
   return (
-    <section className="flex flex-col pt-16 w-full min-w-[360px]">
-      <div className="flex-center flex-col self-stretch">
+    <section className="form-screen">
+      <div className="form-container">
         <div className="w-full max-w-[660px] pl-4 mt-8 md:mt-0">
           <BackButton />
           <div className="flex flex-col items-center w-full min-w-[360px] max-w-[660px] px-5">
@@ -62,9 +62,9 @@ export default function TermsOfUse() {
 
             <div className="flex flex-col gap-8 self-stretch pb-12">
               <div
-                className="flex items-center gap-3 cursor-pointer"
+                className="terms-check"
                 onClick={() => {
-                  handleCheckboxClick('all');
+                  handleCheckClick('all');
                 }}
               >
                 <Icons
@@ -79,14 +79,14 @@ export default function TermsOfUse() {
                 />
                 <p className="font-semibold">전체 동의하기</p>
               </div>
-
+              {/* 아래는 약관들 */}
               <div className="flex flex-col gap-8">
                 {/* 1. 서비스 이용약관 */}
-                <div className="flex flex-col gap-3 cursor-pointer">
+                <div className="flex flex-col gap-3">
                   <div
-                    className="flex items-center gap-3"
+                    className="terms-check"
                     onClick={() => {
-                      handleCheckboxClick('terms1');
+                      handleCheckClick('terms1');
                     }}
                   >
                     <Icons
@@ -103,18 +103,16 @@ export default function TermsOfUse() {
                       <p className="text-primary-1">[필수]</p> 1. 서비스 이용약관
                     </p>
                   </div>
-                  <div className="bg-white-0 p-4 border-2 border-primary-1 rounded-lg cursor-auto">
-                    <div className="w-full max-h-52 font-medium overflow-scroll hide-scrollbar whitespace-pre-line">
-                      {termsOfService}
-                    </div>
+                  <div className="terms-container">
+                    <div className="terms-contents">{termsOfService}</div>
                   </div>
                 </div>
                 {/* 2. 개인정보 수집 및 이용 동의서 */}
                 <div className="flex flex-col gap-3">
                   <div
-                    className="flex items-center gap-3 cursor-pointer"
+                    className="terms-check"
                     onClick={() => {
-                      handleCheckboxClick('terms2');
+                      handleCheckClick('terms2');
                     }}
                   >
                     <Icons
@@ -131,10 +129,8 @@ export default function TermsOfUse() {
                       <p className="text-primary-1">[필수]</p> 2. 개인정보 수집 및 이용 동의서
                     </p>
                   </div>
-                  <div className="bg-white-0 p-4 border-2 border-primary-1 rounded-lg cursor-auto">
-                    <div className="w-full max-h-52 font-medium overflow-scroll hide-scrollbar whitespace-pre-line">
-                      {privacyPolicy}
-                    </div>
+                  <div className="terms-container">
+                    <div className="terms-contents">{privacyPolicy}</div>
                   </div>
                 </div>
               </div>
