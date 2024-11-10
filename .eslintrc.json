@@ -26,6 +26,7 @@
     "no-nested-ternary": 0,
     "react/jsx-props-no-spreading": 0,
     "react/require-default-props": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "jsx-a11y/media-has-caption": "off"
   }
 }
