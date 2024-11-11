@@ -54,6 +54,21 @@ body {
     @apply hover:scale-105 transform transition-transform duration-200 ease-out;
   }
   /* 로그인/회원가입 */
+  .form-screen {
+    @apply flex flex-col pt-16 w-full min-w-[360px];
+  }
+  .form-container {
+    @apply flex-center flex-col self-stretch;
+  }
+  .terms-container {
+    @apply bg-white-0 p-4 border-2 border-primary-1 rounded-lg cursor-auto;
+  }
+  .terms-contents {
+    @apply w-full max-h-52 font-medium overflow-scroll hide-scrollbar whitespace-pre-line;
+  }
+  .terms-check {
+    @apply flex items-center gap-3 cursor-pointer;
+  }
   .form-title {
     @apply mb-12 pre-3xl-semibold text-center;
   }
@@ -126,5 +141,13 @@ body {
   /*포트폴리오*/
   .pf-read-section {
     @apply flex flex-col my-10;
+  }
+
+  /* 관리자 */
+  .manage-page-block {
+    @apply flex items-center justify-between py-6 pl-6 pr-[14px] bg-white-0 border w-full max-w-96 border-gray-3;
+  }
+  .manage-icon {
+    @apply flex gap-[14px];
   }
 }

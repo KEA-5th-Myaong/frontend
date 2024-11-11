@@ -36,4 +36,4 @@
 
 ## 🤔 Issue Ticket
 
-- [Ticket](https://JIRA)
+- [Ticket](https://gwagseoyeon.atlassian.net/browse/KAN-)
