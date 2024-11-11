@@ -5,16 +5,7 @@ import AdminSideBar from '../_components/AdminSideBar';
 import testData from '../_components/reportTest.json';
 import Icons from '@/app/_components/ui/Icon';
 import { CheckIcon } from '@/app/_components/ui/iconPath';
-
-interface ReportedContents {
-  postId: number;
-  title: string;
-  contentsType: 'POST' | 'COMMENT';
-  contentsId: number | string;
-  content: string;
-  reportCount: number;
-  isHidden: boolean;
-}
+import { ReportedContents } from '../_types/admin-types';
 
 export default function AdminContents() {
   const [contents, setContents] = useState<ReportedContents[]>([]);
@@ -24,12 +15,21 @@ export default function AdminContents() {
   }, []);
 
   const handleHideContent = (postId: number) => {
-    setContents((prevContents) =>
-      // 조건에 맞는 콘텐츠만 수정된 새 배열을 반환
-      prevContents.map((content) =>
+    setContents((prevContents) => {
+      const updatedContents = prevContents.map((content) =>
         content.postId === postId ? { ...content, isHidden: !content.isHidden } : content,
-      ),
-    );
+      );
+
+      // 해당 콘텐츠의 새로운 상태 확인
+      const targetContent = updatedContents.find((content) => content.postId === postId);
+      if (targetContent?.isHidden) {
+        alert('콘텐츠가 숨김 처리되었습니다.');
+      } else {
+        alert('콘텐츠의 숨김이 해제되었습니다.');
+      }
+
+      return updatedContents;
+    });
   };
 
   const reportedContents = contents.filter((content) => !content.isHidden);
