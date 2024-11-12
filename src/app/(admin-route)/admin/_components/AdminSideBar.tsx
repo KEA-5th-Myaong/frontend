@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -15,6 +17,10 @@ import {
 export default function AdminSideBar() {
   const pathname = usePathname();
   const handleLogoutClick = () => {};
+
+  if (pathname === '/admin') {
+    return null;
+  }
 
   const getLinkClassName = (href: string) => {
     const isActive = pathname === href;

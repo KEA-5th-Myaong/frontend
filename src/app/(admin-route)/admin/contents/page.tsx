@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AdminSideBar from '../_components/AdminSideBar';
 import testData from '../_components/reportTest.json';
 import Icons from '@/app/_components/ui/Icon';
 import { CheckIcon } from '@/app/_components/ui/iconPath';
@@ -36,9 +35,7 @@ export default function AdminContents() {
   const blindedContents = contents.filter((content) => content.isHidden);
 
   return (
-    <section className="flex gap-2.5 pl-12 pb-40">
-      <AdminSideBar />
-
+    <section className="flex gap-2.5 w-full pl-12 pb-40">
       <div className="w-full min-w-[545px] font-semibold px-6 py-8 bg-white-0 border border-gray-5">
         <p className="w-full text-2xl border-b border-gray-5 pb-4 mb-5">콘텐츠 관리</p>
 
