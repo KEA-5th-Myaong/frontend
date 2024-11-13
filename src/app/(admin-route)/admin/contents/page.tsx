@@ -5,9 +5,12 @@ import testData from '../_components/reportTest.json';
 import Icons from '@/app/_components/ui/Icon';
 import { CheckIcon } from '@/app/_components/ui/iconPath';
 import { ReportedContents } from '../_types/admin-types';
+import { initailModalState } from '@/app/_components/Modal';
+import AdminModal from '../_components/AdminModal';
 
 export default function AdminContents() {
   const [contents, setContents] = useState<ReportedContents[]>([]);
+  const [modalState, setModalState] = useState(initailModalState);
 
   useEffect(() => {
     setContents(testData.contents);
@@ -22,9 +25,21 @@ export default function AdminContents() {
       // 해당 콘텐츠의 새로운 상태 확인
       const targetContent = updatedContents.find((content) => content.postId === postId);
       if (targetContent?.isHidden) {
-        alert('콘텐츠가 숨김 처리되었습니다.');
+        setModalState((prev) => ({
+          ...prev,
+          open: true,
+          topText: '숨김 처리 되었습니다.',
+          btnText: '확인',
+          onBtnClick: () => setModalState(initailModalState),
+        }));
       } else {
-        alert('콘텐츠의 숨김이 해제되었습니다.');
+        setModalState((prev) => ({
+          ...prev,
+          open: true,
+          topText: '숨김 처리가 해제 되었습니다.',
+          btnText: '확인',
+          onBtnClick: () => setModalState(initailModalState),
+        }));
       }
 
       return updatedContents;
@@ -87,14 +102,11 @@ export default function AdminContents() {
                     <p className="w-[50%] text-center">{content.title}</p>
                     <p className="w-[10%] text-center">{content.reportCount}회</p>
                     <div className="w-[20%] flex justify-center items-center relative">
-                      <div
-                        onClick={() => handleHideContent(content.postId)}
-                        className="w-4 h-4 cursor-pointer border border-gray-5"
-                      >
+                      <div onClick={() => handleHideContent(content.postId)} className="w-4 h-4 cursor-pointer">
                         {content.isHidden && (
                           <Icons
-                            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                            name={CheckIcon}
+                            className="bg-black-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                            name={{ ...CheckIcon, fill: '#fff' }}
                           />
                         )}
                       </div>
@@ -106,6 +118,15 @@ export default function AdminContents() {
           </div>
         </div>
       </div>
+
+      {modalState.open && (
+        <AdminModal
+          onOverlayClick={modalState.onBtnClick}
+          topText={modalState.topText}
+          btnText={modalState.btnText}
+          onBtnClick={modalState.onBtnClick}
+        />
+      )}
     </section>
   );
 }
