@@ -129,6 +129,9 @@ body {
   }
 
   /* 관리자 */
+  .admin-modal-text {
+    @apply text-white-0 modal-text;
+  }
   .manage-page-block {
     @apply flex items-center justify-between py-6 pl-6 pr-[14px] bg-white-0 border w-full max-w-96 border-gray-3;
   }
