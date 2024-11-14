@@ -1,18 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import BackButton from '../../../../../_components/BackButton';
 import { postPost } from '../_services/blogService';
 import Modal, { initailModalState } from '@/app/_components/Modal';
+import { PostWriteProps } from '../_types/blog';
 import usePostWriteStore from '@/app/_store/postWirte';
 import useChatWriteStore from '@/app/_store/chatWrite';
+import '@toast-ui/editor/dist/toastui-editor.css'; // toast ui의 기본 스타일
 
-export interface PostWriteProps {
-  title: string;
-  content: string;
-}
+// Next.js의 dynamic import를 사용하여 ToastEditor 컴포넌트를 동적으로 불러옴, 동적으로 불러올 컴포넌트의 경로를 지정
+const ToastEditor = dynamic(() => import('../../../../../_components/ToastEditor'), {
+  ssr: false, // 서버사이드 렌더링 비활성화
+  loading: () => <div className="w-full h-60 bg-gray-200 rounded-md animate-pulse" />,
+});
 
 export default function PostWrite() {
   const router = useRouter();
@@ -21,14 +24,13 @@ export default function PostWrite() {
   const messages = useChatWriteStore((state) => state.messages);
   const resetMessages = useChatWriteStore((state) => state.resetMessages);
 
-  const formattedMessages = messages.map((msg) => `${msg.isAI ? '면접관' : '나'}: ${msg.text}`).join('\n\n');
+  const formattedMessages = useMemo(
+    () => messages.map((msg) => `${msg.isAI ? '면접관' : '나'}: ${msg.text}`).join('\n\n'),
+    [messages],
+  );
 
-  const { register, handleSubmit } = useForm<PostWriteProps>({
-    defaultValues: {
-      title: '',
-      content: formattedMessages || postData || '',
-    },
-  });
+  const [title, setTitle] = useState(''); // 포스트 제목
+  const [content, setContent] = useState(postData || formattedMessages || ' '); // 포스트 내용
   const [modalState, setModalState] = useState(initailModalState);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function PostWrite() {
     };
   }, [resetPostData, resetMessages]);
 
-  const handleBackBtnClick = () => {
+  const handleBackBtnClick = useCallback(() => {
     setModalState((prev) => ({
       ...prev,
       open: true,
@@ -53,52 +55,74 @@ export default function PostWrite() {
         router.back();
       },
     }));
-  };
+  }, [resetPostData, router]);
 
-  const onSubmit = async (data: PostWriteProps) => {
-    await postPost(data);
+  const handleSubmit = useCallback(
+    async (data: PostWriteProps) => {
+      try {
+        if (!data.title.trim() || !data.content.trim()) {
+          setModalState((prev) => ({
+            ...prev,
+            open: true,
+            topText: '제목과 내용을 모두 입력해주세요.',
+            btnText: '확인',
+            onBtnClick: () => setModalState(initailModalState),
+          }));
+          return;
+        }
 
-    setModalState((prev) => ({
-      ...prev,
-      open: true,
-      topText: '포스트가 작성되었습니다.',
-      btnText: '닫기',
-      onBtnClick: () => {
-        resetPostData();
-        router.push('/main');
-      },
-    }));
-  };
-
+        await postPost(data); // api 호출
+        // api 호출 후 나오는 모달
+        setModalState((prev) => ({
+          ...prev,
+          open: true,
+          topText: '포스트가 작성되었습니다.',
+          btnText: '닫기',
+          onBtnClick: () => {
+            resetPostData();
+            router.push('/main');
+          },
+        }));
+      } catch (error) {
+        setModalState((prev) => ({
+          ...prev,
+          open: true,
+          topText: '포스트 작성 중 오류가 발생했습니다.',
+          btnText: '확인',
+          onBtnClick: () => setModalState(initailModalState),
+        }));
+      }
+    },
+    [resetPostData, router],
+  );
   return (
     <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5 pt-14 md:pt-0">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+      <div className="w-full">
         <BackButton onBtnClick={handleBackBtnClick} className="flex w-full pt-12 px-5 mb-2" />
 
         <div className="flex-col w-full py-3 px-2.5">
           <p className="py-1">포스트 작성</p>
-
           <input
             type="text"
-            {...register('title', {
-              required: '제목은 필수입니다.',
-            })}
             placeholder="제목을 입력해주세요"
+            value={title}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
             className="text-3xl font-semibold outline-none w-full my-3"
           />
         </div>
 
-        <textarea
-          {...register('content', { required: '내용은 필수입니다.' })}
-          className="p-4 w-full min-w-[344px] max-w-[1000px] h-[438px] resize-none outline-none border-2 border-gray-5"
-        />
+        <ToastEditor initialValue={content} onChange={(value: string) => setContent(value)} height="400px" />
 
         <div className="flex justify-end w-full pt-16">
-          <button type="submit" className="py-[18px] px-6 rounded-[28px] primary-1-btn">
+          <button
+            type="button"
+            onClick={() => handleSubmit({ title, content })}
+            className="py-[18px] px-6 rounded-[28px] primary-1-btn"
+          >
             작성 완료
           </button>
         </div>
-      </form>
+      </div>
 
       {modalState.open && (
         <Modal

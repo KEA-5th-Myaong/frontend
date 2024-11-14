@@ -14,6 +14,7 @@ export interface ModalProps {
   onOverlayClick?: () => void;
 
   hasInput?: boolean;
+  placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

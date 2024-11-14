@@ -4,6 +4,7 @@ export interface IconPathTypes {
   height: number;
   fill?: string;
   options?: IconOptions;
+  className?: string;
 }
 export interface IconOptions {
   stroke?: string;
