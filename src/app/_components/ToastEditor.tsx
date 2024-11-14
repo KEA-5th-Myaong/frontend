@@ -1,47 +1,39 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useRef, useEffect } from 'react';
-import { Editor as EditorType } from '@toast-ui/react-editor';
-
-const Editor = dynamic(() => import('@toast-ui/react-editor').then((mod) => mod.Editor), {
-  ssr: false,
-  loading: () => <div className="w-full h-60 bg-gray-200 rounded-md animate-pulse" />,
-});
+import { Editor } from '@toast-ui/react-editor'; // Toast UI Editor의 React 래퍼 컴포넌트
 
 interface ToastEditorProps {
-  initialValue?: string;
-  onChange?: (value: string) => void;
-  className?: string;
+  initialValue: string;
+  onChange: (value: string) => void;
+  height: string;
 }
 
-function ToastEditor({ initialValue = '', onChange, className }: ToastEditorProps) {
-  const editorRef = useRef<EditorType>(null);
+export default function ToastEditor({ initialValue = '', onChange, height }: ToastEditorProps) {
+  const editorRef = useRef<Editor>(null);
 
+  // 컴포넌트가 마운트된 후 에디터의 change 이벤트 리스너를 설정
   useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.getInstance().setMarkdown(initialValue);
+    const instance = editorRef.current?.getInstance();
+    if (instance) {
+      // change 이벤트 리스너 등록
+      instance.on('change', () => {
+        // 변경된 내용을 HTML 형식으로 가져옴
+        const content = instance.getHTML();
+        // 상위 컴포넌트로 변경된 내용을 전달
+        onChange?.(content);
+      });
     }
-  }, [initialValue]);
-
-  const handleChange = () => {
-    if (onChange && editorRef.current) {
-      const instance = editorRef.current.getInstance();
-      onChange(instance.getMarkdown());
-    }
-  };
+  }, [onChange]);
 
   return (
     <Editor
-      className={className}
       ref={editorRef}
       initialValue={initialValue}
-      previewStyle="vertical"
-      initialEditType="wysiwyg"
-      useCommandShortcut
-      onChange={handleChange}
+      initialEditType="wysiwyg" // 기본 모드를 위지윅으로 지정
+      hideModeSwitch // 마크다운으로 전환하지 못하게
+      height={height}
+      useCommandShortcut // 키보드 단축키 사용 활성화
     />
   );
 }
-
-export default ToastEditor;
