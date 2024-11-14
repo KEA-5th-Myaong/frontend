@@ -44,6 +44,10 @@ export default function TermsOfUse() {
       ...prevState,
       all: terms1 && terms2, // terms1과 terms2가 모두 true면 all도 true
     }));
+
+    if (terms1 && terms2) {
+      router.push('/sign-up');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isChecked.terms1, isChecked.terms2]); // 위 주석은 불필요한 리렌더링 방지를 위해 isChecked를 뺀 것
   // 마지막 '다음' 버튼의 상태가 변경되는 useEffect
@@ -100,7 +104,7 @@ export default function TermsOfUse() {
                       className={`px-0.5 border-2 ${isChecked.terms1 ? 'border-primary-1 bg-primary-1' : 'border-gray-1'} rounded-full`}
                     />
                     <p className="font-semibold flex items-center gap-0.5">
-                      <p className="text-primary-1">[필수]</p> 1. 서비스 이용약관
+                      <p className="text-primary-1">[필수]</p>서비스 이용약관
                     </p>
                   </div>
                   <div className="terms-container">
@@ -126,7 +130,7 @@ export default function TermsOfUse() {
                       className={`px-0.5 border-2 ${isChecked.terms2 ? 'border-primary-1 bg-primary-1' : 'border-gray-1'} rounded-full`}
                     />
                     <p className="font-semibold flex items-center gap-0.5">
-                      <p className="text-primary-1">[필수]</p> 2. 개인정보 수집 및 이용 동의서
+                      <p className="text-primary-1">[필수]</p>개인정보 수집 및 이용 동의서
                     </p>
                   </div>
                   <div className="terms-container">
