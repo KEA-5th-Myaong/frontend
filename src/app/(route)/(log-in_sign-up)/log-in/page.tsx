@@ -5,8 +5,8 @@ import LoginForm from './_components/LoginForm';
 
 export default function Login() {
   return (
-    <section className="flex flex-col pt-24 pb-12 w-full">
-      <div className="flex-center flex-col self-stretch">
+    <section className="pt-24 pb-12 form-screen">
+      <div className="form-container">
         <div className="flex flex-col items-center w-full min-w-[355px] max-w-[660px] px-5">
           <p className="form-title">{FORM_TEXT[0]}</p>
           <LoginForm />
@@ -15,7 +15,7 @@ export default function Login() {
             <Link href="/change-pwd" className="text-gray-1 underline mt-6">
               {FORM_TEXT[12]}
             </Link>
-            <Link href="/sign-up" className="text-gray-1 underline mt-6">
+            <Link href="/terms-of-use" className="text-gray-1 underline mt-6">
               회원가입
             </Link>
           </div>

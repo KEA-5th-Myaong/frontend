@@ -49,17 +49,7 @@ export default function PSListBox({ psId, title, position, content, timestamp }:
 
   return (
     <div className="flex justify-between px-6 pb-4 pt-6 sm:px-8 sm:pb-4 sm:pt-10 border border-gray-2 rounded-lg bg-white-0 cursor-pointer">
-      <div
-        role="button"
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            handlePSListBoxClick();
-          }
-        }}
-        onClick={handlePSListBoxClick}
-        className="flex flex-col gap-3 w-2/3"
-        tabIndex={0}
-      >
+      <div onClick={handlePSListBoxClick} className="flex flex-col gap-3 w-2/3">
         <div className="flex items-center gap-4">
           <p className="font-semibold text-lg sm:text-xl line-clamp-2">{title}</p>
           <div className="hidden sm:block bg-primary-1 rounded-md px-5 py-1 text-[11px] text-white-0">

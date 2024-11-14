@@ -45,9 +45,9 @@ export async function postInterview(interviewData: unknown) {
 }
 
 // (POST) 면접 메시지 전송
-export async function postInterviewMessage(interviewData: unknown) {
+export async function postInterviewMessage(interviewId: string, interviewData: unknown) {
   try {
-    const { data } = await api.post('/interviews/messages', interviewData);
+    const { data } = await api.post(`/interviews/${interviewId}/messages`, interviewData);
     return data;
   } catch (error) {
     console.error('면접 메시지 전송 실패:', error);
@@ -67,7 +67,7 @@ export async function putInterviewMessage(messageId: string, interviewData: unkn
 }
 
 // (GET) 새 질문 생성
-export async function fetchInterviewNewQuestion(interviewId: string) {
+export async function fetchNewQuestion(interviewId: string) {
   try {
     const { data } = await api.get(`/interviews/${interviewId}/q`);
     return data;
@@ -78,7 +78,7 @@ export async function fetchInterviewNewQuestion(interviewId: string) {
 }
 
 // (GET) 꼬리 질문 생성
-export async function fetchInterviewTailQuestion(interviewId: string) {
+export async function fetchTailQuestion(interviewId: string) {
   try {
     const { data } = await api.get(`/interviews/${interviewId}/follow-up-q`);
     return data;
@@ -102,7 +102,7 @@ export async function fetchInterviewHistoryLists() {
 // (GET) 특정 면접 기록 조회
 export async function fetchInterviewHistory(interviewId: string) {
   try {
-    const { data } = await api.get(`/interviews/${interviewId}`);
+    const { data } = await api.get(`/interviews/${interviewId}/messages`);
     return data;
   } catch (error) {
     console.error('특정 면접 기록 조회 실패:', error);
@@ -111,10 +111,9 @@ export async function fetchInterviewHistory(interviewId: string) {
 }
 
 // (DELETE) 면접 기록 삭제
-export async function deleteInterviews(interviewId: string) {
+export async function deleteInterview(interviewId: string) {
   try {
-    const { data } = await api.delete(`/interviews/${interviewId}`);
-    return data;
+    await api.delete(`/interviews/${interviewId}`);
   } catch (error) {
     console.error('면접 기록 삭제 실패:', error);
     throw error;
