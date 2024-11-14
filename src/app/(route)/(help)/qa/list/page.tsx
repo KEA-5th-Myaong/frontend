@@ -7,14 +7,14 @@ export default function QAList() {
   return (
     <div className="flex-col w-full h-hull max-w-[1000px] min-w-[360px]: mx-10 md:my-24 my-32">
       <div className="flex row-auto">
-        <div className="flex h-24 w-[90%]">
+        <div className="flex h-24 w-[85%]">
           {/* 문의게시판 title */}
           <div className="font-semibold text-3xl">
             문의게시판
             <div className="font-light text-sm py-4 text-gray-0">문의메일 : pplog@pplog.com</div>
           </div>
         </div>
-        <div className="relative w-36 items-center justify-center pt-5">
+        <div className="w-36 items-center justify-center pt-5">
           <div className="">
             <Link href="/qa/write">
               <div className="flex-center py-4 rounded-[28px] primary-1-btn hover-animation">문의 작성</div>
