@@ -14,7 +14,7 @@ import '@toast-ui/editor/dist/toastui-editor.css'; // toast ui의 기본 스타�
 // Next.js의 dynamic import를 사용하여 ToastEditor 컴포넌트를 동적으로 불러옴, 동적으로 불러올 컴포넌트의 경로를 지정
 const ToastEditor = dynamic(() => import('../../../../../_components/ToastEditor'), {
   ssr: false, // 서버사이드 렌더링 비활성화
-  loading: () => <div className="w-full h-60 bg-gray-200 rounded-md animate-pulse" />,
+  loading: () => <div className="w-full h-96 bg-gray-200 rounded-md animate-pulse" />,
 });
 
 export default function PostWrite() {
@@ -113,15 +113,13 @@ export default function PostWrite() {
 
         <ToastEditor initialValue={content} onChange={(value: string) => setContent(value)} height="400px" />
 
-        <div className="flex justify-end w-full pt-16">
-          <button
-            type="button"
-            onClick={() => handleSubmit({ title, content })}
-            className="py-[18px] px-6 rounded-[28px] primary-1-btn"
-          >
-            작성 완료
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => handleSubmit({ title, content })}
+          className="flex justify-self-end mt-16 py-4 px-6 rounded-[28px] primary-1-btn"
+        >
+          작성 완료
+        </button>
       </div>
 
       {modalState.open && (
