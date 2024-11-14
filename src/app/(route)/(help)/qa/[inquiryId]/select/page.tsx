@@ -38,6 +38,7 @@ export default function QASelect() {
                 setMenuOpen((prev) => !prev);
               }}
             >
+              {/* 본인이 작성한 게시물일 경우만 드롭다운 보이도록 수정 필요 */}
               <Icons name={MoreIcon} />
             </button>
             {menuOpen && <MoreOptions />}
@@ -45,11 +46,11 @@ export default function QASelect() {
         </div>
         <div className="flex w-full pb-8 px-7 text-2xl font-semibold">
           <div className="flex w-7 h-7">{isLocked && <Icons name={LockIcon} className="flex-center w-5 h-8" />}</div>
-          <div className="">{testData.selectData.title}</div>
+          <div className="">{testData.inquiry.title}</div>
         </div>
         <div className="px-14">
-          <p className="flex">{testData.selectData.content}</p>
-          <div className="py-5">{testData.selectData.timestamp}</div>
+          <p className="flex">{testData.inquiry.content}</p>
+          <div className="py-5 text-gray-0">{testData.inquiry.timestamp}</div>
         </div>
       </div>
       <div className="flex-col w-full bg-blue-2 mt-5 pb-10">
@@ -57,8 +58,8 @@ export default function QASelect() {
           <div className="px-7">관리자</div>
         </div>
         <div className="px-14">
-          <p className="flex">{testData.selectData.content}</p>
-          <div className="py-5">{testData.selectData.timestamp}</div>
+          <p className="flex">{testData.inquiryReply.content}</p>
+          <div className="py-5 text-gray-0">{testData.inquiryReply.timestamp}</div>
         </div>
       </div>
     </div>
