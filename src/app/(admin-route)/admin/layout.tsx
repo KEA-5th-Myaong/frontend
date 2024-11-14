@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import '../globals.css';
+import '../../globals.css';
 import Image from 'next/image';
+import AdminSideBar from './_components/AdminSideBar';
 
 export const metadata = {
   title: 'PPLOG 관리자',
@@ -14,7 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Link href="/main" className="absolute ml-16 pt-9">
           <Image src="/assets/adminLogo.svg" alt="로고" width={103} height={66} />
         </Link>
-        <section className="bg-[#F5F5F5] min-h-screen pt-28 px-5">{children}</section>
+
+        <section className="flex bg-[#F5F5F5] min-h-screen pt-28 px-5">
+          <AdminSideBar />
+          {children}
+        </section>
       </body>
     </html>
   );

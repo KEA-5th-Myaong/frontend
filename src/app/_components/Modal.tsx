@@ -81,7 +81,7 @@ export default function Modal({
             <button
               type="button"
               onClick={onSubBtnClick}
-              className="bg-gray-3 text-white-0 w-full mx-auto py-4 rounded-lg"
+              className="bg-gray-3 text-white-0 w-full mx-auto py-4 rounded-lg whitespace-nowrap"
             >
               {subBtnText}
             </button>
@@ -91,7 +91,7 @@ export default function Modal({
           <button
             type="button"
             onClick={onBtnClick}
-            className={`w-full ${isWarn ? 'bg-red-0' : 'bg-primary-1'} mx-auto py-4 rounded-lg text-white-0`}
+            className={`w-full ${isWarn ? 'bg-red-0' : 'bg-primary-1'} mx-auto py-4 rounded-lg text-white-0 whitespace-nowrap`}
           >
             {btnText}
           </button>

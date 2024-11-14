@@ -3,7 +3,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import Icons from '@/app/_components/ui/Icon';
-import { AlertIcon, CorpIcon, LogOutIcon, MemberIcon, NoticeIcon } from '@/app/_components/ui/iconPath';
+import {
+  AlertIcon,
+  CorpIcon,
+  FaqIcon,
+  FolderIcon,
+  LogOutIcon,
+  MemberCategoryIcon,
+  MemberIcon,
+  NoticeIcon,
+} from '@/app/_components/ui/iconPath';
 
 export default function AdminMain() {
   const handleLogoutClick = () => {};
@@ -11,7 +20,7 @@ export default function AdminMain() {
     <section className="flex-center w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 font-semibold min-w-[360px] w-full max-w-[768px] pb-40">
         {/* 관리자 */}
-        <div className="flex-center flex-col bg-black-3 h-[286px] pt-10 pb-9 text-white-0 font-semibold w-full max-w-h-96">
+        <div className="flex-center flex-col bg-black-3 h-[286px] pt-10 pb-9 text-white-0 font-semibold w-full max-w-h-96 shadow-xl">
           <Image width={120} height={120} src="/assets/admin/main-admin.svg" alt="" />
           <p className="mt-4">관리자</p>
           <p className="mt-3 font-medium">yeonilil@naver.com</p>
@@ -36,7 +45,7 @@ export default function AdminMain() {
         {/* 콘텐츠 관리 */}
         <Link href="/admin/contents" className="manage-page-block">
           <div className="manage-icon">
-            <Image width={20} height={20} src="/assets/admin/main-contents.svg" alt="" />
+            <Icons name={FolderIcon} />
             콘텐츠 관리
           </div>
           <Image width={40} height={40} src="/assets/arrow-right.svg" alt=">" />
@@ -60,7 +69,7 @@ export default function AdminMain() {
         {/* 회원 카테고리 관리 */}
         <Link href="admin/member-category" className="manage-page-block">
           <div className="manage-icon">
-            <Image width={20} height={20} src="/assets/admin/main-membercategory.svg" alt="" />
+            <Icons name={MemberCategoryIcon} />
             회원 카테고리 관리
           </div>
           <Image width={40} height={40} src="/assets/arrow-right.svg" alt=">" />
@@ -68,7 +77,7 @@ export default function AdminMain() {
         {/* 문의 관리 */}
         <Link href="/admin/faq" className="manage-page-block">
           <div className="manage-icon">
-            <Image width={20} height={20} src="/assets/admin/main-faq.svg" alt="" />
+            <Icons name={FaqIcon} />
             문의 관리
           </div>
           <Image width={40} height={40} src="/assets/arrow-right.svg" alt=">" />
