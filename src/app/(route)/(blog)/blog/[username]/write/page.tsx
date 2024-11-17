@@ -97,31 +97,29 @@ export default function PostWrite() {
   );
   return (
     <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5 pt-14 md:pt-0">
-      <div className="w-full">
-        <BackButton onBtnClick={handleBackBtnClick} className="flex w-full pt-12 mb-2" />
+      <BackButton onBtnClick={handleBackBtnClick} className="flex w-full pt-12 mb-2" />
 
-        {/* 제목 */}
-        <div className="flex-col w-full py-3 px-2.5">
-          <p className="py-1">포스트 작성</p>
-          <input
-            type="text"
-            placeholder="제목을 입력해주세요"
-            value={title}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-            className="text-3xl font-semibold outline-none w-full my-3"
-          />
-        </div>
-        {/* 본문 */}
-        <ToastEditor initialValue={content} onChange={(value: string) => setContent(value)} height="400px" />
-        {/* 작성완료버튼 */}
-        <button
-          type="button"
-          onClick={() => handleSubmit({ title, content })}
-          className="flex justify-self-end mt-16 py-4 px-6 rounded-[28px] primary-1-btn"
-        >
-          작성 완료
-        </button>
+      {/* 제목 */}
+      <div className="flex-col w-full py-3 px-2.5">
+        <p className="py-1">포스트 작성</p>
+        <input
+          type="text"
+          placeholder="제목을 입력해주세요"
+          value={title}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+          className="text-3xl font-semibold outline-none w-full my-3"
+        />
       </div>
+      {/* 본문 */}
+      <ToastEditor initialValue={content} onChange={(value: string) => setContent(value)} height="400px" />
+      {/* 작성완료버튼 */}
+      <button
+        type="button"
+        onClick={() => handleSubmit({ title, content })}
+        className="flex self-end max-w-fit mt-16 py-4 px-6 rounded-[28px] primary-1-btn hover:bg-primary-2"
+      >
+        작성 완료
+      </button>
 
       {modalState.open && (
         <Modal
