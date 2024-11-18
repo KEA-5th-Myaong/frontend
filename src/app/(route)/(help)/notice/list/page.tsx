@@ -19,18 +19,21 @@ export default function NoticeList() {
       <div>
         <div className="flex py-5 border-y-2 md:text-base text-sm  border-gray-0">
           <div className="flex-center w-[10%]">번호</div>
-          <div className="flex-center w-[65%]">제목</div>
+          <div className="flex-center w-[20%]"></div>
+          <div className="flex-center w-[45%]">제목</div>
           <div className="flex-center w-[25%]">날짜</div>
         </div>
         <div>
           {testData.importantNotices.map((data) => (
             <Link href="./1/select" className="flex w-full py-5 border-b-2 md:text-base text-sm border-gray-5">
               <div className="flex-center w-[10%]">{data.noticeId}</div>
-              <div className="relative flex-center w-[65%]">
-                <div className="absolute left-20">
-                  <div className="flex-center w-10 h-5 rounded-lg bg-red-0 text-xs text-white-0">중요</div>
-                </div>
-                <p>{data.title}</p>
+              <div className="flex-center w-[20%]">
+                <div className="flex-center w-10 h-5 rounded-lg bg-red-0 text-xs text-white-0">중요</div>
+              </div>
+              <div className=" flex-center w-[45%] gap-4">
+                <p className="flex-grow text-center w-full justify-self-start overflow-hidden text-ellipsis whitespace-nowrap">
+                  {data.title}
+                </p>
               </div>
               <div className="flex-center w-[25%]">{data.timestamp}</div>
             </Link>
@@ -38,7 +41,8 @@ export default function NoticeList() {
           {testData.notices.map((data) => (
             <Link href="./1/select" className="flex w-full py-5 border-b-2 md:text-base text-sm border-gray-5">
               <p className="flex-center w-[10%]">{data.noticeId}</p>
-              <p className="flex-center w-[65%]">{data.title}</p>
+              <p className="w-[20%]"></p>
+              <p className="w-[45%] text-center">{data.title}</p>
               <p className="flex-center w-[25%]">{data.timestamp}</p>
             </Link>
           ))}

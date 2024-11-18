@@ -18,7 +18,7 @@ export default function QAWrite() {
   }
 
   return (
-    <div className="relative flex-col w-full max-w-[1000px] min-w-[360px]: mx-10 md:my-7 my-32 ">
+    <div className="relative flex-col w-full max-w-[1000px] min-w-[360px] mx-10 md:my-7 my-32 ">
       {/* 문의작성 title */}
       <div className="flex-col h-24 py-1">
         <BackButton />
