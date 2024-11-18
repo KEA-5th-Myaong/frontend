@@ -19,18 +19,18 @@ export default function QASelect() {
   });
 
   return (
-    <div className="flex-col w-full max-w-[1000px] min-w-[360px]: mx-10 md:my-7 my-32">
+    <div className="w-full max-w-[1000px] min-w-[360px] mx-10 md:my-7 my-32">
       {/* 문의 title */}
-      <div className="flex-col w-full py-1">
+      <div className="w-full py-1">
         <BackButton />
-        <div className="flex-col font-semibold text-3xl pt-7">
+        <div className="font-semibold text-3xl pt-7">
           문의
-          <div className="flex font-light text-sm py-4 text-gray-0">문의메일 : pplog@pplog.com</div>
+          <div className="font-light text-sm py-4 text-gray-0">문의메일 : pplog@pplog.com</div>
         </div>
       </div>
-      <div className="flex-col w-full border-2 border-gray-5 pb-10">
+      <div className="w-full border-2 border-gray-5 pb-10">
         <div className="relative py-8">
-          <div className="absolute  right-4 w-11 h-10 " ref={dropdownRef}>
+          <div className="absolute right-4 w-11 h-10 " ref={dropdownRef}>
             <button
               type="button"
               className="cursor-pointer"
@@ -46,20 +46,18 @@ export default function QASelect() {
         </div>
         <div className="flex w-full pb-8 px-7 text-2xl font-semibold">
           <div className="flex w-7 h-7">{isLocked && <Icons name={LockIcon} className="flex-center w-5 h-8" />}</div>
-          <div className="">{testData.inquiry.title}</div>
+          <p>{testData.inquiry.title}</p>
         </div>
         <div className="px-14">
           <p className="flex">{testData.inquiry.content}</p>
-          <div className="py-5 text-gray-0">{testData.inquiry.timestamp}</div>
+          <p className="py-5 text-gray-0">{testData.inquiry.timestamp}</p>
         </div>
       </div>
-      <div className="flex-col w-full bg-blue-2 mt-5 pb-10">
-        <div className="flex w-full py-10 px-7 text-xl font-semibold">
-          <div className="px-7">관리자</div>
-        </div>
-        <div className="px-14">
+      <div className="w-full bg-blue-2 mt-5 pb-10">
+        <div className="flex w-full pt-10 pb px-14 text-xl font-semibold ">관리자</div>
+        <div className="px-14 pt-5">
           <p className="flex">{testData.inquiryReply.content}</p>
-          <div className="py-5 text-gray-0">{testData.inquiryReply.timestamp}</div>
+          <p className="py-5 text-gray-0">{testData.inquiryReply.timestamp}</p>
         </div>
       </div>
     </div>
