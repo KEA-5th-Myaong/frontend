@@ -82,7 +82,7 @@ export default function ChangePwdForm() {
         />
 
         {/* 회원가입 button */}
-        <div className="mt-[60px]">
+        <div className="mt-[17px]">
           {errorMessage && <p className="form-error-text">{errorMessage}</p>}
           <button type="submit" className={`form-btn ${!isFormValid ? 'bg-gray-1' : ''}`} disabled={!isFormValid}>
             {FORM_TEXT[10]}

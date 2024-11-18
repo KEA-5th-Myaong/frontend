@@ -33,7 +33,7 @@ export default function Video() {
     <div className="fixed left-12 bottom-12 z-50">
       <video
         ref={videoRef}
-        className={`${showFace ? 'block' : 'hidden'} w-70 h-64 bg-gray-0 -scale-x-100 rounded-xl drop-shadow-xl`}
+        className={`${showFace ? 'block' : 'hidden'} w-70 h-64 aspect-video bg-gray-0 -scale-x-100 rounded-xl drop-shadow-xl`}
         autoPlay
       />
 

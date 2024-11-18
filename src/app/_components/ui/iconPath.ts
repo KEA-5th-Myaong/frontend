@@ -1,5 +1,19 @@
 import { IconPathTypes } from '../../_types/icon';
 
+// 약관 체크 아이콘
+export const TermCheckIcon: IconPathTypes = {
+  path: 'm4.5 12.75 6 6 9-13.5',
+  fill: 'none',
+  width: 24,
+  height: 24,
+  options: {
+    stroke: '#9FA6B2',
+    strokeWidth: 3,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+};
+
 // 눈 모양 아이콘
 export const EyeIcon: IconPathTypes = {
   path: [
@@ -119,6 +133,19 @@ export const MenuIcon: IconPathTypes = {
   height: 14,
 };
 
+// 체크 아이콘
+export const CheckIcon: IconPathTypes = {
+  path: 'M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z',
+  fill: 'currentColor',
+  width: 16,
+  height: 16,
+  options: {
+    fillRule: 'evenodd',
+    clipRule: 'evenodd',
+  },
+};
+
+// 사용자 아이콘
 export const UserIcon: IconPathTypes = {
   path: [
     'M13 15V13.0769C13 12.2609 12.6839 11.4782 12.1213 10.9012C11.5587 10.3242 10.7956 10 10 10H4C3.20435 10 2.44129 10.3242 1.87868 10.9012C1.31607 11.4782 1 12.2609 1 13.0769V15',
@@ -203,4 +230,122 @@ export const RefreshIcon: IconPathTypes = {
   fill: 'currentColor',
   width: 20,
   height: 20,
+};
+
+// 관리자
+// 로그아웃 아이콘
+export const LogOutIcon: IconPathTypes = {
+  path: [
+    'M3 4.25A2.25 2.25 0 0 1 5.25 2h5.5A2.25 2.25 0 0 1 13 4.25v2a.75.75 0 0 1-1.5 0v-2a.75.75 0 0 0-.75-.75h-5.5a.75.75 0 0 0-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 0 0 .75-.75v-2a.75.75 0 0 1 1.5 0v2A2.25 2.25 0 0 1 10.75 18h-5.5A2.25 2.25 0 0 1 3 15.75V4.25Z',
+    'M6 10a.75.75 0 0 1 .75-.75h9.546l-1.048-.943a.75.75 0 1 1 1.004-1.114l2.5 2.25a.75.75 0 0 1 0 1.114l-2.5 2.25a.75.75 0 1 1-1.004-1.114l1.048-.943H6.75A.75.75 0 0 1 6 10Z',
+  ],
+  fill: 'currentColor',
+  width: 20,
+  height: 20,
+  options: {
+    clipRule: 'evenodd',
+  },
+};
+
+// 폴더 아이콘
+export const FolderIcon: IconPathTypes = {
+  path: 'M18.3346 14.8333C18.3346 15.2754 18.159 15.6993 17.8465 16.0118C17.5339 16.3244 17.11 16.5 16.668 16.5H3.33464C2.89261 16.5 2.46868 16.3244 2.15612 16.0118C1.84356 15.6993 1.66797 15.2754 1.66797 14.8333V3.16667C1.66797 2.72464 1.84356 2.30072 2.15612 1.98816C2.46868 1.67559 2.89261 1.5 3.33464 1.5H7.5013L9.16797 4H16.668C17.11 4 17.5339 4.17559 17.8465 4.48816C18.159 4.80072 18.3346 5.22464 18.3346 5.66667V14.8333Z',
+  fill: 'none',
+  width: 20,
+  height: 18,
+  options: {
+    stroke: '#1E1E1E',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+};
+
+// 알림 아이콘
+export const AlertIcon: IconPathTypes = {
+  path: 'M10.4417 17.5013C10.2952 17.7539 10.0849 17.9635 9.83185 18.1092C9.57884 18.255 9.29198 18.3317 9 18.3317C8.70802 18.3317 8.42116 18.255 8.16814 18.1092C7.91513 17.9635 7.70484 17.7539 7.55833 17.5013M14 6.66797C14 5.34189 13.4732 4.07012 12.5355 3.13243C11.5979 2.19475 10.3261 1.66797 9 1.66797C7.67392 1.66797 6.40215 2.19475 5.46447 3.13243C4.52678 4.07012 4 5.34189 4 6.66797C4 12.5013 1.5 14.168 1.5 14.168H16.5C16.5 14.168 14 12.5013 14 6.66797Z',
+  fill: 'none',
+  width: 18,
+  height: 20,
+  options: {
+    stroke: '#1E1E1E',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+};
+
+// 기업 아이콘
+export const CorpIcon: IconPathTypes = {
+  path: [
+    'M7.33333 1.5H1.5V7.33333H7.33333V1.5Z',
+    'M16.5 1.5H10.6667V7.33333H16.5V1.5Z',
+    'M16.5 10.6667H10.6667V16.5H16.5V10.6667Z',
+    'M7.33333 10.6667H1.5V16.5H7.33333V10.6667Z',
+  ],
+  fill: 'none',
+  width: 18,
+  height: 18,
+  options: {
+    stroke: '#1E1E1E',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+};
+
+// 회원관리 아이콘
+export const MemberIcon: IconPathTypes = {
+  path: 'M14.6654 16.5V14.8333C14.6654 13.9493 14.3142 13.1014 13.6891 12.4763C13.0639 11.8512 12.2161 11.5 11.332 11.5H4.66536C3.78131 11.5 2.93346 11.8512 2.30834 12.4763C1.68322 13.1014 1.33203 13.9493 1.33203 14.8333V16.5M11.332 4.83333C11.332 6.67428 9.83965 8.16667 7.9987 8.16667C6.15775 8.16667 4.66536 6.67428 4.66536 4.83333C4.66536 2.99238 6.15775 1.5 7.9987 1.5C9.83965 1.5 11.332 2.99238 11.332 4.83333Z',
+  fill: 'none',
+  width: 16,
+  height: 18,
+  options: {
+    stroke: '#1E1E1E',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+};
+
+// 회원카테고리관리 아이콘
+export const MemberCategoryIcon: IconPathTypes = {
+  path: 'M5.66667 1H16.5M5.66667 6H16.5M5.66667 11H16.5M1.5 1H1.50833M1.5 6H1.50833M1.5 11H1.50833',
+  fill: 'none',
+  width: 18,
+  height: 12,
+  options: {
+    stroke: '#1E1E1E',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+};
+
+// 문의관리 아이콘
+export const FaqIcon: IconPathTypes = {
+  path: 'M7.5763 7.5013C7.77222 6.94436 8.15893 6.47472 8.66793 6.17558C9.17693 5.87643 9.77538 5.76708 10.3573 5.8669C10.9392 5.96671 11.467 6.26924 11.8472 6.72091C12.2274 7.17258 12.4355 7.74424 12.4346 8.33464C12.4346 10.0013 9.93464 10.8346 9.93464 10.8346M10.0013 14.168H10.0096M18.3346 10.0013C18.3346 14.6037 14.6037 18.3346 10.0013 18.3346C5.39893 18.3346 1.66797 14.6037 1.66797 10.0013C1.66797 5.39893 5.39893 1.66797 10.0013 1.66797C14.6037 1.66797 18.3346 5.39893 18.3346 10.0013Z',
+  fill: 'none',
+  width: 20,
+  height: 20,
+  options: {
+    stroke: '#1E1E1E',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+};
+
+// 공지 아이콘
+export const NoticeIcon: IconPathTypes = {
+  path: 'M10.0013 13.3346V10.0013M10.0013 6.66797H10.0096M18.3346 10.0013C18.3346 14.6037 14.6037 18.3346 10.0013 18.3346C5.39893 18.3346 1.66797 14.6037 1.66797 10.0013C1.66797 5.39893 5.39893 1.66797 10.0013 1.66797C14.6037 1.66797 18.3346 5.39893 18.3346 10.0013Z',
+  fill: 'none',
+  width: 20,
+  height: 20,
+  options: {
+    stroke: '#1E1E1E',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
 };

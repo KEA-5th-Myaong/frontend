@@ -29,17 +29,7 @@ export default function Post({
         border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out ${className}`}
     >
       <div className="flex flex-col w-full">
-        <div
-          className="flex items-center w-full"
-          role="button"
-          onClick={onUserClick}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              onUserClick();
-            }
-          }}
-          tabIndex={0}
-        >
+        <div className="flex items-center w-full" onClick={onUserClick}>
           <Image className="rounded-full mr-5" src={imageSource} alt="프로필사진" width={42} height={42} unoptimized />
           <div className="flex justify-between w-full">
             <p>{nickname}</p>
@@ -52,17 +42,7 @@ export default function Post({
       </div>
 
       <div className="flex flex-col pl-[12px] sm:pl-[62px] pr-5 gap-7">
-        <div
-          className="flex flex-col gap-4"
-          role="button"
-          onClick={onContentClick}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              onContentClick();
-            }
-          }}
-          tabIndex={0}
-        >
+        <div className="flex flex-col gap-4" onClick={onContentClick}>
           <span className="text-[#030303] font-semibold">{title}</span>
           <span className="text-[#030303] overflow-hidden line-clamp-3">{content}</span>
         </div>
