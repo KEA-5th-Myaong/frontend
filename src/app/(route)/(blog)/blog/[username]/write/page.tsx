@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import BackButton from '../../../../../_components/BackButton';
-import { postPost } from '../_services/blogService';
+import { postPic, postPost } from '../_services/blogService';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import { PostWriteProps } from '../_types/blog';
 import usePostWriteStore from '@/app/_store/postWirte';
@@ -56,6 +56,11 @@ export default function PostWrite() {
       },
     }));
   }, [resetPostData, router]);
+
+  const handleImage = useCallback(async (file: File, callback: (url: string) => void) => {
+    const imageUrl = await postPic(file);
+    callback(imageUrl);
+  }, []);
 
   const handleSubmit = useCallback(
     async (data: PostWriteProps) => {
@@ -111,7 +116,12 @@ export default function PostWrite() {
         />
       </div>
       {/* 본문 */}
-      <ToastEditor initialValue={content} onChange={(value: string) => setContent(value)} height="400px" />
+      <ToastEditor
+        initialValue={content}
+        onChange={(value: string) => setContent(value)}
+        height="400px"
+        handleImage={handleImage}
+      />
       {/* 작성완료버튼 */}
       <button
         type="button"

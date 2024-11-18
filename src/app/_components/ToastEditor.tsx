@@ -7,9 +7,10 @@ interface ToastEditorProps {
   initialValue: string;
   onChange: (value: string) => void;
   height: string;
+  handleImage: (blob: File, callback: (url: string) => void) => Promise<void>;
 }
 
-export default function ToastEditor({ initialValue = '', onChange, height }: ToastEditorProps) {
+export default function ToastEditor({ initialValue = '', onChange, height, handleImage }: ToastEditorProps) {
   const editorRef = useRef<Editor>(null);
 
   // 컴포넌트가 마운트된 후 에디터의 change 이벤트 리스너를 설정
@@ -34,6 +35,7 @@ export default function ToastEditor({ initialValue = '', onChange, height }: Toa
       hideModeSwitch // 마크다운으로 전환하지 못하게
       height={height}
       useCommandShortcut // 키보드 단축키 사용 활성화
+      hooks={{ addImageBlobHook: handleImage }}
     />
   );
 }
