@@ -80,7 +80,7 @@ export async function postPost(postData: unknown) {
 // (POST) 포스트 이미지 업로드
 export async function postPic(file: File): Promise<string> {
   const formData = new FormData();
-  formData.append('image', file);
+  formData.append('pic', file);
 
   try {
     const { data } = await api.post('/blog/posts/pic', formData, {
@@ -88,6 +88,7 @@ export async function postPic(file: File): Promise<string> {
         'Content-Type': 'multipart/form-data',
       },
     });
+    console.log(data);
     return data.picUrl;
   } catch (error) {
     console.error('포스트 이미지 업로드 실패:', error);

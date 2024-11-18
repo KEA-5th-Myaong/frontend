@@ -57,11 +57,13 @@ export default function PostWrite() {
     }));
   }, [resetPostData, router]);
 
+  // 이미지 처리 함수
   const handleImage = useCallback(async (file: File, callback: (url: string) => void) => {
     const imageUrl = await postPic(file);
     callback(imageUrl);
   }, []);
 
+  // 포스트 제출
   const handleSubmit = useCallback(
     async (data: PostWriteProps) => {
       try {
@@ -102,7 +104,7 @@ export default function PostWrite() {
   );
   return (
     <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5 pt-14 md:pt-0">
-      <BackButton onBtnClick={handleBackBtnClick} className="flex w-full pt-12 mb-2" />
+      <BackButton onBtnClick={handleBackBtnClick} className="flex max-w-fit mt-12 mb-2" />
 
       {/* 제목 */}
       <div className="flex-col w-full py-3 px-2.5">
