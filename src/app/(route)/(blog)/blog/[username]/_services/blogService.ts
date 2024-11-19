@@ -88,7 +88,7 @@ export async function postPic(file: File): Promise<string> {
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log(data);
+
     return data.picUrl;
   } catch (error) {
     console.error('포스트 이미지 업로드 실패:', error);
