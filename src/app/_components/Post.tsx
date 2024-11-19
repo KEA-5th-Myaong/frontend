@@ -23,13 +23,19 @@ export default function Post({
   lovedCount,
 }: PostDetailProps) {
   const imageSource = profilePicUrl || defaultProfilePic;
+
+  const handleUserClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // 상위 요소로의 이벤트 전파를 막기
+    onUserClick();
+  };
   return (
     <div
+      onClick={onContentClick}
       className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] rounded-2xl 
         border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out ${className}`}
     >
       <div className="flex flex-col w-full">
-        <div className="flex items-center w-full" onClick={onUserClick}>
+        <div className="flex items-center w-full" onClick={handleUserClick}>
           <Image className="rounded-full mr-5" src={imageSource} alt="프로필사진" width={42} height={42} unoptimized />
           <div className="flex justify-between w-full">
             <p>{nickname}</p>
@@ -42,7 +48,7 @@ export default function Post({
       </div>
 
       <div className="flex flex-col pl-[12px] sm:pl-[62px] pr-5 gap-7">
-        <div className="flex flex-col gap-4" onClick={onContentClick}>
+        <div className="flex flex-col gap-4">
           <span className="text-[#030303] font-semibold">{title}</span>
           <span className="text-[#030303] overflow-hidden line-clamp-3">{content}</span>
         </div>
