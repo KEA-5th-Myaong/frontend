@@ -3,7 +3,8 @@
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import DOMPurify from 'dompurify'; // 추후에 수정
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../../../../../_components/ui/Icon';
 import { CommentIcon, FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
 import MoreOptions from '../../../../../../_components/MoreOptions';
@@ -12,20 +13,19 @@ import PostComment from './_comment/PostComment';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { fetchPostPostId } from '../../_services/blogService';
+import { deletePost, fetchPostPostId } from '../../_services/blogService';
+import usePostWriteStore from '@/app/_store/postWirte';
+import Modal, { initailModalState } from '@/app/_components/Modal';
 
 export default function PostContent() {
+  const router = useRouter();
   const params = useParams();
-  const { postId } = params;
+  const { username, postId } = params;
+  const queryClient = useQueryClient();
+  const setPost = usePostWriteStore((state) => state.setPostData);
+  const [modalState, setModalState] = useState(initailModalState);
 
-  const getMemberId = (param: string | string[]): string => {
-    if (Array.isArray(param)) {
-      return param[0]; // 배열인 경우 첫 번째 요소를 사용
-    }
-    return param;
-  };
-
-  const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(getMemberId(postId)));
+  const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId as string));
 
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,6 +34,39 @@ export default function PostContent() {
     ref: dropdownRef,
     callback: () => setShowDropDown(false),
   });
+
+  // 포스트 수정
+  const handleEditClick = () => {
+    router.push(`/blog/${username}/write`);
+    setPost(data?.data.content);
+  };
+
+  // 포스트 삭제
+  const handleDeletePost = async (id: string) => {
+    try {
+      await deletePost(id as string);
+      await queryClient.invalidateQueries({ queryKey: ['user-post', postId] });
+    } catch (error) {
+      console.error('포스트 삭제 실패:', error);
+    } finally {
+      setModalState(initailModalState); // 모달 닫기
+      router.push(`/blog/${username}`);
+    }
+  };
+
+  // 삭제 버튼 누르면 나오는 모달
+  const handleDeleteClick = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '해당 포스트를 삭제하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '삭제',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () => handleDeletePost(postId as string),
+    }));
+  };
 
   return (
     <>
@@ -49,7 +82,7 @@ export default function PostContent() {
             name={MoreIcon}
           />
 
-          {showDropDown && <MoreOptions />}
+          {showDropDown && <MoreOptions handleEditClick={handleEditClick} handleDeleteClick={handleDeleteClick} />}
         </div>
       </div>
 
@@ -96,6 +129,18 @@ export default function PostContent() {
 
       {/* 댓글 */}
       <PostComment comments={data?.data.comments} />
+
+      {modalState.open && (
+        <Modal
+          isWarn
+          hasSubBtn={modalState.hasSubBtn}
+          topText={modalState.topText}
+          subBtnText={modalState.subBtnText}
+          btnText={modalState.btnText}
+          onSubBtnClick={modalState.onSubBtnClick}
+          onBtnClick={modalState.onBtnClick}
+        />
+      )}
     </>
   );
 }
