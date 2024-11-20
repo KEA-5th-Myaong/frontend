@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import BackButton from '../../../../../_components/BackButton';
-import { postPic, postPost } from '../_services/blogService';
+import { postPic, postPost, putPost } from '../_services/blogService';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import { PostWriteProps } from '../_types/blog';
 import usePostWriteStore from '@/app/_store/postWirte';
@@ -20,6 +20,10 @@ const ToastEditor = dynamic(() => import('../../../../../_components/ToastEditor
 
 export default function PostWrite() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isEdit = searchParams.get('edit') === 'true';
+  const postId = searchParams.get('postId');
+
   const postData = usePostWriteStore((state) => state.postData);
   const resetPostData = usePostWriteStore((state) => state.resetPostData);
   const messages = useChatWriteStore((state) => state.messages);
@@ -84,12 +88,16 @@ export default function PostWrite() {
           return;
         }
 
-        await postPost(data); // api 호출
+        if (isEdit && postId) {
+          await putPost(postId, data); // 수정 API 호출
+        } else {
+          await postPost(data); // 새 글 작성 API 호출
+        }
         // api 호출 후 나오는 모달
         setModalState((prev) => ({
           ...prev,
           open: true,
-          topText: '포스트가 작성되었습니다.',
+          topText: `포스트가 ${isEdit ? '수정' : '작성'}되었습니다.`,
           btnText: '닫기',
           onBtnClick: () => {
             resetPostData();
@@ -100,13 +108,13 @@ export default function PostWrite() {
         setModalState((prev) => ({
           ...prev,
           open: true,
-          topText: '포스트 작성 중 오류가 발생했습니다.',
+          topText: `포스트 ${isEdit ? '수정' : '작성'} 중 오류가 발생했습니다.`,
           btnText: '확인',
           onBtnClick: () => setModalState(initailModalState),
         }));
       }
     },
-    [resetPostData, router],
+    [isEdit, postId, resetPostData, router],
   );
   return (
     <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5 pt-14 md:pt-0">
