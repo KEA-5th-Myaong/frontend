@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import DOMPurify from 'dompurify'; // 추후에 수정
 import { useParams, useRouter } from 'next/navigation';
@@ -35,27 +35,30 @@ export default function PostContent() {
     callback: () => setShowDropDown(false),
   });
 
-  // 포스트 수정
-  const handleEditClick = () => {
+  // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
+  const handleEditClick = useCallback(() => {
     router.push(`/blog/${username}/write`);
     setPost(data?.data.content);
-  };
+  }, [username, data?.data.content, router, setPost]);
 
-  // 포스트 삭제
-  const handleDeletePost = async (id: string) => {
-    try {
-      await deletePost(id as string);
-      await queryClient.invalidateQueries({ queryKey: ['user-post', postId] });
-    } catch (error) {
-      console.error('포스트 삭제 실패:', error);
-    } finally {
-      setModalState(initailModalState); // 모달 닫기
-      router.push(`/blog/${username}`);
-    }
-  };
+  // 포스트 삭제, 자식 컴포넌트의 불필요한 리렌더링 방지
+  const handleDeletePost = useCallback(
+    async (id: string) => {
+      try {
+        await deletePost(id as string);
+        await queryClient.invalidateQueries({ queryKey: ['user-post', postId] });
+      } catch (error) {
+        console.error('포스트 삭제 실패:', error);
+      } finally {
+        setModalState(initailModalState); // 모달 닫기
+        router.push(`/blog/${username}`);
+      }
+    },
+    [postId, queryClient, router, username],
+  );
 
   // 삭제 버튼 누르면 나오는 모달
-  const handleDeleteClick = () => {
+  const handleDeleteClick = useCallback(() => {
     setModalState((prev) => ({
       ...prev,
       open: true,
@@ -66,8 +69,13 @@ export default function PostContent() {
       onSubBtnClick: () => setModalState(initailModalState),
       onBtnClick: () => handleDeletePost(postId as string),
     }));
-  };
+  }, [handleDeletePost, postId]);
 
+  // 컨텐츠 sanitize 메모이제이션
+  const sanitizedContent = useMemo(
+    () => ({ __html: DOMPurify.sanitize(data?.data.content || '') }),
+    [data?.data.content],
+  );
   return (
     <>
       {/* 제목과 더보기 아이콘 */}
@@ -98,7 +106,6 @@ export default function PostContent() {
             height={29}
             unoptimized
           />
-
           <span>{data?.data.nickname}</span>
         </div>
         <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
@@ -107,10 +114,7 @@ export default function PostContent() {
       </div>
 
       {/* 포스트 내용 */}
-      <div
-        className="mt-[19px] px-[7px]"
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.data.content) }}
-      />
+      <div className="mt-[19px] px-[7px]" dangerouslySetInnerHTML={sanitizedContent} />
 
       {/* 작성일 댓글 좋아요 */}
       <div className="flex items-center justify-between mt-20 pb-10 border-b">
