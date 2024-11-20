@@ -17,6 +17,8 @@ export interface PostDetailProps extends PostProps {
   lovedCount: number;
   userJob: string;
 
+  onLoveClick?: () => void;
+  onBookmarkClick?: () => void;
   onUserClick: () => void;
   onContentClick: () => void;
 }

@@ -190,7 +190,7 @@ export async function deleteReplies(replyId: string) {
 }
 
 // (PUT) 좋아요 표시
-export async function putLike(postId: string) {
+export async function putLike(postId: number) {
   try {
     const { data } = await api.put(`/blog/posts/${postId}/like`);
     return data;
@@ -201,7 +201,7 @@ export async function putLike(postId: string) {
 }
 
 // (PUT) 북마크 표시
-export async function putBookmark(postId: string) {
+export async function putBookmark(postId: number) {
   try {
     const { data } = await api.put(`/blog/posts/${postId}/bookmark`);
     return data;

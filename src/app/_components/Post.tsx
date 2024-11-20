@@ -18,6 +18,8 @@ export default function Post({
   className,
 
   // 미구현
+  onLoveClick,
+  onBookmarkClick,
   userJob,
   isLoved,
   lovedCount,
@@ -28,18 +30,36 @@ export default function Post({
     e.stopPropagation(); // 상위 요소로의 이벤트 전파를 막기
     onUserClick();
   };
+
+  const handleBookmarkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onBookmarkClick) {
+      onBookmarkClick();
+    }
+  };
+
+  const handleLoveClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onLoveClick) {
+      onLoveClick();
+    }
+  };
   return (
     <div
       onClick={onContentClick}
       className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] rounded-2xl 
-        border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out ${className}`}
+        border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out cursor-pointer ${className}`}
     >
       <div className="flex flex-col w-full">
         <div className="flex items-center w-full" onClick={handleUserClick}>
           <Image className="rounded-full mr-5" src={imageSource} alt="프로필사진" width={42} height={42} unoptimized />
           <div className="flex justify-between w-full">
             <p>{nickname}</p>
-            <Icons name={isBookmarked ? { ...BookmarkIcon, fill: '#41AED9' } : BookmarkIcon} className="mr-5" />
+            <Icons
+              onClick={handleBookmarkClick}
+              name={isBookmarked ? { ...BookmarkIcon, fill: '#41AED9' } : BookmarkIcon}
+              className="mr-5"
+            />
           </div>
         </div>
         <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
@@ -55,7 +75,7 @@ export default function Post({
 
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-1">{timestamp}</span>
-          <div className="blog-favor-frame">
+          <div onClick={handleLoveClick} className="blog-favor-frame">
             <Icons name={FavorIcon} className={`${isLoved ? 'text-primary-1' : 'text-gray-1'}`} />
             <span className={`${isLoved ? 'text-primary-1' : 'text-gray-1'} text-sm mt-[1.5px]`}>{lovedCount}</span>
           </div>
