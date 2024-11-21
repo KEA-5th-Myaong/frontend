@@ -108,7 +108,7 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
                 router.push(`/blog/${post.username}`);
               }}
               onContentClick={() => {
-                router.push(`/blog/${post.username}/${post.postId}`);
+                router.push(`/blog/${post.username}/${post.title}`);
               }}
               thumbnail={null}
               profilePicUrl={post.profilePicUrl || defaultProfilePic.src} // 여기를 수정
