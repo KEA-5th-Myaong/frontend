@@ -13,18 +13,24 @@ import PostComment from './_comment/PostComment';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { deletePost, fetchPostPostId } from '../../_services/blogService';
+import { deletePost, fetchPostPostId, fetchURLPost } from '../../_services/blogService';
 import usePostWriteStore from '@/app/_store/postWirte';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 
 export default function PostContent() {
   const router = useRouter();
   const params = useParams();
-  const { username, postId } = params;
+  const { username, postTitle } = params;
+
   const queryClient = useQueryClient();
   const setTitle = usePostWriteStore((state) => state.setPostTitle);
   const setPost = usePostWriteStore((state) => state.setPostData);
   const [modalState, setModalState] = useState(initailModalState);
+
+  const { data: postURLData } = useCustomQuery(['url-post'], () =>
+    fetchURLPost(username as string, postTitle as string),
+  );
+  const postId = postURLData?.postId;
 
   const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId as string));
 

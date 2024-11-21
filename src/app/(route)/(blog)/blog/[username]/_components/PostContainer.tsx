@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
 import Post from '../../../../../_components/Post';
-import { fetchPost, putBookmark, putLike } from '../_services/blogService';
+import { fetchPost, fetchProfile, putBookmark, putLike } from '../_services/blogService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { PostDetailProps } from '@/app/(route)/(main-page)/main/_types/main-page';
 import { formatDate } from '@/app/_utils/formatDate';
@@ -17,8 +17,11 @@ type MutationContext = {
 
 export default function PostContainer() {
   const router = useRouter();
+  const params = useParams();
+  const { username } = params;
+  const { data: memberData } = useCustomQuery(['member', username], () => fetchProfile(username as string));
 
-  const memberId = '1'; // 멤버아이디 나중에 전역변수에서 가져옴
+  const memberId = memberData?.memberId;
   const [lastId, setLastId] = useState('0');
   const queryClient = useQueryClient();
 

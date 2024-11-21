@@ -1,5 +1,16 @@
 import api from '@/app/api/axiosInstance';
 
+// (GET) 타인 정보 조회(주어진 정보가 username뿐일 때 사용)
+export async function fetchProfile(username: string) {
+  try {
+    const { data } = await api.get(`/blog/profile?profile=${username}`);
+    return data;
+  } catch (error) {
+    console.error('타인 정보 조회 실패:', error);
+    throw error;
+  }
+}
+
 // (GET) 회원 정보 조회(블로그 접속 시)
 export async function fetchMemberInfo(memberId: string) {
   try {
@@ -62,6 +73,17 @@ export async function fetchPostPostId(postId: string | undefined) {
     return data;
   } catch (error) {
     console.error('사용자의 특정 포스트 조회 실패:', error);
+    throw error;
+  }
+}
+
+// (GET) URL로 포스트 조회
+export async function fetchURLPost(username: string, title: string) {
+  try {
+    const { data } = await api.get(`/blog/posts/${username}/${title}`);
+    return data;
+  } catch (error) {
+    console.error('URL로 포스트 조회 실패:', error);
     throw error;
   }
 }
