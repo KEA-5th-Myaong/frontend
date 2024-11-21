@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import DOMPurify from 'dompurify'; // 추후에 수정
 import { useParams, useRouter } from 'next/navigation';
@@ -16,6 +16,8 @@ import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { deletePost, fetchPostPostId, fetchURLPost } from '../../_services/blogService';
 import usePostWriteStore from '@/app/_store/postWirte';
 import Modal, { initailModalState } from '@/app/_components/Modal';
+import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
+import { PostDetailProps } from '@/app/(route)/(main-page)/main/_types/main-page';
 
 export default function PostContent() {
   const router = useRouter();
@@ -30,7 +32,16 @@ export default function PostContent() {
   const { data: postURLData } = useCustomQuery(['url-post'], () =>
     fetchURLPost(username as string, postTitle as string),
   );
+
+  const [posts, setPosts] = useState<PostDetailProps[]>([]); // 포스트 목록 상태
+  useEffect(() => {
+    if (postURLData && postURLData.success && postURLData.data && Array.isArray(postURLData.data.posts)) {
+      setPosts(postURLData.data.posts);
+    }
+  }, [postURLData]);
+
   const postId = postURLData?.postId || 1;
+  const memberId = '1';
 
   const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId as string));
 
@@ -41,6 +52,8 @@ export default function PostContent() {
     ref: dropdownRef,
     callback: () => setShowDropDown(false),
   });
+
+  const { loveMutation } = useLoveAndBookmark(posts, setPosts, memberId);
 
   // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
   const handleEditClick = useCallback(() => {
@@ -132,9 +145,12 @@ export default function PostContent() {
             <Icons name={CommentIcon} />
             <p className="text-sm">{data?.data.commentCount}</p>
           </div>
-          <div className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame">
+          <div
+            onClick={() => loveMutation.mutate(posts.postId)}
+            className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame"
+          >
             <Icons name={FavorIcon} />
-            <span className="text-sm">{data?.data.likeCount}</span>
+            <span className="text-sm">{posts.lovedCount || 0}</span>
           </div>
         </div>
       </div>
