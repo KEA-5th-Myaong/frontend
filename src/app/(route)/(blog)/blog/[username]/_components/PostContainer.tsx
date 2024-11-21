@@ -122,7 +122,7 @@ export default function PostContainer() {
               isBookmarked={post.isBookmarked}
               onLoveClick={() => loveMutation.mutate(post.postId)}
               isLoved={post.isLoved}
-              lovedCount={post.lovedCount}
+              lovedCount={post.lovedCount || 0}
             />
           ))}
     </div>

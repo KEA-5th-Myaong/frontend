@@ -52,7 +52,15 @@ export default function Post({
     >
       <div className="flex flex-col w-full">
         <div className="flex items-center w-full" onClick={handleUserClick}>
-          <Image className="rounded-full mr-5" src={imageSource} alt="프로필사진" width={42} height={42} unoptimized />
+          <Image
+            className="rounded-full mr-5"
+            src={imageSource}
+            alt=""
+            width={42}
+            height={42}
+            unoptimized
+            loading="lazy"
+          />
           <div className="flex justify-between w-full">
             <p>{nickname}</p>
             <Icons

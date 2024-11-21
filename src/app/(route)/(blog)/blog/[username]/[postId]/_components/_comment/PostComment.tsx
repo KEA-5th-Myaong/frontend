@@ -67,7 +67,6 @@ export default function PostComment({ comments }: PostCommentProps) {
     const isReplyInputVisible =
       replyingTo === comment.commentId || replies.some((reply) => replyingTo === reply.commentId);
     // * some 메소드: 배열의 요소 중 하나라도 주어진 조건을 만족하면 true를 반환
-
     return (
       <div key={comment.commentId}>
         {/* 일반 댓글 */}
@@ -103,7 +102,7 @@ export default function PostComment({ comments }: PostCommentProps) {
       {/* 댓글 입력 인풋 */}
       <div className="flex flex-col mt-10 gap-2.5">
         <textarea
-          className="resize-none px-[18px] py-2.5 w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3"
+          className="resize-none px-[18px] py-2.5 w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3 focus:outline-none"
           placeholder="댓글을 작성해주세요"
           maxLength={255}
         />

@@ -22,6 +22,7 @@ export default function PostContent() {
   const params = useParams();
   const { username, postId } = params;
   const queryClient = useQueryClient();
+  const setTitle = usePostWriteStore((state) => state.setPostTitle);
   const setPost = usePostWriteStore((state) => state.setPostData);
   const [modalState, setModalState] = useState(initailModalState);
 
@@ -38,8 +39,9 @@ export default function PostContent() {
   // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
   const handleEditClick = useCallback(() => {
     router.push(`/blog/${username}/write?edit=true&postId=${postId}`);
+    setTitle(data?.data.title);
     setPost(data?.data.content);
-  }, [username, postId, data?.data.content, router, setPost]);
+  }, [username, postId, data?.data.title, setTitle, data?.data.content, setPost, router]);
 
   // 포스트 삭제, 자식 컴포넌트의 불필요한 리렌더링 방지
   const handleDeletePost = useCallback(

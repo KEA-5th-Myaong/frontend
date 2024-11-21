@@ -24,8 +24,9 @@ export default function PostWrite() {
   const isEdit = searchParams.get('edit') === 'true';
   const postId = searchParams.get('postId');
 
+  const postTitle = usePostWriteStore((state) => state.postTitle);
   const postData = usePostWriteStore((state) => state.postData);
-  const resetPostData = usePostWriteStore((state) => state.resetPostData);
+  const resetPost = usePostWriteStore((state) => state.resetPost);
   const messages = useChatWriteStore((state) => state.messages);
   const resetMessages = useChatWriteStore((state) => state.resetMessages);
 
@@ -34,7 +35,7 @@ export default function PostWrite() {
     [messages],
   );
 
-  const [title, setTitle] = useState(''); // 포스트 제목
+  const [title, setTitle] = useState(postTitle || ''); // 포스트 제목
   const [content, setContent] = useState(postData || formattedMessages || ' '); // 포스트 내용
   const [modalState, setModalState] = useState(initailModalState);
   // 에디터 높이 설정, 비율은 55%와 기본 높이는 400px
@@ -46,9 +47,9 @@ export default function PostWrite() {
   useEffect(() => {
     return () => {
       resetMessages();
-      resetPostData();
+      resetPost();
     };
-  }, [resetPostData, resetMessages]);
+  }, [resetPost, resetMessages]);
 
   const handleBackBtnClick = useCallback(() => {
     setModalState((prev) => ({
@@ -61,11 +62,11 @@ export default function PostWrite() {
       btnText: '이동',
       onSubBtnClick: () => setModalState(initailModalState),
       onBtnClick: () => {
-        resetPostData();
+        resetPost();
         router.back();
       },
     }));
-  }, [resetPostData, router]);
+  }, [resetPost, router]);
 
   // 이미지 처리 함수
   const handleImage = useCallback(async (file: File, callback: (url: string) => void) => {
@@ -100,7 +101,7 @@ export default function PostWrite() {
           topText: `포스트가 ${isEdit ? '수정' : '작성'}되었습니다.`,
           btnText: '닫기',
           onBtnClick: () => {
-            resetPostData();
+            resetPost();
             router.push('/main');
           },
         }));
@@ -114,7 +115,7 @@ export default function PostWrite() {
         }));
       }
     },
-    [isEdit, postId, resetPostData, router],
+    [isEdit, postId, resetPost, router],
   );
   return (
     <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5 pt-14 md:pt-0">
