@@ -30,7 +30,7 @@ export default function PostContent() {
   const { data: postURLData } = useCustomQuery(['url-post'], () =>
     fetchURLPost(username as string, postTitle as string),
   );
-  const postId = postURLData?.postId;
+  const postId = postURLData?.postId || 1;
 
   const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId as string));
 
