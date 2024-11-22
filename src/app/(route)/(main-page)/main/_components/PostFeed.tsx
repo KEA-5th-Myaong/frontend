@@ -6,7 +6,6 @@ import { v4 } from 'uuid';
 import { useInView } from 'react-intersection-observer';
 import { PostProps } from '../_types/main-page';
 import { fetchBookmark, fetchFollowing, fetchPosts, fetchPreJob } from '../_services/mainService';
-import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import Post from '@/app/_components/Post';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
@@ -17,12 +16,26 @@ interface PostFeedProps {
   preJob: string[];
 }
 
+interface PostResponse {
+  pages: PostResponse[] | undefined;
+  data: {
+    posts: PostProps[];
+    lastId: number;
+  };
+}
+
 export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   const router = useRouter();
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   const { ref, inView } = useInView();
 
-  const [lastId, setLastId] = useState('0'); // 포스트의 마지막 아이디(나중에 무한스크롤 구현에 사용)
+  const commonQueryOptions = {
+    getNextPageParam: (lastPage: PostResponse) => {
+      if (lastPage.data.lastId === -1) return undefined;
+      return lastPage.data.lastId;
+    },
+    initialPageParam: '0',
+  };
 
   const {
     data: recommendData,
@@ -30,31 +43,38 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useCustomInfiniteQuery(['recommendPosts', lastId], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
+  } = useCustomInfiniteQuery(['recommendPosts'], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
+    ...commonQueryOptions,
     enabled: activeTab === '추천',
-    getNextPageParam: (lastPage) => {
-      if (lastPage.data.lastId === -1) return undefined;
-      return lastPage.data.lastId;
-    },
   });
 
-  const { data: followingData, isLoading: isFollowingLoading } = useCustomQuery(
-    ['followingPosts', lastId],
-    () => fetchFollowing(lastId),
-    { enabled: activeTab === '팔로잉' },
+  const { data: followingData, isLoading: isFollowingLoading } = useCustomInfiniteQuery(
+    ['followingPosts'],
+    ({ pageParam = '0' }) => fetchFollowing(pageParam as string),
+    { ...commonQueryOptions, enabled: activeTab === '팔로잉' },
   );
 
-  const { data: bookmarkData, isLoading: isBookmarkLoading } = useCustomQuery(
-    ['bookmarkPosts', lastId],
-    () => fetchBookmark(lastId),
-    { enabled: activeTab === '북마크' },
+  const { data: bookmarkData, isLoading: isBookmarkLoading } = useCustomInfiniteQuery(
+    ['bookmarkPosts'],
+    ({ pageParam = '0' }) => fetchBookmark(pageParam as string),
+    { ...commonQueryOptions, enabled: activeTab === '북마크' },
   );
 
-  const { data: preJobData, isLoading: isPreJobLoading } = useCustomQuery(
-    ['preJobPosts', lastId, preJob],
-    () => fetchPreJob(lastId, preJob),
-    { enabled: activeTab === '직군' && preJob.length > 0 },
+  const { data: preJobData, isLoading: isPreJobLoading } = useCustomInfiniteQuery(
+    ['preJobPosts', ...preJob],
+    ({ pageParam = '0' }) => fetchPreJob(pageParam as string, preJob),
+    { ...commonQueryOptions, enabled: activeTab === '직군' && preJob.length > 0 },
   );
+
+  const processPagesData = (pages?: PostResponse[]) => {
+    if (!pages) return [];
+    return pages.reduce((acc: PostProps[], page: PostResponse) => {
+      if (page.data.posts) {
+        return [...acc, ...page.data.posts];
+      }
+      return acc;
+    }, []);
+  };
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -63,34 +83,20 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
 
     let currentPosts: PostProps[] = [];
 
-    if (activeTab === '추천' && recommendData) {
-      // infinite query의 pages 데이터 처리
-      currentPosts = recommendData.pages.reduce((acc: PostProps[], page) => {
-        if (page.data.posts) {
-          return [...acc, ...page.data.posts];
-        }
-        return acc;
-      }, []);
-    } else {
-      // 일반 query 데이터 처리
-      // eslint-disable-next-line default-case
-      switch (activeTab) {
-        case '팔로잉':
-          if (followingData?.success && followingData.data?.posts) {
-            currentPosts = followingData.data.posts;
-          }
-          break;
-        case '북마크':
-          if (bookmarkData?.success && bookmarkData.data?.posts) {
-            currentPosts = bookmarkData.data.posts;
-          }
-          break;
-        case '직군':
-          if (preJobData?.success && preJobData.data?.posts) {
-            currentPosts = preJobData.data.posts;
-          }
-          break;
-      }
+    // eslint-disable-next-line default-case
+    switch (activeTab) {
+      case '추천':
+        currentPosts = processPagesData(recommendData?.pages);
+        break;
+      case '팔로잉':
+        currentPosts = processPagesData(followingData?.pages);
+        break;
+      case '북마크':
+        currentPosts = processPagesData(bookmarkData?.pages);
+        break;
+      case '직군':
+        currentPosts = processPagesData(preJobData?.pages);
+        break;
     }
 
     setPosts(currentPosts);
@@ -106,20 +112,14 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
     fetchNextPage,
   ]);
 
-  const isLoading = (() => {
-    switch (activeTab) {
-      case '추천':
-        return isRecommendLoading;
-      case '팔로잉':
-        return isFollowingLoading;
-      case '북마크':
-        return isBookmarkLoading;
-      case '직군':
-        return isPreJobLoading;
-      default:
-        return isRecommendLoading;
-    }
-  })();
+  const loadingStates = {
+    추천: isRecommendLoading,
+    팔로잉: isFollowingLoading,
+    북마크: isBookmarkLoading,
+    직군: isPreJobLoading,
+  };
+
+  const isLoading = loadingStates[activeTab as keyof typeof loadingStates] ?? isRecommendLoading;
 
   return (
     <div className="flex flex-col gap-6 w-full pt-5">
