@@ -21,6 +21,7 @@ import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown'
 import Footer from '../../../_components/Footer';
 import UploadImage from './_components/UploadImage';
 import { PortfolioProps } from '@/app/_types/portfolio';
+import Image from 'next/image';
 
 export default function PortfolioWrite() {
   const [title, setTitle] = useState('백지연 포트폴리오1');
@@ -146,7 +147,16 @@ export default function PortfolioWrite() {
                   />
                 </section>
                 <EducationSection register={register} />
-                {toggles.experience && <ExperienceSection register={register} />}
+
+                <div className="relative">
+                  {toggles.experience && <ExperienceSection register={register} />}
+                  {toggles.experience && (
+                    <div className="custom-shadow absolute right-[-220px] top-[90px] flex flex-col items-center max-w-[200px] bg-white-0  text-gray-1 text-[14px] py-[16px] px-[25px] rounded-[10px] border-[2px] border-[#D8E6F1] ">
+                      <Image src="/mascot.png" alt="마스코트" width={70} height={63} className="mb-[17px]" />
+                      강렬한 첫인상을 줄 수 있도록 도입부를 임팩트 있게 작성하세요
+                    </div>
+                  )}
+                </div>
                 {toggles.links && <LinksSection register={register} />}
                 {toggles.skills && <SkillsSection setValue={setValue} />}
                 {toggles.certifications && <CertificationsSection register={register} />}
