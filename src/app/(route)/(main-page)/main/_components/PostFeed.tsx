@@ -3,12 +3,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { v4 } from 'uuid';
+import { useInView } from 'react-intersection-observer';
 import { PostProps } from '../_types/main-page';
 import { fetchBookmark, fetchFollowing, fetchPosts, fetchPreJob } from '../_services/mainService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import Post from '@/app/_components/Post';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
+import useCustomInfiniteQuery from '@/app/_hooks/useCustomInfiniteQuery';
 
 interface PostFeedProps {
   activeTab: string;
@@ -18,14 +20,23 @@ interface PostFeedProps {
 export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   const router = useRouter();
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
+  const { ref, inView } = useInView();
 
-  const [lastId, setLastId] = useState('1'); // 포스트의 마지막 아이디(나중에 무한스크롤 구현에 사용)
+  const [lastId, setLastId] = useState('0'); // 포스트의 마지막 아이디(나중에 무한스크롤 구현에 사용)
 
-  const { data: recommendData, isLoading: isRecommendLoading } = useCustomQuery(
-    ['recommendPosts', lastId], // 키 값, 캐싱을 위해 사용
-    () => fetchPosts(lastId), // 콜백 함수
-    { enabled: activeTab === '추천' }, // 해당 탭이 활성화 됐을 때에만 쿼리 실행
-  );
+  const {
+    data: recommendData,
+    isLoading: isRecommendLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useCustomInfiniteQuery(['recommendPosts', lastId], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
+    enabled: activeTab === '추천',
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.lastId === -1) return undefined;
+      return lastPage.data.lastId;
+    },
+  });
 
   const { data: followingData, isLoading: isFollowingLoading } = useCustomQuery(
     ['followingPosts', lastId],
@@ -46,34 +57,54 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   );
 
   useEffect(() => {
-    // 나중에 무한 스크롤 구현할 때 수정
-    const handleLastIdChange = (newLastId: string) => {
-      setLastId(newLastId);
-    };
-
-    let currentData;
-    switch (activeTab) {
-      case '추천':
-        currentData = recommendData;
-        break;
-      case '팔로잉':
-        currentData = followingData;
-        break;
-      case '북마크':
-        currentData = bookmarkData;
-        break;
-      case '직군':
-        currentData = preJobData;
-        break;
-      default:
-        currentData = recommendData;
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
 
-    if (currentData && currentData.success && currentData.data && Array.isArray(currentData.data.posts)) {
-      setPosts(currentData.data.posts);
-      handleLastIdChange(currentData.data.lastId);
+    let currentPosts: PostProps[] = [];
+
+    if (activeTab === '추천' && recommendData) {
+      // infinite query의 pages 데이터 처리
+      currentPosts = recommendData.pages.reduce((acc: PostProps[], page) => {
+        if (page.data.posts) {
+          return [...acc, ...page.data.posts];
+        }
+        return acc;
+      }, []);
+    } else {
+      // 일반 query 데이터 처리
+      // eslint-disable-next-line default-case
+      switch (activeTab) {
+        case '팔로잉':
+          if (followingData?.success && followingData.data?.posts) {
+            currentPosts = followingData.data.posts;
+          }
+          break;
+        case '북마크':
+          if (bookmarkData?.success && bookmarkData.data?.posts) {
+            currentPosts = bookmarkData.data.posts;
+          }
+          break;
+        case '직군':
+          if (preJobData?.success && preJobData.data?.posts) {
+            currentPosts = preJobData.data.posts;
+          }
+          break;
+      }
     }
-  }, [activeTab, recommendData, followingData, preJobData, bookmarkData]);
+
+    setPosts(currentPosts);
+  }, [
+    activeTab,
+    recommendData,
+    followingData,
+    preJobData,
+    bookmarkData,
+    inView,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  ]);
 
   const isLoading = (() => {
     switch (activeTab) {
@@ -119,6 +150,10 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
               lovedCount={0}
             />
           ))}
+
+      {/* 무한 스크롤 트리거용 div */}
+      <div ref={ref} className="h-1" />
+      {isFetchingNextPage && <div className="w-full h-48 bg-gray-200 rounded-md animate-pulse" />}
     </div>
   );
 }
