@@ -142,6 +142,9 @@ body {
   .pf-read-section {
     @apply flex flex-col my-10;
   }
+  .custom-shadow {
+    @apply shadow-[0px_4px_21.6px_rgba(0,0,0,0.05)];
+  }
 
   /* 관리자 */
   .admin-modal-text {
