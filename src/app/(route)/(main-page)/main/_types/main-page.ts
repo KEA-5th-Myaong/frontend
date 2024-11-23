@@ -27,3 +27,16 @@ export interface PostData {
   lastId: number;
   posts: PostProps[];
 }
+
+export interface PostFeedProps {
+  activeTab: string;
+  preJob: string[];
+}
+
+export interface PostResponse {
+  pages: PostResponse[] | undefined;
+  data: {
+    posts: PostProps[];
+    lastId: number;
+  };
+}
