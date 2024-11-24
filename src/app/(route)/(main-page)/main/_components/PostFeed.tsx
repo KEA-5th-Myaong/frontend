@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { v4 } from 'uuid';
 import { useInView } from 'react-intersection-observer';
-import { PostFeedProps, PostProps, PostResponse } from '../_types/main-page';
+import { PostProps, PostFeedProps, PostResponse } from '../_types/main-page';
 import { fetchBookmark, fetchFollowing, fetchPosts, fetchPreJob } from '../_services/mainService';
 import Post from '@/app/_components/Post';
 import { formatDate } from '@/app/_utils/formatDate';
@@ -182,8 +182,10 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
               content={post.content}
               timestamp={formatDate(post.timestamp)}
               userJob="프론트엔드 개발자"
-              isLoved={false}
-              lovedCount={0}
+              onBookmarkClick={() => {}}
+              onLoveClick={() => {}}
+              isLoved={post.isLoved}
+              lovedCount={post.lovedCount || 0}
             />
           ))}
 

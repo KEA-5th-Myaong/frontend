@@ -1,15 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { putLike, putBookmark } from '../(route)/(blog)/blog/[username]/_services/blogService';
-import { PostDetailProps } from '../(route)/(main-page)/main/_types/main-page';
+import { PostProps } from '../(route)/(main-page)/main/_types/main-page';
 import useCustomMutation from './useCustomMutation';
 
 type MutationContext = {
-  previousPosts: PostDetailProps[];
+  previousPosts: PostProps[];
 };
 
 const useLoveAndBookmark = (
-  posts: PostDetailProps[],
-  setPosts: React.Dispatch<React.SetStateAction<PostDetailProps[]>>,
+  posts: PostProps[],
+  setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>,
   memberId?: string,
   lastId?: string,
 ) => {

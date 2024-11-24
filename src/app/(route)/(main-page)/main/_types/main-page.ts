@@ -9,10 +9,6 @@ export interface PostProps {
   username?: string | null;
   profilePicUrl: string | null;
   isBookmarked: boolean;
-}
-
-export interface PostDetailProps extends PostProps {
-  className?: string;
   isLoved: boolean;
   lovedCount: number;
   userJob: string;
@@ -21,11 +17,8 @@ export interface PostDetailProps extends PostProps {
   onBookmarkClick?: () => void;
   onUserClick: () => void;
   onContentClick: () => void;
-}
 
-export interface PostData {
-  lastId: number;
-  posts: PostProps[];
+  className?: string;
 }
 
 export interface PostFeedProps {
@@ -36,7 +29,7 @@ export interface PostFeedProps {
 export interface PostResponse {
   pages: PostResponse[] | undefined;
   data: {
-    posts: PostProps[];
     lastId: number;
+    posts: PostProps[];
   };
 }

@@ -17,7 +17,7 @@ import { deletePost, fetchPostPostId, fetchURLPost } from '../../_services/blogS
 import usePostWriteStore from '@/app/_store/postWirte';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
-import { PostDetailProps } from '@/app/(route)/(main-page)/main/_types/main-page';
+import { PostProps } from '@/app/(route)/(main-page)/main/_types/main-page';
 
 export default function PostContent() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function PostContent() {
     fetchURLPost(username as string, postTitle as string),
   );
 
-  const [posts, setPosts] = useState<PostDetailProps[]>([]); // 포스트 목록 상태
+  const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   useEffect(() => {
     if (postURLData && postURLData.success && postURLData.data && Array.isArray(postURLData.data.posts)) {
       setPosts(postURLData.data.posts);
@@ -146,11 +146,11 @@ export default function PostContent() {
             <p className="text-sm">{data?.data.commentCount}</p>
           </div>
           <div
-            onClick={() => loveMutation.mutate(posts.postId)}
+            onClick={() => loveMutation.mutate(data?.data.postId)}
             className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame"
           >
             <Icons name={FavorIcon} />
-            <span className="text-sm">{posts.lovedCount || 0}</span>
+            <span className="text-sm">{data?.data.lovedCount || 0}</span>
           </div>
         </div>
       </div>

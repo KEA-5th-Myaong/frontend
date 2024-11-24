@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Post from '../../../../../_components/Post';
 import { fetchPost, fetchProfile } from '../_services/blogService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { PostDetailProps } from '@/app/(route)/(main-page)/main/_types/main-page';
+import { PostProps } from '@/app/(route)/(main-page)/main/_types/main-page';
 import { formatDate } from '@/app/_utils/formatDate';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
 
@@ -21,7 +21,7 @@ export default function PostContainer() {
 
   const { data, isLoading } = useCustomQuery(['post', memberId], () => fetchPost(memberId, lastId));
 
-  const [posts, setPosts] = useState<PostDetailProps[]>([]); // 포스트 목록 상태
+  const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   useEffect(() => {
     if (data && data.success && data.data && Array.isArray(data.data.posts)) {
       setPosts(data.data.posts);

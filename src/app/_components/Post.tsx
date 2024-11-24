@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { PostDetailProps } from '../(route)/(main-page)/main/_types/main-page';
+import { PostProps } from '../(route)/(main-page)/main/_types/main-page';
 import Icons from './ui/Icon';
 import { BookmarkIcon, FavorIcon } from './ui/iconPath';
 import defaultProfilePic from '../../../public/mascot.png'; // 기본 프로필 이미지 import
@@ -23,7 +23,7 @@ export default function Post({
   userJob,
   isLoved,
   lovedCount,
-}: PostDetailProps) {
+}: PostProps) {
   const imageSource = profilePicUrl || defaultProfilePic;
 
   const handleUserClick = (e: React.MouseEvent) => {
