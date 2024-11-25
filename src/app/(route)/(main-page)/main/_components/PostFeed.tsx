@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { v4 } from 'uuid';
 import { useInView } from 'react-intersection-observer';
@@ -10,10 +10,12 @@ import Post from '@/app/_components/Post';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
 import useCustomInfiniteQuery from '@/app/_hooks/useCustomInfiniteQuery';
+import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
 
 export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   const router = useRouter();
   const { ref, inView } = useInView(); // 무한 스크롤을 위한 InterSection Observer 훅
+  const [posts, setPosts] = useState<PostProps[]>([]);
 
   // 모든 무한 쿼리에 공통적으로 사용할 옵션
   const commonQueryOptions = {
@@ -106,13 +108,24 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
     if (!currentQuery?.data?.pages) return [];
     return processPagesData(currentQuery.data.pages);
   }, [currentQuery?.data?.pages]);
+
+  useEffect(() => {
+    setPosts(currentPosts);
+  }, [currentPosts]);
+
+  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
+    posts,
+    setPosts,
+    '1', // memberId
+    currentQuery?.data?.pages?.[currentQuery.data.pages.length - 1]?.data.lastId?.toString(), // 마지막 페이지의 lastId
+  );
   return (
     <div className="flex flex-col gap-6 w-full pt-5">
       {isLoading
         ? Array.from({ length: 5 }).map(() => (
             <div key={v4()} className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
           ))
-        : currentPosts.map((post) => (
+        : posts.map((post) => (
             <Post
               key={post.postId}
               postId={post.postId}
@@ -131,8 +144,8 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
               content={post.content}
               timestamp={formatDate(post.timestamp)}
               userJob="프론트엔드 개발자"
-              onBookmarkClick={() => {}}
-              onLoveClick={() => {}}
+              onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
+              onLoveClick={() => loveMutation.mutate(post.postId)}
               isLoved={post.isLoved}
               lovedCount={post.lovedCount || 0}
             />
