@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { v4 } from 'uuid';
 import { useInView } from 'react-intersection-observer';
@@ -25,50 +25,28 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
     initialPageParam: '0', // 초기 페이지 파라미터
   };
 
-  const {
-    data: recommendData, // 추천 게시글 데이터
-    isLoading: isRecommendLoading, // 초기 로딩 상태
-    fetchNextPage: fetchRecommendNextpage, // 다음 페이지 fetch 함수
-    hasNextPage: hasRecommendNextPage, // 다음 페이지 존재 여부
-    isFetchingNextPage: isFetchingRecommendNextPage, // 다음 페이지 fetch중인지
-  } = useCustomInfiniteQuery(['recommendPosts'], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
-    ...commonQueryOptions,
-    enabled: activeTab === '추천',
-  });
-
-  const {
-    data: followingData,
-    isLoading: isFollowingLoading,
-    fetchNextPage: fetchFollowingNextPage,
-    hasNextPage: hasFollowingNextPage,
-    isFetchingNextPage: isFetchingFollowingNextPage,
-  } = useCustomInfiniteQuery(['followingPosts'], ({ pageParam = '0' }) => fetchFollowing(pageParam as string), {
-    ...commonQueryOptions,
-    enabled: activeTab === '팔로잉',
-  });
-
-  const {
-    data: bookmarkData,
-    isLoading: isBookmarkLoading,
-    fetchNextPage: fetchBookmarkNextPage,
-    hasNextPage: hasBookmarkNextPage,
-    isFetchingNextPage: isFetchingBookmarkNextPage,
-  } = useCustomInfiniteQuery(['bookmarkPosts'], ({ pageParam = '0' }) => fetchBookmark(pageParam as string), {
-    ...commonQueryOptions,
-    enabled: activeTab === '북마크',
-  });
-
-  const {
-    data: preJobData,
-    isLoading: isPreJobLoading,
-    fetchNextPage: fetchPreJobNextPage,
-    hasNextPage: hasPreJobNextPage,
-    isFetchingNextPage: isFetchingPreJobNextPage,
-  } = useCustomInfiniteQuery(
-    ['preJobPosts', ...preJob], // preJob 변경 시 쿼리 갱신
-    ({ pageParam = '0' }) => fetchPreJob(pageParam as string, preJob),
-    { ...commonQueryOptions, enabled: activeTab === '직군' && preJob.length > 0 },
-  );
+  // 각 탭별 무한스크롤 쿼리 설정
+  const queries = {
+    추천: useCustomInfiniteQuery(['recommendPosts'], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
+      ...commonQueryOptions,
+      enabled: activeTab === '추천',
+    }),
+    팔로잉: useCustomInfiniteQuery(['followingPosts'], ({ pageParam = '0' }) => fetchFollowing(pageParam as string), {
+      ...commonQueryOptions,
+      enabled: activeTab === '팔로잉',
+    }),
+    북마크: useCustomInfiniteQuery(['bookmarkPosts'], ({ pageParam = '0' }) => fetchBookmark(pageParam as string), {
+      ...commonQueryOptions,
+      enabled: activeTab === '북마크',
+    }),
+    직군: useCustomInfiniteQuery(
+      ['preJobPosts', ...preJob],
+      ({ pageParam = '0' }) => fetchPreJob(pageParam as string, preJob),
+      { ...commonQueryOptions, enabled: activeTab === '직군' && preJob.length > 0 },
+    ),
+  };
+  // 현재 활성화된 쿼리
+  const currentQuery = queries[activeTab as keyof typeof queries];
 
   // 페이지 데이터를 처리하는 유틸 함수
   const processPagesData = (pages?: PostResponse[]) => {
@@ -81,82 +59,53 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
       return acc;
     }, []);
   };
-
   // 무한 스크롤 처리
   useEffect(() => {
-    // 관찰 대상이 화면에 보일 때
-    if (inView) {
-      // eslint-disable-next-line default-case
-      switch (activeTab) {
-        case '추천':
-          if (hasRecommendNextPage && !isFetchingRecommendNextPage) {
-            fetchRecommendNextpage(); // 현재 활성 탭에 따라 다음 페이지 로드
-          }
-          break;
-        case '팔로잉':
-          if (hasFollowingNextPage && !isFetchingFollowingNextPage) {
-            fetchFollowingNextPage();
-          }
-          break;
-        case '북마크':
-          if (hasBookmarkNextPage && !isFetchingBookmarkNextPage) {
-            fetchBookmarkNextPage();
-          }
-          break;
-        case '직군':
-          if (hasPreJobNextPage && !isFetchingPreJobNextPage) {
-            fetchPreJobNextPage();
-          }
-          break;
+    // inView가 true이고 현재 쿼리의 다음 데이터가 있을 때
+    if (inView && currentQuery) {
+      const { hasNextPage, isFetchingNextPage, fetchNextPage } = currentQuery;
+      if (hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
       }
     }
-  }, [
-    activeTab,
-    inView,
-    hasRecommendNextPage,
-    isFetchingRecommendNextPage,
-    fetchRecommendNextpage,
-    hasFollowingNextPage,
-    isFetchingFollowingNextPage,
-    fetchFollowingNextPage,
-    hasBookmarkNextPage,
-    isFetchingBookmarkNextPage,
-    fetchBookmarkNextPage,
-    hasPreJobNextPage,
-    isFetchingPreJobNextPage,
-    fetchPreJobNextPage,
-  ]);
+  }, [inView, currentQuery]);
+
   // 각 탭별 로딩 상태
-  const loadingStates = {
-    추천: isRecommendLoading,
-    팔로잉: isFollowingLoading,
-    북마크: isBookmarkLoading,
-    직군: isPreJobLoading,
-  };
-  // 현재 활성 탭의 로딩 상태
-  const isLoading = loadingStates[activeTab as keyof typeof loadingStates] ?? isRecommendLoading;
-  // 현재 활성 탭의 다음 페이지 로딩 상태
-  const isFetchingNextPage = {
-    추천: isFetchingRecommendNextPage,
-    팔로잉: isFetchingFollowingNextPage,
-    북마크: isFetchingBookmarkNextPage,
-    직군: isFetchingPreJobNextPage,
-  }[activeTab];
-  // 현재 활성 탭의 게시글 데이터 결정
-  const currentPosts = (() => {
-    switch (activeTab) {
-      case '추천':
-        return processPagesData(recommendData?.pages);
-      case '팔로잉':
-        return processPagesData(followingData?.pages);
-      case '북마크':
-        return processPagesData(bookmarkData?.pages);
-      case '직군':
-        return processPagesData(preJobData?.pages);
-      default:
-        return [];
-    }
-  })();
+  const loadingStates = useMemo(
+    () => ({
+      추천: queries.추천.isLoading,
+      팔로잉: queries.팔로잉.isLoading,
+      북마크: queries.북마크.isLoading,
+      직군: queries.직군.isLoading,
+    }),
+    [queries.추천.isLoading, queries.팔로잉.isLoading, queries.북마크.isLoading, queries.직군.isLoading],
+  );
+
+  // 현재 활성 탭의 로딩 상태, 기본 값은 추천 탭의 로딩 상태
+  const isLoading = loadingStates[activeTab as keyof typeof loadingStates] ?? queries.추천.isLoading;
+  // 현재 활성 탭의 다음 데이터 로딩 상태
+  const isFetchingNextPage = useMemo(
+    () =>
+      ({
+        추천: queries.추천.isFetchingNextPage,
+        팔로잉: queries.팔로잉.isFetchingNextPage,
+        북마크: queries.북마크.isFetchingNextPage,
+        직군: queries.직군.isFetchingNextPage,
+      })[activeTab],
+    [
+      activeTab,
+      queries.추천.isFetchingNextPage,
+      queries.팔로잉.isFetchingNextPage,
+      queries.북마크.isFetchingNextPage,
+      queries.직군.isFetchingNextPage,
+    ],
+  );
+
+  // 현재 활성 탭의 모든 게시글 데이터
+  const currentPosts = useMemo(() => {
+    if (!currentQuery?.data?.pages) return [];
+    return processPagesData(currentQuery.data.pages);
+  }, [currentQuery?.data?.pages]);
   return (
     <div className="flex flex-col gap-6 w-full pt-5">
       {isLoading
