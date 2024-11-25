@@ -70,8 +70,12 @@ export default function PostWrite() {
 
   // 이미지 처리 함수
   const handleImage = useCallback(async (file: File, callback: (url: string) => void) => {
-    const imageUrl = await postPic(file);
-    callback(imageUrl);
+    try {
+      const imageUrl = await postPic(file);
+      callback(imageUrl);
+    } catch (error) {
+      console.error('이미지 업로드 실패:', error);
+    }
   }, []);
 
   // 포스트 제출

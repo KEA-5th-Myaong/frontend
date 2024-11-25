@@ -25,6 +25,10 @@ export default function ToastEditor({ initialValue = '', onChange, height, handl
         onChange?.(content);
       });
     }
+    // 클린업 함수(메모리 누수 방지)
+    return () => {
+      instance?.off('change');
+    };
   }, [onChange]);
 
   return (
