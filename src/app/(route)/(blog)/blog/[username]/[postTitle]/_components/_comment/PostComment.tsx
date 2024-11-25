@@ -6,7 +6,7 @@ import { CommentProps } from '../../_types/post';
 import CommentItem from './CommentItem';
 import ReplyInput from './ReplyInput';
 import useCustomMutation from '@/app/_hooks/useCustomMutation';
-import { postComments } from '../../../_services/blogService';
+import { postComments, postReplies } from '../../../_services/blogService';
 
 interface PostCommentProps {
   postId: string;
@@ -59,7 +59,6 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
     },
     onSuccess: (response, variables) => {
       setCommentLists((prev) => [...prev, response]); // response: 서버에서 반환한 새로 생성된 댓글 정보
-      queryClient.invalidateQueries({ queryKey: ['user-post', variables.postId] });
     },
     onSettled: () => {
       // 성공이든 실패든 완료되면 쿼리를 리페치
@@ -79,27 +78,64 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
     setNewComment(''); // 입력창 비우기
   };
 
-  // 답글 버튼 클릭
+  // 답글 버튼 클릭(답글 달기 시작)
   const handleReplyClick = (commentId: number) => {
     // 현재 답글을 작성 중인 댓글이 클릭된 댓글과 같은지 확인
     setReplyingTo(replyingTo === commentId ? null : commentId); // 이미 답글 작성 중이던 댓글을 다시 클릭하면, 답글 작성 UI를 닫음
   };
 
-  // 답글 제출
-  const handleReplySubmit = (parentId: number, content: string) => {
-    if (content.trim()) {
-      const newReply: CommentProps = {
-        commentId: Math.max(...commentLists.map((c) => c.commentId)) + 1,
-        parentCommentId: parentId,
+  const postReplyMutation = useCustomMutation(postReplies, {
+    onMutate: async (commentData: { postId: string; comment: string; parentId: string }) => {
+      // 진행 중인 쿼리를 취소
+      await queryClient.cancelQueries({ queryKey: ['user-post', commentData.postId] });
+
+      const previousComments = queryClient.getQueryData(['user-post', commentData.postId]);
+
+      const optimisticComment = {
+        comment: commentData.comment,
         nickname: '김현중',
-        comment: content,
         timestamp: '방금 전',
-        profilePicUrl: '/mascot.png',
+        profilePicUrl: null,
         memberId: null,
       };
-      setCommentLists([...commentLists, newReply]);
-      setReplyingTo(null); // 답글 작성 종료(id를 null로)
-    }
+
+      queryClient.setQueryData(['user-post', commentData.postId], (old: any) => ({
+        ...old,
+        comments: [...(old?.comments || []), optimisticComment],
+      }));
+
+      return { previousComments };
+    },
+
+    onError: (err, variables, context) => {
+      // 에러 발생 시 이전 상태로 롤백
+      if (context?.previousComments) {
+        queryClient.setQueryData(['user-post', variables.postId], context.previousComments);
+      }
+    },
+    onSuccess: (response, variables) => {
+      setCommentLists((prev) => {
+        const parentIndex = prev.findIndex((comment) => comment.commentId === variables.parentId);
+        const newComments = [...prev];
+        newComments.splice(parentIndex + 1, 0, response); // 부모 댓글 바로 다음에 삽입
+        return newComments;
+      });
+    },
+    onSettled: () => {
+      // 성공이든 실패든 완료되면 쿼리를 리페치
+      queryClient.invalidateQueries({ queryKey: ['user-post'] });
+    },
+  });
+
+  // 답글 제출
+  const handleReplySubmit = (parentId: string, content: string) => {
+    if (!content.trim()) return;
+
+    postReplyMutation.mutate({
+      postId,
+      comment: content,
+      parentId,
+    });
   };
 
   // 수정 버튼 클릭
