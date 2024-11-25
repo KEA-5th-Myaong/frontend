@@ -356,3 +356,17 @@ export const NoticeIcon: IconPathTypes = {
     strokeLinejoin: 'round',
   },
 };
+
+// 화살표 원 아이콘
+export const ArrowCircleIcon: IconPathTypes = {
+  path: 'M8.0026 10.6654L10.6693 7.9987M10.6693 7.9987L8.0026 5.33203M10.6693 7.9987H5.33594M14.6693 7.9987C14.6693 11.6806 11.6845 14.6654 8.0026 14.6654C4.32071 14.6654 1.33594 11.6806 1.33594 7.9987C1.33594 4.3168 4.32071 1.33203 8.0026 1.33203C11.6845 1.33203 14.6693 4.3168 14.6693 7.9987Z',
+  fill: 'none',
+  options: {
+    stroke: '#B3B3B3',
+    strokeWidth: 1.6,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+  width: 16,
+  height: 16,
+};
