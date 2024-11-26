@@ -1,8 +1,15 @@
-export default function MoreOptions({ handleDeleteClick }: { handleDeleteClick?: () => void }) {
+export default function MoreOptions({
+  handleEditClick,
+  handleDeleteClick,
+}: {
+  handleEditClick?: () => void;
+  handleDeleteClick?: () => void;
+}) {
   return (
     <div className="absolute border rounded-lg p-2.5 bg-white-0 right-0">
       <button
         type="button"
+        onClick={handleEditClick}
         className="px-2 sm:px-4 md:px-8 py-1.5 whitespace-nowrap rounded-lg text-gray-0 hover:bg-primary-1 hover:text-white-0"
       >
         수정

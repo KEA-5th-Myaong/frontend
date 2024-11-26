@@ -9,19 +9,27 @@ export interface PostProps {
   username?: string | null;
   profilePicUrl: string | null;
   isBookmarked: boolean;
-}
-
-export interface PostDetailProps extends PostProps {
-  className?: string;
   isLoved: boolean;
   lovedCount: number;
   userJob: string;
 
+  onLoveClick?: () => void;
+  onBookmarkClick?: () => void;
   onUserClick: () => void;
   onContentClick: () => void;
+
+  className?: string;
 }
 
-export interface PostData {
-  lastId: number;
-  posts: PostProps[];
+export interface PostFeedProps {
+  activeTab: string;
+  preJob: string[];
+}
+
+export interface PostResponse {
+  pages: PostResponse[] | undefined;
+  data: {
+    lastId: number;
+    posts: PostProps[];
+  };
 }
