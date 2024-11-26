@@ -2,21 +2,27 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { UseFormRegister } from 'react-hook-form';
 import ExperienceItem from '../items/ExperienceItem';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface ExperienceItemState {
   id: number;
   component: JSX.Element;
 }
 
-export default function ExperienceSection() {
+interface ExperienceSectionProps {
+  register: UseFormRegister<PortfolioProps>;
+}
+
+export default function ExperienceSection({ register }: ExperienceSectionProps) {
   const deleteExperienceItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setExperienceItems(experienceItems.filter((item) => item.id !== id));
   };
 
   const [experienceItems, setExperienceItems] = useState<ExperienceItemState[]>([
-    { id: 0, component: <ExperienceItem key={0} id={0} onDelete={deleteExperienceItem} /> },
+    { id: 0, component: <ExperienceItem register={register} key={0} id={0} onDelete={deleteExperienceItem} /> },
   ]);
   const addExperienceItem = () => {
     if (experienceItems.length < 20) {
@@ -24,7 +30,12 @@ export default function ExperienceSection() {
       const newItemId = experienceItems.length;
       setExperienceItems([
         ...experienceItems,
-        { id: newItemId, component: <ExperienceItem key={newItemId} id={newItemId} onDelete={deleteExperienceItem} /> },
+        {
+          id: newItemId,
+          component: (
+            <ExperienceItem register={register} key={newItemId} id={newItemId} onDelete={deleteExperienceItem} />
+          ),
+        },
       ]);
     }
   };

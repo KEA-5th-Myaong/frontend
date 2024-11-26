@@ -2,21 +2,27 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { UseFormRegister } from 'react-hook-form';
 import EducationItem from '../items/EducationItem';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface EducationItemState {
   id: number;
   component: JSX.Element;
 }
 
-export default function EducationSection() {
+interface EducationSectionProps {
+  register: UseFormRegister<PortfolioProps>;
+}
+
+export default function EducationSection({ register }: EducationSectionProps) {
   const deleteEducationItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setEducationItems(educationItems.filter((item) => item.id !== id));
   };
 
   const [educationItems, setEducationItems] = useState<EducationItemState[]>([
-    { id: 0, component: <EducationItem key={0} id={0} onDelete={deleteEducationItem} /> },
+    { id: 0, component: <EducationItem register={register} key={0} id={0} onDelete={deleteEducationItem} /> },
   ]);
 
   const addEducationItem = () => {
@@ -25,7 +31,12 @@ export default function EducationSection() {
       const newItemId = educationItems.length;
       setEducationItems([
         ...educationItems,
-        { id: newItemId, component: <EducationItem key={newItemId} id={newItemId} onDelete={deleteEducationItem} /> },
+        {
+          id: newItemId,
+          component: (
+            <EducationItem register={register} key={newItemId} id={newItemId} onDelete={deleteEducationItem} />
+          ),
+        },
       ]);
     }
   };
