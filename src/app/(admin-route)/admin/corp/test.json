@@ -1,0 +1,32 @@
+{
+  "corpList": [
+    {
+      "companyId": 1,
+      "name": "기업 이름"
+    },
+    {
+      "companyId": 2,
+      "name": "기업 이름"
+    },
+    {
+      "companyId": 3,
+      "name": "기업 이름"
+    },
+    {
+      "companyId": 4,
+      "name": "기업 이름"
+    },
+    {
+      "companyId": 5,
+      "name": "기업 이름"
+    },
+    {
+      "companyId": 6,
+      "name": "기업 이름"
+    },
+    {
+      "companyId": 7,
+      "name": "기업 이름"
+    }
+  ]
+}
