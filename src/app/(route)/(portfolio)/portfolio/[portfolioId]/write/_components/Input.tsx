@@ -1,7 +1,8 @@
+import { UseFormRegister, FieldValues, Path } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
 import { RequiredIcon } from '@/app/_components/ui/iconPath';
 
-interface InputProps {
+interface InputProps<T extends FieldValues> {
   element: 'input' | 'textarea';
   label: string;
   size: 'sm' | 'lg';
@@ -11,10 +12,12 @@ interface InputProps {
   placeholder?: string;
   required?: boolean;
   maxLength?: number;
+  name: Path<T>;
+  register: UseFormRegister<T>;
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
 }
 
-export default function Input({
+export default function Input<T extends FieldValues>({
   element,
   label,
   size,
@@ -23,9 +26,11 @@ export default function Input({
   pattern,
   placeholder,
   maxLength,
+  name,
+  register,
   onClick,
   required,
-}: InputProps) {
+}: InputProps<T>) {
   const inputWidth = size === 'sm' ? 'w-[260px]' : 'w-full';
   const background = color === 'white' ? 'bg-white-0' : 'bg-transparent';
 
@@ -40,6 +45,7 @@ export default function Input({
       </div>
       {element === 'input' ? (
         <input
+          {...register(name, { required })}
           type={type}
           placeholder={placeholder}
           pattern={pattern === 'grade' ? gradePattern : pattern || undefined}
@@ -52,6 +58,7 @@ export default function Input({
         />
       ) : (
         <textarea
+          {...register(name, { required })}
           placeholder={placeholder}
           required={required}
           maxLength={maxLength}

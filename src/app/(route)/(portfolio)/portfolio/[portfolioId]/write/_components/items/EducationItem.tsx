@@ -1,18 +1,23 @@
 import Image from 'next/image';
+import { UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface EducationItemProps {
   id: number;
+  register: UseFormRegister<PortfolioProps>;
   onDelete: (id: number) => void;
 }
 
-function EducationItem({ id, onDelete }: EducationItemProps) {
+export default function EducationItem({ id, register, onDelete }: EducationItemProps) {
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
+            register={register}
+            name={`educations.${id}.name`}
             element="input"
             label="학교명"
             size="lg"
@@ -23,6 +28,8 @@ function EducationItem({ id, onDelete }: EducationItemProps) {
             required
           />
           <Input
+            register={register}
+            name={`educations.${id}.major`}
             element="input"
             label="학과"
             size="lg"
@@ -33,8 +40,19 @@ function EducationItem({ id, onDelete }: EducationItemProps) {
             required
           />
         </div>
-        <Input element="input" label="졸업 일자" size="lg" type="date" color="white" required />
         <Input
+          register={register}
+          name={`educations.${id}.graduation`}
+          element="input"
+          label="졸업 일자"
+          size="lg"
+          type="date"
+          color="white"
+          required
+        />
+        <Input
+          register={register}
+          name={`educations.${id}.gpa`}
           element="input"
           label="학점"
           size="lg"
@@ -50,5 +68,3 @@ function EducationItem({ id, onDelete }: EducationItemProps) {
     </MotionWrapper>
   );
 }
-
-export default EducationItem;

@@ -2,21 +2,27 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { UseFormRegister } from 'react-hook-form';
 import ActivityItem from '../items/ActivityItem';
+import { PortfolioProps } from '@/app/_types/portfolio';
 
 interface ActivityItemState {
   id: number;
   component: JSX.Element;
 }
 
-export default function ActivitiesSection() {
+interface ActivitiesSectionProps {
+  register: UseFormRegister<PortfolioProps>;
+}
+
+export default function ActivitiesSection({ register }: ActivitiesSectionProps) {
   const deleteActivityItem = (id: number) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     setActivityItems(activityItems.filter((item) => item.id !== id));
   };
 
   const [activityItems, setActivityItems] = useState<ActivityItemState[]>([
-    { id: 0, component: <ActivityItem key={0} id={0} onDelete={deleteActivityItem} /> },
+    { id: 0, component: <ActivityItem register={register} key={0} id={0} onDelete={deleteActivityItem} /> },
   ]);
 
   const addActivityItem = () => {
@@ -25,7 +31,10 @@ export default function ActivitiesSection() {
       const newItemId = activityItems.length;
       setActivityItems([
         ...activityItems,
-        { id: newItemId, component: <ActivityItem key={newItemId} id={newItemId} onDelete={deleteActivityItem} /> },
+        {
+          id: newItemId,
+          component: <ActivityItem register={register} key={newItemId} id={newItemId} onDelete={deleteActivityItem} />,
+        },
       ]);
     } else {
       alert('활동은 최대 20개까지 추가할 수 있습니다.'); // 경고 메시지
