@@ -223,20 +223,6 @@ export const LockIcon: IconPathTypes = {
   height: 26,
 };
 
-// // 체크 아이콘
-// export const CheckIcon: IconPathTypes = {
-//   path: 'M19.916 4.626a.75.75 0 0 1 .208 1.04l-9 13.5a.75.75 0 0 1-1.154.114l-6-6a.75.75 0 0 1 1.06-1.06l5.353 5.353 8.493-12.74a.75.75 0 0 1 1.04-.207Z',
-//   fill: 'currentColor',
-//   width: 26,
-//   height: 26,
-//   options: {
-//     fillRule: 'evenodd',
-//     clipRule: 'evenodd',
-//     stroke: 'black',
-//     strokeWidth: 1.5,
-//   },
-// };
-
 // 재생 아이콘
 export const PlayIcon: IconPathTypes = {
   path: 'M3 3.732a1.5 1.5 0 0 1 2.305-1.265l6.706 4.267a1.5 1.5 0 0 1 0 2.531l-6.706 4.268A1.5 1.5 0 0 1 3 12.267V3.732Z',
@@ -369,4 +355,32 @@ export const NoticeIcon: IconPathTypes = {
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
   },
+};
+
+// 화살표 원 아이콘
+export const ArrowCircleIcon: IconPathTypes = {
+  path: 'M8.0026 10.6654L10.6693 7.9987M10.6693 7.9987L8.0026 5.33203M10.6693 7.9987H5.33594M14.6693 7.9987C14.6693 11.6806 11.6845 14.6654 8.0026 14.6654C4.32071 14.6654 1.33594 11.6806 1.33594 7.9987C1.33594 4.3168 4.32071 1.33203 8.0026 1.33203C11.6845 1.33203 14.6693 4.3168 14.6693 7.9987Z',
+  fill: 'none',
+  options: {
+    stroke: '#B3B3B3',
+    strokeWidth: 1.6,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+  width: 16,
+  height: 16,
+};
+
+// 쓰레기통 아이콘
+export const TrashIcon: IconPathTypes = {
+  path: 'M2 3.9987H3.33333M3.33333 3.9987H14M3.33333 3.9987L3.33333 13.332C3.33333 13.6857 3.47381 14.0248 3.72386 14.2748C3.97391 14.5249 4.31304 14.6654 4.66667 14.6654H11.3333C11.687 14.6654 12.0261 14.5249 12.2761 14.2748C12.5262 14.0248 12.6667 13.6857 12.6667 13.332V3.9987M5.33333 3.9987V2.66536C5.33333 2.31174 5.47381 1.9726 5.72386 1.72256C5.97391 1.47251 6.31304 1.33203 6.66667 1.33203H9.33333C9.68696 1.33203 10.0261 1.47251 10.2761 1.72256C10.5262 1.9726 10.6667 2.31174 10.6667 2.66536V3.9987M6.66667 7.33203V11.332M9.33333 7.33203V11.332',
+  fill: 'none',
+  options: {
+    stroke: '#B3B3B3',
+    strokeWidth: 1.6,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+  width: 16,
+  height: 16,
 };
