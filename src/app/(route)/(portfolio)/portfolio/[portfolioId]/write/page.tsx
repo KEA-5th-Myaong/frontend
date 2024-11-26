@@ -21,7 +21,7 @@ import Footer from '../../../_components/Footer';
 import UploadImage from './_components/UploadImage';
 
 export default function PortfolioWrite() {
-  const [title, setTitle] = useState('곽서연 포트폴리오1');
+  const [title, setTitle] = useState('백지연 포트폴리오1');
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
   const router = useRouter();

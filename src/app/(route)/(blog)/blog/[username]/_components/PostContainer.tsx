@@ -9,6 +9,7 @@ import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { PostProps } from '@/app/(route)/(main-page)/main/_types/main-page';
 import { formatDate } from '@/app/_utils/formatDate';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
+import defaultProfilePic from '../../../../../../../public/mascot.png';
 
 export default function PostContainer() {
   const router = useRouter();
@@ -50,7 +51,7 @@ export default function PostContainer() {
                 router.push(`/blog/${post.username}/${post.title}`);
               }}
               thumbnail={null}
-              profilePicUrl={post.profilePicUrl}
+              profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
               userJob="프론트엔드 개발자"

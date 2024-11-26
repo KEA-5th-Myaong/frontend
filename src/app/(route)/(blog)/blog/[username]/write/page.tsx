@@ -113,9 +113,9 @@ export default function PostWrite() {
         setModalState((prev) => ({
           ...prev,
           open: true,
-          topText: `포스트 ${isEdit ? '수정' : '작성'} 중 오류가 발생했습니다.`,
-          btnText: '확인',
-          onBtnClick: () => setModalState(initailModalState),
+          topText: `포스트가 작성되었습니다.`,
+          btnText: '이동',
+          onBtnClick: () => router.push('/blog/member2'),
         }));
       }
     },
