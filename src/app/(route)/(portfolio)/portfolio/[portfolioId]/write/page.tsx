@@ -24,12 +24,7 @@ import { PortfolioProps } from '@/app/_types/portfolio';
 import Tips from './_components/Tips';
 
 export default function PortfolioWrite() {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<PortfolioProps>();
+  const { register, handleSubmit, setValue } = useForm<PortfolioProps>();
   const methods = useForm<PortfolioProps>();
 
   const onSubmit = handleSubmit((data) => console.log(data));
@@ -83,7 +78,7 @@ export default function PortfolioWrite() {
                     {...register('title')}
                     placeholder="포트폴리오 제목을 입력해 주세요."
                     type="text"
-                    className="pre-3xl-semibold focus:outline-none"
+                    className="pre-3xl-semibold w-full focus:outline-none"
                   />
                   <div ref={dropdownRef}>
                     <Icons
