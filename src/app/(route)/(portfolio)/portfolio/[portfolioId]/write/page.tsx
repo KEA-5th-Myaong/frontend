@@ -35,7 +35,6 @@ export default function PortfolioWrite() {
 
   const onSubmit = handleSubmit((data) => console.log(data));
 
-  const [title, setTitle] = useState('백지연 포트폴리오1');
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
   const router = useRouter();
