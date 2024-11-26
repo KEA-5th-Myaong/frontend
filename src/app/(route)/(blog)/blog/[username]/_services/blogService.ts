@@ -1,5 +1,16 @@
 import api from '@/app/api/axiosInstance';
 
+// (GET) 타인 정보 조회(주어진 정보가 username뿐일 때 사용)
+export async function fetchProfile(username: string) {
+  try {
+    const { data } = await api.get(`/blog/profile?profile=${username}`);
+    return data;
+  } catch (error) {
+    console.error('타인 정보 조회 실패:', error);
+    throw error;
+  }
+}
+
 // (GET) 회원 정보 조회(블로그 접속 시)
 export async function fetchMemberInfo(memberId: string) {
   try {
@@ -66,6 +77,17 @@ export async function fetchPostPostId(postId: string | undefined) {
   }
 }
 
+// (GET) URL로 포스트 조회
+export async function fetchURLPost(username: string, title: string) {
+  try {
+    const { data } = await api.get(`/blog/posts/${username}/${title}`);
+    return data;
+  } catch (error) {
+    console.error('URL로 포스트 조회 실패:', error);
+    throw error;
+  }
+}
+
 // (POST) 포스트 작성
 export async function postPost(postData: unknown) {
   try {
@@ -78,10 +100,18 @@ export async function postPost(postData: unknown) {
 }
 
 // (POST) 포스트 이미지 업로드
-export async function postPic(postData: unknown) {
+export async function postPic(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append('pic', file);
+
   try {
-    const { data } = await api.post('/blog/posts/pic', postData);
-    return data;
+    const { data } = await api.post('/blog/posts/pic', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    return data.picUrl;
   } catch (error) {
     console.error('포스트 이미지 업로드 실패:', error);
     throw error;
@@ -182,7 +212,7 @@ export async function deleteReplies(replyId: string) {
 }
 
 // (PUT) 좋아요 표시
-export async function putLike(postId: string) {
+export async function putLike(postId: number) {
   try {
     const { data } = await api.put(`/blog/posts/${postId}/like`);
     return data;
@@ -193,7 +223,7 @@ export async function putLike(postId: string) {
 }
 
 // (PUT) 북마크 표시
-export async function putBookmark(postId: string) {
+export async function putBookmark(postId: number) {
   try {
     const { data } = await api.put(`/blog/posts/${postId}/bookmark`);
     return data;

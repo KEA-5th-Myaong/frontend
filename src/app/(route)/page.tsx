@@ -135,7 +135,7 @@ export default function Home() {
             AI 면접관이 당신의 포트폴리오와 자기소개서를 분석하고
           </p>
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold">맞춤형 피드백을 제공합니다</p>
-          <p className="sm:pre-xl-medium md:pre-2xl-medium text-gray-5 my-[30px]">
+          <p className="sm:pre-xl-medium md:pre-2xl-medium my-[30px] text-gray-1">
             AI의 첨삭과 개선 방안으로 완성도 높은 자기소개서를 작성하세요
           </p>
           <Image
@@ -163,7 +163,7 @@ export default function Home() {
         >
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold">AI가 당신의 경력과 자기소개서에 맞춘 </p>
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold">모의 면접 질문을 제공합니다</p>
-          <p className="sm:pre-xl-medium md:pre-2xl-medium text-gray-5 mt-[30px]">
+          <p className="sm:pre-xl-medium md:pre-2xl-medium  text-gray-1 mt-[30px]">
             언제 어디서든 AI 면접관과의 모의 면접을 통해 자신만의 페이스로 연습하세요
           </p>
           <div className="relative mt-[100px]">
@@ -202,7 +202,7 @@ export default function Home() {
           <p className="sm:pre-2xl-semibold md:pre-3xl-semibold">
             취업 준비에 필요한 지식과 경험을 블로그와 함께 나누세요
           </p>
-          <p className="sm:pre-xl-medium md:pre-2xl-medium text-gray-5 mt-[30px]">
+          <p className="sm:pre-xl-medium md:pre-2xl-medium  text-gray-1 mt-[30px]">
             블로그에서 취업 관련 팁을 공유하고, 다른 사람들과 소통하세요
           </p>
           <div className="mt-[100px] px-[30px]">

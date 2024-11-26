@@ -28,3 +28,9 @@ export interface FollowedProps {
     },
   ];
 }
+
+// 포스트 작성 페이지
+export interface PostWriteProps {
+  title: string;
+  content: string;
+}

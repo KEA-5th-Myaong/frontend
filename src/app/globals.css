@@ -130,7 +130,7 @@ body {
     @apply flex-center flex-col p-2.5 bg-white-0 text-sm rounded-lg border border-gray-5;
   }
   .dropdown-item {
-    @apply py-1.5 px-[30px] hover:bg-primary-3 hover:text-white-0 rounded-md cursor-pointer;
+    @apply py-1.5 px-[30px] hover:bg-primary-1 hover:text-white-0 rounded-md cursor-pointer;
   }
 
   /*포트폴리오 아이템 토글 스타일*/
@@ -141,6 +141,9 @@ body {
   /*포트폴리오*/
   .pf-read-section {
     @apply flex flex-col my-10;
+  }
+  .custom-shadow {
+    @apply shadow-[0px_4px_21.6px_rgba(0,0,0,0.05)];
   }
 
   /* 관리자 */

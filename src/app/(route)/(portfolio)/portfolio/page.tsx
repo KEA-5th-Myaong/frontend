@@ -84,9 +84,9 @@ export default function PortfolioList() {
           </button>
         </Link>
       </div>
-      <button type="button" onClick={handlePostTest}>
+      {/* <button type="button" onClick={handlePostTest}>
         POST 테스트
-      </button>
+      </button> */}
 
       <div className="flex flex-col items-center mt-[30px] mb-[100px] px-[50px]">
         <div className="w-full lg:max-w-[1000px] grid justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[25px] gap-4">
