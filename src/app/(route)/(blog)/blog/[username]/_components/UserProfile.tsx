@@ -100,7 +100,7 @@ export default function UserProfile() {
               href={`/blog/${params.userId}/write`}
               className={`${isFollowed ? 'bg-gray-0' : 'bg-primary-1'} flex justify-center ml-0 sm:ml-10 
             md:ml-0 self-stretch text-lg h-fit py-[4.5px] 
-            sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold primary-1-btn`}
+            sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold hover:bg-primary-2 primary-1-btn`}
             >
               글 작성하기
             </Link>
