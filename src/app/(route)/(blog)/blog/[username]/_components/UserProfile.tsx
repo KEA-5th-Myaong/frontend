@@ -72,16 +72,16 @@ export default function UserProfile() {
 
             <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
               <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
-                백지연
-                <span className="inline md:hidden">백지연님의 블로그</span>
+                {blogUserData?.data.nickname}
+                <span className="inline md:hidden">님의 블로그</span>
               </span>
               <div className="hidden sm:inline md:hidden w-full h-[1px] bg-gray-1" />
-              <span>안녕하세요 저는 백지연입니다.</span>
+              <span> {blogUserData?.data.nickname}의 블로그입니다.</span>
             </div>
 
             <div className="hidden md:flex justify-between self-stretch px-[58px] md:w-auto">
               <FollowButton
-                count={blogUserData?.data.followerCount || 9}
+                count={blogUserData?.data.followerCount}
                 label="팔로워"
                 onClick={() => setIsFollowerOpen(true)}
               />
@@ -89,7 +89,7 @@ export default function UserProfile() {
               <div className="h-[53px] bg-gray-0 w-[2px]" />
 
               <FollowButton
-                count={blogUserData?.data.followingCount || 9}
+                count={blogUserData?.data.followingCount}
                 label="팔로잉"
                 onClick={() => setIsFollowingOpen(true)}
               />
@@ -122,14 +122,14 @@ export default function UserProfile() {
       <FollowModal
         isOpen={isFollowerOpen}
         onClose={() => setIsFollowerOpen(false)}
-        title="백지연님을 팔로우하는 유저"
+        title={`${blogUserData?.data.nickname}님을 팔로우하는 유저`}
         list={followedList}
       />
 
       <FollowModal
         isOpen={isFollowingOpen}
         onClose={() => setIsFollowingOpen(false)}
-        title="백지연님이 팔로우하는 유저"
+        title={`${blogUserData?.data.nickname}님이 팔로우하는 유저`}
         list={followingList}
       />
     </>

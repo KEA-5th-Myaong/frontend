@@ -42,8 +42,7 @@ export default function PostContainer() {
               key={post.postId}
               postId={post.postId}
               title={post.title}
-              // nickname={post.nickname ?? ''}
-              nickname="백지연"
+              nickname={post.nickname ?? ''}
               memberId={post.memberId ?? ''}
               onUserClick={() => {
                 router.push(`/blog/${post.username}`);
@@ -52,8 +51,7 @@ export default function PostContainer() {
                 router.push(`/blog/${post.username}/${post.title}`);
               }}
               thumbnail={null}
-              // profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
-              profilePicUrl={defaultProfilePic.src}
+              profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
               userJob="프론트엔드 개발자"

@@ -140,7 +140,7 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
                 router.push(`/blog/${post.username}/${post.title}`);
               }}
               thumbnail={null}
-              profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
+              profilePicUrl={post.profilePicUrl || defaultProfilePic.src} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
               userJob="프론트엔드 개발자"

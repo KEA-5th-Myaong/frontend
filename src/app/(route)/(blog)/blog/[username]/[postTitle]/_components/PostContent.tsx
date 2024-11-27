@@ -156,7 +156,7 @@ export default function PostContent() {
       </div>
 
       {/* 댓글 */}
-      <PostComment comments={data?.data.comments} />
+      <PostComment postId={postId} comments={data?.data.comments} />
 
       {modalState.open && (
         <Modal
