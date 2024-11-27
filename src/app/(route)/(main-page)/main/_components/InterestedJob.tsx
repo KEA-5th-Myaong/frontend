@@ -71,7 +71,7 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
     onClose();
   };
   return (
-    <Overlay onClick={onClose}>
+    <Overlay onClick={() => {}}>
       <motion.div
         onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 Overlay까지 전달되지 않도록
         {...modalMotion}
@@ -116,7 +116,7 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
             {/* 중앙선 */}
             <div className="w-[1px] h-full bg-gray-5 mx-3 sm:mx-6 md:mx-8" />
             {/* 직군 상세 */}
-            <div className="flex items-center flex-col w-full max-w-52 h-44 pr-0 sm:pr-4 overflow-scroll hide-scrollbar">
+            <div className="flex items-center flex-col w-full max-w-52 h-48 pr-0 sm:pr-4 overflow-scroll hide-scrollbar">
               {jobs.map((job) => (
                 <button
                   type="button"
@@ -144,11 +144,12 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-6 w-full mt-10">
-            <button type="button" onClick={onClose} className="w-full bg-gray-1 primary-1-btn py-3 md:py-5">
-              나중에
-            </button>
-            <button type="submit" className="w-full  primary-1-btn py-3 md:py-5">
+          <div className="flex-center gap-6 w-full mt-10">
+            <button
+              disabled={preJob.length === 0}
+              type="submit"
+              className={`max-w-[66%] w-full primary-1-btn py-3 md:py-5 ${preJob.length === 0 && 'bg-gray-1'}`}
+            >
               저장
             </button>
           </div>
