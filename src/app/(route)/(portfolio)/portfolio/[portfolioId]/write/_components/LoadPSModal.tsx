@@ -40,7 +40,12 @@ export default function LoadPSModal({ onOverlayClick }: LoadPSModalProps) {
         {...modalMotion}
         className="flex m-4 min-w-[300px]  max-w-[1000px] max-h-[600px] hide-scrollbar overflow-y-scroll w-full pb-6 px-[65px] pt-[58px] flex-col items-start gap-6 rounded-2xl bg-white-0 shadow-md"
       >
-        <h1 className="pre-2xl-semibold">자기소개서 불러오기</h1>
+        <div className="flex items-center gap-[20px]">
+          <h1 className="pre-2xl-semibold">자기소개서 불러오기</h1>
+          <div className="text-[14px] px-4 py-2 flex-center border border-gray-5 rounded-2xl">
+            포트폴리오 자기소개서 항목에 불러올 자기소개서를 선택해 주세요.
+          </div>
+        </div>
         {psList.length === 0 ? (
           <>
             <div className="flex flex-col gap-3 mt-10 ml-[350px]">
