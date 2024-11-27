@@ -18,11 +18,9 @@ interface JobProps {
 
 export default function JobMenu({ className, onJobSelect, selectedJob, activeTab }: JobMenuProps) {
   const { data } = useCustomQuery(['pre-job'], () => fetchPreJobs());
-  console.log(data);
   const preJob = data?.data;
 
   const [jobs, setJobs] = useState<JobProps[]>([]);
-  console.log(jobs);
 
   useEffect(() => {
     setJobs(preJob);

@@ -4,7 +4,6 @@ import api from '@/app/api/axiosInstance';
 export async function fetchAllPreJobs() {
   try {
     const { data } = await api.get('/pre-jobs/jobs');
-    console.log('데이터ㅇㄴㅁㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁㅇㄴㄹㅁ', data);
     return data;
   } catch (error) {
     console.error('전체 관심 직군 목록 조회 실패:', error);

@@ -31,7 +31,6 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
   const { handleSubmit } = useForm({});
   const { data: jobData } = useCustomQuery(['pre-jobs-list'], () => fetchAllPreJobs());
 
-  console.log(jobData);
   const [selectJobCategory, setSelectJobCategory] = useState('직군 전체');
   const [preJob, setPreJob] = useState<number[]>([]);
 

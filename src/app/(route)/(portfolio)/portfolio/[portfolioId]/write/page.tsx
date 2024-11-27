@@ -156,7 +156,7 @@ export default function PortfolioWrite() {
                   </div>
                   {toggles.personalStatement && <PSSection register={register} />}
                 </section>
-                <button type="submit">제출 테스트</button>
+                {/* <button type="submit">제출 테스트</button> */}
               </form>
             </FormProvider>
           </div>
