@@ -1,3 +1,4 @@
+// 각 Post 리스트 개별 박스들
 export interface PostProps {
   postId: number;
   title: string;
@@ -33,3 +34,20 @@ export interface PostResponse {
     posts: PostProps[];
   };
 }
+
+// 관심 직군(Job, InterestedJobProps, Category, CategoryData)
+export interface Job {
+  jobId: number;
+  jobName: string;
+}
+
+export interface InterestedJobProps {
+  onClose: () => void;
+}
+
+export interface Category {
+  categoryName: string;
+  jobs: Job[];
+}
+
+export interface CategoryData extends Array<Category> {}

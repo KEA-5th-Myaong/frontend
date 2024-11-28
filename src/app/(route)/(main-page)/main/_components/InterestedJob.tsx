@@ -4,28 +4,14 @@ import { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 import Overlay from '../../../../_components/Overlay';
 import { modalMotion } from '../../../../_components/Modal';
 import Icons from '@/app/_components/ui/Icon';
 import { ArrowIcon } from '@/app/_components/ui/iconPath';
 import { fetchAllPreJobs, postPreJobs } from '../_services/mainService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-
-interface InterestedJobProps {
-  onClose: () => void;
-}
-
-interface Job {
-  jobId: number;
-  jobName: string;
-}
-
-interface Category {
-  categoryName: string;
-  jobs: Job[];
-}
-
-interface CategoryData extends Array<Category> {}
+import { CategoryData, InterestedJobProps } from '../_types/main-page';
 
 export default function InterestedJob({ onClose }: InterestedJobProps) {
   const { handleSubmit } = useForm({});
@@ -33,6 +19,8 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
 
   const [selectJobCategory, setSelectJobCategory] = useState('직군 전체');
   const [preJob, setPreJob] = useState<number[]>([]);
+
+  const queryClient = useQueryClient();
 
   const categoryData: CategoryData = useMemo(() => {
     return jobData && jobData.success ? jobData.data : [];
@@ -68,6 +56,7 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
 
   const onSubmit = async () => {
     await postPreJobs({ preJob });
+    queryClient.invalidateQueries({ queryKey: ['pre-job'] });
     onClose();
   };
   return (
