@@ -18,7 +18,6 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
   const [replyingTo, setReplyingTo] = useState<number | null>(null); // 답글을 작성중인 댓글의 id
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null); // 수정중인 댓글의 id
   const [newComment, setNewComment] = useState('');
-
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -30,10 +29,8 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
     onMutate: async (commentData: { postId: string; comment: string }) => {
       // 진행 중인 쿼리를 취소
       await queryClient.cancelQueries({ queryKey: ['user-post', commentData.postId] });
-
       // 이전 데이터 백업
       const previousComments = queryClient.getQueryData(['user-post', commentData.postId]);
-
       // 낙관적 업데이트
       const optimisticComment = {
         comment: commentData.comment,
@@ -42,15 +39,12 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
         profilePicUrl: '/mascot.png',
         memberId: null,
       };
-
       queryClient.setQueryData(['user-post', commentData.postId], (old: any) => ({
         ...old,
         comments: [...(old?.comments || []), optimisticComment],
       }));
-
       return { previousComments };
     },
-
     onError: (err, variables, context) => {
       // 에러 발생 시 이전 상태로 롤백
       if (context?.previousComments) {
@@ -65,19 +59,15 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
       queryClient.invalidateQueries({ queryKey: ['user-post'] });
     },
   });
-
   // 댓글 제출
   const handleCommentSubmit = () => {
     if (!newComment.trim()) return;
-
     postCommentMutation.mutate({
       postId, // props에서 받은 postId 사용
       comment: newComment,
     });
-
     setNewComment(''); // 입력창 비우기
   };
-
   // 답글 버튼 클릭(답글 달기 시작)
   const handleReplyClick = (commentId: number) => {
     // 현재 답글을 작성 중인 댓글이 클릭된 댓글과 같은지 확인
@@ -88,9 +78,7 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
     onMutate: async (commentData: { postId: string; comment: string; parentId: string }) => {
       // 진행 중인 쿼리를 취소
       await queryClient.cancelQueries({ queryKey: ['user-post', commentData.postId] });
-
       const previousComments = queryClient.getQueryData(['user-post', commentData.postId]);
-
       const optimisticComment = {
         comment: commentData.comment,
         nickname: '김현중',
@@ -98,15 +86,12 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
         profilePicUrl: null,
         memberId: null,
       };
-
       queryClient.setQueryData(['user-post', commentData.postId], (old: any) => ({
         ...old,
         comments: [...(old?.comments || []), optimisticComment],
       }));
-
       return { previousComments };
     },
-
     onError: (err, variables, context) => {
       // 에러 발생 시 이전 상태로 롤백
       if (context?.previousComments) {
@@ -126,11 +111,9 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
       queryClient.invalidateQueries({ queryKey: ['user-post'] });
     },
   });
-
   // 답글 제출
   const handleReplySubmit = (parentId: string, content: string) => {
     if (!content.trim()) return;
-
     postReplyMutation.mutate({
       postId,
       comment: content,
