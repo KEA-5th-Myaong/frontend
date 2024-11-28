@@ -1,4 +1,4 @@
-import api from '../api/axiosInstance';
+import api from '@/app/api/axiosInstance';
 
 // (GET) 기업 목록 조회 (구현 아직 안됨)
 export async function fetchCorp() {

@@ -11,10 +11,10 @@ interface PortfolioState {
 const usePortfolioStore = create<PortfolioState>((set) => ({
   // Fix - 임의 데이터
   portfolio: [
-    { id: '1', title: '곽서연 포트폴리오 1', date: '2024.10.17', memo: '메모' },
-    { id: '2', title: '곽서연 포트폴리오 2', date: '2024.10.17', memo: '메모' },
-    { id: '3', title: '곽서연 포트폴리오 3', date: '2024.10.17', memo: '메모' },
-    { id: '4', title: '곽서연 포트폴리오 4', date: '2024.10.17', memo: '메모' },
+    { id: '1', title: '백지연 포트폴리오 1', date: '2024.10.17', memo: '메모' },
+    { id: '2', title: '백지연 포트폴리오 2', date: '2024.10.17', memo: '메모' },
+    { id: '3', title: '백지연 포트폴리오 3', date: '2024.10.17', memo: '메모' },
+    { id: '4', title: '백지연 포트폴리오 4', date: '2024.10.17', memo: '메모' },
   ],
   isMainPortfolio: null,
 

@@ -8,7 +8,7 @@ export default function PortfolioContainer() {
       <section className="flex items-center">
         <Image
           alt="포트폴리오 사용자 기본 이미지"
-          src="/profile.png"
+          src="/mascot.png"
           width={120}
           height={120}
           className="rounded-[20px]"
@@ -21,7 +21,7 @@ export default function PortfolioContainer() {
             <p className="font-semibold">관심 직무</p>
           </div>
           <div className="flex flex-col ml-10 my-5 gap-2">
-            <p className="text-left">곽서연</p>
+            <p className="text-left">백지연</p>
             <p>010-0000-0000</p>
             <p>yeonyeon@email.com</p>
             <p>프론트엔드 개발자</p>
