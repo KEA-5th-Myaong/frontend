@@ -43,9 +43,9 @@ export default function SearchPage() {
     return () => setPosts([]);
   }, [data]);
 
-  const handleSearch = (e: { key: string }) => {
+  const handleSearch = (e?: { key: string }) => {
     if (searchValue === '') return;
-    if (e.key === 'Enter') {
+    if (!e || e.key === 'Enter') {
       setSearchTerm(searchValue);
     }
   };
@@ -57,13 +57,13 @@ export default function SearchPage() {
     data?.pages?.[data.pages.length - 1]?.data.lastId?.toString(), // 마지막 페이지의 lastId
   );
   return (
-    <section className="flex justify-center pt-14 pb-12">
+    <section className="flex justify-center pt-14 pb-20">
       <div className="w-full min-w-[360px] max-w-[982px] px-[42px]">
         <Carousel />
 
-        <div className="flex flex-col w-full items-center pt-11">
-          <div className="flex items-center w-full max-w-[66%] border border-[#B4B4B4] px-5 py-4 mb-9 rounded-[28px] gap-5">
-            <Icons name={SearchIcon} />
+        <div className="flex flex-col w-full items-center pt-0 md:pt-11">
+          <div className="flex items-center w-full sm:max-w-[80%] md:max-w-[66%] border border-[#B4B4B4] px-5 py-4 mb-9 rounded-[28px] gap-5">
+            <Icons onClick={() => handleSearch()} name={SearchIcon} />
             <input
               className="w-full focus:outline-none"
               placeholder="검색어를 입력해주세요"
