@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { v4 } from 'uuid';
 import Carousel from '../_components/Carousel';
 import Post from '@/app/_components/Post';
 import { formatDate } from '@/app/_utils/formatDate';
@@ -19,7 +20,7 @@ export default function SearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [posts, setPosts] = useState<PostProps[]>([]);
 
-  const { data, refetch } = useCustomInfiniteQuery(
+  const { data, isLoading } = useCustomInfiniteQuery(
     ['search-posts', searchTerm],
     ({ pageParam = '0' }) => fetchPostSearch(pageParam as string, searchTerm),
     {
@@ -38,13 +39,14 @@ export default function SearchPage() {
       const allPosts = data.pages.flatMap((page) => page.data.posts);
       setPosts(allPosts);
     }
+    // 컴포넌트가 언마운트되거나 리렌더링되기 전에 실행되는 정리 작업을 수행, 메모리 누수를 방지하고 불필요한 상태 업데이트를 막음
+    return () => setPosts([]);
   }, [data]);
 
   const handleSearch = (e: { key: string }) => {
     if (searchValue === '') return;
     if (e.key === 'Enter') {
       setSearchTerm(searchValue);
-      refetch();
     }
   };
 
@@ -71,31 +73,35 @@ export default function SearchPage() {
             />
           </div>
           <div className="flex flex-col gap-5">
-            {posts?.map((post) => (
-              <Post
-                key={post.postId}
-                postId={post.postId}
-                title={post.title}
-                nickname={post.nickname || ''}
-                memberId={post.memberId || ''}
-                isBookmarked={post.isBookmarked}
-                onUserClick={() => {
-                  router.push(`/blog/${post.username}`);
-                }}
-                onContentClick={() => {
-                  router.push(`/blog/${post.username}/${post.title}`);
-                }}
-                thumbnail={null}
-                profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
-                content={post.content}
-                timestamp={formatDate(post.timestamp)}
-                userJob={post.userJob || '기타'}
-                onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
-                onLoveClick={() => loveMutation.mutate(post.postId)}
-                isLoved={post.isLoved}
-                lovedCount={post.lovedCount || 0}
-              />
-            ))}
+            {isLoading
+              ? Array.from({ length: 5 }).map(() => (
+                  <div key={v4()} className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
+                ))
+              : posts?.map((post) => (
+                  <Post
+                    key={post.postId}
+                    postId={post.postId}
+                    title={post.title}
+                    nickname={post.nickname || ''}
+                    memberId={post.memberId || ''}
+                    isBookmarked={post.isBookmarked}
+                    onUserClick={() => {
+                      router.push(`/blog/${post.username}`);
+                    }}
+                    onContentClick={() => {
+                      router.push(`/blog/${post.username}/${post.title}`);
+                    }}
+                    thumbnail={null}
+                    profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
+                    content={post.content}
+                    timestamp={formatDate(post.timestamp)}
+                    userJob={post.userJob || '기타'}
+                    onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
+                    onLoveClick={() => loveMutation.mutate(post.postId)}
+                    isLoved={post.isLoved}
+                    lovedCount={post.lovedCount || 0}
+                  />
+                ))}
           </div>
         </div>
       </div>
