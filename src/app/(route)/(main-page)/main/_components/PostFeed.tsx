@@ -82,9 +82,9 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
     }),
     [queries.추천.isLoading, queries.팔로잉.isLoading, queries.북마크.isLoading, queries.직군.isLoading],
   );
-
   // 현재 활성 탭의 로딩 상태, 기본 값은 추천 탭의 로딩 상태
   const isLoading = loadingStates[activeTab as keyof typeof loadingStates] ?? queries.추천.isLoading;
+
   // 현재 활성 탭의 다음 데이터 로딩 상태
   const isFetchingNextPage = useMemo(
     () =>
