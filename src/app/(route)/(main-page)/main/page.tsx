@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import JobMenu from './_components/JobMenu';
 import InterestedJob from './_components/InterestedJob';
 import Carousel from './_components/Carousel';
@@ -11,11 +11,12 @@ import useCustomQuery from '@/app/_hooks/useCustomQuery';
 
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState('추천'); // 활성화된 탭
-  const [showInterestedJob, setShowInterestedJob] = useState(true); // 첫 로그인 시 관심 직군 모달 보여주기(나중엔 선택 직군 있는지 여부로 변경)
+  const [showInterestedJob, setShowInterestedJob] = useState(true); // 첫 로그인 시 관심 직군 모달 보여주기
   const [selectedJob, setSelectedJob] = useState<string | null>(null); // 선택한 직업
 
   const [preJob, setPreJob] = useState<string[]>([]); // 선호 직업을 저장할 상태
   const { data } = useCustomQuery(['pre-job'], () => fetchPreJobs());
+
   // preJob에 직군 목록 저장
   useEffect(() => {
     if (data?.data) {
@@ -23,13 +24,19 @@ export default function MainPage() {
       setPreJob(jobIds);
     }
   }, [data]);
+  // preJob이 변경될 때 모달 표시 여부 결정
+  useEffect(() => {
+    if (preJob.length === 0) {
+      setShowInterestedJob(false);
+    }
+  }, [preJob.length]);
 
   // 특정 직군 포스트 불러오기
-  const handleJobSelect = (jobId: string) => {
+  const handleJobSelect = useCallback((jobId: string) => {
     setSelectedJob(jobId);
     setPreJob([jobId]);
     setActiveTab('직군');
-  };
+  }, []);
 
   // 탭 바꾸기
   const handleTabChange = (tab: string) => {
