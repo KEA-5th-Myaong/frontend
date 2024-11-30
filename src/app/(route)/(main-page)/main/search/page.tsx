@@ -18,8 +18,30 @@ export default function SearchPage() {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState(''); // searchValue와 searchTerm을 구분해야
   const [searchTerm, setSearchTerm] = useState(''); // onChange가 완료되고 검색 함수 실행 때만 api호출 할 수 있음
-  const [posts, setPosts] = useState<PostProps[]>([]);
+  const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록
 
+  // 검색어 하이라이트 처리
+  const highlightText = (text: string): string | JSX.Element => {
+    if (!searchTerm) return text;
+    // 전체 텍스트를 검색어 기준으로 분할, 'gi' 플래그: g(전역 검색), i(대소문자 구분 없음)
+    const contexts = text.split(new RegExp(`(${searchTerm})`, 'gi'));
+    // 검색어가 포함되지 않은 경우 원본 텍스트 반환
+    if (contexts.length === 1) return text;
+    return (
+      <>
+        {contexts.map((context) =>
+          context.toLowerCase() === searchTerm.toLowerCase() ? (
+            <span key={v4()} className="text-[#F6C000]">
+              {context}
+            </span>
+          ) : (
+            context
+          ),
+        )}
+      </>
+    );
+  };
+  // 무한스크롤 포스트 데이터 가져오기
   const { data, isLoading } = useCustomInfiniteQuery(
     ['search-posts', searchTerm],
     ({ pageParam = '0' }) => fetchPostSearch(pageParam as string, searchTerm),
@@ -33,7 +55,7 @@ export default function SearchPage() {
       enabled: !!searchTerm,
     },
   );
-
+  // 무한스크롤된 데이터 관리
   useEffect(() => {
     if (data?.pages) {
       const allPosts = data.pages.flatMap((page) => page.data.posts);
@@ -42,7 +64,7 @@ export default function SearchPage() {
     // 컴포넌트가 언마운트되거나 리렌더링되기 전에 실행되는 정리 작업을 수행, 메모리 누수를 방지하고 불필요한 상태 업데이트를 막음
     return () => setPosts([]);
   }, [data]);
-
+  // 검색 함수
   const handleSearch = (e?: { key: string }) => {
     if (searchValue === '') return;
     if (!e || e.key === 'Enter') {
@@ -93,7 +115,7 @@ export default function SearchPage() {
                     }}
                     thumbnail={null}
                     profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
-                    content={post.content}
+                    content={typeof post.content === 'string' ? highlightText(post.content) : post.content}
                     timestamp={formatDate(post.timestamp)}
                     userJob={post.userJob || '기타'}
                     onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}

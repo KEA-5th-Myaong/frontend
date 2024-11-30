@@ -3,7 +3,7 @@ export interface PostProps {
   postId: number;
   title: string;
   thumbnail: string | null;
-  content: string;
+  content: string | JSX.Element;
   timestamp: string;
   memberId: string | null;
   nickname: string | null;
