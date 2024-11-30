@@ -16,8 +16,8 @@ import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
 
 export default function SearchPage() {
   const router = useRouter();
-  const [searchValue, setSearchValue] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchValue, setSearchValue] = useState(''); // searchValue와 searchTerm을 구분해야
+  const [searchTerm, setSearchTerm] = useState(''); // onChange가 완료되고 검색 함수 실행 때만 api호출 할 수 있음
   const [posts, setPosts] = useState<PostProps[]>([]);
 
   const { data, isLoading } = useCustomInfiniteQuery(
@@ -63,7 +63,7 @@ export default function SearchPage() {
 
         <div className="flex flex-col w-full items-center pt-0 md:pt-11">
           <div className="flex items-center w-full sm:max-w-[80%] md:max-w-[66%] border border-[#B4B4B4] px-5 py-4 mb-9 rounded-[28px] gap-5">
-            <Icons onClick={() => handleSearch()} name={SearchIcon} />
+            <Icons onClick={() => handleSearch()} name={SearchIcon} className="cursor-pointer" />
             <input
               className="w-full focus:outline-none"
               placeholder="검색어를 입력해주세요"
