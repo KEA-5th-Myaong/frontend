@@ -21,10 +21,15 @@ export default function SearchPage() {
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록
 
   // 검색어 하이라이트 처리
-  const highlightText = (text: string): string | JSX.Element => {
+  const highlightText = (text: string | JSX.Element): string | JSX.Element => {
+    if (typeof text !== 'string') return text; //  string이 아닐 경우 함수 종료
     if (!searchTerm) return text;
+
+    // 검색어의 특수문자 이스케이프 처리
+    const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
     // 전체 텍스트를 검색어 기준으로 분할, 'gi' 플래그: g(전역 검색), i(대소문자 구분 없음)
-    const contexts = text.split(new RegExp(`(${searchTerm})`, 'gi'));
+    const contexts = text.split(new RegExp(`(${escapedSearchTerm})`, 'gi'));
     // 검색어가 포함되지 않은 경우 원본 텍스트 반환
     if (contexts.length === 1) return text;
     return (
@@ -115,7 +120,7 @@ export default function SearchPage() {
                     }}
                     thumbnail={null}
                     profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
-                    content={typeof post.content === 'string' ? highlightText(post.content) : post.content}
+                    content={highlightText(post.content)}
                     timestamp={formatDate(post.timestamp)}
                     userJob={post.userJob || '기타'}
                     onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
