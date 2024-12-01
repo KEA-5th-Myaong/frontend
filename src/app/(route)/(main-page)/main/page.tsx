@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import JobMenu from './_components/JobMenu';
 import InterestedJob from './_components/InterestedJob';
-import Carousel from './_components/Carousel';
 import MainTabMenu from './_components/MainTabMenu';
 import PostFeed from './_components/PostFeed';
 import { fetchPreJobs } from './_services/mainService';
@@ -53,39 +52,34 @@ export default function MainPage() {
 
   return (
     <>
-      <section className="flex justify-center pt-14 pb-12">
-        <div className="w-full min-w-[360px] max-w-[982px] px-[42px]">
-          <Carousel />
+      <div className="flex flex-col md:flex-row w-full gap-3.5">
+        {/* 직군 메뉴 */}
+        <JobMenu
+          className="hidden md:flex"
+          onJobSelect={handleJobSelect}
+          selectedJob={selectedJob}
+          activeTab={activeTab}
+          preJob={data?.data}
+        />
 
-          <div className="flex flex-col md:flex-row w-full gap-3.5">
-            {/* 직군 메뉴 */}
-            <JobMenu
-              className="hidden md:flex"
-              onJobSelect={handleJobSelect}
-              selectedJob={selectedJob}
-              activeTab={activeTab}
-              preJob={data?.data}
-            />
+        <div className="flex flex-col items-center w-full pt-4 md:pt-5">
+          {/* 추천 팔로잉 가로 북마크 */}
+          <MainTabMenu activeTab={activeTab} onTabChange={handleTabChange} />
 
-            <div className="flex flex-col items-center w-full pt-4 md:pt-5">
-              {/* 추천 팔로잉 가로 북마크 */}
-              <MainTabMenu activeTab={activeTab} onTabChange={handleTabChange} />
+          {/* 직군 메뉴 */}
+          <JobMenu
+            className="flex md:hidden"
+            onJobSelect={handleJobSelect}
+            selectedJob={selectedJob}
+            activeTab={activeTab}
+            preJob={data?.data}
+          />
 
-              {/* 직군 메뉴 */}
-              <JobMenu
-                className="flex md:hidden"
-                onJobSelect={handleJobSelect}
-                selectedJob={selectedJob}
-                activeTab={activeTab}
-                preJob={data?.data}
-              />
-
-              {/* 피드 */}
-              <PostFeed activeTab={activeTab} preJob={preJob} />
-            </div>
-          </div>
+          {/* 피드 */}
+          <PostFeed activeTab={activeTab} preJob={preJob} />
         </div>
-      </section>
+      </div>
+
       {showInterestedJob && <InterestedJob onClose={handleInterestedJobClose} />}
     </>
   );

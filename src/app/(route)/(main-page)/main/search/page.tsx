@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { v4 } from 'uuid';
-import Carousel from '../_components/Carousel';
 import Post from '@/app/_components/Post';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
@@ -84,54 +83,48 @@ export default function SearchPage() {
     data?.pages?.[data.pages.length - 1]?.data.lastId?.toString(), // 마지막 페이지의 lastId
   );
   return (
-    <section className="flex justify-center pt-14 pb-20">
-      <div className="w-full min-w-[360px] max-w-[982px] px-[42px]">
-        <Carousel />
-
-        <div className="flex flex-col w-full items-center pt-0 md:pt-11">
-          <div className="flex items-center w-full sm:max-w-[80%] md:max-w-[66%] border border-[#B4B4B4] px-5 py-4 mb-9 rounded-[28px] gap-5">
-            <Icons onClick={() => handleSearch()} name={SearchIcon} className="cursor-pointer" />
-            <input
-              className="w-full focus:outline-none"
-              placeholder="검색어를 입력해주세요"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              onKeyDown={handleSearch}
-            />
-          </div>
-          <div className="flex flex-col gap-5">
-            {isLoading
-              ? Array.from({ length: 5 }).map(() => (
-                  <div key={v4()} className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
-                ))
-              : posts?.map((post) => (
-                  <Post
-                    key={post.postId}
-                    postId={post.postId}
-                    title={post.title}
-                    nickname={post.nickname || ''}
-                    memberId={post.memberId || ''}
-                    isBookmarked={post.isBookmarked}
-                    onUserClick={() => {
-                      router.push(`/blog/${post.username}`);
-                    }}
-                    onContentClick={() => {
-                      router.push(`/blog/${post.username}/${post.title}`);
-                    }}
-                    thumbnail={null}
-                    profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
-                    content={highlightText(post.content)}
-                    timestamp={formatDate(post.timestamp)}
-                    userJob={post.userJob || '기타'}
-                    onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
-                    onLoveClick={() => loveMutation.mutate(post.postId)}
-                    isLoved={post.isLoved}
-                    lovedCount={post.lovedCount || 0}
-                  />
-                ))}
-          </div>
-        </div>
+    <div className="flex flex-col w-full items-center pt-0 md:pt-11">
+      <div className="flex items-center w-full sm:max-w-[80%] md:max-w-[66%] border border-[#B4B4B4] px-5 py-4 mb-9 rounded-[28px] gap-5">
+        <Icons onClick={() => handleSearch()} name={SearchIcon} className="cursor-pointer" />
+        <input
+          className="w-full focus:outline-none"
+          placeholder="검색어를 입력해주세요"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyDown={handleSearch}
+        />
       </div>
-    </section>
+      <div className="flex flex-col gap-5">
+        {isLoading
+          ? Array.from({ length: 5 }).map(() => (
+              <div key={v4()} className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
+            ))
+          : posts?.map((post) => (
+              <Post
+                key={post.postId}
+                postId={post.postId}
+                title={post.title}
+                nickname={post.nickname || ''}
+                memberId={post.memberId || ''}
+                isBookmarked={post.isBookmarked}
+                onUserClick={() => {
+                  router.push(`/blog/${post.username}`);
+                }}
+                onContentClick={() => {
+                  router.push(`/blog/${post.username}/${post.title}`);
+                }}
+                thumbnail={null}
+                profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
+                content={highlightText(post.content)}
+                timestamp={formatDate(post.timestamp)}
+                userJob={post.userJob || '기타'}
+                onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
+                onLoveClick={() => loveMutation.mutate(post.postId)}
+                isLoved={post.isLoved}
+                lovedCount={post.lovedCount || 0}
+              />
+            ))}
+      </div>
+    </div>
   );
 }
