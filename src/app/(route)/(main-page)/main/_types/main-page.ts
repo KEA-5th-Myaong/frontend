@@ -22,11 +22,12 @@ export interface PostProps {
   className?: string;
 }
 
+// 메인 페이지 포스트 피드
 export interface PostFeedProps {
   activeTab: string;
   preJob: string[];
 }
-
+// API로 불러오는 포스트 데이터
 export interface PostResponse {
   pages: PostResponse[] | undefined;
   data: {
@@ -35,19 +36,16 @@ export interface PostResponse {
   };
 }
 
-// 관심 직군(Job, InterestedJobProps, Category, CategoryData)
-export interface Job {
-  jobId: number;
-  jobName: string;
+// 관심 직군(JobProps, InterestedJobProps, Category, CategoryData)
+export interface JobProps {
+  jobId: number | undefined;
+  jobName: string | undefined;
 }
-
 export interface InterestedJobProps {
   onClose: () => void;
 }
-
 export interface Category {
   categoryName: string;
-  jobs: Job[];
+  jobs: JobProps[];
 }
-
 export interface CategoryData extends Array<Category> {}

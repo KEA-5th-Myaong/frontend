@@ -1,19 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Job } from '../_types/main-page';
+import { JobProps } from '../_types/main-page';
 
 interface JobMenuProps {
   className: string;
   onJobSelect: (jobId: string) => void;
   selectedJob: string | null;
   activeTab: string;
-  preJob: Job[];
-}
-
-interface JobProps {
-  jobId: number | undefined;
-  jobName: string | undefined;
+  preJob: JobProps[];
 }
 
 export default function JobMenu({ className, onJobSelect, selectedJob, activeTab, preJob }: JobMenuProps) {
