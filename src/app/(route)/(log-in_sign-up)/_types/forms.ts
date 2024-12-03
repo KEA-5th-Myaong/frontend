@@ -13,8 +13,8 @@ export interface SignUpState extends LoginState {
 }
 
 export interface ChangePwdProps {
-  userPwd: string;
-  checkPwd: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export interface FormInputProps<T extends FieldValues> {
@@ -23,6 +23,7 @@ export interface FormInputProps<T extends FieldValues> {
   placeholder: string;
   register: UseFormRegister<T>;
   required: string;
+  onChange?: (e: React.ChangeEvent) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   type?: string;
   error?: FieldError;

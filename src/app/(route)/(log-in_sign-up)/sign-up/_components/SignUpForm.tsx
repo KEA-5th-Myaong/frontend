@@ -2,19 +2,20 @@
 
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { FORM_CATCH_ERROR, FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT, MODAL_TEXT } from '../../_constants/forms';
 import { SignUpState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
 import { validateCheckPwd, validateEmail, validateId, validatePwd } from '../../_utils/validation';
 import Modal from '../../../../_components/Modal';
+import { fetchCheckUsername, postSignUp } from '@/app/_services/membersService';
 
 export default function SignUpForm() {
   const {
+    reset,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isDirty, dirtyFields },
     setError,
     clearErrors,
     watch,
@@ -22,54 +23,58 @@ export default function SignUpForm() {
     mode: 'onChange',
   });
   const router = useRouter();
+  const [isUsernameChecked, setIsUsernameChecked] = useState(false); // 아이디 중복 검사 진행 여부
+  const [isEmailChecked, setIsEmailChecked] = useState(false); // 이메일 중복 검사 진행 여부
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // 에러 메시지들
+  const [showSuccessModal, setShowSuccessModal] = useState(false); // 회원가입 성공 모달
 
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-
-  // 이메일 중복 검사
-  const checkEMailDuplicate = async (email: string) => {
-    if (!validateEmail(email, setError, clearErrors)) {
-      return; // 유효성 검사를 통과하지 않으면 중복검사를 실행하지 않음
+  // 아이디 중복 검사
+  const checkUsername = async (username: string) => {
+    setIsUsernameChecked(false); // 검사 시작 시 false로 설정
+    if (!validateId(username, setError)) {
+      return;
     }
-
     try {
-      const response = await axios.get(`/api/check/mail?main=${email}`); // 실제 함수로 수정
-      if (response.data.isDuplicate) {
-        // setError('userEMail', {
-        //   type: 'manual',
-        //   message: FORM_ERROR[7],
-        // });
+      const response = await fetchCheckUsername(username);
+      if (response.data.usable) {
+        setError('username', {
+          type: 'manual',
+          message: FORM_ERROR[5],
+        });
       } else {
-        clearErrors('email');
+        clearErrors('username');
+        setIsUsernameChecked(true); // 중복이 아닐 때만 true로 설정
       }
-    } catch {
-      // setError('userEMail', {
-      //   type: 'manual',
-      //   message: FORM_CATCH_ERROR[0],
-      // });
+    } catch (error) {
+      setError('username', {
+        type: 'manual',
+        message: FORM_CATCH_ERROR[1],
+      });
     }
   };
 
-  // 아이디 중복 검사
-  const checkIdDuplicate = async (id: string) => {
-    if (!validateId(id, setError)) {
-      return; // 유효성 검사를 통과하지 않으면 중복검사를 실행하지 않음
+  // 이메일 중복 검사
+  const checkEMailDuplicate = async (email: string) => {
+    setIsEmailChecked(false); // 검사 시작 시 false로 설정
+    if (!validateEmail(email, setError, clearErrors)) {
+      return;
     }
     try {
-      const response = await axios.get(`/api/check?id=${id}`); // 실제 함수로 수정
-      if (response.data.isDuplicate) {
-        // setError('userId', {
-        //   type: 'manual',
-        //   message: FORM_ERROR[5],
-        // });
+      const response = await fetchCheckUsername(email);
+      if (response.data.usable) {
+        setError('email', {
+          type: 'manual',
+          message: FORM_ERROR[7],
+        });
       } else {
-        clearErrors('username'); // 중복 아니면 에러메시지 지움
+        clearErrors('email');
+        setIsEmailChecked(true); // 중복이 아닐 때만 true로 설정
       }
-    } catch (error) {
-      // setError('userId', {
-      //   type: 'manual',
-      //   message: FORM_CATCH_ERROR[1],
-      // });
+    } catch {
+      setError('email', {
+        type: 'manual',
+        message: FORM_CATCH_ERROR[0],
+      });
     }
   };
 
@@ -78,20 +83,34 @@ export default function SignUpForm() {
 
   // 임시 회원 가입 API 호출 함수
   const onSubmit = async (data: SignUpState) => {
-    console.log('회원가입 데이터:', data);
-
-    // API 호출 성공을 가정
-    return { success: true };
+    try {
+      const signupData = await postSignUp(data);
+      // 수정 필요
+      if (signupData.success) {
+        return { success: true };
+      }
+      return { success: false };
+    } catch (error) {
+      console.error('회원가입 에러:', error);
+      throw error;
+    }
   };
 
   // Modal 확인 버튼 클릭 핸들러
   const handleModalConfirm = () => {
     setShowSuccessModal(false);
-    router.push('/log-in');
+    // router.push('/log-in');
   };
 
   // 에러 객체에 값이 있는지 검사
-  const isFormValid = Object.keys(errors).length === 0;
+  const isFormValid =
+    isValid &&
+    isDirty && // 폼이 한번이라도 수정 되었는지
+    isUsernameChecked && // 아이디 중복 검사 완료 확인
+    isEmailChecked && // 이메일 중복 검사 완료 확인
+    (['name', 'nickname', 'email', 'username', 'password', 'confirmPassword'] as const).every(
+      (field) => dirtyFields[field as keyof SignUpState], // 필수 필드가 수정 되었는지
+    );
 
   // 폼 제출
   const handleFormSubmit = async (data: SignUpState) => {
@@ -99,6 +118,7 @@ export default function SignUpForm() {
       const result = await onSubmit(data);
       if (result.success) {
         setShowSuccessModal(true);
+        reset(); // 회원가입 완료 후 폼 초기화
       }
     } catch (error) {
       setErrorMessage(FORM_CATCH_ERROR[2]);
@@ -117,7 +137,6 @@ export default function SignUpForm() {
           error={errors.name}
           maxLength={20}
         />
-
         {/* 닉네임 input */}
         <FormInput<SignUpState>
           id="nickname"
@@ -129,7 +148,6 @@ export default function SignUpForm() {
           maxLength={10}
           infoText={FORM_TEXT[8]}
         />
-
         {/* 이메일 input */}
         <FormInput<SignUpState>
           id="email"
@@ -137,11 +155,11 @@ export default function SignUpForm() {
           placeholder={FORM_PLACEHOLDER[3]}
           register={register}
           onBlur={(e) => checkEMailDuplicate(e.target.value)}
+          onChange={() => setIsEmailChecked(false)}
           type="email"
           error={errors.email}
           required={FORM_ERROR[4]}
         />
-
         {/* 아이디 input */}
         <FormInput<SignUpState>
           id="username"
@@ -149,12 +167,12 @@ export default function SignUpForm() {
           placeholder={FORM_PLACEHOLDER[0]}
           register={register}
           required={FORM_ERROR[0]}
-          onBlur={(e) => checkIdDuplicate(e.target.value)}
+          onBlur={(e) => checkUsername(e.target.value)}
+          onChange={() => setIsUsernameChecked(false)}
           error={errors.username}
           maxLength={10}
           infoText={FORM_TEXT[8]}
         />
-
         {/* 비밀번호 input */}
         <FormInput<SignUpState>
           id="password"
@@ -168,7 +186,6 @@ export default function SignUpForm() {
           minLength={10}
           infoText={FORM_TEXT[9]}
         />
-
         {/* 비밀번호 확인 input */}
         <FormInput<SignUpState>
           id="confirmPassword"
@@ -180,7 +197,6 @@ export default function SignUpForm() {
           type="password"
           error={errors.confirmPassword}
         />
-
         {/* 회원가입 button */}
         <div className="mt-[60px]">
           {errorMessage && <p className="form-error-text">{errorMessage}</p>}

@@ -10,6 +10,7 @@ export default function FormInput<T extends FieldValues>({
   placeholder,
   register,
   required,
+  onChange,
   onBlur = undefined,
   type = undefined,
   error = undefined,
@@ -40,6 +41,7 @@ export default function FormInput<T extends FieldValues>({
         id={id as string}
         {...register(id as Path<T>, { required, onBlur })}
         className="mt-2 form-input"
+        onChange={onChange}
         placeholder={placeholder}
         disabled={isDisabled}
         value={value}
