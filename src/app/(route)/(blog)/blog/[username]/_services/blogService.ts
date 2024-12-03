@@ -56,9 +56,9 @@ export async function fetchFollowed(memberId: string | string[], lastId: string)
 }
 
 // (GET) 사용자의 포스트 목록 조회
-export async function fetchPost(memberId: string, lastId: string) {
+export async function fetchPost(memberId: string, pageParam: string) {
   try {
-    const { data } = await api.get(`/blog/posts/members/${memberId}/${lastId}`);
+    const { data } = await api.get(`/blog/posts/members/${memberId}/${pageParam}`);
     return data;
   } catch (error) {
     console.error('사용자의 포스트 목록 조회 실패:', error);
