@@ -33,14 +33,14 @@ export default function SignUpForm() {
     }
 
     try {
-      const response = await axios.get(`/api/check/mail?main=${email}`);
+      const response = await axios.get(`/api/check/mail?main=${email}`); // 실제 함수로 수정
       if (response.data.isDuplicate) {
         // setError('userEMail', {
         //   type: 'manual',
         //   message: FORM_ERROR[7],
         // });
       } else {
-        clearErrors('userEMail');
+        clearErrors('email');
       }
     } catch {
       // setError('userEMail', {
@@ -56,14 +56,14 @@ export default function SignUpForm() {
       return; // 유효성 검사를 통과하지 않으면 중복검사를 실행하지 않음
     }
     try {
-      const response = await axios.get(`/api/check?id=${id}`);
+      const response = await axios.get(`/api/check?id=${id}`); // 실제 함수로 수정
       if (response.data.isDuplicate) {
         // setError('userId', {
         //   type: 'manual',
         //   message: FORM_ERROR[5],
         // });
       } else {
-        clearErrors('userId'); // 중복 아니면 에러메시지 지움
+        clearErrors('username'); // 중복 아니면 에러메시지 지움
       }
     } catch (error) {
       // setError('userId', {
@@ -74,7 +74,7 @@ export default function SignUpForm() {
   };
 
   // 비밀번호 체크
-  const userPwdValue = watch('userPwd');
+  const userPwdValue = watch('password');
 
   // 임시 회원 가입 API 호출 함수
   const onSubmit = async (data: SignUpState) => {
@@ -104,82 +104,81 @@ export default function SignUpForm() {
       setErrorMessage(FORM_CATCH_ERROR[2]);
     }
   };
-
   return (
     <>
       <form className="flex flex-col gap-10 self-stretch pb-12" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* 이름 input */}
         <FormInput<SignUpState>
-          id="userName"
+          id="name"
           label={FORM_TEXT[6]}
           placeholder={FORM_PLACEHOLDER[2]}
           register={register}
           required={FORM_ERROR[3]}
-          error={errors.userName}
+          error={errors.name}
           maxLength={20}
         />
 
         {/* 닉네임 input */}
         <FormInput<SignUpState>
-          id="userNickname"
+          id="nickname"
           label={FORM_TEXT[11]}
           placeholder={FORM_PLACEHOLDER[5]}
           register={register}
           required={FORM_ERROR[12]}
-          error={errors.userNickname}
+          error={errors.nickname}
           maxLength={10}
           infoText={FORM_TEXT[8]}
         />
 
         {/* 이메일 input */}
         <FormInput<SignUpState>
-          id="userEMail"
+          id="email"
           label={FORM_TEXT[7]}
           placeholder={FORM_PLACEHOLDER[3]}
           register={register}
           onBlur={(e) => checkEMailDuplicate(e.target.value)}
           type="email"
-          error={errors.userEMail}
+          error={errors.email}
           required={FORM_ERROR[4]}
         />
 
         {/* 아이디 input */}
         <FormInput<SignUpState>
-          id="userId"
+          id="username"
           label={FORM_TEXT[1]}
           placeholder={FORM_PLACEHOLDER[0]}
           register={register}
           required={FORM_ERROR[0]}
           onBlur={(e) => checkIdDuplicate(e.target.value)}
-          error={errors.userId}
+          error={errors.username}
           maxLength={10}
           infoText={FORM_TEXT[8]}
         />
 
         {/* 비밀번호 input */}
         <FormInput<SignUpState>
-          id="userPwd"
+          id="password"
           label={FORM_TEXT[2]}
           placeholder={FORM_PLACEHOLDER[1]}
           register={register}
           required={FORM_ERROR[1]}
           onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
           type="password"
-          error={errors.userPwd}
+          error={errors.password}
           minLength={10}
           infoText={FORM_TEXT[9]}
         />
 
         {/* 비밀번호 확인 input */}
         <FormInput<SignUpState>
-          id="checkPwd"
+          id="confirmPassword"
           label={FORM_TEXT[3]}
           placeholder={FORM_PLACEHOLDER[4]}
           register={register}
           required={FORM_ERROR[10]}
           onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
           type="password"
-          error={errors.checkPwd}
+          error={errors.confirmPassword}
         />
 
         {/* 회원가입 button */}

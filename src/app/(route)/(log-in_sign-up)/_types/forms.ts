@@ -1,15 +1,15 @@
 import { FieldError, FieldValues, UseFormRegister } from 'react-hook-form';
 
 export interface LoginState {
-  userId: string;
-  userPwd: string;
+  username: string;
+  password: string;
 }
 
 export interface SignUpState extends LoginState {
-  userName: string;
-  userNickname: string;
-  checkPwd: string;
-  userEMail: string;
+  name: string;
+  nickname: string;
+  confirmPassword: string;
+  email: string;
 }
 
 export interface ChangePwdProps {

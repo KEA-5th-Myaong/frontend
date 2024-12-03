@@ -7,6 +7,7 @@ import MainTabMenu from './_components/MainTabMenu';
 import PostFeed from './_components/PostFeed';
 import { fetchPreJobs } from './_services/mainService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchMe } from '@/app/_services/membersService';
 
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState('추천'); // 활성화된 탭
@@ -15,6 +16,8 @@ export default function MainPage() {
 
   const [preJob, setPreJob] = useState<string[]>([]); // 선호 직업을 저장할 상태
   const { data } = useCustomQuery(['pre-job'], () => fetchPreJobs());
+  const { data: meData } = useCustomQuery(['me'], () => fetchMe());
+  console.log(meData);
 
   // preJob에 직군 목록 저장
   useEffect(() => {
