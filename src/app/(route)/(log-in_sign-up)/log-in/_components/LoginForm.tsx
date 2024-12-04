@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import { FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { LoginState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
@@ -18,7 +19,14 @@ export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginState) => {
-    await postLogin(data);
+    const response = await postLogin(data);
+    // 쿠키에 토큰 저장
+    Cookies.set('accessToken', response.data.accessToken, {
+      path: '/', // 모든 경로에서 접근 가능
+      secure: process.env.NODE_ENV === 'production', // HTTPS에서만 작동 (프로덕션 환경에서)
+      sameSite: 'strict', // CSRF 공격 방지
+    });
+    return response;
   };
 
   const handleFormSubmit = async (data: LoginState) => {

@@ -17,7 +17,6 @@ export default function MainPage() {
   const [preJob, setPreJob] = useState<string[]>([]); // 선호 직업을 저장할 상태
   const { data } = useCustomQuery(['pre-job'], () => fetchPreJobs());
   const { data: meData } = useCustomQuery(['me'], () => fetchMe());
-  console.log(meData);
 
   // preJob에 직군 목록 저장
   useEffect(() => {
@@ -28,7 +27,7 @@ export default function MainPage() {
   }, [data]);
   // preJob이 변경될 때 모달 표시 여부 결정
   useEffect(() => {
-    if (preJob.length === 0) {
+    if (preJob.length !== 0) {
       setShowInterestedJob(false);
     }
   }, [preJob.length]);
