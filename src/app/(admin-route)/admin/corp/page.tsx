@@ -47,10 +47,13 @@ export default function AdminCorp() {
             {/* 기업생성 */}
             <div className="flex h-[10%] items-center px-5">
               <textarea
-                className="resize-none border-gray-2 px-[18px] py-2.5 w-[75%] border max-h-[45px] rounded-xl placeholder:text-gray-3 focus:outline-none"
+                className="resize-none border-gray-2 px-[18px] py-2.5 w-full border max-h-[45px] rounded-xl placeholder:text-gray-3 focus:outline-none"
                 placeholder="기업명"
               />
-              <button type="button" className="w-[23%] ml-2 rounded-xl text-sm bg-black-3 text-white-0 h-full ">
+              <button
+                type="button"
+                className="px-14 ml-2 rounded-xl text-sm bg-black-3 text-white-0 h-full whitespace-nowrap"
+              >
                 기업생성
               </button>
             </div>
