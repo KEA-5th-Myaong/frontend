@@ -55,7 +55,7 @@ export default function PortfolioWrite() {
 
   return (
     <div className="relative ">
-      <div className="relative flex sm:pl-[30px] md:pl-[80px] lg:pl-[200px] mt-[60px] mb-[100px] w-full lg:mx-auto">
+      <div className="relative flex sm:pl-[30px] md:pl-[80px] lg:pl-[200px] pt-[100px] xl:pt-[60px] mb-[100px] w-full lg:mx-auto">
         <ItemToggle />
         <section className="flex max-w-[1200px] min-w-[900px] px-0 ">
           <div className="w-full ml-10">
