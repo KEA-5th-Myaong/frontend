@@ -22,17 +22,6 @@ export async function postAdminLogin(postData: unknown) {
   }
 }
 
-// (GET) 아이디 중복 확인
-export async function fetchCheckUsername(username: string) {
-  try {
-    const { data } = await api.get(`/auth/check-duplicate/username?username=${username}`);
-    return data;
-  } catch (error) {
-    console.error('아이디 중복 확인 실패:', error);
-    throw error;
-  }
-}
-
 // (GET) 이메일 중복 확인
 export async function fetchCheckEmail(email: string) {
   try {
@@ -40,6 +29,17 @@ export async function fetchCheckEmail(email: string) {
     return data;
   } catch (error) {
     console.error('이메일 중복 확인 실패:', error);
+    throw error;
+  }
+}
+
+// (GET) 아이디 중복 확인
+export async function fetchCheckUsername(username: string) {
+  try {
+    const { data } = await api.get(`/auth/check-duplicate/username?username=${username}`);
+    return data;
+  } catch (error) {
+    console.error('아이디 중복 확인 실패:', error);
     throw error;
   }
 }

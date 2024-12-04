@@ -81,11 +81,11 @@ export default function ChangePwdForm() {
           error={errors.confirmPassword}
         />
 
-        {/* 회원가입 button */}
+        {/* 비밀번호 변경 button */}
         <div className="mt-[17px]">
           {errorMessage && <p className="form-error-text">{errorMessage}</p>}
           <button type="submit" className={`form-btn ${!isFormValid ? 'bg-gray-1' : ''}`} disabled={!isFormValid}>
-            {FORM_TEXT[10]}
+            {FORM_TEXT[12]}
           </button>
         </div>
       </form>

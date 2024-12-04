@@ -8,14 +8,14 @@ import { SignUpState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
 import { validateCheckPwd, validateEmail, validateId, validatePwd } from '../../_utils/validation';
 import Modal from '../../../../_components/Modal';
-import { fetchCheckUsername, postSignUp } from '@/app/_services/membersService';
+import { fetchCheckEmail, fetchCheckUsername, postSignUp } from '@/app/_services/membersService';
 
 export default function SignUpForm() {
   const {
     reset,
     register,
     handleSubmit,
-    formState: { errors, isValid, isDirty, dirtyFields },
+    formState: { errors, isValid, isDirty },
     setError,
     clearErrors,
     watch,
@@ -34,22 +34,16 @@ export default function SignUpForm() {
     if (!validateId(username, setError)) {
       return;
     }
-    try {
-      const response = await fetchCheckUsername(username);
-      if (response.data.usable) {
-        setError('username', {
-          type: 'manual',
-          message: FORM_ERROR[5],
-        });
-      } else {
-        clearErrors('username');
-        setIsUsernameChecked(true); // 중복이 아닐 때만 true로 설정
-      }
-    } catch (error) {
+
+    const response = await fetchCheckUsername(username);
+    if (response.data.usable === false) {
       setError('username', {
         type: 'manual',
-        message: FORM_CATCH_ERROR[1],
+        message: FORM_ERROR[5],
       });
+    } else {
+      clearErrors('username');
+      setIsUsernameChecked(true); // 중복이 아닐 때만 true로 설정
     }
   };
 
@@ -60,8 +54,8 @@ export default function SignUpForm() {
       return;
     }
     try {
-      const response = await fetchCheckUsername(email);
-      if (response.data.usable) {
+      const response = await fetchCheckEmail(email);
+      if (response.data.usable === false) {
         setError('email', {
           type: 'manual',
           message: FORM_ERROR[7],
@@ -70,7 +64,8 @@ export default function SignUpForm() {
         clearErrors('email');
         setIsEmailChecked(true); // 중복이 아닐 때만 true로 설정
       }
-    } catch {
+    } catch (error) {
+      console.log(error);
       setError('email', {
         type: 'manual',
         message: FORM_CATCH_ERROR[0],
@@ -99,7 +94,7 @@ export default function SignUpForm() {
   // Modal 확인 버튼 클릭 핸들러
   const handleModalConfirm = () => {
     setShowSuccessModal(false);
-    // router.push('/log-in');
+    router.push('/log-in');
   };
 
   // 에러 객체에 값이 있는지 검사
@@ -107,10 +102,7 @@ export default function SignUpForm() {
     isValid &&
     isDirty && // 폼이 한번이라도 수정 되었는지
     isUsernameChecked && // 아이디 중복 검사 완료 확인
-    isEmailChecked && // 이메일 중복 검사 완료 확인
-    (['name', 'nickname', 'email', 'username', 'password', 'confirmPassword'] as const).every(
-      (field) => dirtyFields[field as keyof SignUpState], // 필수 필드가 수정 되었는지
-    );
+    isEmailChecked; // 이메일 중복 검사 완료 확인
 
   // 폼 제출
   const handleFormSubmit = async (data: SignUpState) => {
@@ -170,7 +162,8 @@ export default function SignUpForm() {
           onBlur={(e) => checkUsername(e.target.value)}
           onChange={() => setIsUsernameChecked(false)}
           error={errors.username}
-          maxLength={10}
+          minLength={6}
+          maxLength={12}
           infoText={FORM_TEXT[8]}
         />
         {/* 비밀번호 input */}
