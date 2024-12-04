@@ -7,17 +7,16 @@ import PortfolioCard from '../_components/PortfolioCard';
 import PortfolioAddCard from '../_components/PortfolioAddCard';
 import usePortfolioStore from '../../../_store/portfolio';
 import { PortfolioCardProps } from '../../../_types/portfolio';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchPortfolios } from '../_services/portfolioServices';
+
 export default function PortfolioList() {
   const { portfolio } = usePortfolioStore();
 
-  // const { data: pfData } = useCustomQuery(['pf'], () => fetchPortfolios());
-  // const queryClient = useQueryClient();
-  // const createPortfolioMutation = useCustomMutation(postPorfolios, {
-  //   onSuccess: (data) => {
-  //     console.log('반환 받은 포트폴리오 아이디', data);
-  //     queryClient.invalidateQueries(['pf']); // 캐시 초기화
-  //   },
-  // });
+  // 포트폴리오 목록 조회
+  const { data: portfolioList } = useCustomQuery(['portfolios'], () => fetchPortfolios());
+  console.log(portfolioList);
+
   return (
     <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full pt-14 md:pt-0">
       <div className="pt-[60px] flex justify-between items-center w-full max-w-[1000px] md:px-[60px] lg:px-[50px] ">
@@ -35,14 +34,11 @@ export default function PortfolioList() {
           </button>
         </Link>
       </div>
-      {/* <button type="button" onClick={handlePostTest}>
-        POST 테스트
-      </button> */}
 
       <div className="flex flex-col items-center mt-[30px] mb-[100px] px-[50px]">
         <div className="w-full lg:max-w-[1000px] grid justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[25px] gap-4">
           {portfolio.map((item: PortfolioCardProps) => (
-            <PortfolioCard key={item.id} id={item.id} title={item.title} date="2024.10.17" />
+            <PortfolioCard key={item.id} id={item.id} title={item.title} memo={item.memo} date={item.date} />
           ))}
           <PortfolioAddCard />
         </div>

@@ -1,13 +1,13 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Link from 'next/link';
 import Icons from '../../../_components/ui/Icon';
 import { MoreIcon } from '../../../_components/ui/iconPath';
 import PortfolioDropdown from './PortfolioDropdown';
 import useClickOutside from '@/app/_hooks/useClickOutside';
 import { PortfolioCardProps } from '@/app/_types/portfolio';
 import usePortfolioStore from '@/app/_store/portfolio';
-import Link from 'next/link';
 
 export default function PortfolioCard({ id, title, date, memo }: PortfolioCardProps) {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
@@ -34,7 +34,7 @@ export default function PortfolioCard({ id, title, date, memo }: PortfolioCardPr
 
   return (
     <div className=" relative w-[320px] bg-white-0 border border-gray-5 rounded-xl pt-[30px] pb-2.5 px-[30px]">
-      <Link href={`/`}>
+      <Link href={`/portfolio/${id}/write`}>
         <div className="flex justify-between">
           <h1 className="max-w-[15ch] font-semibold whitespace-nowrap text-ellipsis overflow-hidden">{title}</h1>
           <button
