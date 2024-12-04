@@ -15,8 +15,10 @@ export default function AdminCorp() {
         <div className="text-2xl border-b border-gray-5 pb-4 mb-5 w-full font-semibold ">기업 관리</div>
         {/* 검색 */}
         <div className="flex border-b-2 border-black-0 w-full max-w-[25%]">
-          <div className="flex justify-start  py-5  ">
+          <div className="flex justify-start  py-2  ">
             <Icons name={{ ...SearchIcon, fill: '#00000' }} />
+            {/* 검색어 입력시 / hover 색상 변경 필요 */}
+            <textarea className="resize-none ml-3 px-[18px] w-full max-h-[30px]  placeholder:text-gray-3 focus:outline-none" />
           </div>
         </div>
         <div className="flex-col mt-2 h-[500px] max-w-[50%] border-gray-5 border">
@@ -42,6 +44,7 @@ export default function AdminCorp() {
                 </div>
               ))}
             </div>
+            {/* 기업생성 */}
             <div className="flex h-[10%] items-center px-5">
               <textarea
                 className="resize-none border-gray-2 px-[18px] py-2.5 w-[75%] border max-h-[45px] rounded-xl placeholder:text-gray-3 focus:outline-none"
