@@ -32,7 +32,7 @@ export default function LoginForm() {
   const handleFormSubmit = async (data: LoginState) => {
     try {
       await onSubmit(data);
-      router.push('/main');
+      router.replace('/main');
     } catch (error) {
       setErrorMessage(FORM_ERROR[2]);
       console.log('에러 메시지', errorMessage); // api 연결 후, 모달로 수정

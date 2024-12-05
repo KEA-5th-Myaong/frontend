@@ -94,7 +94,7 @@ export default function SignUpForm() {
   // Modal 확인 버튼 클릭 핸들러
   const handleModalConfirm = () => {
     setShowSuccessModal(false);
-    router.push('/log-in');
+    router.replace('/log-in');
   };
 
   // 에러 객체에 값이 있는지 검사
