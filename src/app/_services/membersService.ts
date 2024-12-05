@@ -77,17 +77,6 @@ export async function fetchMember(memberId: string) {
   }
 }
 
-// (GET) 회원 정보 조회(username만을 가지고)
-export async function fetchMemberUsername(username: string) {
-  try {
-    const { data } = await api.get(`/blog/profiles?username=${username}`);
-    return data;
-  } catch (error) {
-    console.error('회원 정보 조회(username만을 가지고) 실패:', error);
-    throw error;
-  }
-}
-
 // (POST) 비밀번호 확인
 export async function postCheckPassword(passwordData: unknown) {
   try {
