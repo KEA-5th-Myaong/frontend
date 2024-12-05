@@ -124,7 +124,8 @@ export async function deleteInterview(interviewId: string) {
 // (POST) 표정 분석
 export async function postAnalyzeExpression(image: unknown) {
   try {
-    await axios.post(`${process.env.NEXT_PUBLIC_TEMP_URL}/analyze_expression`, image);
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_TEMP_URL}/analyze_expression`, image);
+    return data;
   } catch (error) {
     console.error('표정 분석 실패:', error);
     throw error;

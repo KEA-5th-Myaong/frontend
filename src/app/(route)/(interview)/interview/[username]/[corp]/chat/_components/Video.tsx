@@ -1,11 +1,16 @@
 import { useRef, useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { postAnalyzeExpression } from '@/app/(route)/(interview)/_services/interviewService';
+import Icons from '@/app/_components/ui/Icon';
+import { PlayIcon } from '@/app/_components/ui/iconPath';
 
 export default function Video() {
   const videoRef = useRef<HTMLVideoElement>(null); // 웹캠 비디오 엘리먼트를 참조하기 위한 ref
   const streamRef = useRef<MediaStream | null>(null); // 카메라 스트림 저장하고 관리 위한 ref, MediaStream 객체를 저장하여 카메라 리소스를 제어할 수 있게 함
+  const [showPractice, setShowPractice] = useState(false);
   const [showFace, setShowFace] = useState(false); // 카메라 표시 여부
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [responseExpression, setResponseExpression] = useState('');
 
   const getMediaPermission = useCallback(async () => {
     try {
@@ -62,7 +67,8 @@ export default function Video() {
           const data = {
             image: base64String,
           };
-          await postAnalyzeExpression(data);
+          const response = await postAnalyzeExpression(data);
+          setResponseExpression(response.data.expression);
         } catch (error) {
           console.error('이미지 변환 또는 전송 실패:', error);
         }
@@ -94,7 +100,7 @@ export default function Video() {
   }, [stopAnalysis]);
 
   useEffect(() => {
-    if (showFace) {
+    if (showFace && showPractice) {
       getMediaPermission().then(() => {
         startAnalysis();
       });
@@ -104,24 +110,46 @@ export default function Video() {
     return () => {
       stopCamera();
     };
-  }, [showFace, getMediaPermission, stopCamera, startAnalysis]);
-
+  }, [showFace, showPractice, getMediaPermission, stopCamera, startAnalysis]);
   return (
     <div className="fixed left-12 bottom-12 z-50">
-      <video
-        ref={videoRef}
-        className={`${showFace ? 'block' : 'hidden'} w-70 h-64 aspect-video bg-gray-0 -scale-x-100 rounded-xl drop-shadow-xl`}
-        autoPlay
-      />
+      {showPractice && (
+        <div className="fixed left-12 bottom-28 max-w-[420px] z-10 bg-white-0 px-10 rounded-xl border border-gray-5 pt-5 pb-11">
+          <div className="w-full flex justify-between pb-[14px] border-b border-gray-5 mb-4">
+            <p className="font-semibold">면접 연습하기</p>
+            <div
+              onClick={() => setShowFace((prev) => !prev)}
+              className="flex items-center border border-primary-3 py-1 px-4 rounded-[28px] cursor-pointer"
+            >
+              <Icons name={PlayIcon} />
+              {showFace ? '표정 분석 종료' : '표정 분석 시작'}
+            </div>
+          </div>
+          {showFace ? (
+            <video ref={videoRef} className="max-w-full h-[208px] aspect-video bg-black-0 -scale-x-100" autoPlay />
+          ) : (
+            <div className="max-w-full h-[208px] aspect-video bg-black-0" />
+          )}
+
+          <p className="font-semibold mt-5">AI 표정 분석 결과</p>
+          <div className="flex gap-2">
+            <div className="w-12 h-12 flex-shrink-0">
+              <Image className="w-full h-full" width={33} height={33} src="/mascot.png" alt="이미지" />
+            </div>
+            <p className="mt-3 font-medium text-[11px] bg-[#F5F5F5] rounded-[20px] py-4 px-8">{responseExpression}</p>
+          </div>
+        </div>
+      )}
 
       <button
         type="button"
         className="py-4 px-6 rounded-[28px] primary-1-btn mt-2 md:block hidden"
         onClick={() => {
-          setShowFace((prev) => !prev);
+          setShowPractice((prev) => !prev);
+          setShowFace(false);
         }}
       >
-        {showFace ? 'AI 표정 분석 종료' : 'AI 표정 분석'}
+        {showPractice ? 'AI 표정 분석 종료' : 'AI 표정 분석'}
       </button>
     </div>
   );

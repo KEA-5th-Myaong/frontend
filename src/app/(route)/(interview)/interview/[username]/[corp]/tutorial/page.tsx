@@ -74,18 +74,12 @@ export default function Tutorial() {
                   <p className="font-semibold">면접 연습하기</p>
                   <div className="flex items-center border border-primary-3 py-1 px-4 rounded-[28px]">
                     <Icons name={PlayIcon} />
-                    녹화 시작
+                    표정 분석 시작
                   </div>
                 </div>
 
                 <Image width={360} height={208} src="/assets/videoImage.png" alt="표정분석사람 이미지" />
-                <div className="w-full flex justify-between mt-5 ">
-                  <p className="font-semibold">AI 표정 분석 결과</p>
-                  <div className="flex items-center border border-primary-3 py-1 px-4 rounded-[28px]">
-                    <Icons name={RefreshIcon} />
-                    다시 보기
-                  </div>
-                </div>
+                <p className="font-semibold mt-5">AI 표정 분석 결과</p>
                 {/* 면접 연습하기 본문 */}
                 <div className="flex gap-2">
                   <div className="w-12 h-12 flex-shrink-0">
