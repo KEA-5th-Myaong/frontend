@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import testData from '../test.json';
 import menuData from '../menuData.json';
 import Icons from '../../ui/Icon';
@@ -12,6 +13,8 @@ interface MyMenuProps {
   openMenu: string | null;
 }
 export default function MyMenu({ handleMenuOpen, openMenu }: MyMenuProps) {
+  const router = useRouter();
+
   const alarmMenuRef = useRef<HTMLDivElement>(null);
   const myPageMenuRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +28,7 @@ export default function MyMenu({ handleMenuOpen, openMenu }: MyMenuProps) {
   return (
     <div className="hidden md:flex-center w-64 h-14 absolute right-4 mt-3  ">
       <button type="button">
-        <Icons name={{ ...SearchIcon, fill: 'black' }} />
+        <Icons onClick={() => router.push('/main/search')} name={{ ...SearchIcon, fill: 'black' }} />
       </button>
       {/* 유저 아이콘 */}
       <div className="flex w-30 h-7 justify-center items-cente mx-5">
