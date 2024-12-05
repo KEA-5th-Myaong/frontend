@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { useQueryClient } from '@tanstack/react-query';
 import { FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { LoginState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
@@ -17,6 +18,11 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginState>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // 로그인 시 기존 캐시 무효화
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({
+    queryKey: ['me'],
+  });
 
   const onSubmit = async (data: LoginState) => {
     const response = await postLogin(data);
