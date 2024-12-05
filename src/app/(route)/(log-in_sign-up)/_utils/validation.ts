@@ -22,7 +22,7 @@ export const validateEmail = (
 
 // 아이디 유효성 검사
 export const validateId = (id: string, setError: UseFormSetError<SignUpState>): boolean => {
-  const validIdRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]+$/;
+  const validIdRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,}$/;
   if (!validIdRegex.test(id)) {
     setError('username', {
       type: 'manual',

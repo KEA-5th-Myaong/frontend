@@ -55,6 +55,17 @@ export async function postSignUp(signupData: unknown) {
   }
 }
 
+// (POST) 소셜 회원가입 추가 정보 입력
+export async function postSignUpDetail(signupData: unknown) {
+  try {
+    const { data } = await api.post('/members', signupData);
+    return data;
+  } catch (error) {
+    console.error('소셜 회원가입 추가 정보 입력 실패:', error);
+    throw error;
+  }
+}
+
 // (GET) 현재 로그인한 회원의 정보 조회
 export async function fetchMe() {
   try {
