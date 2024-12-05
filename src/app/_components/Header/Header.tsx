@@ -52,7 +52,7 @@ export default function Header() {
   });
 
   return (
-    <div className="fixed md:relative flex text-white-0 px-8 gap-1 w-full min-w-[360px] bg-white-0 border-b-2 h-20 items-center z-50">
+    <div className="fixed md:relative flex text-white-0 px-8 w-full min-w-[360px] bg-white-0 border-b-2 h-20 items-center z-50">
       <div className="hidden md:flex w-full items-center">
         {/* 로고 버튼 */}
         <div className="pl-4 w-44">
@@ -77,16 +77,14 @@ export default function Header() {
           />
         </div>
       </div>
-      <div className="hidden md:flex  w-full h-full">
+      <div className="hidden md:flex w-full">
         <MyMenu openMenu={openMenu} handleMenuOpen={handleMenuOpen} userData={userData} />
       </div>
 
       {/* Mobile 스크린 */}
-      <div className="flex-center md:hidden w-full h-full ">
-        <div className="absolute left-1 p-4 w-10 h-12">
-          <button type="button" onClick={toggleSideMenuOpen}>
-            <Icons name={MenuIcon} />
-          </button>
+      <div className="flex-center md:hidden w-full">
+        <div className="absolute left-1 pl-4 cursor-pointer" onClick={toggleSideMenuOpen}>
+          <Icons name={MenuIcon} />
         </div>
         <Link href="/main" className="">
           {!isSideMenuOpen && (
