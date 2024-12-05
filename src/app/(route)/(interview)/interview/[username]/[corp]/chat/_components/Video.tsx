@@ -1,9 +1,11 @@
 import { useRef, useCallback, useEffect, useState } from 'react';
+import { postAnalyzeExpression } from '@/app/(route)/(interview)/_services/interviewService';
 
 export default function Video() {
   const videoRef = useRef<HTMLVideoElement>(null); // 웹캠 비디오 엘리먼트를 참조하기 위한 ref
   const streamRef = useRef<MediaStream | null>(null); // 카메라 스트림 저장하고 관리 위한 ref, MediaStream 객체를 저장하여 카메라 리소스를 제어할 수 있게 함
   const [showFace, setShowFace] = useState(false); // 카메라 표시 여부
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const getMediaPermission = useCallback(async () => {
     try {
@@ -23,28 +25,86 @@ export default function Video() {
     }
   }, []);
 
-  // 카메라 끄기 함수
-  const stopCamera = useCallback(() => {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop()); // 모든 비디오 트랙 중단
-      if (videoRef.current) {
-        videoRef.current.srcObject = null; // 비디오 요소의 스트림 제거
+  // Blob를 base64 문자열로 변환하는 유틸리티 함수
+  const blobToBase64 = (blob: Blob): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          // data:image/jpeg;base64, 부분을 제거하고 순수 base64 문자열만 추출
+          const base64String = reader.result.split(',')[1];
+          resolve(base64String);
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  const captureFrame = useCallback(async () => {
+    if (!videoRef.current) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.drawImage(videoRef.current, 0, 0);
+
+    // 캔버스를 Blob으로 변환
+    canvas.toBlob(async (blob) => {
+      if (blob) {
+        try {
+          // Blob을 base64로 변환
+          const base64String = await blobToBase64(blob);
+          // 요구사항에 맞는 형식으로 데이터 구성
+          const data = {
+            image: base64String,
+          };
+          await postAnalyzeExpression(data);
+        } catch (error) {
+          console.error('이미지 변환 또는 전송 실패:', error);
+        }
       }
-      streamRef.current = null; // 스트림 참조 제거
+    }, 'image/jpeg');
+  }, []);
+
+  const startAnalysis = useCallback(() => {
+    if (intervalRef.current) return;
+    intervalRef.current = setInterval(captureFrame, 1000);
+  }, [captureFrame]);
+
+  const stopAnalysis = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
   }, []);
 
+  const stopCamera = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+      streamRef.current = null;
+    }
+    stopAnalysis();
+  }, [stopAnalysis]);
+
   useEffect(() => {
     if (showFace) {
-      getMediaPermission();
+      getMediaPermission().then(() => {
+        startAnalysis();
+      });
     } else {
       stopCamera();
     }
-    // 컴포넌트 언마운트시 카메라 끔
     return () => {
       stopCamera();
     };
-  }, [showFace, getMediaPermission, stopCamera]);
+  }, [showFace, getMediaPermission, stopCamera, startAnalysis]);
 
   return (
     <div className="fixed left-12 bottom-12 z-50">

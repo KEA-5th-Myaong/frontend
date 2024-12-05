@@ -1,3 +1,4 @@
+import axios from 'axios';
 import api from '@/app/api/axiosInstance';
 
 // (GET) 선택 가능한 기업 목록 조회
@@ -116,6 +117,16 @@ export async function deleteInterview(interviewId: string) {
     await api.delete(`/interviews/${interviewId}`);
   } catch (error) {
     console.error('면접 기록 삭제 실패:', error);
+    throw error;
+  }
+}
+
+// (POST) 표정 분석
+export async function postAnalyzeExpression(image: unknown) {
+  try {
+    await axios.post(`${process.env.NEXT_PUBLIC_TEMP_URL}/analyze_expression`, image);
+  } catch (error) {
+    console.error('표정 분석 실패:', error);
     throw error;
   }
 }
