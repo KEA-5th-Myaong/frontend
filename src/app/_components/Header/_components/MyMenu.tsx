@@ -7,12 +7,14 @@ import menuData from '../menuData.json';
 import Icons from '../../ui/Icon';
 import { SearchIcon, XIcon, UserIcon } from '../../ui/iconPath';
 import useClickOutside from '../../../_hooks/useClickOutside';
+import { User } from '@/app/_hooks/useMe';
 
 interface MyMenuProps {
   handleMenuOpen: (menu: string | null) => void;
   openMenu: string | null;
+  userData?: User;
 }
-export default function MyMenu({ handleMenuOpen, openMenu }: MyMenuProps) {
+export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuProps) {
   const router = useRouter();
 
   const alarmMenuRef = useRef<HTMLDivElement>(null);
@@ -55,7 +57,7 @@ export default function MyMenu({ handleMenuOpen, openMenu }: MyMenuProps) {
             )}
           </button>
         </div>
-        <div className="flex-center text-black-0 text-sm font-medium">{testData.userData.userName} 님</div>
+        <div className="flex-center text-black-0 text-sm font-medium">{userData?.data.nickname} 님</div>
       </div>
       <div className="flex-center w-10 h-10">
         <div className="w-7 h-7 text-xs relative" ref={alarmMenuRef}>

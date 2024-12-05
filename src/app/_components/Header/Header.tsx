@@ -10,8 +10,11 @@ import { MenuIcon } from '../ui/iconPath';
 import SideMenu from './_components/SideMenu';
 import useClickOutside from '../../_hooks/useClickOutside';
 import MyMenu from './_components/MyMenu';
+import useMe from '@/app/_hooks/useMe';
 
 export default function Header() {
+  const { data: userData } = useMe();
+
   // 상태 관리
   const [openMenu, setOpenMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
   const [openBlogMenu, setOpenBlogMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
@@ -75,7 +78,7 @@ export default function Header() {
         </div>
       </div>
       <div className="hidden md:flex  w-full h-full">
-        <MyMenu openMenu={openMenu} handleMenuOpen={handleMenuOpen} />
+        <MyMenu openMenu={openMenu} handleMenuOpen={handleMenuOpen} userData={userData} />
       </div>
 
       {/* Mobile 스크린 */}
