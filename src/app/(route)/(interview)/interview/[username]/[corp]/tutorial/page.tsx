@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Icons from '@/app/_components/ui/Icon';
-import { ArrowIcon, PlayIcon, PlusIcon, RefreshIcon, TriangleIcon, XIcon } from '@/app/_components/ui/iconPath';
+import { ArrowIcon, PlayIcon, PlusIcon, TriangleIcon, XIcon } from '@/app/_components/ui/iconPath';
 import Tooltip from './_components/ToolTip';
 
 export default function Tutorial() {

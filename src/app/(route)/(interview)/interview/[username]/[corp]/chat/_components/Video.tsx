@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { postAnalyzeExpression } from '@/app/(route)/(interview)/_services/interviewService';
 import Icons from '@/app/_components/ui/Icon';
 import { PlayIcon } from '@/app/_components/ui/iconPath';
+import { expressionMapping } from '../_types/messageType';
 
 export default function Video() {
   const videoRef = useRef<HTMLVideoElement>(null); // 웹캠 비디오 엘리먼트를 참조하기 위한 ref
@@ -136,7 +137,9 @@ export default function Video() {
             <div className="w-12 h-12 flex-shrink-0">
               <Image className="w-full h-full" width={33} height={33} src="/mascot.png" alt="이미지" />
             </div>
-            <p className="mt-3 font-medium text-[11px] bg-[#F5F5F5] rounded-[20px] py-4 px-8">{responseExpression}</p>
+            <p className="mt-3 font-medium text-[11px] bg-[#F5F5F5] rounded-[20px] py-4 px-8">
+              {expressionMapping[responseExpression]}
+            </p>
           </div>
         </div>
       )}
