@@ -15,7 +15,7 @@ export async function fetchCompanies() {
 // (GET) 선택 가능한 기업 검색
 export async function fetchCompaniesSearch(search: unknown) {
   try {
-    const { data } = await api.get(`/interviews/companies/search?search=${search}`);
+    const { data } = await api.get(`/interviews/companies?search=${search}`);
     return data;
   } catch (error) {
     console.error('선택 가능한 기업 검색 실패:', error);
