@@ -58,7 +58,7 @@ export async function deleteProtfoliosPic(portfolioId: string) {
 // (PUT) 대표 포트폴리오 설정
 export async function putPortfoliosMain(portfolioId: string) {
   try {
-    await api.put(`/${portfolioId}/main`);
+    await api.put(`/portfolios/${portfolioId}/main`);
   } catch (error) {
     console.error('대표 포트폴리오 설정 실패:', error);
     throw error;
