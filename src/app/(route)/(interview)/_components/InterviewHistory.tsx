@@ -94,22 +94,20 @@ export default function InterviewHistory() {
           <p className="pl-[13px] font-medium">면접 기록 불러오는중...</p>
         ) : (
           historyLists?.map((item: HistoryItem) => (
-            <button
-              type="button"
-              key={item.interviewId}
-              className="bg-white-0 hover:bg-[#F3F3F3] interview-history"
-              onClick={() => handleSelectHistory(item.title, item.interviewId)}
-            >
-              <p className="interview-history-text">{item.title}</p>
-              <Icons
+            <div key={item.interviewId} className="bg-white-0 hover:bg-[#F3F3F3] cursor-pointer interview-history">
+              <div onClick={() => handleSelectHistory(item.title, item.interviewId)} className="interview-history-text">
+                {item.title}
+              </div>
+              <div
                 onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
                   handleDeleteClick(item.interviewId);
                 }}
-                name={XIcon}
-                className="flex-shrink-0 ml-2"
-              />
-            </button>
+                className="pl-2 py-2"
+              >
+                <Icons name={XIcon} className="" />
+              </div>
+            </div>
           ))
         )}
       </div>
