@@ -22,8 +22,6 @@ export default function PostContainer() {
 
   const memberId = memberData?.memberId;
 
-  const [lastId, setLastId] = useState('0'); // 실제 데이터 반영 후 수정
-
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useCustomInfiniteQuery(
     ['post', memberId],
     ({ pageParam = '0' }) => fetchPost(memberId, pageParam as string),
@@ -53,7 +51,12 @@ export default function PostContainer() {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(posts, setPosts, memberId, lastId);
+  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
+    posts,
+    setPosts,
+    memberId,
+    data?.pageParams?.[data.pageParams.length - 1]?.toString(),
+  );
   return (
     <div className="flex flex-col gap-6">
       {isLoading

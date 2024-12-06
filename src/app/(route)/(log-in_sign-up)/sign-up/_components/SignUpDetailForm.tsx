@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import { FORM_CATCH_ERROR, FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT, MODAL_TEXT } from '../../_constants/forms';
 import { SignUpState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
-import { validateCheckPwd, validateEmail, validateId, validatePwd } from '../../_utils/validation';
+import { validateId } from '../../_utils/validation';
 import Modal from '../../../../_components/Modal';
-import { fetchCheckEmail, fetchCheckUsername, postSignUp } from '@/app/_services/membersService';
+import { fetchCheckUsername, postSignUpDetail } from '@/app/_services/membersService';
 
-export default function SignUpForm() {
+export default function SignUpDetailForm() {
   const {
     reset,
     register,
@@ -18,13 +18,11 @@ export default function SignUpForm() {
     formState: { errors, isValid, isDirty },
     setError,
     clearErrors,
-    watch,
   } = useForm<SignUpState>({
     mode: 'onChange',
   });
   const router = useRouter();
   const [isUsernameChecked, setIsUsernameChecked] = useState(false); // 아이디 중복 검사 진행 여부
-  const [isEmailChecked, setIsEmailChecked] = useState(false); // 이메일 중복 검사 진행 여부
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // 에러 메시지들
   const [showSuccessModal, setShowSuccessModal] = useState(false); // 회원가입 성공 모달
 
@@ -47,39 +45,10 @@ export default function SignUpForm() {
     }
   };
 
-  // 이메일 중복 검사
-  const checkEMailDuplicate = async (email: string) => {
-    setIsEmailChecked(false); // 검사 시작 시 false로 설정
-    if (!validateEmail(email, setError, clearErrors)) {
-      return;
-    }
-    try {
-      const response = await fetchCheckEmail(email);
-      if (response.data.usable === false) {
-        setError('email', {
-          type: 'manual',
-          message: FORM_ERROR[7],
-        });
-      } else {
-        clearErrors('email');
-        setIsEmailChecked(true); // 중복이 아닐 때만 true로 설정
-      }
-    } catch (error) {
-      console.log(error);
-      setError('email', {
-        type: 'manual',
-        message: FORM_CATCH_ERROR[0],
-      });
-    }
-  };
-
-  // 비밀번호 체크
-  const userPwdValue = watch('password');
-
-  // 임시 회원 가입 API 호출 함수
+  // 회원 가입 API 호출 함수
   const onSubmit = async (data: SignUpState) => {
     try {
-      const signupData = await postSignUp(data);
+      const signupData = await postSignUpDetail(data);
       // 수정 필요
       if (signupData.success) {
         return { success: true };
@@ -101,8 +70,7 @@ export default function SignUpForm() {
   const isFormValid =
     isValid &&
     isDirty && // 폼이 한번이라도 수정 되었는지
-    isUsernameChecked && // 아이디 중복 검사 완료 확인
-    isEmailChecked; // 이메일 중복 검사 완료 확인
+    isUsernameChecked; // 아이디 중복 검사 완료 확인
 
   // 폼 제출
   const handleFormSubmit = async (data: SignUpState) => {
@@ -140,18 +108,6 @@ export default function SignUpForm() {
           maxLength={10}
           infoText={FORM_TEXT[8]}
         />
-        {/* 이메일 input */}
-        <FormInput<SignUpState>
-          id="email"
-          label={FORM_TEXT[7]}
-          placeholder={FORM_PLACEHOLDER[3]}
-          register={register}
-          onBlur={(e) => checkEMailDuplicate(e.target.value)}
-          onChange={() => setIsEmailChecked(false)}
-          type="email"
-          error={errors.email}
-          required={FORM_ERROR[4]}
-        />
         {/* 아이디 input */}
         <FormInput<SignUpState>
           id="username"
@@ -166,33 +122,10 @@ export default function SignUpForm() {
           maxLength={12}
           infoText={FORM_TEXT[8]}
         />
-        {/* 비밀번호 input */}
-        <FormInput<SignUpState>
-          id="password"
-          label={FORM_TEXT[2]}
-          placeholder={FORM_PLACEHOLDER[1]}
-          register={register}
-          required={FORM_ERROR[1]}
-          onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
-          type="password"
-          error={errors.password}
-          minLength={10}
-          infoText={FORM_TEXT[9]}
-        />
-        {/* 비밀번호 확인 input */}
-        <FormInput<SignUpState>
-          id="confirmPassword"
-          label={FORM_TEXT[3]}
-          placeholder={FORM_PLACEHOLDER[4]}
-          register={register}
-          required={FORM_ERROR[10]}
-          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
-          type="password"
-          error={errors.confirmPassword}
-        />
+
         {/* 회원가입 button */}
-        <div className="mt-[60px]">
-          {errorMessage && <p className="form-error-text">{errorMessage}</p>}
+        <div className="relative mt-[60px]">
+          {errorMessage && <p className="absolute bottom-20 form-error-text">{errorMessage}</p>}
           <button type="submit" className={`form-btn ${!isFormValid ? 'bg-gray-1' : ''}`} disabled={!isFormValid}>
             {FORM_TEXT[10]}
           </button>
