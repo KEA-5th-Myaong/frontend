@@ -34,6 +34,17 @@ export default function PortfolioList() {
 
       <div className="flex flex-col items-center mt-[30px] mb-[100px] px-[50px]">
         <div className="w-full lg:max-w-[1000px] grid justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[25px] gap-4">
+          {/* main 객체 렌더링 */}
+          {portfolioList?.data?.main && portfolioList.data.main.portfolioId && (
+            <PortfolioCard
+              key={portfolioList.data.main.portfolioId}
+              portfolioId={portfolioList.data.main.portfolioId}
+              portfolioName={portfolioList.data.main.portfolioName}
+              memo={portfolioList.data.main.memo}
+              timestamp={portfolioList.data.main.timestamp}
+            />
+          )}
+          {/* portfolios 배열 렌더링 */}
           {portfolioList?.data?.portfolios?.map((item: PortfolioCardProps) => (
             <PortfolioCard
               key={item.portfolioId}
