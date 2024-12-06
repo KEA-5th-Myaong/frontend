@@ -10,6 +10,7 @@ export default function FormInput<T extends FieldValues>({
   placeholder,
   register,
   required,
+  onChange,
   onBlur = undefined,
   type = undefined,
   error = undefined,
@@ -28,31 +29,33 @@ export default function FormInput<T extends FieldValues>({
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  // value prop이 존재할 때만 value 속성을 포함시키는 inputProps 객체 생성
+  const inputProps = {
+    maxLength,
+    minLength,
+    type: isPassword ? (showPassword ? 'text' : 'password') : type,
+    id: id as string,
+    className: 'mt-2 form-input',
+    onChange,
+    placeholder,
+    disabled: isDisabled,
+    ...(value !== undefined && { value }), // value가 undefined가 아닐 때만 포함
+  };
   return (
     <div className="relative">
       <div className="flex items-center gap-2">
         {label} {isEssential && <p className="form-red-dot" />}
       </div>
-      <input
-        maxLength={maxLength}
-        minLength={minLength}
-        type={isPassword ? (showPassword ? 'text' : 'password') : type}
-        id={id as string}
-        {...register(id as Path<T>, { required, onBlur })}
-        className="mt-2 form-input"
-        placeholder={placeholder}
-        disabled={isDisabled}
-        value={value}
-      />
+      <input {...inputProps} {...register(id as Path<T>, { required, onBlur })} />
       {isPassword && (
-        <button
-          type="button"
+        <div
           tabIndex={-1} // 눈 아이콘에 focus가 생기지 않도록
           onClick={togglePasswordVisibility}
           className="absolute right-4 top-[62px] transform -translate-y-1/2"
         >
           <Icons name={showPassword ? EyeIcon : EyeSlashIcon} />
-        </button>
+        </div>
       )}
 
       {isEdit && (

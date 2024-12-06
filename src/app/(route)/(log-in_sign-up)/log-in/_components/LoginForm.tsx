@@ -3,6 +3,8 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { useQueryClient } from '@tanstack/react-query';
 import { FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { LoginState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
@@ -16,15 +18,27 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginState>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // 로그인 시 기존 캐시 무효화
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({
+    queryKey: ['me'],
+  });
 
   const onSubmit = async (data: LoginState) => {
-    await postLogin(data);
+    const response = await postLogin(data);
+    // 쿠키에 토큰 저장
+    Cookies.set('accessToken', response.data.accessToken, {
+      path: '/', // 모든 경로에서 접근 가능
+      secure: process.env.NODE_ENV === 'production', // HTTPS에서만 작동 (프로덕션 환경에서)
+      sameSite: 'strict', // CSRF 공격 방지
+    });
+    return response;
   };
 
   const handleFormSubmit = async (data: LoginState) => {
     try {
       await onSubmit(data);
-      router.push('/main');
+      router.replace('/main');
     } catch (error) {
       setErrorMessage(FORM_ERROR[2]);
       console.log('에러 메시지', errorMessage); // api 연결 후, 모달로 수정

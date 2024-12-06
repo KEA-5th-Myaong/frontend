@@ -21,7 +21,7 @@ export default function ChangePwdContainer() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  const userPwdValue = watch('userPwd');
+  const userPwdValue = watch('password');
 
   const onSubmit = async (data: ChangePwdProps) => {
     console.log('비밀번호 데이터', data);
@@ -53,27 +53,27 @@ export default function ChangePwdContainer() {
         className="flex flex-col justify-center gap-14 w-full min-w-[360px] max-w-[600px] pt-10 px-5"
       >
         <FormInput<ChangePwdProps>
-          id="userPwd"
+          id="password"
           label="새 비밀번호"
           placeholder="새 비밀번호를 입력해 주세요"
           register={register}
           required="새 비밀번호를 입력해주세요"
           onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
           type="password"
-          error={errors.userPwd}
+          error={errors.password}
           minLength={10}
           isEssential={false}
         />
 
         <FormInput<ChangePwdProps>
-          id="checkPwd"
+          id="confirmPassword"
           label="새 비밀번호 확인"
           placeholder="새 비밀번호를 입력해 주세요"
           register={register}
           required="새 비밀번호를 확인해주세요"
           onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
           type="password"
-          error={errors.checkPwd}
+          error={errors.confirmPassword}
           isEssential={false}
         />
 

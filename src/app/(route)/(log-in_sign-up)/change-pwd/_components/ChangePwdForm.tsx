@@ -25,7 +25,7 @@ export default function ChangePwdForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  const userPwdValue = watch('userPwd');
+  const userPwdValue = watch('password');
 
   const onSubmit = async (data: ChangePwdProps) => {
     console.log('비밀번호 데이터', data);
@@ -57,35 +57,35 @@ export default function ChangePwdForm() {
       <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* 비밀번호 input */}
         <FormInput<ChangePwdProps>
-          id="userPwd"
+          id="password"
           label={FORM_TEXT[2]}
           placeholder={FORM_PLACEHOLDER[1]}
           register={register}
           required={FORM_ERROR[1]}
           onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
           type="password"
-          error={errors.userPwd}
+          error={errors.password}
           minLength={10}
           infoText={FORM_TEXT[9]}
         />
 
         {/* 비밀번호 확인 input */}
         <FormInput<ChangePwdProps>
-          id="checkPwd"
+          id="confirmPassword"
           label={FORM_TEXT[3]}
           placeholder={FORM_PLACEHOLDER[4]}
           register={register}
           required={FORM_ERROR[10]}
           onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
           type="password"
-          error={errors.checkPwd}
+          error={errors.confirmPassword}
         />
 
-        {/* 회원가입 button */}
+        {/* 비밀번호 변경 button */}
         <div className="mt-[17px]">
           {errorMessage && <p className="form-error-text">{errorMessage}</p>}
           <button type="submit" className={`form-btn ${!isFormValid ? 'bg-gray-1' : ''}`} disabled={!isFormValid}>
-            {FORM_TEXT[10]}
+            {FORM_TEXT[12]}
           </button>
         </div>
       </form>

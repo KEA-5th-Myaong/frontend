@@ -7,28 +7,19 @@ import Image from 'next/image';
 import FollowButton from './_follow/FollowButton';
 import FollowModal from './_follow/FollowModal';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { fetchFollowed, fetchFollowing, fetchMemberInfo } from '../_services/blogService';
-import { fetchMemberUsername } from '@/app/_services/membersService';
+import { fetchFollowed, fetchFollowing, fetchMemberInfo, fetchProfile } from '../_services/blogService';
 import defaultProfilePic from '../../../../../../../public/mascot.png';
 
 export default function UserProfile() {
   const params = useParams();
-
-  const getUsername = (param: string | string[]): string => {
-    if (Array.isArray(param)) {
-      return param[0]; // 배열인 경우 첫 번째 요소를 사용
-    }
-    return param;
-  };
-
-  const userName = decodeURI(getUsername(params.username));
+  const { username } = params;
 
   // url의 username을 가지고 memberId 가져오기
-  const { data: userNameData } = useCustomQuery(['user-name', userName], () => fetchMemberUsername(userName)); // 현재 유저 정보
+  const { data: userNameData } = useCustomQuery(['user-name', username], () => fetchProfile(username as string)); // 현재 유저 정보
   const memberId = userNameData?.data.memberId; // 멤버 아이디
 
   // 블로그 주인장 데이터
-  const { data: blogUserData } = useCustomQuery(['blog-user', userName], () => fetchMemberInfo(memberId));
+  const { data: blogUserData } = useCustomQuery(['blog-user', username], () => fetchMemberInfo(memberId));
 
   const { data: followedData } = useCustomQuery(['followed', memberId], () => fetchFollowed(memberId, '10'));
   const { data: followingData } = useCustomQuery(['following', memberId], () => fetchFollowing(memberId, '10'));

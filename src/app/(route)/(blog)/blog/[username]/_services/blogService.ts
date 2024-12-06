@@ -3,7 +3,7 @@ import api from '@/app/api/axiosInstance';
 // (GET) 타인 정보 조회(주어진 정보가 username뿐일 때 사용)
 export async function fetchProfile(username: string) {
   try {
-    const { data } = await api.get(`/blog/profile?profile=${username}`);
+    const { data } = await api.get(`/blog/profiles?username=${username}`);
     return data;
   } catch (error) {
     console.error('타인 정보 조회 실패:', error);
@@ -47,7 +47,7 @@ export async function fetchFollowing(memberId: string | string[], lastId: string
 // (GET) 팔로워 목록 조회
 export async function fetchFollowed(memberId: string | string[], lastId: string) {
   try {
-    const { data } = await api.get(`/blog/profiles/${memberId}/followed/${lastId}`);
+    const { data } = await api.get(`/blog/profiles/${memberId}/follower/${lastId}`);
     return data;
   } catch (error) {
     console.error('팔로워 목록 조회 실패:', error);

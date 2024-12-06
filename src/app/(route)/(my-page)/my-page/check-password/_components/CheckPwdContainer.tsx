@@ -37,7 +37,7 @@ export default function CheckPwdContainer() {
           개인정보 보호를 위해 비밀번호를 재확인합니다.
         </p>
         <FormInput
-          id="userPwd"
+          id="password"
           label={FORM_TEXT[3]}
           isEssential={false}
           placeholder={FORM_PLACEHOLDER[1]}

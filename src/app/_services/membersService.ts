@@ -22,6 +22,50 @@ export async function postAdminLogin(postData: unknown) {
   }
 }
 
+// (GET) 이메일 중복 확인
+export async function fetchCheckEmail(email: string) {
+  try {
+    const { data } = await api.get(`/auth/check-duplicate/email?email=${email}`);
+    return data;
+  } catch (error) {
+    console.error('이메일 중복 확인 실패:', error);
+    throw error;
+  }
+}
+
+// (GET) 아이디 중복 확인
+export async function fetchCheckUsername(username: string) {
+  try {
+    const { data } = await api.get(`/auth/check-duplicate/username?username=${username}`);
+    return data;
+  } catch (error) {
+    console.error('아이디 중복 확인 실패:', error);
+    throw error;
+  }
+}
+
+// (POST) 로컬 회원가입
+export async function postSignUp(signupData: unknown) {
+  try {
+    const { data } = await api.post('/auth/sign-up', signupData);
+    return data;
+  } catch (error) {
+    console.error('로컬 회원가입 실패:', error);
+    throw error;
+  }
+}
+
+// (POST) 소셜 회원가입 추가 정보 입력
+export async function postSignUpDetail(signupData: unknown) {
+  try {
+    const { data } = await api.post('/members', signupData);
+    return data;
+  } catch (error) {
+    console.error('소셜 회원가입 추가 정보 입력 실패:', error);
+    throw error;
+  }
+}
+
 // (GET) 현재 로그인한 회원의 정보 조회
 export async function fetchMe() {
   try {
@@ -40,17 +84,6 @@ export async function fetchMember(memberId: string) {
     return data;
   } catch (error) {
     console.error('회원 정보 조회 실패:', error);
-    throw error;
-  }
-}
-
-// (GET) 회원 정보 조회(username만을 가지고)
-export async function fetchMemberUsername(username: string) {
-  try {
-    const { data } = await api.get(`/blog/profiles?username=${username}`);
-    return data;
-  } catch (error) {
-    console.error('회원 정보 조회(username만을 가지고) 실패:', error);
     throw error;
   }
 }
