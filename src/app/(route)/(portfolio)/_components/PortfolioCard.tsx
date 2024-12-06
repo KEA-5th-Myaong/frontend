@@ -8,7 +8,7 @@ import PortfolioDropdown from './PortfolioDropdown';
 import useClickOutside from '@/app/_hooks/useClickOutside';
 import { PortfolioCardProps } from '@/app/_types/portfolio';
 import usePortfolioStore from '@/app/_store/portfolio';
-import { putPortfoliosMain } from '../_services/portfolioServices';
+import { postPortfoliosMemo, putPortfoliosMain } from '../_services/portfolioServices';
 
 export default function PortfolioCard({ id, title, date, memo }: PortfolioCardProps) {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
@@ -29,10 +29,13 @@ export default function PortfolioCard({ id, title, date, memo }: PortfolioCardPr
   };
 
   // 메모 업데이트
-  const handleMemoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMemoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const newMemo = e.target.value;
     setCurrentMemo(newMemo);
     setMemo(id, newMemo);
+    console.log(id, currentMemo);
+    // API : 포트폴리오 목록 메모 등록
+    await postPortfoliosMemo(id, memo);
   };
 
   return (
