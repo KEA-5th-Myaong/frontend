@@ -3,10 +3,10 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { FORM_ERROR, FORM_PLACEHOLDER, FORM_TEXT } from '../../_constants/forms';
 import { LoginState } from '../../_types/forms';
 import FormInput from '../../_components/FormInput';
+import { postLogin } from '@/app/_services/membersService';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -18,17 +18,16 @@ export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginState) => {
-    const response = await axios.post('/api/login', data); // 임시 api 주소
-    console.log(response); // 콘솔로그는 나중에 제거
+    await postLogin(data);
   };
 
   const handleFormSubmit = async (data: LoginState) => {
     try {
       await onSubmit(data);
+      router.push('/main');
     } catch (error) {
       setErrorMessage(FORM_ERROR[2]);
       console.log('에러 메시지', errorMessage); // api 연결 후, 모달로 수정
-      router.push('/main');
     }
   };
 
@@ -36,24 +35,24 @@ export default function LoginForm() {
     <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
       {/* 아이디 input */}
       <FormInput<LoginState>
-        id="userId"
+        id="username"
         label={FORM_TEXT[1]}
         placeholder={FORM_PLACEHOLDER[0]}
         register={register}
         required={FORM_ERROR[0]}
-        error={errors.userId}
+        error={errors.username}
         isEssential={false}
       />
 
       {/* 비밀번호 input */}
       <FormInput<LoginState>
-        id="userPwd"
+        id="password"
         label={FORM_TEXT[2]}
         placeholder={FORM_PLACEHOLDER[1]}
         register={register}
         type="password"
         required={FORM_ERROR[1]}
-        error={errors.userPwd}
+        error={errors.password}
         isEssential={false}
       />
 

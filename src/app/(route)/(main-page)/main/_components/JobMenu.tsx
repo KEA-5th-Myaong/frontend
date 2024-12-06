@@ -1,25 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { fetchPreJobs } from '../_services/mainService';
+import { JobProps } from '../_types/main-page';
 
 interface JobMenuProps {
   className: string;
   onJobSelect: (jobId: string) => void;
   selectedJob: string | null;
   activeTab: string;
+  preJob: JobProps[];
 }
 
-interface JobProps {
-  jobId: number | undefined;
-  jobName: string | undefined;
-}
-
-export default function JobMenu({ className, onJobSelect, selectedJob, activeTab }: JobMenuProps) {
-  const { data } = useCustomQuery(['pre-job'], () => fetchPreJobs());
-  const preJob = data?.data;
-
+export default function JobMenu({ className, onJobSelect, selectedJob, activeTab, preJob }: JobMenuProps) {
   const [jobs, setJobs] = useState<JobProps[]>([]);
 
   useEffect(() => {

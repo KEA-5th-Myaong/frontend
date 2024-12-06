@@ -53,7 +53,7 @@ export default function PostContent() {
     callback: () => setShowDropDown(false),
   });
 
-  const { loveMutation } = useLoveAndBookmark(posts, setPosts, memberId);
+  const { bookmarkMutation, loveMutation } = useLoveAndBookmark(posts, setPosts, memberId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
 
   // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
   const handleEditClick = useCallback(() => {
