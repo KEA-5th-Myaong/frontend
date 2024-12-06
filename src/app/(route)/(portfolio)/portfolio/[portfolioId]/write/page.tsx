@@ -20,14 +20,19 @@ import useToggleStore from '@/app/_store/portfolioToggle';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import Footer from '../../../_components/Footer';
 import UploadImage from './_components/UploadImage';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 import Tips from './_components/Tips';
+import { postPorfolios } from '../../../_services/portfolioServices';
 
 export default function PortfolioWrite() {
-  const { register, handleSubmit, setValue } = useForm<PortfolioProps>();
-  const methods = useForm<PortfolioProps>();
+  const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
+  const methods = useForm<PortfolioFormProps>();
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit(async (pfData) => {
+    console.log(pfData);
+    const responseId = await postPorfolios(pfData);
+    console.log('Portfolio created with ID:', responseId);
+  });
 
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
@@ -156,7 +161,7 @@ export default function PortfolioWrite() {
                   </div>
                   {toggles.personalStatement && <PSSection register={register} />}
                 </section>
-                {/* <button type="submit">제출 테스트</button> */}
+                <button type="submit">제출 테스트</button>
               </form>
             </FormProvider>
           </div>

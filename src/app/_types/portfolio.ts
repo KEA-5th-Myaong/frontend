@@ -5,8 +5,7 @@ export interface PortfolioCardProps {
   memo?: string; // 포트폴리오메모
 }
 
-export interface PortfolioProps {
-  id: string; // 포트폴리오 ID ------- 없음
+export interface PortfolioFormProps {
   title: string; // 포트폴리오 제목
   name: string; // 포트폴리오 작성자 이름
   preferredJob: string; // 관심 직무
@@ -27,6 +26,8 @@ export interface PortfolioProps {
     achievement?: string; // 주요 업무 및 성과 (nullable)
   }; // 경력 정보 (nullable)
   ps?: {
+    title: string; // 자기소개서 제목
+    position: string; // 지원 직무
     reason: string; // 지원 사유
     content: string; // 자기소개
   }; // 자기소개 및 지원 사유 (nullable)
