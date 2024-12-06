@@ -8,6 +8,7 @@ import PortfolioDropdown from './PortfolioDropdown';
 import useClickOutside from '@/app/_hooks/useClickOutside';
 import { PortfolioCardProps } from '@/app/_types/portfolio';
 import usePortfolioStore from '@/app/_store/portfolio';
+import { putPortfoliosMain } from '../_services/portfolioServices';
 
 export default function PortfolioCard({ id, title, date, memo }: PortfolioCardProps) {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
@@ -21,8 +22,10 @@ export default function PortfolioCard({ id, title, date, memo }: PortfolioCardPr
   });
 
   // 대표 포트폴리오 설정
-  const handleSetMain = () => {
+  const handleSetMain = async () => {
     setMainPortfolio(id);
+    // API : 대표 포트폴리오 설정
+    await putPortfoliosMain(id);
   };
 
   // 메모 업데이트
