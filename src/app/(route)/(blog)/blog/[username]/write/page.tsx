@@ -31,7 +31,7 @@ export default function PostWrite() {
   const resetMessages = useChatWriteStore((state) => state.resetMessages);
 
   const formattedMessages = useMemo(
-    () => messages.map((msg) => `${msg.role === 'interviewee' ? '면접관' : '나'}: ${msg.content}`).join('\n\n'),
+    () => messages.map((msg) => `${msg.role === 'interviewer' ? '면접관' : '나'}: ${msg.content}`).join('\n\n'),
     [messages],
   );
 
