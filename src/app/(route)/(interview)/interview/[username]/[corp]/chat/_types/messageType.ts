@@ -1,7 +1,7 @@
-export interface Message {
-  text: string;
-  isAI: boolean;
+export interface InterviewMessages {
   messageId: string;
+  role: string;
+  content: string;
 }
 
 // 표정분석 결과

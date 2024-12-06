@@ -43,7 +43,7 @@ export default function InterviewHistory() {
   // 과거의 면접 선택
   const handleSelectHistory = (title: string, interviewId: string) => {
     setInterviewId(interviewId);
-    router.push(`/interview/khj0930/history/${title}`);
+    router.replace(`/interview/${username}/history/${title}`);
   };
 
   // 면접 기록 삭제
@@ -89,7 +89,7 @@ export default function InterviewHistory() {
         <Icons name={TriangleIcon} className={`${showMore ? '' : 'rotate-180'} mt-1.5 block md:hidden`} />
       </button>
 
-      <div className={`${showMore ? 'flex' : 'hidden'} md:flex flex-col gap-1 mb-14`}>
+      <div className={`${showMore ? 'flex' : 'hidden'} md:flex flex-col mb-14`}>
         {isLoading ? (
           <p className="pl-[13px] font-medium">면접 기록 불러오는중...</p>
         ) : (
