@@ -5,17 +5,14 @@ import Icons from '../../../_components/ui/Icon';
 import { PlusIcon } from '../../../_components/ui/iconPath';
 import PortfolioCard from '../_components/PortfolioCard';
 import PortfolioAddCard from '../_components/PortfolioAddCard';
-import usePortfolioStore from '../../../_store/portfolio';
 import { PortfolioCardProps } from '../../../_types/portfolio';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchPortfolios } from '../_services/portfolioServices';
 
 export default function PortfolioList() {
-  const { portfolio } = usePortfolioStore();
-
   // 포트폴리오 목록 조회
-  // const { data: portfolioList } = useCustomQuery(['portfolios'], () => fetchPortfolios());
-  // console.log(portfolioList);
+  const { data: portfolioList } = useCustomQuery(['portfolios'], () => fetchPortfolios());
+  console.log('포트폴리오 리스트', portfolioList);
 
   return (
     <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full pt-14 md:pt-0">
@@ -37,8 +34,14 @@ export default function PortfolioList() {
 
       <div className="flex flex-col items-center mt-[30px] mb-[100px] px-[50px]">
         <div className="w-full lg:max-w-[1000px] grid justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[25px] gap-4">
-          {portfolio.map((item: PortfolioCardProps) => (
-            <PortfolioCard key={item.id} id={item.id} title={item.title} memo={item.memo} date={item.date} />
+          {portfolioList?.data?.portfolios?.map((item: PortfolioCardProps) => (
+            <PortfolioCard
+              key={item.portfolioId}
+              portfolioId={item.portfolioId}
+              portfolioName={item.portfolioName}
+              memo={item.memo}
+              timestamp={item.timestamp}
+            />
           ))}
           <PortfolioAddCard />
         </div>

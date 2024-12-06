@@ -27,11 +27,31 @@ import { postPorfolios } from '../../../_services/portfolioServices';
 export default function PortfolioWrite() {
   const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
   const methods = useForm<PortfolioFormProps>();
+  const cleanData = (data: PortfolioFormProps) => {
+    return {
+      ...data,
+      picUrl: data.picUrl || null,
+      educations: data.educations || [],
+      experiences: data.experiences || [],
+      ps: data.ps || null,
+      links: data.links || [],
+      skills: data.skills || [],
+      certifications: data.certifications || [],
+      extraActivities: data.extraActivities || [],
+    };
+  };
 
-  const onSubmit = handleSubmit(async (pfData) => {
-    console.log(pfData);
-    const responseId = await postPorfolios(pfData);
-    console.log('Portfolio created with ID:', responseId);
+  const onSubmit = handleSubmit(async (formData) => {
+    const cleanedData = cleanData(formData); // 데이터 정리
+    console.log('Cleaned Data:', cleanedData);
+
+    // API 요청
+    try {
+      const responseId = await postPorfolios(cleanedData);
+      console.log('Portfolio created with ID:', responseId);
+    } catch (error) {
+      console.error('Error creating portfolio:', error);
+    }
   });
 
   const [isShowDropdown, setIsShowDropdown] = useState(false);

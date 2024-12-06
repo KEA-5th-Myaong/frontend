@@ -46,7 +46,7 @@ export default function EducationItem({ id, register, onDelete }: EducationItemP
           element="input"
           label="졸업 일자"
           size="lg"
-          type="date"
+          type="month"
           color="white"
           required
         />
@@ -56,8 +56,7 @@ export default function EducationItem({ id, register, onDelete }: EducationItemP
           element="input"
           label="학점"
           size="lg"
-          type="text"
-          pattern="grade"
+          type="number"
           color="white"
           placeholder="학점/기준학점"
         />
