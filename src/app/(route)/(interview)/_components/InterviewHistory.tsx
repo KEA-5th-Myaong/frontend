@@ -43,7 +43,7 @@ export default function InterviewHistory() {
   // 과거의 면접 선택
   const handleSelectHistory = (title: string, interviewId: string) => {
     setInterviewId(interviewId);
-    router.push(`/interview/khj0930/history/${title}`);
+    router.replace(`/interview/${username}/history/${title}`);
   };
 
   // 면접 기록 삭제
@@ -89,27 +89,25 @@ export default function InterviewHistory() {
         <Icons name={TriangleIcon} className={`${showMore ? '' : 'rotate-180'} mt-1.5 block md:hidden`} />
       </button>
 
-      <div className={`${showMore ? 'flex' : 'hidden'} md:flex flex-col gap-1 mb-14`}>
+      <div className={`${showMore ? 'flex' : 'hidden'} md:flex flex-col mb-14`}>
         {isLoading ? (
           <p className="pl-[13px] font-medium">면접 기록 불러오는중...</p>
         ) : (
           historyLists?.map((item: HistoryItem) => (
-            <button
-              type="button"
-              key={item.interviewId}
-              className="bg-white-0 hover:bg-[#F3F3F3] interview-history"
-              onClick={() => handleSelectHistory(item.title, item.interviewId)}
-            >
-              <p className="interview-history-text">{item.title}</p>
-              <Icons
+            <div key={item.interviewId} className="bg-white-0 hover:bg-[#F3F3F3] cursor-pointer interview-history">
+              <div onClick={() => handleSelectHistory(item.title, item.interviewId)} className="interview-history-text">
+                {item.title}
+              </div>
+              <div
                 onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
                   handleDeleteClick(item.interviewId);
                 }}
-                name={XIcon}
-                className="flex-shrink-0 ml-2"
-              />
-            </button>
+                className="pl-2 py-2"
+              >
+                <Icons name={XIcon} className="" />
+              </div>
+            </div>
           ))
         )}
       </div>
