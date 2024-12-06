@@ -20,14 +20,39 @@ import useToggleStore from '@/app/_store/portfolioToggle';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import Footer from '../../../_components/Footer';
 import UploadImage from './_components/UploadImage';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 import Tips from './_components/Tips';
+import { postPorfolios } from '../../../_services/portfolioServices';
 
 export default function PortfolioWrite() {
-  const { register, handleSubmit, setValue } = useForm<PortfolioProps>();
-  const methods = useForm<PortfolioProps>();
+  const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
+  const methods = useForm<PortfolioFormProps>();
+  const cleanData = (data: PortfolioFormProps) => {
+    return {
+      ...data,
+      picUrl: data.picUrl || null,
+      educations: data.educations || [],
+      experiences: data.experiences || [],
+      ps: data.ps || null,
+      links: data.links || [],
+      skills: data.skills || [],
+      certifications: data.certifications || [],
+      extraActivities: data.extraActivities || [],
+    };
+  };
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit(async (formData) => {
+    const cleanedData = cleanData(formData); // 데이터 정리
+    console.log('Cleaned Data:', cleanedData);
+
+    // API 요청
+    try {
+      const responseId = await postPorfolios(cleanedData);
+      console.log('Portfolio created with ID:', responseId);
+    } catch (error) {
+      console.error('Error creating portfolio:', error);
+    }
+  });
 
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
@@ -55,9 +80,9 @@ export default function PortfolioWrite() {
 
   return (
     <div className="relative ">
-      <div className="relative flex pl-[200px] mt-[60px] mb-[100px] w-full lg:mx-auto">
+      <div className="relative flex sm:pl-[30px] md:pl-[80px] lg:pl-[200px] pt-[100px] xl:pt-[60px] mb-[100px] w-full lg:mx-auto">
         <ItemToggle />
-        <section className="flex max-w-[1200px] min-w-[900px] md:px-[60px] lg:px-0 ">
+        <section className="flex max-w-[1200px] min-w-[900px] px-0 ">
           <div className="w-full ml-10">
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
@@ -156,7 +181,7 @@ export default function PortfolioWrite() {
                   </div>
                   {toggles.personalStatement && <PSSection register={register} />}
                 </section>
-                {/* <button type="submit">제출 테스트</button> */}
+                <button type="submit">제출 테스트</button>
               </form>
             </FormProvider>
           </div>

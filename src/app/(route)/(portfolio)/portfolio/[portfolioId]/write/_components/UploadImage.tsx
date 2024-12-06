@@ -1,5 +1,7 @@
 'use client';
 
+import Icons from '@/app/_components/ui/Icon';
+import { XIcon } from '@/app/_components/ui/iconPath';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
@@ -22,6 +24,13 @@ export default function UploadImage() {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleImageRemove = () => {
+    setPreviewUrl(null); // 이미지 삭제
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // 파일 선택 초기화
+    }
+  };
   return (
     <button
       type="button"
@@ -29,7 +38,12 @@ export default function UploadImage() {
       className="flex-center flex-col  w-[150px] h-[150px] my-8 bg-white-0 border border-gray-5 rounded-[12px] cursor-pointer"
     >
       {previewUrl ? (
-        <img src={previewUrl} alt="프로필 사진" className="w-full h-full object-cover rounded-[12px]" />
+        <div className="relative w-full h-full">
+          <img src={previewUrl} alt="프로필 사진" className="w-full h-full object-cover rounded-[12px]" />
+          <button type="button" onClick={handleImageRemove} className="absolute top-2 right-2 z-[40]">
+            <Icons name={XIcon} />
+          </button>
+        </div>
       ) : (
         <div className="flex-center flex-col">
           <input

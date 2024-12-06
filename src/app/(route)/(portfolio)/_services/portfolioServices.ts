@@ -1,3 +1,4 @@
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 import api from '@/app/api/axiosInstance';
 
 // (GET) 포트폴리오 목록 조회
@@ -23,7 +24,7 @@ export async function fetchPortfolio(portfolioId: string) {
 }
 
 // (POST) 포트폴리오 작성
-export async function postPorfolios(portfolioData: unknown) {
+export async function postPorfolios(portfolioData: PortfolioFormProps) {
   try {
     const stringifiedData = JSON.stringify(portfolioData);
     const { data } = await api.post('/portfolios', stringifiedData);
