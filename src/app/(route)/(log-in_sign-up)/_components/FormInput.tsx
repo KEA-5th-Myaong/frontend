@@ -24,19 +24,41 @@ export default function FormInput<T extends FieldValues>({
   value,
 }: FormInputProps<T>) {
   const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const isPassword = type === 'password';
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const handleBlur = React.useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      setIsFocused(false);
+      if (onBlur) {
+        onBlur(e);
+      }
+    },
+    [onBlur],
+  );
 
+  const handleFocus = React.useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  // register에서 반환되는 ref, onChange, onBlur 등을 보존하면서 추가 핸들러를 적용
+  const customRegister = {
+    ...register(id as Path<T>, {
+      required,
+      onBlur: handleBlur,
+    }),
+    onFocus: handleFocus,
+  };
   // value prop이 존재할 때만 value 속성을 포함시키는 inputProps 객체 생성
   const inputProps = {
     maxLength,
     minLength,
     type: isPassword ? (showPassword ? 'text' : 'password') : type,
     id: id as string,
-    className: 'mt-2 form-input',
+    className: `mt-2 form-input  ${isFocused && 'focused'}`,
     onChange,
     placeholder,
     disabled: isDisabled,
@@ -47,7 +69,7 @@ export default function FormInput<T extends FieldValues>({
       <div className="flex items-center gap-2">
         {label} {isEssential && <p className="form-red-dot" />}
       </div>
-      <input {...inputProps} {...register(id as Path<T>, { required, onBlur })} />
+      <input {...inputProps} {...customRegister} />
       {isPassword && (
         <div
           tabIndex={-1} // 눈 아이콘에 focus가 생기지 않도록
