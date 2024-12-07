@@ -73,7 +73,7 @@ export default function ChangePwdForm() {
         <FormInput<ChangePwdProps>
           id="confirmPassword"
           label={FORM_TEXT[3]}
-          placeholder={FORM_PLACEHOLDER[4]}
+          placeholder={FORM_PLACEHOLDER[1]}
           register={register}
           required={FORM_ERROR[10]}
           onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}

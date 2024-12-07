@@ -133,7 +133,7 @@ export default function SignUpForm() {
         <FormInput<SignUpState>
           id="nickname"
           label={FORM_TEXT[11]}
-          placeholder={FORM_PLACEHOLDER[5]}
+          placeholder={FORM_PLACEHOLDER[4]}
           register={register}
           required={FORM_ERROR[12]}
           error={errors.nickname}
@@ -183,7 +183,7 @@ export default function SignUpForm() {
         <FormInput<SignUpState>
           id="confirmPassword"
           label={FORM_TEXT[3]}
-          placeholder={FORM_PLACEHOLDER[4]}
+          placeholder={FORM_PLACEHOLDER[1]}
           register={register}
           required={FORM_ERROR[10]}
           onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
