@@ -38,8 +38,8 @@ export interface PostResponse {
 
 // 관심 직군(JobProps, InterestedJobProps, Category, CategoryData)
 export interface JobProps {
-  jobId: number | undefined;
-  jobName: string | undefined;
+  jobId: number;
+  jobName: string;
 }
 export interface InterestedJobProps {
   onClose: () => void;
