@@ -6,7 +6,7 @@ import DOMPurify from 'dompurify'; // 추후에 수정
 import { useParams, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../../../../../_components/ui/Icon';
-import { CommentIcon, FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
+import { BookmarkIcon, CommentIcon, FavorIcon, MoreIcon, SirenIcon } from '../../../../../../_components/ui/iconPath';
 import MoreOptions from '../../../../../../_components/MoreOptions';
 import useClickOutside from '../../../../../../_hooks/useClickOutside';
 import PostComment from './_comment/PostComment';
@@ -102,6 +102,16 @@ export default function PostContent() {
       {/* 제목과 더보기 아이콘 */}
       <div className="flex justify-between items-center">
         <span className="text-[22px] font-semibold">{data?.data.title}</span>
+        {/* 타인의 게시물일 경우 */}
+        <div className="relative flex items-end gap-5">
+          <div className="flex items-end gap-0.5 text-gray-0 text-xs">
+            <Icons className="cursor-pointer" name={SirenIcon} />
+            신고
+          </div>
+
+          <Icons name={BookmarkIcon} className="pt-0.5 border-primary-3" />
+        </div>
+        {/* 본인의 게시물일 경우 */}
         <div className="relative" ref={dropdownRef}>
           <Icons
             onClick={() => {
