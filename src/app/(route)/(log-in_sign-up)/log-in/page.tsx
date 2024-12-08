@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { FORM_TEXT } from '../_constants/forms';
 import LoginForm from './_components/LoginForm';
-import SocialLogin from './_components/SocialLogin';
 
 export default function Login() {
   return (
@@ -23,7 +23,22 @@ export default function Login() {
           <div className="flex flex-col self-stretch items-center mt-[17px]">
             <span className="mb-4 text-gray-3">{FORM_TEXT[5]}</span>
 
-            <SocialLogin />
+            <div className="flex gap-5">
+              <Image
+                width={50}
+                height={50}
+                src="/assets/log-in/kakao-login.png"
+                alt="카카오로그인"
+                className="rounded-full cursor-pointer"
+              />
+              <Image
+                width={50}
+                height={50}
+                src="/assets/log-in/google-login.png"
+                alt="구글로그인"
+                className="rounded-full cursor-pointer"
+              />
+            </div>
           </div>
         </div>
       </div>
