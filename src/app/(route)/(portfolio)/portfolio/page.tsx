@@ -12,7 +12,6 @@ import { fetchPortfolios } from '../_services/portfolioServices';
 export default function PortfolioList() {
   // 포트폴리오 목록 조회
   const { data: portfolioList } = useCustomQuery(['portfolios'], () => fetchPortfolios());
-  console.log('포트폴리오 리스트', portfolioList);
 
   return (
     <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full pt-14 md:pt-0">
