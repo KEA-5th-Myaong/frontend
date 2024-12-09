@@ -17,8 +17,6 @@ interface MyMenuProps {
 
 export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuProps) {
   const router = useRouter();
-  console.log(userData);
-
   const isLogined = userData?.data?.nickname;
 
   const alarmMenuRef = useRef<HTMLDivElement>(null);

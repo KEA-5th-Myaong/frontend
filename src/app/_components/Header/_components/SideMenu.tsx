@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import Overlay from '../../Overlay';
-import menuData from '../menuData.json';
 import { User } from '@/app/_hooks/useMe';
 
 interface SideMenuProps {
@@ -15,6 +14,7 @@ interface SideMenuProps {
 
 export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
   const isLogined = userData?.data?.nickname;
+  console.log(isLogined);
   return (
     <AnimatePresence>
       {isOpen && (
@@ -39,32 +39,55 @@ export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
               </div>
             </div>
             <div className="flex-col pl-6">
-              <ul className="pt-5">
+              <div className="pt-5">
                 <p className="text-xl pb-1.5 font-semibold">블로그</p>
-                {menuData.blogSubMenuItems.map((menu) => (
-                  <Link
-                    href={menu.path}
-                    onClick={() => {
-                      onClose();
-                    }}
-                  >
-                    <li className="text-sm text-gray-0 pt-2 pl-5">{menu.name}</li>
-                  </Link>
-                ))}
-              </ul>
-              <ul className="pt-5">
+
+                <Link
+                  href={`/blog/${userData?.data.username}`}
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">내 블로그</p>
+                </Link>
+
+                <Link
+                  href={`/blog/${userData?.data.username}/write`}
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">글 쓰기</p>
+                </Link>
+              </div>
+              <div className="pt-5">
                 <p className="text-xl pb-1.5 font-semibold">구직</p>
-                {menuData.jobSubMenuItems.map((menu) => (
-                  <Link
-                    href={menu.path}
-                    onClick={() => {
-                      onClose();
-                    }}
-                  >
-                    <li className="text-sm text-gray-0 pt-2 pl-5">{menu.name}</li>
-                  </Link>
-                ))}
-              </ul>
+
+                <Link
+                  href={`/interview/${userData?.data.username}/select`}
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">모의 면접</p>
+                </Link>
+                <Link
+                  href={`/personal-statement/${userData?.data.username}/list`}
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">자소서 첨삭</p>
+                </Link>
+                <Link
+                  href="/portfolio"
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">내 포트폴리오</p>
+                </Link>
+              </div>
             </div>
           </motion.div>
         </Overlay>

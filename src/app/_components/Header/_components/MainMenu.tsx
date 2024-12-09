@@ -5,16 +5,23 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import useClickOutside from '../../../_hooks/useClickOutside';
 import SubMenu from './SubMenu';
-import menuData from '../menuData.json';
+import { User } from '@/app/_hooks/useMe';
 
 interface MainMenuProps {
+  userData: User | undefined;
   handleBlogOpen: (menu: string | null) => void;
   handleJobOpen: (menu: string | null) => void;
   openBlogMenu: string | null;
   openJobMenu: string | null;
 }
 
-export default function MainMenu({ handleBlogOpen, handleJobOpen, openBlogMenu, openJobMenu }: MainMenuProps) {
+export default function MainMenu({
+  userData,
+  handleBlogOpen,
+  handleJobOpen,
+  openBlogMenu,
+  openJobMenu,
+}: MainMenuProps) {
   const blogMenuRef = useRef<HTMLDivElement>(null);
   const jobMenuRef = useRef<HTMLDivElement>(null);
   const [hoverBlogText, setHoverBlogText] = useState<true | false>(false); // 마우스 호버 시의 텍스트 관리
@@ -81,7 +88,7 @@ export default function MainMenu({ handleBlogOpen, handleJobOpen, openBlogMenu, 
             </div>
           </div>
           블로그
-          {openBlogMenu === 'blog' && <SubMenu menuItems={menuData.blogSubMenuItems} />}
+          {openBlogMenu === 'blog' && userData?.data.username && <SubMenu isBlog userName={userData.data.username} />}
         </button>
       </div>
 
@@ -106,7 +113,9 @@ export default function MainMenu({ handleBlogOpen, handleJobOpen, openBlogMenu, 
             </div>
           </div>
           구직
-          {openJobMenu === 'job' && <SubMenu menuItems={menuData.jobSubMenuItems} />}
+          {openJobMenu === 'job' && userData?.data.username && (
+            <SubMenu isBlog={false} userName={userData.data.username} />
+          )}
         </button>
       </div>
     </div>
