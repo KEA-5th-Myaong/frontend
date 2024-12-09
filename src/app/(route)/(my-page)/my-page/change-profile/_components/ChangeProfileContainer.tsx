@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
 import FormInput from '../../../../(log-in_sign-up)/_components/FormInput';
 import Modal from '../../../../../_components/Modal';
 import ImageChange from './ImageChange';
@@ -16,10 +17,12 @@ import { postPreJobs } from '@/app/(route)/(main-page)/main/_services/mainServic
 export default function ChangeProfileContainer() {
   const { register, handleSubmit, setValue } = useForm<ProfileFormProps>({
     defaultValues: {
-      name: '',
+      nickname: '',
       blogIntro: '',
     },
   });
+  const queryClient = useQueryClient();
+
   const { data: userData } = useMe();
   const { data: blogData } = useCustomQuery(['user-profile', userData?.data.username], () =>
     fetchProfile(userData?.data.username as string),
@@ -28,7 +31,7 @@ export default function ChangeProfileContainer() {
   const [showModal, setShowModal] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null); // 프로필 이미지
   const [isDisabled, setIsDisabled] = useState({
-    name: true,
+    nickname: true,
     blogIntro: true,
   });
   // 관심 직군
@@ -40,24 +43,24 @@ export default function ChangeProfileContainer() {
   // userData가 변경될 때 폼 값 설정
   useEffect(() => {
     if (userData?.data && blogData?.data) {
-      setValue('name', userData.data.username || '');
+      setValue('nickname', userData.data.nickname || '');
       setValue('blogIntro', blogData.data.blogIntro || '');
     }
   }, [userData, blogData, setValue]);
 
   const onSubmit = async (data: ProfileFormProps) => {
     try {
-      if (selectedJobs.length === 0) {
-        return;
-      }
       const formData = new FormData();
-      formData.append('name', data.name);
+      formData.append('nickname', data.nickname);
       formData.append('blogIntro', data.blogIntro);
       if (profileImage) {
         formData.append('profileImage', profileImage);
       }
       await putChangeProfile(formData);
       await postPreJobs({ preJob: selectedJobs });
+      queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({ queryKey: ['user-profile'] });
+      queryClient.clear(); // 모든 쿼리 캐시를 제거
 
       setShowModal(true);
     } catch (error) {
@@ -66,7 +69,7 @@ export default function ChangeProfileContainer() {
   };
 
   // 닉네임, 이메일 활/비활
-  const toggleDisabled = (field: 'name' | 'blogIntro') => {
+  const toggleDisabled = (field: 'nickname' | 'blogIntro') => {
     setIsDisabled((prev) => ({ ...prev, [field]: !prev[field] }));
   };
   return (
@@ -78,15 +81,15 @@ export default function ChangeProfileContainer() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10 pt-2 w-full max-w-[640px]">
         <FormInput
-          id="name"
+          id="nickname"
           label="닉네임"
           placeholder="닉네임을 입력해주세요"
           register={register}
           required="닉네임을 입력해주세요"
           isEssential={false}
           isEdit
-          isDisabled={isDisabled.name}
-          onEditClick={() => toggleDisabled('name')}
+          isDisabled={isDisabled.nickname}
+          onEditClick={() => toggleDisabled('nickname')}
         />
         <FormInput
           id="blogIntro"
