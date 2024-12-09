@@ -5,11 +5,16 @@ import { RequiredIcon } from '@/app/_components/ui/iconPath';
 import { fetchPortfolio } from '@/app/(route)/(portfolio)/_services/portfolioServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { Certifications, Educations, Experiences, ExtraActivities, Links, PS } from '@/app/_types/portfolio';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PortfolioContainer() {
+  // 유저 정보 조회
+  const { data: userData } = useMe();
+  console.log(userData);
   // 포트폴리오 조회
   const params = useParams();
   const { portfolioId } = params;
+  console.log('포폴 아이디', portfolioId);
   const { data: portfolio } = useCustomQuery(['portfolio'], () => fetchPortfolio(String(portfolioId)));
   console.log('현재 페이지 포폴', portfolio);
   return (
@@ -17,7 +22,7 @@ export default function PortfolioContainer() {
       <section className="flex items-center">
         <Image
           alt="포트폴리오 사용자 기본 이미지"
-          src="/mascot.png"
+          src={portfolio?.data?.picUrl ? portfolio?.data?.picUrl : '/mascot.png'}
           width={120}
           height={120}
           className="rounded-[20px]"
@@ -30,8 +35,8 @@ export default function PortfolioContainer() {
             <p className="font-semibold">관심 직무</p>
           </div>
           <div className="flex flex-col ml-10 my-5 gap-2">
-            <p className="text-left">백지연</p>
-            <p>010-0000-0000</p>
+            <p className="text-left">{userData?.data.nickname}</p>
+            <p>{portfolio?.data?.tel}</p>
             <p>{portfolio?.data?.email}</p>
             <p>{portfolio?.data?.preferredJob}</p>
           </div>
