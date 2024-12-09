@@ -1,6 +1,6 @@
 export interface ProfileFormProps {
-  userName: string;
-  userEmail: string;
+  name: string;
+  blogIntro: string;
 }
 
 export interface ImageChangeProps {

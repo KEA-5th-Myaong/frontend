@@ -2,16 +2,32 @@ import { useState, useRef, useEffect } from 'react';
 import Icons from '../../../../../_components/ui/Icon';
 import { PictureIcon } from '../../../../../_components/ui/iconPath';
 import { ImageChangeProps } from '../_types/myPage';
+import { postProfilePic } from '@/app/_services/membersService';
 
 export default function ImageChange({ defaultPicUrl, setProfileImage }: ImageChangeProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 이미지 미리보기용 url 저장
   const fileInputRef = useRef<HTMLInputElement>(null); // 파일 입력에 대한 참조 생성
-
+  // 기본 이미지 설정
   useEffect(() => {
     setPreviewUrl(defaultPicUrl ?? null);
   }, [defaultPicUrl]);
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // 이미지 최종 수정
+  const uploadProfileImage = async (file: File | null) => {
+    try {
+      const formData = new FormData();
+      if (file) {
+        formData.append('profilePic', file);
+      } else {
+        formData.append('profilePic', ''); // null 전송
+      }
+      await postProfilePic(formData);
+    } catch (error) {
+      console.error('프로필 이미지 업로드 실패:', error);
+    }
+  };
+
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // 선택된 파일 가져옴
     if (file) {
       setProfileImage(file); // 선택 파일을 부모 컴포넌트의 상태(profileImage)로 설정
@@ -22,19 +38,17 @@ export default function ImageChange({ defaultPicUrl, setProfileImage }: ImageCha
         setPreviewUrl(reader.result as string); // 읽은 결과(DataURL)를 미리보기 URL로 설정
       };
       reader.readAsDataURL(file); // 파일을 DataURL로 읽기 시작
+
+      await uploadProfileImage(file);
     }
   };
 
-  const handleDefaultImage = () => {
+  const handleDefaultImage = async () => {
     const defaultImagePath = '/mascot.png';
-    setPreviewUrl(defaultImagePath);
-    // 기본 이미지 파일을 File 객체로 변환하여 setProfileImage에 전달
-    fetch(defaultImagePath)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const file = new File([blob], 'mascot.png', { type: 'image/png' });
-        setProfileImage(file);
-      });
+    setPreviewUrl(defaultImagePath); // UI에는 mascot.png 표시
+    setProfileImage(null);
+
+    await uploadProfileImage(null); // API에는 null 전송
   };
 
   return (

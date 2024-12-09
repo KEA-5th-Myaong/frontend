@@ -17,7 +17,7 @@ export default function UserProfile() {
   const { username } = params;
 
   // url의 username을 가지고 memberId 가져오기
-  const { data: userNameData } = useCustomQuery(['user-name', username], () => fetchProfile(username as string)); // 현재 유저 정보
+  const { data: userNameData } = useCustomQuery(['user-profile', username], () => fetchProfile(username as string)); // 현재 유저 정보
   const memberId = userNameData?.data.memberId; // 멤버 아이디
 
   const { data: userData } = useMe();

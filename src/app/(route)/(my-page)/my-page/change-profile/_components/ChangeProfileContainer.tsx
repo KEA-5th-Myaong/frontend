@@ -8,51 +8,54 @@ import ImageChange from './ImageChange';
 import JobSelection from './JobSelection';
 import { ProfileFormProps } from '../_types/myPage';
 import useMe from '@/app/_hooks/useMe';
+import { putChangeProfile } from '@/app/_services/membersService';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { fetchProfile } from '@/app/(route)/(blog)/blog/[username]/_services/blogService';
 
 export default function ChangeProfileContainer() {
   const { register, handleSubmit, setValue } = useForm<ProfileFormProps>({
     defaultValues: {
-      userName: '',
-      userEmail: '',
+      name: '',
+      blogIntro: '',
     },
   });
   const { data: userData } = useMe();
+  const { data: blogData } = useCustomQuery(['user-profile', userData?.data.username], () =>
+    fetchProfile(userData?.data.username as string),
+  );
 
   const [showModal, setShowModal] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null); // 프로필 이미지
   const [isDisabled, setIsDisabled] = useState({
-    userName: true,
-    userEmail: true,
+    name: true,
+    blogIntro: true,
   });
 
   // userData가 변경될 때 폼 값 설정
   useEffect(() => {
-    if (userData?.data) {
-      setValue('userName', userData.data.username || '');
-      setValue('userEmail', userData.data.email || '');
+    if (userData?.data && blogData?.data) {
+      setValue('name', userData.data.username || '');
+      setValue('blogIntro', blogData.data.blogIntro || '');
     }
-  }, [userData, setValue]);
+  }, [userData, blogData, setValue]);
 
-  const onSubmit = (data: ProfileFormProps) => {
+  const onSubmit = async (data: ProfileFormProps) => {
     try {
       const formData = new FormData();
-      formData.append('userName', data.userName);
-      formData.append('userEmail', data.userEmail);
-      // formData.append('job', preJob);
+      formData.append('name', data.name);
+      formData.append('blogIntro', data.blogIntro);
       if (profileImage) {
         formData.append('profileImage', profileImage);
       }
-
-      console.log(Object.fromEntries(formData));
-
+      await putChangeProfile(formData);
       setShowModal(true);
     } catch (error) {
       console.error('프로필 업데이트 실패:', error);
     }
   };
 
-  // 이름, 이메일 활/비활
-  const toggleDisabled = (field: 'userName' | 'userEmail') => {
+  // 닉네임, 이메일 활/비활
+  const toggleDisabled = (field: 'name' | 'blogIntro') => {
     setIsDisabled((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
@@ -65,26 +68,26 @@ export default function ChangeProfileContainer() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10 pt-2 w-full max-w-[640px]">
         <FormInput
-          id="userName"
-          label="이름"
-          placeholder="이름을 입력해주세요"
+          id="name"
+          label="닉네임"
+          placeholder="닉네임을 입력해주세요"
           register={register}
-          required="이름을 입력해주세요"
+          required="닉네임을 입력해주세요"
           isEssential={false}
           isEdit
-          isDisabled={isDisabled.userName}
-          onEditClick={() => toggleDisabled('userName')}
+          isDisabled={isDisabled.name}
+          onEditClick={() => toggleDisabled('name')}
         />
         <FormInput
-          id="userEmail"
-          label="이메일"
-          placeholder="이메일을 입력해주세요"
+          id="blogIntro"
+          label="블로그 소개글"
+          placeholder="블로그 소개글을 입력해주세요"
           register={register}
-          required="이메일을 입력해주세요"
+          required="블로그 소개글을 입력해주세요"
           isEssential={false}
           isEdit
-          isDisabled={isDisabled.userEmail}
-          onEditClick={() => toggleDisabled('userEmail')}
+          isDisabled={isDisabled.blogIntro}
+          onEditClick={() => toggleDisabled('blogIntro')}
         />
 
         <button type="submit" className="mt-5 primary-1-btn py-5">

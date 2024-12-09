@@ -19,7 +19,7 @@ export default function PostContainer() {
   const { ref, inView } = useInView(); // 무한 스크롤을 위한 InterSection Observer 훅
   const params = useParams();
   const { username } = params;
-  const { data: memberData } = useCustomQuery(['member', username], () => fetchProfile(username as string));
+  const { data: memberData } = useCustomQuery(['user-profile', username], () => fetchProfile(username as string));
 
   const memberId = memberData?.memberId; // 다른 사람
   const { data: userData } = useMe();
