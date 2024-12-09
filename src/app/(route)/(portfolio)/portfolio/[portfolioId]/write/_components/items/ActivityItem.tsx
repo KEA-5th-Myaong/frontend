@@ -3,12 +3,12 @@ import React from 'react';
 import { Path, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface ActivityItemProps {
   id: number;
   onDelete: (id: number) => void;
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 function ActivityItem({ id, onDelete, register }: ActivityItemProps) {
@@ -18,7 +18,7 @@ function ActivityItem({ id, onDelete, register }: ActivityItemProps) {
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
             register={register}
-            name={`experiences.${id}.name` as Path<PortfolioProps>}
+            name={`experiences.${id}.name` as Path<PortfolioFormProps>}
             element="input"
             label="이름"
             size="lg"
@@ -29,7 +29,7 @@ function ActivityItem({ id, onDelete, register }: ActivityItemProps) {
           />
           <Input
             register={register}
-            name={`experiences.${id}.institution` as Path<PortfolioProps>}
+            name={`experiences.${id}.institution` as Path<PortfolioFormProps>}
             element="input"
             label="교육기관"
             size="lg"
@@ -41,7 +41,7 @@ function ActivityItem({ id, onDelete, register }: ActivityItemProps) {
         </div>
         <Input
           register={register}
-          name={`experiences.${id}.start` as Path<PortfolioProps>}
+          name={`experiences.${id}.start` as Path<PortfolioFormProps>}
           element="input"
           label="시작 일자"
           size="lg"
@@ -50,7 +50,7 @@ function ActivityItem({ id, onDelete, register }: ActivityItemProps) {
         />
         <Input
           register={register}
-          name={`experiences.${id}.end` as Path<PortfolioProps>}
+          name={`experiences.${id}.end` as Path<PortfolioFormProps>}
           element="input"
           label="종료 일자"
           size="lg"
@@ -59,7 +59,7 @@ function ActivityItem({ id, onDelete, register }: ActivityItemProps) {
         />
         <Input
           register={register}
-          name={`experiences.${id}.description` as Path<PortfolioProps>}
+          name={`experiences.${id}.description` as Path<PortfolioFormProps>}
           element="textarea"
           label="활동 상세 내용"
           size="lg"

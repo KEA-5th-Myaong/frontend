@@ -2,12 +2,12 @@ import Image from 'next/image';
 import { Path, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface LinkItemProps {
   id: number;
   onDelete: (id: number) => void;
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 function LinkItem({ id, onDelete, register }: LinkItemProps) {
@@ -17,7 +17,7 @@ function LinkItem({ id, onDelete, register }: LinkItemProps) {
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
             register={register}
-            name={`links.${id}.name` as Path<PortfolioProps>}
+            name={`links.${id}.name` as Path<PortfolioFormProps>}
             element="input"
             label="링크명"
             size="lg"
@@ -28,7 +28,7 @@ function LinkItem({ id, onDelete, register }: LinkItemProps) {
           />
           <Input
             register={register}
-            name={`links.${id}.link` as Path<PortfolioProps>}
+            name={`links.${id}.link` as Path<PortfolioFormProps>}
             element="input"
             label="URL"
             size="lg"

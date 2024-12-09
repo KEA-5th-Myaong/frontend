@@ -2,10 +2,10 @@ import { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
 import { XIcon } from '@/app/_components/ui/iconPath';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface SkillSectionProps {
-  setValue: UseFormSetValue<PortfolioProps>;
+  setValue: UseFormSetValue<PortfolioFormProps>;
 }
 
 export default function SkillsSection({ setValue }: SkillSectionProps) {

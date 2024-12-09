@@ -1,13 +1,13 @@
 import Image from 'next/image';
-import { Path, useForm, UseFormRegister } from 'react-hook-form';
+import { Path, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface CertificationItemProps {
   id: number;
   onDelete: (id: number) => void;
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 function CertificationItem({ id, onDelete, register }: CertificationItemProps) {
@@ -17,7 +17,7 @@ function CertificationItem({ id, onDelete, register }: CertificationItemProps) {
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
             register={register}
-            name={`certifications.${id}.name` as Path<PortfolioProps>}
+            name={`certifications.${id}.name` as Path<PortfolioFormProps>}
             element="input"
             label="자격증명"
             size="lg"
@@ -28,7 +28,7 @@ function CertificationItem({ id, onDelete, register }: CertificationItemProps) {
           />
           <Input
             register={register}
-            name={`certifications.${id}.date` as Path<PortfolioProps>}
+            name={`certifications.${id}.date` as Path<PortfolioFormProps>}
             element="input"
             label="취득 일자"
             size="lg"

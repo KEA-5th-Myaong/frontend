@@ -2,11 +2,11 @@ import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface EducationItemProps {
   id: number;
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
   onDelete: (id: number) => void;
 }
 

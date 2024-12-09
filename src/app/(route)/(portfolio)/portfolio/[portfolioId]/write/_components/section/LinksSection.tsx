@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import LinkItem from '../items/LinkItem';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface LinkItemState {
   id: number;
@@ -12,7 +12,7 @@ interface LinkItemState {
 }
 
 interface LinksSectionProps {
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 export default function LinksSection({ register }: LinksSectionProps) {
