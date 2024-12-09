@@ -42,7 +42,7 @@ export default function PostContent() {
     }
   }, [postURLData]);
 
-  const postId = postURLData?.postId || 1;
+  const postId = postURLData?.postId;
 
   const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId as string));
 
