@@ -129,7 +129,7 @@ export default function UserProfile() {
             {isMe ? (
               <button
                 type="button"
-                onClick={() => router.push(`/blog/${params.userId}/write`)}
+                onClick={() => router.push(`/blog/${username}/write`)}
                 className="bg-primary-1 hover:bg-primary-2 user-profile-btn"
               >
                 글 작성하기

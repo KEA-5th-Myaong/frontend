@@ -7,13 +7,15 @@ import CommentItem from './CommentItem';
 import ReplyInput from './ReplyInput';
 import useCustomMutation from '@/app/_hooks/useCustomMutation';
 import { postComments, postReplies } from '../../../_services/blogService';
+import { User } from '@/app/_hooks/useMe';
 
 interface PostCommentProps {
+  userData: User;
   postId: string;
   comments: CommentProps[];
 }
 
-export default function PostComment({ postId, comments }: PostCommentProps) {
+export default function PostComment({ userData, postId, comments }: PostCommentProps) {
   const [commentLists, setCommentLists] = useState<CommentProps[]>([]);
   const [replyingTo, setReplyingTo] = useState<number | null>(null); // 답글을 작성중인 댓글의 id
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null); // 수정중인 댓글의 id
@@ -34,12 +36,12 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
       // 낙관적 업데이트
       const optimisticComment = {
         comment: commentData.comment,
-        nickname: '김현중',
+        nickname: userData?.data.nickname,
         timestamp: '방금 전',
-        profilePicUrl: '/mascot.png',
+        profilePicUrl: userData?.data.profilePicUrl,
         memberId: null,
       };
-      queryClient.setQueryData(['user-post', commentData.postId], (old: any) => ({
+      queryClient.setQueryData(['user-post', commentData.postId], (old: { comments: CommentProps[] }) => ({
         ...old,
         comments: [...(old?.comments || []), optimisticComment],
       }));
@@ -51,7 +53,7 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
         queryClient.setQueryData(['user-post', variables.postId], context.previousComments);
       }
     },
-    onSuccess: (response, variables) => {
+    onSuccess: (response) => {
       setCommentLists((prev) => [...prev, response]); // response: 서버에서 반환한 새로 생성된 댓글 정보
     },
     onSettled: () => {
@@ -81,9 +83,9 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
       const previousComments = queryClient.getQueryData(['user-post', commentData.postId]);
       const optimisticComment = {
         comment: commentData.comment,
-        nickname: '김현중',
+        nickname: userData?.data.nickname,
         timestamp: '방금 전',
-        profilePicUrl: null,
+        profilePicUrl: userData?.data.profilePicUrl,
         memberId: null,
       };
       queryClient.setQueryData(['user-post', commentData.postId], (old: any) => ({
@@ -112,7 +114,7 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
     },
   });
   // 답글 제출
-  const handleReplySubmit = (parentId: number, content: string) => {
+  const handleReplySubmit = (parentId: string, content: string) => {
     if (!content.trim()) return;
     postReplyMutation.mutate({
       postId,
@@ -170,7 +172,9 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
           />
         ))}
         {/* 답글 인풋 보이게 */}
-        {isReplyInputVisible && <ReplyInput onSubmit={(content) => handleReplySubmit(comment.commentId, content)} />}
+        {isReplyInputVisible && (
+          <ReplyInput onSubmit={(content) => handleReplySubmit(comment.commentId as unknown as string, content)} />
+        )}
       </div>
     );
   };

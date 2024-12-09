@@ -18,11 +18,13 @@ import usePostWriteStore from '@/app/_store/postWirte';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
 import { PostProps } from '@/app/(route)/(main-page)/main/_types/main-page';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PostContent() {
   const router = useRouter();
   const params = useParams();
   const { username, postTitle } = params;
+  const { data: userData } = useMe();
 
   const queryClient = useQueryClient();
   const setTitle = usePostWriteStore((state) => state.setPostTitle);
@@ -41,7 +43,6 @@ export default function PostContent() {
   }, [postURLData]);
 
   const postId = postURLData?.postId || 1;
-  const memberId = '1';
 
   const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId as string));
 
@@ -53,7 +54,7 @@ export default function PostContent() {
     callback: () => setShowDropDown(false),
   });
 
-  const { bookmarkMutation, loveMutation } = useLoveAndBookmark(posts, setPosts, memberId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
+  const { bookmarkMutation, loveMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
 
   // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
   const handleEditClick = useCallback(() => {
@@ -160,13 +161,13 @@ export default function PostContent() {
             className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame"
           >
             <Icons name={FavorIcon} />
-            <span className="text-sm">{data?.data.lovedCount || 0}</span>
+            <span className="text-sm">{data?.data.likeCount}</span>
           </div>
         </div>
       </div>
 
       {/* 댓글 */}
-      <PostComment postId={postId} comments={data?.data.comments} />
+      <PostComment userData={userData} postId={postId} comments={data?.data.comments} />
 
       {modalState.open && (
         <Modal
