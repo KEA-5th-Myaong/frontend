@@ -1,5 +1,5 @@
 export interface ProfileFormProps {
-  name: string;
+  nickname: string;
   blogIntro: string;
 }
 

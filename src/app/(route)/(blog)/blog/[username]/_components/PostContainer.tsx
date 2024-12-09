@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import { useInView } from 'react-intersection-observer';
 import Post from '../../../../../_components/Post';
-import { fetchPost, fetchProfile } from '../_services/blogService';
+import { fetchMemberInfo, fetchPost, fetchProfile } from '../_services/blogService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { PostProps, PostResponse } from '@/app/(route)/(main-page)/main/_types/main-page';
 import { formatDate } from '@/app/_utils/formatDate';
@@ -19,9 +19,11 @@ export default function PostContainer() {
   const { ref, inView } = useInView(); // 무한 스크롤을 위한 InterSection Observer 훅
   const params = useParams();
   const { username } = params;
-  const { data: memberData } = useCustomQuery(['user-profile', username], () => fetchProfile(username as string));
+  const { data: userNameData } = useCustomQuery(['user-profile', username], () => fetchProfile(username as string));
+  const memberId = userNameData?.data?.memberId; // 다른 사람
 
-  const memberId = memberData?.memberId; // 다른 사람
+  const { data: bloguserNameData } = useCustomQuery(['blog-user', username], () => fetchMemberInfo(memberId));
+
   const { data: userData } = useMe();
   const [isMe, setIsMe] = useState(false);
   useEffect(() => {
@@ -41,6 +43,7 @@ export default function PostContainer() {
       initialPageParam: '0',
     },
   );
+  console.log(data);
 
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   // 무한스크롤된 데이터 관리
@@ -76,16 +79,16 @@ export default function PostContainer() {
               key={post.postId}
               postId={post.postId}
               title={post.title}
-              nickname={post.nickname ?? ''}
-              memberId={post.memberId ?? ''}
+              nickname={bloguserNameData?.data.nickname}
+              memberId={memberId}
               onUserClick={() => {
-                router.push(`/blog/${post.username}`);
+                router.push(`/blog/${bloguserNameData?.data.username}`);
               }}
               onContentClick={() => {
-                router.push(`/blog/${post.username}/${post.title}`);
+                router.push(`/blog/${bloguserNameData?.data.username}/${post.title}`);
               }}
               thumbnail={null}
-              profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
+              profilePicUrl={post.profilePicUrl === null ? defaultProfilePic.src : bloguserNameData?.data.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
               userJob="프론트엔드 개발자"

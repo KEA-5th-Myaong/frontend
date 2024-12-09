@@ -1,10 +1,15 @@
+'use client';
+
 import Link from 'next/link';
+import useMe from '@/app/_hooks/useMe';
 
 interface MyPageHeaderProps {
   currentPage: 'change-profile' | 'change-password' | 'withdraw';
 }
 
 export default function MyPageHeader({ currentPage }: MyPageHeaderProps) {
+  const { data: userData } = useMe();
+
   // 현재 페이지에 따라 링크의 스타일을 결정하는 함수
   const getLinkStyle = (page: string) => {
     return currentPage === page ? 'font-bold' : 'font-semibold text-gray-0';
@@ -12,7 +17,7 @@ export default function MyPageHeader({ currentPage }: MyPageHeaderProps) {
 
   return (
     <div className="hidden sm:flex items-center sm:gap-8 md:gap-16 w-full pb-6 max-w-[1300px] border-b border-[#d9d9d9]">
-      <p className="font-semibold sm:text-[22px] md:text-[32px] whitespace-nowrap">김현중 님</p>
+      <p className="font-semibold sm:text-[22px] md:text-[32px] whitespace-nowrap">{userData?.data.name} 님</p>
 
       <div className="flex gap-12 whitespace-nowrap">
         <Link href="/my-page/change-profile" className={getLinkStyle('change-profile')}>
