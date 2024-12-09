@@ -11,6 +11,7 @@ import useMe from '@/app/_hooks/useMe';
 import { putChangeProfile } from '@/app/_services/membersService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchProfile } from '@/app/(route)/(blog)/blog/[username]/_services/blogService';
+import { postPreJobs } from '@/app/(route)/(main-page)/main/_services/mainService';
 
 export default function ChangeProfileContainer() {
   const { register, handleSubmit, setValue } = useForm<ProfileFormProps>({
@@ -30,6 +31,11 @@ export default function ChangeProfileContainer() {
     name: true,
     blogIntro: true,
   });
+  // 관심 직군
+  const [selectedJobs, setSelectedJobs] = useState<number[]>([]);
+  const handleJobsChange = (jobs: number[]) => {
+    setSelectedJobs(jobs);
+  };
 
   // userData가 변경될 때 폼 값 설정
   useEffect(() => {
@@ -41,6 +47,9 @@ export default function ChangeProfileContainer() {
 
   const onSubmit = async (data: ProfileFormProps) => {
     try {
+      if (selectedJobs.length === 0) {
+        return;
+      }
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('blogIntro', data.blogIntro);
@@ -48,6 +57,8 @@ export default function ChangeProfileContainer() {
         formData.append('profileImage', profileImage);
       }
       await putChangeProfile(formData);
+      await postPreJobs({ preJob: selectedJobs });
+
       setShowModal(true);
     } catch (error) {
       console.error('프로필 업데이트 실패:', error);
@@ -58,12 +69,11 @@ export default function ChangeProfileContainer() {
   const toggleDisabled = (field: 'name' | 'blogIntro') => {
     setIsDisabled((prev) => ({ ...prev, [field]: !prev[field] }));
   };
-
   return (
     <div className="flex flex-col justify-center pt-10 sm:pt-11 md:pt-14 px-4 w-full min-w-[360px] max-w-[687px] pb-12">
       <div className="flex flex-col sm:flex-row gap-7 sm:gap-6 md:gap-10">
         <ImageChange defaultPicUrl={userData?.data.profilePicUrl} setProfileImage={setProfileImage} />
-        <JobSelection />
+        <JobSelection onJobsChange={handleJobsChange} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10 pt-2 w-full max-w-[640px]">

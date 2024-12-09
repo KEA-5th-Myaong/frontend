@@ -1,23 +1,13 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import Icons from '../../../../../_components/ui/Icon';
 import { ArrowIcon } from '../../../../../_components/ui/iconPath';
-import { fetchAllPreJobs } from '@/app/(route)/(main-page)/main/_services/mainService';
+import { fetchAllPreJobs, fetchPreJobs } from '@/app/(route)/(main-page)/main/_services/mainService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import { CategoryData, JobProps } from '@/app/(route)/(main-page)/main/_types/main-page';
 
-interface Job {
-  jobId: number;
-  jobName: string;
-}
-
-interface Category {
-  categoryName: string;
-  jobs: Job[];
-}
-
-interface CategoryData extends Array<Category> {}
-
-export default function JobSelection() {
+export default function JobSelection({ onJobsChange }: { onJobsChange: (selectedJobs: number[]) => void }) {
   const { data: jobData } = useCustomQuery(['pre-jobs-list'], () => fetchAllPreJobs());
+  const { data: selectedData } = useCustomQuery(['pre-job'], () => fetchPreJobs());
 
   const categoryData: CategoryData = useMemo(() => {
     return jobData && jobData.success ? jobData.data : [];
@@ -25,6 +15,23 @@ export default function JobSelection() {
 
   const [selectJobCategory, setSelectJobCategory] = useState('직군 전체'); // 선택 직업 카테고리
   const [preJob, setPreJob] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (selectedData?.success && selectedData.data) {
+      const selectedJobs = selectedData.data.map((job: JobProps) => job.jobId);
+      setPreJob(selectedJobs);
+
+      // 선택된 직업이 속한 카테고리 찾기
+      if (selectedJobs.length > 0 && jobData?.success) {
+        const selectedJobId = selectedJobs[0];
+        const foundCategory = categoryData.find((category) => category.jobs.some((job) => job.jobId === selectedJobId));
+
+        if (foundCategory) {
+          setSelectJobCategory(foundCategory.categoryName);
+        }
+      }
+    }
+  }, [selectedData, jobData, categoryData]);
 
   const allJobs = useMemo(() => {
     return categoryData.flatMap((category) => category.jobs);
@@ -40,19 +47,24 @@ export default function JobSelection() {
   }, [selectJobCategory, allJobs, categoryData]);
 
   // 직업 선택 시 호출되는 콜백 함수, useCallback으로 함수를 메모이제이션
-  const handleJobSelect = useCallback((jobId: number) => {
-    setPreJob((prev) => {
-      // 만약 선택된 직업이 이미 preJob 배열에 있다면
-      if (prev.includes(jobId)) {
-        return prev.filter((id) => id !== jobId); // 해당 직업을 배열에서 제거
-      }
-      // 만약 현재 선택된 직업의 수가 5개 미만이라면
-      if (prev.length < 5) {
-        return [...prev, jobId]; // 새로 선택된 직업을 배열에 추가
-      }
-      return prev;
-    });
-  }, []);
+  const handleJobSelect = useCallback(
+    (jobId: number) => {
+      setPreJob((prev) => {
+        let newPreJob;
+        if (prev.includes(jobId)) {
+          newPreJob = prev.filter((id) => id !== jobId);
+        } else if (prev.length < 5) {
+          newPreJob = [...prev, jobId];
+        } else {
+          newPreJob = prev;
+        }
+        onJobsChange(newPreJob); // 부모 컴포넌트에 변경사항 전달
+        return newPreJob;
+      });
+    },
+    [onJobsChange],
+  );
+
   return (
     <div className="flex flex-col w-full">
       <p className="font-semibold pb-4">관심 직군</p>
