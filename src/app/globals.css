@@ -91,6 +91,9 @@ body {
   .form-red-dot {
     @apply bg-red-0 w-[5px] h-[5px] rounded-full;
   }
+  .input-icon {
+    @apply absolute right-4 top-[62px] transform -translate-y-1/2 cursor-pointer;
+  }
 
   /* 블로그 */
   .blog-favor-frame {

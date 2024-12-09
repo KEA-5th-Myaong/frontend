@@ -21,7 +21,6 @@ export default function FormInput<T extends FieldValues>({
   isEdit = false,
   isDisabled = false,
   onEditClick,
-  value,
 }: FormInputProps<T>) {
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -62,7 +61,6 @@ export default function FormInput<T extends FieldValues>({
     onChange,
     placeholder,
     disabled: isDisabled,
-    ...(value !== undefined && { value }), // value가 undefined가 아닐 때만 포함
   };
   return (
     <div className="relative">
@@ -74,19 +72,13 @@ export default function FormInput<T extends FieldValues>({
         <div
           tabIndex={-1} // 눈 아이콘에 focus가 생기지 않도록
           onClick={togglePasswordVisibility}
-          className="absolute right-4 top-[62px] transform -translate-y-1/2"
+          className="input-icon"
         >
           <Icons name={showPassword ? EyeIcon : EyeSlashIcon} />
         </div>
       )}
 
-      {isEdit && (
-        <Icons
-          onClick={onEditClick}
-          className="absolute right-4 top-[62px] transform -translate-y-1/2"
-          name={EditIcon}
-        />
-      )}
+      {isEdit && <Icons onClick={onEditClick} className="input-icon" name={EditIcon} />}
       {error ? (
         <p className="form-error-text">{error.message}</p>
       ) : (

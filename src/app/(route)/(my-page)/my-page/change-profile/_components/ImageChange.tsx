@@ -1,11 +1,15 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Icons from '../../../../../_components/ui/Icon';
 import { PictureIcon } from '../../../../../_components/ui/iconPath';
 import { ImageChangeProps } from '../_types/myPage';
 
-export default function ImageChange({ setProfileImage }: ImageChangeProps) {
+export default function ImageChange({ defaultPicUrl, setProfileImage }: ImageChangeProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 이미지 미리보기용 url 저장
   const fileInputRef = useRef<HTMLInputElement>(null); // 파일 입력에 대한 참조 생성
+
+  useEffect(() => {
+    setPreviewUrl(defaultPicUrl ?? null);
+  }, [defaultPicUrl]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // 선택된 파일 가져옴
@@ -20,8 +24,6 @@ export default function ImageChange({ setProfileImage }: ImageChangeProps) {
       reader.readAsDataURL(file); // 파일을 DataURL로 읽기 시작
     }
   };
-
-  console.log(previewUrl);
 
   const handleDefaultImage = () => {
     const defaultImagePath = '/mascot.png';

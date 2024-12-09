@@ -1,41 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import FormInput from '../../../../(log-in_sign-up)/_components/FormInput';
 import Modal from '../../../../../_components/Modal';
 import ImageChange from './ImageChange';
 import JobSelection from './JobSelection';
 import { ProfileFormProps } from '../_types/myPage';
+import useMe from '@/app/_hooks/useMe';
 
 export default function ChangeProfileContainer() {
-  const { register, handleSubmit } = useForm<ProfileFormProps>({});
+  const { register, handleSubmit, setValue } = useForm<ProfileFormProps>({
+    defaultValues: {
+      userName: '',
+      userEmail: '',
+    },
+  });
+  const { data: userData } = useMe();
 
   const [showModal, setShowModal] = useState(false);
-
   const [profileImage, setProfileImage] = useState<File | null>(null); // 프로필 이미지
-
-  const [inputValue, setInputValue] = useState({
-    userName: '김현중',
-    userEmail: 'khj093099@gachon.ac.kr',
-  });
   const [isDisabled, setIsDisabled] = useState({
     userName: true,
     userEmail: true,
   });
 
-  const onSubmit = (data: ProfileFormProps) => {
-    const formData = new FormData();
-    formData.append('userName', data.userName);
-    formData.append('userEmail', data.userEmail);
-    // formData.append('job', preJob);
-    if (profileImage) {
-      formData.append('profileImage', profileImage);
+  // userData가 변경될 때 폼 값 설정
+  useEffect(() => {
+    if (userData?.data) {
+      setValue('userName', userData.data.username || '');
+      setValue('userEmail', userData.data.email || '');
     }
+  }, [userData, setValue]);
 
-    console.log(Object.fromEntries(formData));
+  const onSubmit = (data: ProfileFormProps) => {
+    try {
+      const formData = new FormData();
+      formData.append('userName', data.userName);
+      formData.append('userEmail', data.userEmail);
+      // formData.append('job', preJob);
+      if (profileImage) {
+        formData.append('profileImage', profileImage);
+      }
 
-    setShowModal(true);
+      console.log(Object.fromEntries(formData));
+
+      setShowModal(true);
+    } catch (error) {
+      console.error('프로필 업데이트 실패:', error);
+    }
   };
 
   // 이름, 이메일 활/비활
@@ -46,8 +59,7 @@ export default function ChangeProfileContainer() {
   return (
     <div className="flex flex-col justify-center pt-10 sm:pt-11 md:pt-14 px-4 w-full min-w-[360px] max-w-[687px] pb-12">
       <div className="flex flex-col sm:flex-row gap-7 sm:gap-6 md:gap-10">
-        <ImageChange setProfileImage={setProfileImage} />
-
+        <ImageChange defaultPicUrl={userData?.data.profilePicUrl} setProfileImage={setProfileImage} />
         <JobSelection />
       </div>
 
@@ -55,11 +67,10 @@ export default function ChangeProfileContainer() {
         <FormInput
           id="userName"
           label="이름"
-          placeholder=""
+          placeholder="이름을 입력해주세요"
           register={register}
           required="이름을 입력해주세요"
           isEssential={false}
-          value={inputValue.userName}
           isEdit
           isDisabled={isDisabled.userName}
           onEditClick={() => toggleDisabled('userName')}
@@ -67,11 +78,10 @@ export default function ChangeProfileContainer() {
         <FormInput
           id="userEmail"
           label="이메일"
-          placeholder=""
+          placeholder="이메일을 입력해주세요"
           register={register}
           required="이메일을 입력해주세요"
           isEssential={false}
-          value={inputValue.userEmail}
           isEdit
           isDisabled={isDisabled.userEmail}
           onEditClick={() => toggleDisabled('userEmail')}
