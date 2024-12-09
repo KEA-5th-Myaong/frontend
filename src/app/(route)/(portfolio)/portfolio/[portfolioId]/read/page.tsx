@@ -10,6 +10,7 @@ import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown'
 import PortfolioContainer from './_components/PortfolioContainer';
 import Footer from '../../../_components/Footer';
 import Modal from '@/app/_components/Modal';
+
 export default function PortfolioRead() {
   const [title, setTitle] = useState('제목');
   //FIX: 로그인 여부 연결

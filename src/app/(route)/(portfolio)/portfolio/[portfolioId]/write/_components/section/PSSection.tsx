@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { Path, UseFormRegister } from 'react-hook-form';
 import { useState } from 'react';
 import Input from '../Input';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 import LoadPSModal from '../LoadPSModal';
 
 interface PSSectionProps {
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 export default function PSSection({ register }: PSSectionProps) {
@@ -37,9 +37,9 @@ export default function PSSection({ register }: PSSectionProps) {
       </div>
       <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
       <section className="w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px]">
-        {/* <Input
+        <Input
           register={register}
-          name={`experiences.${id}.name` as Path<PortfolioProps>}
+          name={`ps.title` as Path<PortfolioFormProps>}
           element="input"
           label="제목"
           size="lg"
@@ -49,17 +49,17 @@ export default function PSSection({ register }: PSSectionProps) {
         />
         <Input
           register={register}
-          name={`experiences.${id}.name` as Path<PortfolioProps>}
+          name={`ps.position` as Path<PortfolioFormProps>}
           element="input"
           label="지원 직무"
           size="lg"
           type="text"
           color="white"
           placeholder="지원 직무를 입력해주세요"
-        /> */}
+        />
         <Input
           register={register}
-          name={`ps.reason` as Path<PortfolioProps>}
+          name={`ps.reason` as Path<PortfolioFormProps>}
           element="textarea"
           label="지원 사유"
           size="lg"
@@ -69,7 +69,7 @@ export default function PSSection({ register }: PSSectionProps) {
         />
         <Input
           register={register}
-          name={`ps.content` as Path<PortfolioProps>}
+          name={`ps.content` as Path<PortfolioFormProps>}
           element="textarea"
           label="자기소개서 내용"
           size="lg"
