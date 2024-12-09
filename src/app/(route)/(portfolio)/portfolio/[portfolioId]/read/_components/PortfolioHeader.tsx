@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { fetchPortfolios } from '@/app/(route)/(portfolio)/_services/portfolioServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { PortfolioCardProps } from '@/app/_types/portfolio';
@@ -10,14 +9,12 @@ export default function PortfolioHeader() {
   // 포트폴리오 목록 조회
   const { data: portfolioList } = useCustomQuery(['portfolios'], () => fetchPortfolios());
 
-  // 현재 선택한 포트폴리오
   const params = useParams();
-  const { portfolioId } = params;
-  const [selectedTitle, setSelectedTitle] = useState<string | null>('title1');
+  const currentPortfolioId = params.portfolioId;
 
-  const handleTitleClick = (title: string) => {
-    setSelectedTitle(title);
-    //TODO: 해당 링크로 이동
+  const router = useRouter();
+  const handleTitleClick = (id: string) => {
+    router.push(`/portfolio/${id}/read`);
   };
 
   return (
@@ -27,22 +24,26 @@ export default function PortfolioHeader() {
         {portfolioList?.data?.main && portfolioList.data.main.portfolioId && (
           <button
             type="button"
-            className={`cursor-pointer ${selectedTitle === 'title1' ? 'text-primary-1' : ''} hover-animation`}
-            onClick={() => handleTitleClick('title1')}
+            className={`cursor-pointer hover-animation ${String(currentPortfolioId) === String(portfolioList.data.main.portfolioId) ? 'text-primary-1' : ''}`}
+            onClick={() => handleTitleClick(portfolioList.data.main.portfolioId)}
           >
             {portfolioList.data.main.portfolioName}
-            {selectedTitle === 'title1' && <div className="bg-primary-1 h-[2px] mt-1 w-full rounded-4" />}
+            {String(currentPortfolioId) === String(portfolioList.data.main.portfolioId) && (
+              <div className="bg-primary-1 h-[2px] mt-1 w-full rounded-4" />
+            )}
           </button>
         )}
         {/* portfolios 배열 렌더링 */}
         {portfolioList?.data?.portfolios?.map((item: PortfolioCardProps) => (
           <button
             type="button"
-            className={`cursor-pointer ${selectedTitle === 'title1' ? 'text-primary-1' : ''} hover-animation`}
-            onClick={() => handleTitleClick('title1')}
+            className={`cursor-pointer hover-animation ${String(currentPortfolioId) === String(item.portfolioId) ? 'text-primary-1' : ''}`}
+            onClick={() => handleTitleClick(item.portfolioId)}
           >
             {item.portfolioName}
-            {selectedTitle === 'title1' && <div className="bg-primary-1 h-[2px] mt-1 w-full rounded-4" />}
+            {String(currentPortfolioId) === String(item.portfolioId) && (
+              <div className="bg-primary-1 h-[2px] mt-1 w-full rounded-4" />
+            )}
           </button>
         ))}
       </div>
