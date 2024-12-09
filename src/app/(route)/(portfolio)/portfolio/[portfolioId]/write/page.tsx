@@ -43,7 +43,6 @@ export default function PortfolioWrite() {
 
   const onSubmit = handleSubmit(async (formData) => {
     const cleanedData = cleanData(formData); // 데이터 정리
-    console.log('Cleaned Data:', cleanedData);
 
     // API 요청
     try {
