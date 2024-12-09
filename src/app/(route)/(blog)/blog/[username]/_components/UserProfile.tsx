@@ -1,43 +1,55 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import FollowButton from './_follow/FollowButton';
 import FollowModal from './_follow/FollowModal';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { fetchFollowed, fetchFollowing, fetchMemberInfo, fetchProfile } from '../_services/blogService';
+import { fetchFollowed, fetchFollowing, fetchMemberInfo, fetchProfile, postFollow } from '../_services/blogService';
 import defaultProfilePic from '../../../../../../../public/mascot.png';
+import useMe from '@/app/_hooks/useMe';
+import useCustomMutation from '@/app/_hooks/useCustomMutation';
 
 export default function UserProfile() {
   const params = useParams();
+  const router = useRouter();
   const { username } = params;
 
   // url의 username을 가지고 memberId 가져오기
   const { data: userNameData } = useCustomQuery(['user-name', username], () => fetchProfile(username as string)); // 현재 유저 정보
   const memberId = userNameData?.data.memberId; // 멤버 아이디
 
-  // 블로그 주인장 데이터
-  const { data: blogUserData } = useCustomQuery(['blog-user', username], () => fetchMemberInfo(memberId));
+  const { data: userData } = useMe();
+  const [isMe, setIsMe] = useState(false);
+  useEffect(() => {
+    if (userData?.data.username === username) {
+      setIsMe(true);
+    }
+  }, [isMe, userData?.data.username, username]);
 
+  // 블로그 주인장 데이터
+  const { data: blogMemberData } = useCustomQuery(['blog-user', username], () => fetchMemberInfo(memberId));
   const { data: followedData } = useCustomQuery(['followed', memberId], () => fetchFollowed(memberId, '10'));
   const { data: followingData } = useCustomQuery(['following', memberId], () => fetchFollowing(memberId, '10'));
 
   const [followedList, setFollowedList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
-
   const [isFollowerOpen, setIsFollowerOpen] = useState(false);
   const [isFollowingOpen, setIsFollowingOpen] = useState(false);
 
-  const [isFollowed, setIsFollowd] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
+  useEffect(() => {
+    if (blogMemberData?.data.isFollowing) {
+      setIsFollowed(true);
+    }
+  }, [blogMemberData?.data.isFollowing]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // 팔로워 데이터 가져오기
         setFollowedList(followedData?.data.followedDTOList);
-
         // 팔로잉 데이터 가져오기
         setFollowingList(followingData?.data.followingDTOList);
       } catch (err) {
@@ -47,6 +59,35 @@ export default function UserProfile() {
 
     fetchData();
   }, [followedData?.data.followedDTOList, followingData?.data.followingDTOList]);
+  // 팔로우 뮤테이션(낙관적 업데이트)
+  const followMutation = useCustomMutation(postFollow, {
+    onMutate: async () => {
+      // 낙관적 업데이트
+      setIsFollowed((prev) => !prev);
+
+      // 팔로워 수 업데이트
+      if (blogMemberData?.data) {
+        const newCount = isFollowed ? blogMemberData.data.followerCount - 1 : blogMemberData.data.followerCount + 1;
+
+        blogMemberData.data.followerCount = newCount;
+      }
+    },
+    onError: () => {
+      // 에러 발생 시 원래 상태로 롤백
+      setIsFollowed((prev) => !prev);
+      if (blogMemberData?.data) {
+        const newCount = isFollowed ? blogMemberData.data.followerCount + 1 : blogMemberData.data.followerCount - 1;
+
+        blogMemberData.data.followerCount = newCount;
+      }
+    },
+  });
+
+  // 팔로우 버튼 누르기
+  const handleFollow = () => {
+    if (!memberId) return;
+    followMutation.mutate(memberId);
+  };
   return (
     <>
       <div className="pt-[51px] pb-[41px] xl:px-5 px-2 rounded-2xl bg-white-0 md:border md:border-gray-2 h-fit">
@@ -54,7 +95,7 @@ export default function UserProfile() {
           <div className="flex flex-col sm:flex-row  md:flex-col items-center gap-3 sm:gap-3 md:gap-10 ">
             <Image
               className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] rounded-full"
-              src={blogUserData?.data.profilePicUrl || defaultProfilePic.src}
+              src={blogMemberData?.data.profilePicUrl || defaultProfilePic.src}
               alt="프로필사진"
               width={52}
               height={52}
@@ -63,16 +104,16 @@ export default function UserProfile() {
 
             <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
               <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
-                {blogUserData?.data.nickname}
+                {blogMemberData?.data.nickname}
                 <span className="inline md:hidden">님의 블로그</span>
               </span>
               <div className="hidden sm:inline md:hidden w-full h-[1px] bg-gray-1" />
-              <span> {blogUserData?.data.nickname}의 블로그입니다.</span>
+              <span> {blogMemberData?.data.nickname}의 블로그입니다.</span>
             </div>
 
             <div className="hidden md:flex justify-between self-stretch px-[58px] md:w-auto">
               <FollowButton
-                count={blogUserData?.data.followerCount}
+                count={blogMemberData?.data.followerCount}
                 label="팔로워"
                 onClick={() => setIsFollowerOpen(true)}
               />
@@ -80,31 +121,38 @@ export default function UserProfile() {
               <div className="h-[53px] bg-gray-0 w-[2px]" />
 
               <FollowButton
-                count={blogUserData?.data.followingCount}
+                count={blogMemberData?.data.followingCount}
                 label="팔로잉"
                 onClick={() => setIsFollowingOpen(true)}
               />
             </div>
-
-            <Link
-              type="button"
-              href={`/blog/${params.userId}/write`}
-              className={`${isFollowed ? 'bg-gray-0' : 'bg-primary-1'} flex justify-center ml-0 sm:ml-10 
-            md:ml-0 self-stretch text-lg h-fit py-[4.5px] 
-            sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold hover:bg-primary-2 primary-1-btn`}
-            >
-              글 작성하기
-            </Link>
+            {isMe ? (
+              <button
+                type="button"
+                onClick={() => router.push(`/blog/${params.userId}/write`)}
+                className="bg-primary-1 hover:bg-primary-2 user-profile-btn"
+              >
+                글 작성하기
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleFollow}
+                className={`${isFollowed ? 'bg-gray-0 hover:bg-gray-1' : 'bg-primary-1 hover:bg-primary-2'} user-profile-btn`}
+              >
+                {isFollowed ? '언팔로우' : '팔로우'}
+              </button>
+            )}
           </div>
 
           {/* 작은 화면일 때 보이는 */}
           <div className="flex flex-col items-start gap-3 sm:hidden md:gap-5 md:w-[300px] md:items-center">
             <span className="text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1">
-              {blogUserData?.data.nickname}
+              {blogMemberData?.data.nickname}
               <span className="inline md:hidden">님의 블로그</span>
             </span>
             <div className="hidden sm:inline md:hidden w-full h-[1px] bg-gray-1" />
-            <span>회원2의 블로그입니다.</span>
+            <span>{blogMemberData?.data.nickname}님의 블로그입니다.</span>
           </div>
         </div>
       </div>
@@ -113,14 +161,13 @@ export default function UserProfile() {
       <FollowModal
         isOpen={isFollowerOpen}
         onClose={() => setIsFollowerOpen(false)}
-        title={`${blogUserData?.data.nickname}님을 팔로우하는 유저`}
+        title={`${blogMemberData?.data.nickname}님을 팔로우하는 유저`}
         list={followedList}
       />
-
       <FollowModal
         isOpen={isFollowingOpen}
         onClose={() => setIsFollowingOpen(false)}
-        title={`${blogUserData?.data.nickname}님이 팔로우하는 유저`}
+        title={`${blogMemberData?.data.nickname}님이 팔로우하는 유저`}
         list={followingList}
       />
     </>

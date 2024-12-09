@@ -96,6 +96,9 @@ body {
   .blog-favor-frame {
     @apply flex items-center gap-[5px] px-3 py-[5px] cursor-pointer;
   }
+  .user-profile-btn {
+    @apply flex justify-center ml-0 sm:ml-10 md:ml-0 self-stretch text-lg h-fit py-[4.5px] sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold primary-1-btn;
+  }
 
   /* 모의 면접 */
   .interview-container {

@@ -11,11 +11,13 @@ import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
 import useCustomInfiniteQuery from '@/app/_hooks/useCustomInfiniteQuery';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   const router = useRouter();
   const { ref, inView } = useInView(); // 무한 스크롤을 위한 InterSection Observer 훅
   const [posts, setPosts] = useState<PostProps[]>([]);
+  const { data: userData } = useMe();
 
   // 모든 무한 쿼리에 공통적으로 사용할 옵션
   const commonQueryOptions = {
@@ -116,7 +118,7 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
     posts,
     setPosts,
-    '1', // memberId
+    userData?.data.memberId,
     currentQuery?.data?.pages?.[currentQuery.data.pages.length - 1]?.data.lastId?.toString(), // 마지막 페이지의 lastId
   );
   return (

@@ -112,7 +112,7 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
     },
   });
   // 답글 제출
-  const handleReplySubmit = (parentId: string, content: string) => {
+  const handleReplySubmit = (parentId: number, content: string) => {
     if (!content.trim()) return;
     postReplyMutation.mutate({
       postId,

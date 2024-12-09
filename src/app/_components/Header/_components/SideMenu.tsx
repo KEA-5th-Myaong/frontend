@@ -14,7 +14,6 @@ interface SideMenuProps {
 
 export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
   const isLogined = userData?.data?.nickname;
-  console.log(isLogined);
   return (
     <AnimatePresence>
       {isOpen && (

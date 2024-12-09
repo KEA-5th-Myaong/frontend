@@ -12,6 +12,7 @@ import { formatDate } from '@/app/_utils/formatDate';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
 import defaultProfilePic from '../../../../../../../public/mascot.png';
 import useCustomInfiniteQuery from '@/app/_hooks/useCustomInfiniteQuery';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PostContainer() {
   const router = useRouter();
@@ -20,7 +21,14 @@ export default function PostContainer() {
   const { username } = params;
   const { data: memberData } = useCustomQuery(['member', username], () => fetchProfile(username as string));
 
-  const memberId = memberData?.memberId;
+  const memberId = memberData?.memberId; // 다른 사람
+  const { data: userData } = useMe();
+  const [isMe, setIsMe] = useState(false);
+  useEffect(() => {
+    if (userData?.data.username === username) {
+      setIsMe(true);
+    }
+  }, [isMe, userData?.data.username, username]);
 
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useCustomInfiniteQuery(
     ['post', memberId],

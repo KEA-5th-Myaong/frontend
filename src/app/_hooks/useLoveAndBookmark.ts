@@ -10,7 +10,7 @@ type MutationContext = {
 const useLoveAndBookmark = (
   posts: PostProps[],
   setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>,
-  memberId?: string,
+  memberId?: number,
   lastId?: string,
 ) => {
   const queryClient = useQueryClient();
