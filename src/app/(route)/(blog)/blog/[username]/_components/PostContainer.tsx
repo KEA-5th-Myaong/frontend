@@ -23,7 +23,9 @@ export default function PostContainer() {
   const memberId = userNameData?.data?.memberId; // 다른 사람
 
   // memberId써서 더 상세한 정보 가져옴
-  const { data: bloguserNameData } = useCustomQuery(['blog-user', username], () => fetchMemberInfo(memberId));
+  const { data: blogUserNameData, isLoading: isblogUserNameDataLoading } = useCustomQuery(['blog-user', username], () =>
+    fetchMemberInfo(memberId),
+  );
 
   const { data: userData } = useMe();
   const [isMe, setIsMe] = useState(false);
@@ -70,7 +72,7 @@ export default function PostContainer() {
   );
   return (
     <div className="flex flex-col gap-6">
-      {isLoading
+      {isblogUserNameDataLoading
         ? Array.from({ length: 5 }).map(() => (
             <div key={`skeleton-${uuidv4()}`} className="w-full h-48 bg-gray-200 rounded-md animate-pulse" />
           ))
@@ -79,19 +81,19 @@ export default function PostContainer() {
               key={post.postId}
               postId={post.postId}
               title={post.title}
-              nickname={bloguserNameData?.data.nickname}
+              nickname={blogUserNameData?.data.nickname}
               memberId={memberId}
               onUserClick={() => {
-                router.push(`/blog/${bloguserNameData?.data.username}`);
+                router.push(`/blog/${blogUserNameData?.data.username}`);
               }}
               onContentClick={() => {
-                router.push(`/blog/${bloguserNameData?.data.username}/${post.title}`);
+                router.push(`/blog/${blogUserNameData?.data.username}/${post.title}`);
               }}
               thumbnail={null}
-              profilePicUrl={post.profilePicUrl === null ? defaultProfilePic.src : bloguserNameData?.data.profilePicUrl} // 여기를 수정
+              profilePicUrl={post.profilePicUrl === null ? defaultProfilePic.src : blogUserNameData?.data.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
-              prejob={bloguserNameData?.data.prejob?.[0]}
+              prejob={blogUserNameData?.data.prejob?.[0]}
               onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
               isBookmarked={post.isBookmarked}
               isLiked={post.isLiked}

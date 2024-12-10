@@ -31,9 +31,17 @@ export default function UserProfile() {
   }, [isMe, userData?.data.username, username]);
 
   // 블로그 주인장 데이터
-  const { data: blogMemberData } = useCustomQuery(['blog-user', username], () => fetchMemberInfo(memberId));
-  const { data: followedData } = useCustomQuery(['followed', memberId], () => fetchFollowed(memberId, '10'));
-  const { data: followingData } = useCustomQuery(['following', memberId], () => fetchFollowing(memberId, '10'));
+  const { data: blogMemberData, isLoading: isBlogMemberLoading } = useCustomQuery(['blog-user', username], () =>
+    fetchMemberInfo(memberId),
+  );
+  const { data: followedData, isLoading: isFollowedLoading } = useCustomQuery(['followed', memberId], () =>
+    fetchFollowed(memberId, '10'),
+  );
+  const { data: followingData, isLoading: isFollowingLoading } = useCustomQuery(['following', memberId], () =>
+    fetchFollowing(memberId, '10'),
+  );
+  // 모든 로딩 한 번에 관리
+  const isLoading = isBlogMemberLoading || isFollowedLoading || isFollowingLoading;
 
   const [followedList, setFollowedList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
@@ -99,58 +107,72 @@ export default function UserProfile() {
     <>
       <div className="pt-[51px] pb-[41px] xl:px-5 px-2 rounded-2xl bg-white-0 md:border md:border-gray-2 h-fit">
         <div className="flex items-center sm:gap-0 gap-8">
-          <div className="flex flex-col sm:flex-row  md:flex-col items-center gap-3 sm:gap-3 md:gap-10 ">
-            <Image
-              className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] rounded-full"
-              src={blogMemberData?.data.profilePicUrl || defaultProfilePic.src}
-              alt="프로필사진"
-              width={52}
-              height={52}
-              unoptimized
-            />
-
-            <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
-              <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
-                {blogMemberData?.data.nickname}
-                <span className="inline md:hidden">님의 블로그</span>
-              </span>
-              <div className="hidden sm:inline md:hidden w-full h-[1px] bg-gray-1" />
-              <span> {blogMemberData?.data.blogIntro}</span>
+          {isLoading ? (
+            <div className="flex flex-col sm:flex-row md:flex-col min-w-[100px] md:min-w-[250px] items-center gap-3 sm:gap-3 md:gap-10">
+              <Image
+                className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] rounded-full animate-spin"
+                src={defaultProfilePic.src}
+                alt="프로필사진"
+                width={52}
+                height={52}
+                unoptimized
+              />
+              불러오는중...
             </div>
-
-            <div className="hidden md:flex justify-between self-stretch px-[58px] md:w-auto">
-              <FollowButton
-                count={blogMemberData?.data.followerCount}
-                label="팔로워"
-                onClick={() => setIsFollowerOpen(true)}
+          ) : (
+            <div className="flex flex-col sm:flex-row md:flex-col items-center gap-3 sm:gap-3 md:gap-10">
+              <Image
+                className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] rounded-full"
+                src={blogMemberData?.data.profilePicUrl || defaultProfilePic.src}
+                alt="프로필사진"
+                width={52}
+                height={52}
+                unoptimized
               />
 
-              <div className="h-[53px] bg-gray-0 w-[2px]" />
+              <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
+                <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
+                  {blogMemberData?.data.nickname}
+                  <span className="inline md:hidden">님의 블로그</span>
+                </span>
+                <div className="hidden sm:inline md:hidden w-full h-[1px] bg-gray-1" />
+                <span> {blogMemberData?.data.blogIntro}</span>
+              </div>
 
-              <FollowButton
-                count={blogMemberData?.data.followingCount}
-                label="팔로잉"
-                onClick={() => setIsFollowingOpen(true)}
-              />
+              <div className="hidden md:flex justify-between self-stretch px-[58px] md:w-auto">
+                <FollowButton
+                  count={blogMemberData?.data.followerCount}
+                  label="팔로워"
+                  onClick={() => setIsFollowerOpen(true)}
+                />
+
+                <div className="h-[53px] bg-gray-0 w-[2px]" />
+
+                <FollowButton
+                  count={blogMemberData?.data.followingCount}
+                  label="팔로잉"
+                  onClick={() => setIsFollowingOpen(true)}
+                />
+              </div>
+              {isMe ? (
+                <button
+                  type="button"
+                  onClick={() => router.push(`/blog/${username}/write`)}
+                  className="bg-primary-1 hover:bg-primary-2 user-profile-btn"
+                >
+                  글 작성하기
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleFollow}
+                  className={`${isFollowed ? 'bg-gray-0 hover:bg-gray-1' : 'bg-primary-1 hover:bg-primary-2'} user-profile-btn`}
+                >
+                  {isFollowed ? '언팔로우' : '팔로우'}
+                </button>
+              )}
             </div>
-            {isMe ? (
-              <button
-                type="button"
-                onClick={() => router.push(`/blog/${username}/write`)}
-                className="bg-primary-1 hover:bg-primary-2 user-profile-btn"
-              >
-                글 작성하기
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleFollow}
-                className={`${isFollowed ? 'bg-gray-0 hover:bg-gray-1' : 'bg-primary-1 hover:bg-primary-2'} user-profile-btn`}
-              >
-                {isFollowed ? '언팔로우' : '팔로우'}
-              </button>
-            )}
-          </div>
+          )}
 
           {/* 작은 화면일 때 보이는 */}
           <div className="flex flex-col items-start gap-3 sm:hidden md:gap-5 md:w-[300px] md:items-center">
