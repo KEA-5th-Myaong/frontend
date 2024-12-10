@@ -25,11 +25,14 @@ export default function PortfolioList() {
     }
   };
   return (
-    <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full pt-14 md:pt-0">
-      <div className="pt-[60px] flex justify-between items-center w-full max-w-[1000px] md:px-[60px] lg:px-[50px] ">
-        <div className="flex flex-col justify-center w-full">
-          <h1 className="font-semibold text-left">포트폴리오 관리</h1>
-          <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
+    <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full h-screen pt-14 md:pt-0 bg-gray-4">
+      <div className="pt-[60px] flex justify-between items-center w-full max-w-[1000px] md:pr-[60px] lg:pr-[50px] ">
+        <div className="flex items-center">
+          <div className="bg-black-0 w-[4px] h-10 mr-6">{''}</div>
+          <div className="flex flex-col justify-center w-full">
+            <h1 className="font-semibold text-left">포트폴리오 관리</h1>
+            <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
+          </div>
         </div>
         <Link href="/portfolio/write">
           <button
