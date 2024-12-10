@@ -233,10 +233,11 @@ export async function putBookmark(postId: number) {
   }
 }
 
-// (PUT) 신고하기
-export async function putReport(postId: string) {
+// (POST) 콘텐츠 신고
+export async function postReport(reportData: unknown) {
   try {
-    await api.put(`/blog/posts/${postId}/report`);
+    const { data } = await api.post(`/blog/posts/report`, reportData);
+    return data;
   } catch (error) {
     console.error('신고하기 실패:', error);
     throw error;

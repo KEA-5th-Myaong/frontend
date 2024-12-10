@@ -34,6 +34,7 @@ export default function PostContent() {
   const { data: postURLData } = useCustomQuery(['url-post', postTitle], () =>
     fetchURLPost(username as string, postTitle as string),
   );
+  const isMe = postURLData?.data.memberId === userData?.data.memberId; // 본인의 게시글인지 확인
 
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function PostContent() {
     callback: () => setShowDropDown(false),
   });
 
-  const { bookmarkMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId, postId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
+  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId, postId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
 
   // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
   const handleEditClick = useCallback(() => {
@@ -91,6 +92,23 @@ export default function PostContent() {
     }));
   }, [handleDeletePost, postId]);
 
+  // 포스트 신고 함수
+  const handleReportPost = () => {};
+
+  // 포스트 신고 버튼 누르면 나오는 모달
+  const handleReportPostClick = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '해당 포스트를 신고하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '신고',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () => handleReportPost(),
+    }));
+  };
+
   // 컨텐츠 sanitize 메모이제이션
   const sanitizedContent = useMemo(
     () => ({ __html: DOMPurify.sanitize(postURLData?.data.content || '') }),
@@ -101,27 +119,29 @@ export default function PostContent() {
       {/* 제목과 더보기 아이콘 */}
       <div className="flex justify-between items-center">
         <span className="text-[22px] font-semibold">{postURLData?.data.title}</span>
-        {/* 타인의 게시물일 경우 */}
-        <div className="relative flex items-end gap-5">
-          <div className="flex items-end gap-0.5 text-gray-0 text-xs">
-            <Icons className="cursor-pointer" name={SirenIcon} />
-            신고
+
+        {isMe ? (
+          <div className="relative" ref={dropdownRef}>
+            <Icons
+              onClick={() => {
+                setShowDropDown((prev) => !prev);
+              }}
+              className="cursor-pointer"
+              name={MoreIcon}
+            />
+
+            {showDropDown && <MoreOptions handleEditClick={handleEditClick} handleDeleteClick={handleDeleteClick} />}
           </div>
+        ) : (
+          <div className="relative flex items-end gap-5">
+            <div onClick={handleReportPostClick} className="flex items-end gap-0.5 text-gray-0 text-xs">
+              <Icons className="cursor-pointer" name={SirenIcon} />
+              신고
+            </div>
 
-          <Icons name={BookmarkIcon} className="pt-0.5 border-primary-3" />
-        </div>
-        {/* 본인의 게시물일 경우 */}
-        <div className="relative" ref={dropdownRef}>
-          <Icons
-            onClick={() => {
-              setShowDropDown((prev) => !prev);
-            }}
-            className="cursor-pointer"
-            name={MoreIcon}
-          />
-
-          {showDropDown && <MoreOptions handleEditClick={handleEditClick} handleDeleteClick={handleDeleteClick} />}
-        </div>
+            <Icons name={BookmarkIcon} className="pt-0.5 border-primary-3" />
+          </div>
+        )}
       </div>
 
       {/* 작성자 프로필 */}
@@ -162,7 +182,7 @@ export default function PostContent() {
       </div>
 
       {/* 댓글 */}
-      <PostComment postId={postId} comments={postURLData?.data.comments} />
+      <PostComment postId={postId} comments={postURLData?.data.comments} currentUserId={userData?.data.memberId} />
 
       {modalState.open && (
         <Modal

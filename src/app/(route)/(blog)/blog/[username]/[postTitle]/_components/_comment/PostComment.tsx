@@ -19,9 +19,10 @@ import Modal, { initailModalState } from '@/app/_components/Modal';
 interface PostCommentProps {
   postId: string;
   comments: CommentProps[];
+  currentUserId?: number;
 }
 
-export default function PostComment({ postId, comments }: PostCommentProps) {
+export default function PostComment({ postId, comments, currentUserId }: PostCommentProps) {
   const [commentLists, setCommentLists] = useState<CommentProps[]>([]);
   const [replyingTo, setReplyingTo] = useState<number | null>(null); // 답글을 작성중인 댓글의 id
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null); // 수정중인 댓글의 id
@@ -195,6 +196,7 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
           onEditSubmit={handleEditSubmit}
           onDelete={handleDeleteClick}
           isEditing={editingCommentId === comment.commentId}
+          isMine={comment.memberId === currentUserId}
         />
         {/* 여기는 답글 */}
         {replies.map((reply) => (
@@ -207,6 +209,7 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
             onDelete={handleDeleteClick}
             isReply
             isEditing={editingCommentId === reply.commentId}
+            isMine={reply.memberId === currentUserId}
           />
         ))}
         {/* 답글 인풋 보이게 */}
