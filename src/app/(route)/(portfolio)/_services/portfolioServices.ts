@@ -36,22 +36,18 @@ export async function postPorfolios(portfolioData: PortfolioFormProps) {
 }
 
 // (POST) 포트폴리오 이미지 등록
-export async function postPortfoliosPic(portfolioId: string) {
+export async function postPortfoliosPic(formData: FormData): Promise<{ picUrl: string }> {
   try {
-    const { data } = await api.post(`/portfolios/${portfolioId}/pic`);
-    return data;
+    const response = await api.post(`/portfolios/pic`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    console.log('API Response:', response);
+
+    // `picUrl` 문자열만 반환
+    return response.data.data.picUrl;
   } catch (error) {
     console.error('포트폴리오 이미지 등록 실패:', error);
-    throw error;
-  }
-}
-
-// (DELETE) 포트폴리오 이미지 삭제
-export async function deleteProtfoliosPic(portfolioId: string) {
-  try {
-    await api.delete(`/portfolios/${portfolioId}`);
-  } catch (error) {
-    console.error('포트폴리오 이미지 삭제 실패:', error);
     throw error;
   }
 }

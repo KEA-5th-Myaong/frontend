@@ -1,27 +1,32 @@
 'use client';
 
-import Icons from '@/app/_components/ui/Icon';
-import { XIcon } from '@/app/_components/ui/iconPath';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
+import Icons from '@/app/_components/ui/Icon';
+import { XIcon } from '@/app/_components/ui/iconPath';
+import { postPortfoliosPic } from '@/app/(route)/(portfolio)/_services/portfolioServices';
 
 export default function UploadImage() {
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 이미지 미리보기 URL
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
     fileInputRef.current?.click(); // 클릭 시 파일 선택 창 열기
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
+      const formData = new FormData();
+      formData.append('pic', file); // FormData에 파일 추가
 
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const picUrl = await postPortfoliosPic(formData); // URL 반환
+        console.log('이미지 업로드 성공 (핸들러)', picUrl);
+        setPreviewUrl(String(picUrl)); // URL 상태 설정
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+      }
     }
   };
 
