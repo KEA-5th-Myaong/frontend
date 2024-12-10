@@ -2,39 +2,38 @@ import Image from 'next/image';
 import { Path, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
-interface LinkItemProps {
+interface CertificationItemProps {
   id: number;
   onDelete: (id: number) => void;
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
-function LinkItem({ id, onDelete, register }: LinkItemProps) {
+function CertificationItem({ id, onDelete, register }: CertificationItemProps) {
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
             register={register}
-            name={`links.${id}.name` as Path<PortfolioProps>}
+            name={`certifications.${id}.name` as Path<PortfolioFormProps>}
             element="input"
-            label="링크명"
+            label="자격증명"
             size="lg"
             type="text"
             color="white"
             maxLength={50}
-            placeholder="링크명을 입력해주세요"
+            placeholder="자격증명을 입력해주세요"
           />
           <Input
             register={register}
-            name={`links.${id}.link` as Path<PortfolioProps>}
+            name={`certifications.${id}.date` as Path<PortfolioFormProps>}
             element="input"
-            label="URL"
+            label="취득 일자"
             size="lg"
-            type="text"
+            type="date"
             color="white"
-            placeholder="URL을 입력해주세요"
           />
         </div>
         <button type="button" onClick={() => onDelete(id)} className="absolute top-[20px] right-10">
@@ -45,4 +44,4 @@ function LinkItem({ id, onDelete, register }: LinkItemProps) {
   );
 }
 
-export default LinkItem;
+export default CertificationItem;

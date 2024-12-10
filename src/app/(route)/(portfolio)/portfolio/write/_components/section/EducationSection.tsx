@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import EducationItem from '../items/EducationItem';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface EducationItemState {
   id: number;
@@ -12,7 +12,7 @@ interface EducationItemState {
 }
 
 interface EducationSectionProps {
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 export default function EducationSection({ register }: EducationSectionProps) {

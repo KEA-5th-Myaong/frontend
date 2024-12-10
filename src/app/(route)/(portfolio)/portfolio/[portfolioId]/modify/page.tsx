@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -17,23 +17,68 @@ import PSSection from './_components/section/PSSection';
 import Input from './_components/Input';
 import ItemToggle from './_components/ItemToggle';
 import useToggleStore from '@/app/_store/portfolioToggle';
+import UploadImage from './_components/UploadImage';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
+import Tips from './_components/Tips';
+import { fetchPortfolio, putPortfolios } from '../../../_services/portfolioServices';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import Footer from '../../../_components/Footer';
-import UploadImage from './_components/UploadImage';
-import { PortfolioProps } from '@/app/_types/portfolio';
-import Tips from './_components/Tips';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import useMe from '@/app/_hooks/useMe';
 
-export default function PortfolioWrite() {
-  const { register, handleSubmit, setValue } = useForm<PortfolioProps>();
-  const methods = useForm<PortfolioProps>();
+export default function PortfolioModify() {
+  const params = useParams();
+  const { portfolioId } = params;
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
+  const methods = useForm<PortfolioFormProps>();
+
+  // 유저 정보 조회
+  const { data: userData } = useMe();
+  setValue('name', String(userData?.data?.name));
+
+  // 포트폴리오 조회
+  const { data: portfolio } = useCustomQuery(['portfolio'], () => fetchPortfolio(String(portfolioId)));
+  console.log('수정 페이지 포트폴리오 데이터 ', portfolio);
+
+  // 포트폴리오 데이터를 폼 필드에 설정
+  useEffect(() => {
+    if (portfolio) {
+      Object.keys(portfolio.data).forEach((key) => {
+        setValue(key as keyof PortfolioFormProps, portfolio.data[key]); // React Hook Form 필드 값 설정
+      });
+    }
+  }, [portfolio, setValue]);
+
+  const cleanData = (data: PortfolioFormProps) => {
+    return {
+      ...data,
+      picUrl: data.picUrl || null,
+      educations: data.educations || [],
+      experiences: data.experiences || [],
+      ps: data.ps || null,
+      links: data.links || [],
+      skills: data.skills || [],
+      certifications: data.certifications || [],
+      extraActivities: data.extraActivities || [],
+    };
+  };
+
+  const onSubmit = handleSubmit(async (formData) => {
+    const cleanedData = cleanData(formData); // 데이터 정리
+
+    // API 요청
+    try {
+      await putPortfolios(String(portfolioId), cleanedData);
+      console.log('수정완료');
+    } catch (error) {
+      console.error('Error creating portfolio:', error);
+    }
+  });
 
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
   const router = useRouter();
-  const params = useParams();
-  const { portfolioId } = params;
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside({
@@ -55,14 +100,14 @@ export default function PortfolioWrite() {
 
   return (
     <div className="relative ">
-      <div className="relative flex pl-[200px] mt-[60px] mb-[100px] w-full lg:mx-auto">
+      <div className="relative flex sm:pl-[30px] md:pl-[80px] lg:pl-[200px] pt-[100px] xl:pt-[60px] mb-[100px] w-full lg:mx-auto">
         <ItemToggle />
-        <section className="flex max-w-[1200px] min-w-[900px] md:px-[60px] lg:px-0 ">
+        <section className="flex max-w-[1200px] min-w-[900px] px-0 ">
           <div className="w-full ml-10">
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
-                <h1 className="font-semibold text-left ">포트폴리오 작성</h1>
-                <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
+                <h1 className="font-semibold text-left ">포트폴리오 수정</h1>
+                <p className="text-left text-gray-0 text-[12px]">포트폴리오는 최대 5개까지 생성 가능합니다</p>
               </div>
               <Link
                 href={`/portfolio/${portfolioId}/read`}
@@ -156,7 +201,7 @@ export default function PortfolioWrite() {
                   </div>
                   {toggles.personalStatement && <PSSection register={register} />}
                 </section>
-                {/* <button type="submit">제출 테스트</button> */}
+                <button type="submit">제출 테스트</button>
               </form>
             </FormProvider>
           </div>
