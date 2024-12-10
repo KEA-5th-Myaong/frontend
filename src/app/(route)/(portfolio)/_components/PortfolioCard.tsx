@@ -10,6 +10,7 @@ import PortfolioDropdown from './PortfolioDropdown';
 import { PortfolioCardProps, PortfolioListMemo } from '@/app/_types/portfolio';
 import { deletePortfolios, postPortfoliosMemo } from '../_services/portfolioServices';
 import Modal, { initailModalState } from '@/app/_components/Modal';
+import { formatDate } from '@/app/_utils/formatDate';
 
 export default function PortfolioCard({
   portfolioId,
@@ -112,7 +113,7 @@ export default function PortfolioCard({
           className="whitespace-nowrap overflow-hidden mt-2.5 bg-gray-4 text-gray-0 text-sm"
         />
       </form>
-      <p className="text-right mt-2.5 text-gray-0 text-xs">{timestamp} 등록</p>
+      <p className="text-right mt-2.5 text-gray-0 text-xs">{formatDate(timestamp)} 등록</p>
 
       {modalState.open && (
         <Modal
