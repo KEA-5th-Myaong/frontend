@@ -71,7 +71,7 @@ export default function PortfolioCard({
   return (
     <div className=" relative w-[320px] bg-white-0 border border-gray-5 rounded-xl pt-[30px] pb-2.5 px-[30px]">
       <div className="flex justify-between">
-        <Link href={`/portfolio/${portfolioId}/read`}>
+        <Link href={`/portfolio/${portfolioId}/modify`}>
           <h1 className="max-w-[15ch] font-semibold whitespace-nowrap text-ellipsis overflow-hidden hover:text-gray-500">
             {portfolioName}
           </h1>

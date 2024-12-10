@@ -17,12 +17,12 @@ import PSSection from './_components/section/PSSection';
 import Input from './_components/Input';
 import ItemToggle from './_components/ItemToggle';
 import useToggleStore from '@/app/_store/portfolioToggle';
-import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
-import Footer from '../../../_components/Footer';
 import UploadImage from './_components/UploadImage';
 import { PortfolioFormProps } from '@/app/_types/portfolio';
 import Tips from './_components/Tips';
-import { postPorfolios } from '../../../_services/portfolioServices';
+import { postPorfolios } from '../../_services/portfolioServices';
+import PortfolioWriteDropdown from '../../_components/PortfolioWriteDropdown';
+import Footer from '../../_components/Footer';
 
 export default function PortfolioWrite() {
   const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
