@@ -1,32 +1,25 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Icons from '../../../_components/ui/Icon';
 import { MoreIcon } from '../../../_components/ui/iconPath';
 import PortfolioDropdown from './PortfolioDropdown';
-import useClickOutside from '@/app/_hooks/useClickOutside';
 import { PortfolioCardProps } from '@/app/_types/portfolio';
 import usePortfolioStore from '@/app/_store/portfolio';
-import { deletePortfolios, postPortfoliosMemo, putPortfoliosMain } from '../_services/portfolioServices';
+import { deletePortfolios, postPortfoliosMemo } from '../_services/portfolioServices';
 
-export default function PortfolioCard({ portfolioId, portfolioName, timestamp, memo }: PortfolioCardProps) {
+export default function PortfolioCard({
+  portfolioId,
+  portfolioName,
+  timestamp,
+  memo,
+  isMain,
+  onSetMain,
+}: PortfolioCardProps) {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const { isMainPortfolio, setMainPortfolio, setMemo } = usePortfolioStore();
+  const { setMemo } = usePortfolioStore();
   const [currentMemo, setCurrentMemo] = useState(memo); // 메모의 현재 상태를 저장
-
-  // const dropdownRef = useRef<HTMLDivElement>(null);
-  // useClickOutside({
-  //   ref: dropdownRef,
-  //   callback: () => setIsShowDropdown(false),
-  // });
-
-  // 대표 포트폴리오 설정
-  const handleSetMain = async () => {
-    setMainPortfolio(portfolioId);
-    // API : 대표 포트폴리오 설정
-    await putPortfoliosMain(portfolioId);
-  };
 
   // 메모 업데이트
   const handleMemoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +33,6 @@ export default function PortfolioCard({ portfolioId, portfolioName, timestamp, m
 
   // 포트폴리오 목록에서 삭제
   const handleDeletePortfolio = async () => {
-    console.log('Deleting portfolio...'); // 디버깅 메시지 추가
     try {
       await deletePortfolios(portfolioId); // API 호출
       console.log(`Portfolio with ID ${portfolioId} deleted`);
@@ -62,8 +54,8 @@ export default function PortfolioCard({ portfolioId, portfolioName, timestamp, m
         </Link>
         <button
           type="button"
-          onClick={handleSetMain}
-          className={`${isMainPortfolio === portfolioId ? 'bg-primary-1' : 'bg-gray-5'} flex-center 
+          onClick={() => onSetMain && onSetMain(portfolioId)}
+          className={`${isMain ? 'bg-primary-1' : 'bg-gray-5'} flex-center 
           px-2.5 rounded-[5px] font-semibold text-[11px] text-white-0`}
         >
           대표

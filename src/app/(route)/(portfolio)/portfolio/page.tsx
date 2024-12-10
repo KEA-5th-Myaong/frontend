@@ -1,18 +1,29 @@
 'use client';
 
 import Link from 'next/link';
+import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../../_components/ui/Icon';
 import { PlusIcon } from '../../../_components/ui/iconPath';
 import PortfolioCard from '../_components/PortfolioCard';
 import PortfolioAddCard from '../_components/PortfolioAddCard';
 import { PortfolioCardProps } from '../../../_types/portfolio';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { fetchPortfolios } from '../_services/portfolioServices';
+import { fetchPortfolios, putPortfoliosMain } from '../_services/portfolioServices';
 
 export default function PortfolioList() {
   // 포트폴리오 목록 조회
+  const queryClient = useQueryClient();
   const { data: portfolioList } = useCustomQuery(['portfolios'], () => fetchPortfolios());
 
+  // API: 대표 포트폴리오 설정
+  const handleSetMainPortfolio = async (portfolioId: string) => {
+    try {
+      await putPortfoliosMain(portfolioId);
+      queryClient.invalidateQueries({ queryKey: ['portfolios'] });
+    } catch (error) {
+      console.error(`Failed to set portfolio ${portfolioId} as main:`, error);
+    }
+  };
   return (
     <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full pt-14 md:pt-0">
       <div className="pt-[60px] flex justify-between items-center w-full max-w-[1000px] md:px-[60px] lg:px-[50px] ">
@@ -41,6 +52,8 @@ export default function PortfolioList() {
               portfolioName={portfolioList.data.main.portfolioName}
               memo={portfolioList.data.main.memo}
               timestamp={portfolioList.data.main.timestamp}
+              isMain
+              onSetMain={handleSetMainPortfolio}
             />
           )}
           {/* portfolios 배열 렌더링 */}
@@ -51,6 +64,7 @@ export default function PortfolioList() {
               portfolioName={item.portfolioName}
               memo={item.memo}
               timestamp={item.timestamp}
+              onSetMain={handleSetMainPortfolio}
             />
           ))}
           <PortfolioAddCard />
