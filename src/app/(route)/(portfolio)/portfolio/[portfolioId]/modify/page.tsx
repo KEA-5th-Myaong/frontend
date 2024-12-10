@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -20,13 +20,36 @@ import useToggleStore from '@/app/_store/portfolioToggle';
 import UploadImage from './_components/UploadImage';
 import { PortfolioFormProps } from '@/app/_types/portfolio';
 import Tips from './_components/Tips';
-import { postPorfolios, postPortfoliosMemo } from '../../../_services/portfolioServices';
+import { fetchPortfolio, putPortfolios } from '../../../_services/portfolioServices';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import Footer from '../../../_components/Footer';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import useMe from '@/app/_hooks/useMe';
 
-export default function PortfolioWrite() {
+export default function PortfolioModify() {
+  const params = useParams();
+  const { portfolioId } = params;
+
   const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
   const methods = useForm<PortfolioFormProps>();
+
+  // 유저 정보 조회
+  const { data: userData } = useMe();
+  setValue('name', String(userData?.data?.name));
+
+  // 포트폴리오 조회
+  const { data: portfolio } = useCustomQuery(['portfolio'], () => fetchPortfolio(String(portfolioId)));
+  console.log('수정 페이지 포트폴리오 데이터 ', portfolio);
+
+  // 포트폴리오 데이터를 폼 필드에 설정
+  useEffect(() => {
+    if (portfolio) {
+      Object.keys(portfolio.data).forEach((key) => {
+        setValue(key as keyof PortfolioFormProps, portfolio.data[key]); // React Hook Form 필드 값 설정
+      });
+    }
+  }, [portfolio, setValue]);
+
   const cleanData = (data: PortfolioFormProps) => {
     return {
       ...data,
@@ -46,8 +69,8 @@ export default function PortfolioWrite() {
 
     // API 요청
     try {
-      const responseId = await postPorfolios(cleanedData);
-      console.log('Portfolio created with ID:', responseId);
+      await putPortfolios(String(portfolioId), cleanedData);
+      console.log('수정완료');
     } catch (error) {
       console.error('Error creating portfolio:', error);
     }
@@ -56,8 +79,6 @@ export default function PortfolioWrite() {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { toggles } = useToggleStore();
   const router = useRouter();
-  const params = useParams();
-  const { portfolioId } = params;
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside({

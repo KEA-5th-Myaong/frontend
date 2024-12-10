@@ -10,13 +10,11 @@ import useMe from '@/app/_hooks/useMe';
 export default function PortfolioContainer() {
   // 유저 정보 조회
   const { data: userData } = useMe();
-  console.log(userData);
   // 포트폴리오 조회
   const params = useParams();
   const { portfolioId } = params;
-  console.log('포폴 아이디', portfolioId);
   const { data: portfolio } = useCustomQuery(['portfolio'], () => fetchPortfolio(String(portfolioId)));
-  console.log('현재 페이지 포폴', portfolio);
+
   return (
     <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] px-5 py-10  lg:mx-auto border rounded-[10px]">
       <section className="flex items-center">
