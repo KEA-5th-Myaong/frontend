@@ -3,13 +3,14 @@ import Icons from '../../../../../_components/ui/Icon';
 import { PictureIcon } from '../../../../../_components/ui/iconPath';
 import { ImageChangeProps } from '../_types/myPage';
 import { postProfilePic } from '@/app/_services/membersService';
+import mascot from '../../../../../../../public/mascot.png';
 
 export default function ImageChange({ defaultPicUrl, setProfileImage }: ImageChangeProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 이미지 미리보기용 url 저장
   const fileInputRef = useRef<HTMLInputElement>(null); // 파일 입력에 대한 참조 생성
   // 기본 이미지 설정
   useEffect(() => {
-    setPreviewUrl(defaultPicUrl ?? null);
+    setPreviewUrl(defaultPicUrl ?? mascot.src);
   }, [defaultPicUrl]);
 
   // 이미지 최종 수정
