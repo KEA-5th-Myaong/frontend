@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import Icons from '@/app/_components/ui/Icon';
 import { RequiredIcon } from '@/app/_components/ui/iconPath';
 import { fetchPortfolio } from '@/app/(route)/(portfolio)/_services/portfolioServices';
@@ -13,7 +15,10 @@ export default function PortfolioContainer() {
   // 포트폴리오 조회
   const params = useParams();
   const { portfolioId } = params;
-  const { data: portfolio } = useCustomQuery(['portfolio'], () => fetchPortfolio(String(portfolioId)));
+  const { data: portfolio } = useCustomQuery(
+    ['portfolio', portfolioId], // Query Key에 ID 포함
+    () => fetchPortfolio(String(portfolioId)),
+  );
 
   return (
     <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] px-5 py-10  lg:mx-auto border rounded-[10px]">
