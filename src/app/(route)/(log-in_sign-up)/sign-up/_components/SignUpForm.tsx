@@ -176,7 +176,8 @@ export default function SignUpForm() {
           onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
           type="password"
           error={errors.password}
-          minLength={10}
+          minLength={8}
+          maxLength={20}
           infoText={FORM_TEXT[9]}
         />
         {/* 비밀번호 확인 input */}
