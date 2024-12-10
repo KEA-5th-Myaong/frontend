@@ -78,7 +78,7 @@ export default function SearchPage() {
     }
   };
 
-  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
+  const { bookmarkMutation } = useLoveAndBookmark(
     posts,
     setPosts,
     userData?.data.memberId,
@@ -121,9 +121,8 @@ export default function SearchPage() {
                 timestamp={formatDate(post.timestamp)}
                 userJob={post.userJob || '기타'}
                 onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
-                onLoveClick={() => loveMutation.mutate(post.postId)}
-                isLoved={post.isLoved}
-                lovedCount={post.lovedCount || 0}
+                isLiked={post.isLiked}
+                likeCount={post.likeCount}
               />
             ))}
       </div>

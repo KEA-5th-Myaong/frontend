@@ -13,7 +13,7 @@ import PostComment from './_comment/PostComment';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { deletePost, fetchPostPostId, fetchURLPost } from '../../_services/blogService';
+import { deletePost, fetchURLPost } from '../../_services/blogService';
 import usePostWriteStore from '@/app/_store/postWirte';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
@@ -31,7 +31,7 @@ export default function PostContent() {
   const setPost = usePostWriteStore((state) => state.setPostData);
   const [modalState, setModalState] = useState(initailModalState);
 
-  const { data: postURLData } = useCustomQuery(['url-post'], () =>
+  const { data: postURLData } = useCustomQuery(['url-post', postTitle], () =>
     fetchURLPost(username as string, postTitle as string),
   );
 
@@ -42,9 +42,7 @@ export default function PostContent() {
     }
   }, [postURLData]);
 
-  const postId = postURLData?.postId;
-
-  const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId as string));
+  const postId = postURLData?.data.postId;
 
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -54,14 +52,14 @@ export default function PostContent() {
     callback: () => setShowDropDown(false),
   });
 
-  const { bookmarkMutation, loveMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
+  const { bookmarkMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId, postId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
 
   // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
   const handleEditClick = useCallback(() => {
     router.push(`/blog/${username}/write?edit=true&postId=${postId}`);
-    setTitle(data?.data.title);
-    setPost(data?.data.content);
-  }, [username, postId, data?.data.title, setTitle, data?.data.content, setPost, router]);
+    setTitle(postURLData?.data.title);
+    setPost(postURLData?.data.content);
+  }, [username, postId, postURLData?.data.title, setTitle, postURLData?.data.content, setPost, router]);
 
   // 포스트 삭제, 자식 컴포넌트의 불필요한 리렌더링 방지
   const handleDeletePost = useCallback(
@@ -95,14 +93,14 @@ export default function PostContent() {
 
   // 컨텐츠 sanitize 메모이제이션
   const sanitizedContent = useMemo(
-    () => ({ __html: DOMPurify.sanitize(data?.data.content || '') }),
-    [data?.data.content],
+    () => ({ __html: DOMPurify.sanitize(postURLData?.data.content || '') }),
+    [postURLData?.data.content],
   );
   return (
     <>
       {/* 제목과 더보기 아이콘 */}
       <div className="flex justify-between items-center">
-        <span className="text-[22px] font-semibold">{data?.data.title}</span>
+        <span className="text-[22px] font-semibold">{postURLData?.data.title}</span>
         {/* 타인의 게시물일 경우 */}
         <div className="relative flex items-end gap-5">
           <div className="flex items-end gap-0.5 text-gray-0 text-xs">
@@ -132,13 +130,13 @@ export default function PostContent() {
           <div id="profile" className="" />
           <Image
             className="min-w-[29px] min-h-[29px] rounded-full"
-            src={data?.data.profilePicUrl || defaultProfilePic.src}
+            src={postURLData?.data.profilePicUrl || defaultProfilePic.src}
             alt="프로필사진"
             width={29}
             height={29}
             unoptimized
           />
-          <span>{data?.data.nickname}</span>
+          <span>{postURLData?.data.nickname}</span>
         </div>
         <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
           프론트엔드 개발자
@@ -150,24 +148,21 @@ export default function PostContent() {
 
       {/* 작성일 댓글 좋아요 */}
       <div className="flex items-center justify-between mt-20 pb-10 border-b">
-        <span className="text-sm text-gray-0">{formatDate(data?.data.timestamp)}</span>
+        <span className="text-sm text-gray-0">{formatDate(postURLData?.data.timestamp)}</span>
         <div className="flex gap-3">
           <div className="text-primary-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame">
             <Icons name={CommentIcon} />
-            <p className="text-sm">{data?.data.commentCount}</p>
+            <p className="text-sm">{postURLData?.data.commentCount}</p>
           </div>
-          <div
-            onClick={() => loveMutation.mutate(data?.data.postId)}
-            className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame"
-          >
+          <div className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame">
             <Icons name={FavorIcon} />
-            <span className="text-sm">{data?.data.likeCount}</span>
+            <span className="text-sm">{postURLData?.data.likeCount}</span>
           </div>
         </div>
       </div>
 
       {/* 댓글 */}
-      <PostComment userData={userData} postId={postId} comments={data?.data.comments} />
+      <PostComment userData={userData} postId={postId} comments={postURLData?.data.comments} />
 
       {modalState.open && (
         <Modal

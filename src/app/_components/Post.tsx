@@ -17,12 +17,10 @@ export default function Post({
   onContentClick,
   className,
 
-  // 미구현
-  onLoveClick,
   onBookmarkClick,
   userJob,
-  isLoved,
-  lovedCount,
+  isLiked,
+  likeCount,
 }: PostProps) {
   const imageSource = profilePicUrl || defaultProfilePic;
 
@@ -38,12 +36,6 @@ export default function Post({
     }
   };
 
-  const handleLoveClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onLoveClick) {
-      onLoveClick();
-    }
-  };
   return (
     <div
       onClick={onContentClick}
@@ -83,9 +75,9 @@ export default function Post({
 
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-1">{timestamp}</span>
-          <div onClick={handleLoveClick} className="blog-favor-frame">
-            <Icons name={FavorIcon} className={`${isLoved ? 'text-primary-1' : 'text-gray-1'}`} />
-            <span className={`${isLoved ? 'text-primary-1' : 'text-gray-1'} text-sm mt-[1.5px]`}>{lovedCount}</span>
+          <div className="blog-favor-frame">
+            <Icons name={FavorIcon} className={`${isLiked ? 'text-primary-1' : 'text-gray-1'}`} />
+            <span className={`${isLiked ? 'text-primary-1' : 'text-gray-1'} text-sm mt-[1.5px]`}>{likeCount}</span>
           </div>
         </div>
       </div>

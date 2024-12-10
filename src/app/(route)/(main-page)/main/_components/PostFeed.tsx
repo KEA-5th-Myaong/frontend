@@ -115,7 +115,7 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
     setPosts(currentPosts);
   }, [currentPosts]);
 
-  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
+  const { bookmarkMutation } = useLoveAndBookmark(
     posts,
     setPosts,
     userData?.data.memberId,
@@ -147,9 +147,8 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
               timestamp={formatDate(post.timestamp)}
               userJob={post.userJob || '기타'}
               onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
-              onLoveClick={() => loveMutation.mutate(post.postId)}
-              isLoved={post.isLoved}
-              lovedCount={post.lovedCount || 0}
+              isLiked={post.isLiked}
+              likeCount={post.likeCount}
             />
           ))}
 

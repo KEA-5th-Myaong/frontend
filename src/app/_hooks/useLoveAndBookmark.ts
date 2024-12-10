@@ -27,8 +27,8 @@ const useLoveAndBookmark = (
           if (post.postId === postId) {
             return {
               ...post,
-              isLoved: !post.isLoved, // 좋아요 상태 토글
-              lovedCount: post.isLoved ? post.lovedCount - 1 : post.lovedCount + 1,
+              isLiked: !post.isLiked, // 좋아요 상태 토글
+              likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1,
             };
           }
           return post;
@@ -51,6 +51,7 @@ const useLoveAndBookmark = (
   const bookmarkMutation = useCustomMutation<unknown, number>(putBookmark, {
     onMutate: async (postId) => {
       await queryClient.cancelQueries({ queryKey: ['bookmarkPosts', lastId] });
+      await queryClient.cancelQueries({ queryKey: ['post', memberId] });
       const previousPosts = [...posts];
 
       setPosts((prev) =>

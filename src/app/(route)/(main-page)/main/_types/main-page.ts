@@ -10,8 +10,8 @@ export interface PostProps {
   username?: string | null;
   profilePicUrl: string | null;
   isBookmarked: boolean;
-  isLoved: boolean;
-  lovedCount: number;
+  isLiked: boolean;
+  likeCount: number;
   userJob: string;
 
   onLoveClick?: () => void;

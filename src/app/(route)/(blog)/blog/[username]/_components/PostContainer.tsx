@@ -22,6 +22,7 @@ export default function PostContainer() {
   const { data: userNameData } = useCustomQuery(['user-profile', username], () => fetchProfile(username as string));
   const memberId = userNameData?.data?.memberId; // 다른 사람
 
+  // memberId써서 더 상세한 정보 가져옴
   const { data: bloguserNameData } = useCustomQuery(['blog-user', username], () => fetchMemberInfo(memberId));
 
   const { data: userData } = useMe();
@@ -40,10 +41,9 @@ export default function PostContainer() {
         if (lastPage.data.lastId === -1) return undefined;
         return lastPage.data.lastId;
       },
-      initialPageParam: '0',
+      initialPageParam: '100',
     },
   );
-  console.log(data);
 
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   // 무한스크롤된 데이터 관리
@@ -62,7 +62,7 @@ export default function PostContainer() {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
+  const { bookmarkMutation } = useLoveAndBookmark(
     posts,
     setPosts,
     memberId,
@@ -91,12 +91,11 @@ export default function PostContainer() {
               profilePicUrl={post.profilePicUrl === null ? defaultProfilePic.src : bloguserNameData?.data.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
-              userJob="프론트엔드 개발자"
+              userJob={bloguserNameData?.data.prejob[0]}
               onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
               isBookmarked={post.isBookmarked}
-              onLoveClick={() => loveMutation.mutate(post.postId)}
-              isLoved={post.isLoved}
-              lovedCount={post.lovedCount || 0}
+              isLiked={post.isLiked}
+              likeCount={post.likeCount}
             />
           ))}
 
