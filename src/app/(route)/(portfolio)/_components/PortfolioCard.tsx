@@ -8,6 +8,7 @@ import PortfolioDropdown from './PortfolioDropdown';
 import { PortfolioCardProps } from '@/app/_types/portfolio';
 import usePortfolioStore from '@/app/_store/portfolio';
 import { deletePortfolios, postPortfoliosMemo } from '../_services/portfolioServices';
+import Modal, { initailModalState } from '@/app/_components/Modal';
 
 export default function PortfolioCard({
   portfolioId,
@@ -20,6 +21,7 @@ export default function PortfolioCard({
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const { setMemo } = usePortfolioStore();
   const [currentMemo, setCurrentMemo] = useState(memo); // 메모의 현재 상태를 저장
+  const [modalState, setModalState] = useState(initailModalState);
 
   // 메모 업데이트
   const handleMemoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +44,22 @@ export default function PortfolioCard({
     } finally {
       setIsShowDropdown(false); // 항상 마지막에 닫기
     }
+  };
+
+  // 삭제 버튼 누르면 나오는 모달
+  const handleDeleteClick = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '해당 포트폴리오를 삭제하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '삭제',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () => {
+        handleDeletePortfolio();
+      },
+    }));
   };
 
   return (
@@ -70,7 +88,7 @@ export default function PortfolioCard({
           />
         </div>
 
-        {isShowDropdown && <PortfolioDropdown id={portfolioId} onDelete={handleDeletePortfolio} />}
+        {isShowDropdown && <PortfolioDropdown id={portfolioId} onDelete={handleDeleteClick} />}
       </div>
       <form className="bg-gray-4 rounded-md mt-5 py-[15px] px-[15px]">
         <h1 className="font-semibold text-sm">MEMO</h1>
@@ -83,6 +101,17 @@ export default function PortfolioCard({
         />
       </form>
       <p className="text-right mt-2.5 text-gray-0 text-xs">{timestamp} 등록</p>
+
+      {modalState.open && (
+        <Modal
+          hasSubBtn={modalState.hasSubBtn}
+          topText={modalState.topText}
+          subBtnText={modalState.subBtnText}
+          btnText={modalState.btnText}
+          onSubBtnClick={modalState.onSubBtnClick}
+          onBtnClick={modalState.onBtnClick}
+        />
+      )}
     </div>
   );
 }
