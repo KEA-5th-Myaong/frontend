@@ -53,7 +53,31 @@ export default function PostContent() {
     callback: () => setShowDropDown(false),
   });
 
-  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId, postId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
+  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId, postId);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    if (postURLData?.data) {
+      setIsBookmarked(postURLData.data.bookmarked);
+    }
+  }, [postURLData?.data]);
+
+  // bookmark 클릭 핸들러 수정
+  const handleBookmarkClick = () => {
+    if (!postId) return;
+
+    bookmarkMutation.mutate(postId, {
+      onSuccess: () => {
+        setIsBookmarked((prev) => !prev);
+        // 새로운 북마크 상태를 서버 응답으로부터 받아서 설정
+        queryClient.invalidateQueries({ queryKey: ['url-post', postTitle] });
+      },
+      onError: (error) => {
+        console.error('Bookmark error:', error);
+        setIsBookmarked((prev) => !prev); // 에러 발생 시 원래 상태로 되돌림
+      },
+    });
+  };
 
   // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
   const handleEditClick = useCallback(() => {
@@ -139,7 +163,11 @@ export default function PostContent() {
               신고
             </div>
 
-            <Icons name={BookmarkIcon} className="pt-0.5 border-primary-3" />
+            <Icons
+              onClick={handleBookmarkClick}
+              name={{ ...BookmarkIcon, fill: isBookmarked ? '#41AED9' : 'none' }}
+              className="pt-0.5 cursor-pointer"
+            />
           </div>
         )}
       </div>
@@ -174,7 +202,10 @@ export default function PostContent() {
             <Icons name={CommentIcon} />
             <p className="text-sm">{postURLData?.data.commentCount}</p>
           </div>
-          <div className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame">
+          <div
+            onClick={() => {}}
+            className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame"
+          >
             <Icons name={FavorIcon} />
             <span className="text-sm">{postURLData?.data.likeCount}</span>
           </div>
