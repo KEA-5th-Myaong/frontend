@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../../_components/ui/Icon';
 import { MoreIcon } from '../../../_components/ui/iconPath';
 import PortfolioDropdown from './PortfolioDropdown';
-import { PortfolioCardProps } from '@/app/_types/portfolio';
-import usePortfolioStore from '@/app/_store/portfolio';
+import { PortfolioCardProps, PortfolioListMemo } from '@/app/_types/portfolio';
 import { deletePortfolios, postPortfoliosMemo } from '../_services/portfolioServices';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 
@@ -19,18 +19,24 @@ export default function PortfolioCard({
   onSetMain,
 }: PortfolioCardProps) {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const { setMemo } = usePortfolioStore();
   const [currentMemo, setCurrentMemo] = useState(memo); // 메모의 현재 상태를 저장
   const [modalState, setModalState] = useState(initailModalState);
 
-  // 메모 업데이트
+  const queryClient = useQueryClient();
+
   const handleMemoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const newMemo = e.target.value;
-    setCurrentMemo(newMemo);
-    setMemo(portfolioId, newMemo);
-    console.log(portfolioId, currentMemo);
-    // API : 포트폴리오 목록 메모 등록
-    await postPortfoliosMemo(portfolioId, memo);
+    setCurrentMemo(newMemo); // 미리 상태 업데이트
+    const memoPayload: PortfolioListMemo = { memo: newMemo };
+
+    try {
+      // API : 메모 등록
+      await postPortfoliosMemo(portfolioId, memoPayload);
+      queryClient.invalidateQueries({ queryKey: ['portfolios'] });
+    } catch (error) {
+      console.error('Failed to update memo:', error);
+      setCurrentMemo(memo); // 기존 메모로 롤백
+    }
   };
 
   // 포트폴리오 목록에서 삭제

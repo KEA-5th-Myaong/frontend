@@ -1,4 +1,4 @@
-import { PortfolioFormProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps, PortfolioListMemo } from '@/app/_types/portfolio';
 import api from '@/app/api/axiosInstance';
 
 // (GET) 포트폴리오 목록 조회
@@ -63,9 +63,10 @@ export async function putPortfoliosMain(portfolioId: string) {
 }
 
 // (POST) 포트폴리오 메모 등록
-export async function postPortfoliosMemo(portfolioId: string, memoData: unknown) {
+export async function postPortfoliosMemo(portfolioId: string, memoData: PortfolioListMemo) {
   try {
     const { data } = await api.post(`/portfolios/${portfolioId}/memo`, memoData);
+    console.log('메모 등록 성공', data);
     return data;
   } catch (error) {
     console.error('포트폴리오 메모 등록 실패: ', error);
