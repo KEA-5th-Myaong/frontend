@@ -3,6 +3,8 @@ export interface PortfolioCardProps {
   portfolioName: string; // 포트폴리오 제목
   timestamp: string; // 등록 날짜
   memo?: string; // 포트폴리오메모
+  isMain?: boolean;
+  onSetMain?: (id: string) => void;
 }
 
 export interface Educations {
