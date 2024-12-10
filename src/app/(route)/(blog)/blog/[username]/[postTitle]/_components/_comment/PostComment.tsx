@@ -6,7 +6,7 @@ import { CommentProps } from '../../_types/post';
 import CommentItem from './CommentItem';
 import ReplyInput from './ReplyInput';
 import useCustomMutation from '@/app/_hooks/useCustomMutation';
-import { postComments, postReplies } from '../../../_services/blogService';
+import { postComments, postReplies, putComments, putReplies } from '../../../_services/blogService';
 import { User } from '@/app/_hooks/useMe';
 
 interface PostCommentProps {
@@ -26,7 +26,7 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
     setCommentLists(comments);
   }, [comments]);
 
-  // 댓글 제출
+  // 댓글 작성 뮤테이션
   const postCommentMutation = useCustomMutation(
     ({ comment }: { postId: string; comment: string }) => postComments({ postId, content: comment }),
     {
@@ -51,6 +51,7 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
     setReplyingTo(replyingTo === commentId ? null : commentId); // 이미 답글 작성 중이던 댓글을 다시 클릭하면, 답글 작성 UI를 닫음
   };
 
+  // 답글 작성 뮤테이션
   const postReplyMutation = useCustomMutation(
     ({ content, commentId }: { postId: string; content: string; commentId: string }) =>
       postReplies({ postId, content, commentId }),
@@ -72,6 +73,27 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
     });
   };
 
+  // 댓글 수정 뮤테이션
+  const editCommentMutation = useCustomMutation(
+    ({ commentId, content }: { commentId: string; content: string }) => putComments(commentId, { content }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        setEditingCommentId(null);
+      },
+    },
+  );
+  // 답글 수정 뮤테이션
+  const editReplyMutation = useCustomMutation(
+    ({ replyId, content }: { replyId: string; content: string }) => putReplies(replyId, { content }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        setEditingCommentId(null);
+      },
+    },
+  );
+
   // 수정 버튼 클릭
   const handleEditClick = (commentId: number) => {
     setEditingCommentId(commentId); // 클릭된 댓글의 ID를 editingCommentId로 설정
@@ -79,13 +101,23 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
 
   // 수정 제출
   const handleEditSubmit = (commentId: number, newContent: string) => {
-    if (newContent.trim()) {
-      setCommentLists(
-        commentLists.map((comment) =>
-          comment.commentId === commentId ? { ...comment, comment: newContent, timestamp: '방금 전' } : comment,
-        ),
-      );
-      setEditingCommentId(null); // 수정 종료(id를 null로)
+    if (!newContent.trim()) return;
+    // 수정하려는 항목이 댓글인지 답글인지 확인
+    const targetComment = commentLists.find((comment) => comment.commentId === commentId);
+    if (!targetComment) return;
+
+    if (targetComment.parentCommentId === null) {
+      // 댓글 수정
+      editCommentMutation.mutate({
+        commentId: commentId.toString(),
+        content: newContent,
+      });
+    } else {
+      // 답글 수정
+      editReplyMutation.mutate({
+        replyId: commentId.toString(),
+        content: newContent,
+      });
     }
   };
 
