@@ -27,40 +27,15 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
   }, [comments]);
 
   // 댓글 제출
-  const postCommentMutation = useCustomMutation(postComments, {
-    onMutate: async (commentData: { postId: string; comment: string }) => {
-      // 진행 중인 쿼리를 취소
-      await queryClient.cancelQueries({ queryKey: ['user-post', commentData.postId] });
-      // 이전 데이터 백업
-      const previousComments = queryClient.getQueryData(['user-post', commentData.postId]);
-      // 낙관적 업데이트
-      const optimisticComment = {
-        comment: commentData.comment,
-        nickname: userData?.data.nickname,
-        timestamp: '방금 전',
-        profilePicUrl: userData?.data.profilePicUrl,
-        memberId: null,
-      };
-      queryClient.setQueryData(['user-post', commentData.postId], (old: { comments: CommentProps[] }) => ({
-        ...old,
-        comments: [...(old?.comments || []), optimisticComment],
-      }));
-      return { previousComments };
+  const postCommentMutation = useCustomMutation(
+    ({ comment }: { postId: string; comment: string }) => postComments({ postId, content: comment }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        setNewComment('');
+      },
     },
-    onError: (err, variables, context) => {
-      // 에러 발생 시 이전 상태로 롤백
-      if (context?.previousComments) {
-        queryClient.setQueryData(['user-post', variables.postId], context.previousComments);
-      }
-    },
-    onSuccess: (response) => {
-      setCommentLists((prev) => [...prev, response]); // response: 서버에서 반환한 새로 생성된 댓글 정보
-    },
-    onSettled: () => {
-      // 성공이든 실패든 완료되면 쿼리를 리페치
-      queryClient.invalidateQueries({ queryKey: ['user-post'] });
-    },
-  });
+  );
   // 댓글 제출
   const handleCommentSubmit = () => {
     if (!newComment.trim()) return;
@@ -76,50 +51,24 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
     setReplyingTo(replyingTo === commentId ? null : commentId); // 이미 답글 작성 중이던 댓글을 다시 클릭하면, 답글 작성 UI를 닫음
   };
 
-  const postReplyMutation = useCustomMutation(postReplies, {
-    onMutate: async (commentData: { postId: string; comment: string; parentId: string }) => {
-      // 진행 중인 쿼리를 취소
-      await queryClient.cancelQueries({ queryKey: ['user-post', commentData.postId] });
-      const previousComments = queryClient.getQueryData(['user-post', commentData.postId]);
-      const optimisticComment = {
-        comment: commentData.comment,
-        nickname: userData?.data.nickname,
-        timestamp: '방금 전',
-        profilePicUrl: userData?.data.profilePicUrl,
-        memberId: null,
-      };
-      queryClient.setQueryData(['user-post', commentData.postId], (old: any) => ({
-        ...old,
-        comments: [...(old?.comments || []), optimisticComment],
-      }));
-      return { previousComments };
+  const postReplyMutation = useCustomMutation(
+    ({ content, commentId }: { postId: string; content: string; commentId: string }) =>
+      postReplies({ postId, content, commentId }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        setReplyingTo(null);
+      },
     },
-    onError: (err, variables, context) => {
-      // 에러 발생 시 이전 상태로 롤백
-      if (context?.previousComments) {
-        queryClient.setQueryData(['user-post', variables.postId], context.previousComments);
-      }
-    },
-    onSuccess: (response, variables) => {
-      setCommentLists((prev) => {
-        const parentIndex = prev.findIndex((comment) => comment.commentId === variables.parentId);
-        const newComments = [...prev];
-        newComments.splice(parentIndex + 1, 0, response); // 부모 댓글 바로 다음에 삽입
-        return newComments;
-      });
-    },
-    onSettled: () => {
-      // 성공이든 실패든 완료되면 쿼리를 리페치
-      queryClient.invalidateQueries({ queryKey: ['user-post'] });
-    },
-  });
+  );
+
   // 답글 제출
-  const handleReplySubmit = (parentId: string, content: string) => {
+  const handleReplySubmit = (commentId: string, content: string) => {
     if (!content.trim()) return;
     postReplyMutation.mutate({
       postId,
-      comment: content,
-      parentId,
+      content,
+      commentId,
     });
   };
 
