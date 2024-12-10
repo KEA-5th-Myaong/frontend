@@ -6,20 +6,27 @@ import { CommentProps } from '../../_types/post';
 import CommentItem from './CommentItem';
 import ReplyInput from './ReplyInput';
 import useCustomMutation from '@/app/_hooks/useCustomMutation';
-import { postComments, postReplies, putComments, putReplies } from '../../../_services/blogService';
-import { User } from '@/app/_hooks/useMe';
+import {
+  deleteComments,
+  deleteReplies,
+  postComments,
+  postReplies,
+  putComments,
+  putReplies,
+} from '../../../_services/blogService';
+import Modal, { initailModalState } from '@/app/_components/Modal';
 
 interface PostCommentProps {
-  userData: User;
   postId: string;
   comments: CommentProps[];
 }
 
-export default function PostComment({ userData, postId, comments }: PostCommentProps) {
+export default function PostComment({ postId, comments }: PostCommentProps) {
   const [commentLists, setCommentLists] = useState<CommentProps[]>([]);
   const [replyingTo, setReplyingTo] = useState<number | null>(null); // 답글을 작성중인 댓글의 id
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null); // 수정중인 댓글의 id
   const [newComment, setNewComment] = useState('');
+  const [modalState, setModalState] = useState(initailModalState);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -121,6 +128,54 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
     }
   };
 
+  // 댓글 삭제 뮤테이션
+  const deleteCommentMutation = useCustomMutation((commentId: string) => deleteComments(commentId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['url-post'] });
+    },
+  });
+  // 답글 삭제 뮤테이션
+  const deleteReplyMutation = useCustomMutation((replyId: string) => deleteReplies(replyId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['url-post'] });
+    },
+  });
+
+  // 삭제 처리 함수 추가
+  const handleDelete = (commentId: number) => {
+    try {
+      const targetComment = commentLists.find((comment) => comment.commentId === commentId);
+      if (!targetComment) return;
+
+      if (targetComment.parentCommentId === null) {
+        // 댓글 삭제
+        deleteCommentMutation.mutate(commentId.toString());
+      } else {
+        // 답글 삭제
+        deleteReplyMutation.mutate(commentId.toString());
+      }
+    } catch (error) {
+      console.error('댓글 삭제 실패:', error);
+      throw error;
+    } finally {
+      setModalState(initailModalState);
+    }
+  };
+
+  // 삭제 클릭하면 나오는 모달
+  const handleDeleteClick = (commentId: number) => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '해당 댓글을 삭제하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '삭제',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () => handleDelete(commentId),
+    }));
+  };
+
   // 댓글과 그에 대한 답글을 렌더링
   const renderCommentWithReplies = (comment: CommentProps) => {
     // 현재 댓글에 대한 답글들을 필터링해서 새 배열로 받음
@@ -138,6 +193,7 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
           onReplyClick={handleReplyClick}
           onEditClick={handleEditClick}
           onEditSubmit={handleEditSubmit}
+          onDelete={handleDeleteClick}
           isEditing={editingCommentId === comment.commentId}
         />
         {/* 여기는 답글 */}
@@ -148,6 +204,7 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
             onReplyClick={handleReplyClick}
             onEditClick={handleEditClick}
             onEditSubmit={handleEditSubmit}
+            onDelete={handleDeleteClick}
             isReply
             isEditing={editingCommentId === reply.commentId}
           />
@@ -182,6 +239,18 @@ export default function PostComment({ userData, postId, comments }: PostCommentP
           댓글 등록
         </button>
       </div>
+
+      {modalState.open && (
+        <Modal
+          isWarn
+          hasSubBtn={modalState.hasSubBtn}
+          topText={modalState.topText}
+          subBtnText={modalState.subBtnText}
+          btnText={modalState.btnText}
+          onSubBtnClick={modalState.onSubBtnClick}
+          onBtnClick={modalState.onBtnClick}
+        />
+      )}
     </div>
   );
 }

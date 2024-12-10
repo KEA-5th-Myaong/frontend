@@ -162,7 +162,7 @@ export default function PostContent() {
       </div>
 
       {/* 댓글 */}
-      <PostComment userData={userData} postId={postId} comments={postURLData?.data.comments} />
+      <PostComment postId={postId} comments={postURLData?.data.comments} />
 
       {modalState.open && (
         <Modal

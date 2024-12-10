@@ -11,6 +11,7 @@ interface CommentItemProps {
   onReplyClick: (id: number) => void;
   onEditClick: (id: number) => void;
   onEditSubmit: (id: number, content: string) => void;
+  onDelete: (id: number) => void;
   isReply?: boolean;
   isEditing?: boolean;
 }
@@ -20,6 +21,7 @@ export default function CommentItem({
   onReplyClick,
   onEditClick,
   onEditSubmit,
+  onDelete,
   isReply = false,
   isEditing,
 }: CommentItemProps) {
@@ -45,7 +47,9 @@ export default function CommentItem({
           <button type="button" onClick={() => onEditClick(comment.commentId)}>
             수정
           </button>
-          <div>삭제</div>
+          <button type="button" onClick={() => onDelete(comment.commentId)}>
+            삭제
+          </button>
           <div>신고</div>
         </div>
       </div>
