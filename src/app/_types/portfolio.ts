@@ -62,3 +62,7 @@ export interface PortfolioFormProps {
   certifications?: Certifications[]; // 자격증 정보 (nullable)
   extraActivities?: ExtraActivities[]; // 추가 활동 정보 (nullable)
 }
+
+export interface PortfolioListMemo {
+  memo: string;
+}
