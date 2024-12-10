@@ -31,7 +31,7 @@ export default function PortfolioList() {
           <h1 className="font-semibold text-left">포트폴리오 관리</h1>
           <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
         </div>
-        <Link href="/portfolio/1/write">
+        <Link href="/portfolio/write">
           <button
             type="button"
             className="flex items-center py-[13px] gap-2.5 md:py-[19px] px-5 md:px-7 rounded-[30px] primary-1-btn hover-animation"
