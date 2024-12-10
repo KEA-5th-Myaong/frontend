@@ -35,6 +35,17 @@ export async function postPorfolios(portfolioData: PortfolioFormProps) {
   }
 }
 
+// (PUT) 포트폴리오 수정
+export async function putPortfolios(portfolioId: string, portfoiloData: PortfolioFormProps) {
+  try {
+    const { data } = await api.put(`/portfolios/${portfolioId}`, portfoiloData);
+    return data;
+  } catch (error) {
+    console.error('포트폴리오 수정 실패:', error);
+    throw error;
+  }
+}
+
 // (POST) 포트폴리오 이미지 등록
 export async function postPortfoliosPic(formData: FormData): Promise<{ picUrl: string }> {
   try {
@@ -70,17 +81,6 @@ export async function postPortfoliosMemo(portfolioId: string, memoData: Portfoli
     return data;
   } catch (error) {
     console.error('포트폴리오 메모 등록 실패: ', error);
-    throw error;
-  }
-}
-
-// (PUT) 포트폴리오 수정
-export async function putPortfolios(portfolioId: string, portfoiloData: unknown) {
-  try {
-    const { data } = await api.put(`/portfolios/${portfolioId}`, portfoiloData);
-    return data;
-  } catch (error) {
-    console.error('포트폴리오 수정 실패:', error);
     throw error;
   }
 }

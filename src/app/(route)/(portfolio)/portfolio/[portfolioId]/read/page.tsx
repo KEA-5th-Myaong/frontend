@@ -74,7 +74,6 @@ export default function PortfolioRead() {
   };
 
   const handleModify = () => {
-    console.log('수정 클릭');
     router.push(`/portfolio/${portfolioId}/modify`);
   };
 
