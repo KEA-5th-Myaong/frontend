@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import CertificationItem from '../items/CertificationItem';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface CertificationItemState {
   id: number;
@@ -12,7 +12,7 @@ interface CertificationItemState {
 }
 
 interface CertificationSectionProps {
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 export default function CertificationsSection({ register }: CertificationSectionProps) {

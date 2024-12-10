@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import ActivityItem from '../items/ActivityItem';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface ActivityItemState {
   id: number;
@@ -12,7 +12,7 @@ interface ActivityItemState {
 }
 
 interface ActivitiesSectionProps {
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 export default function ActivitiesSection({ register }: ActivitiesSectionProps) {

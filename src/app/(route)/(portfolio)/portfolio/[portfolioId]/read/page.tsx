@@ -12,7 +12,8 @@ import Footer from '../../../_components/Footer';
 import Modal from '@/app/_components/Modal';
 
 export default function PortfolioRead() {
-  const [title, setTitle] = useState('백지연 포트폴리오1');
+  const [title, setTitle] = useState('제목');
+  //FIX: 로그인 여부 연결
   const [isLogined, setIsLogined] = useState<boolean | null>(true);
   const [showModal, setShowModal] = useState(false);
 

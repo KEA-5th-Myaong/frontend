@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { UseFormRegister } from 'react-hook-form';
 import ExperienceItem from '../items/ExperienceItem';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
 interface ExperienceItemState {
   id: number;
@@ -12,7 +12,7 @@ interface ExperienceItemState {
 }
 
 interface ExperienceSectionProps {
-  register: UseFormRegister<PortfolioProps>;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
 export default function ExperienceSection({ register }: ExperienceSectionProps) {

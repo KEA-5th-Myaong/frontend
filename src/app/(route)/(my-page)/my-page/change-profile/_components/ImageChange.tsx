@@ -21,8 +21,6 @@ export default function ImageChange({ setProfileImage }: ImageChangeProps) {
     }
   };
 
-  console.log(previewUrl);
-
   const handleDefaultImage = () => {
     const defaultImagePath = '/mascot.png';
     setPreviewUrl(defaultImagePath);
