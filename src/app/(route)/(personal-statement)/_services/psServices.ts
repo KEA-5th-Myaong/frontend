@@ -45,7 +45,7 @@ export async function putPS(psId: string, psData: unknown) {
 }
 
 // (DELETE) 자기소개서 삭제
-export async function deletePS(psId: string) {
+export async function deletePS(psId: number) {
   try {
     await api.delete(`/ps/${psId}`);
   } catch (error) {
