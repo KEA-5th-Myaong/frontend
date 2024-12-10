@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import Icons from '../../../_components/ui/Icon';
 import { MoreIcon } from '../../../_components/ui/iconPath';
 import PortfolioDropdown from './PortfolioDropdown';
@@ -18,6 +19,7 @@ export default function PortfolioCard({
   isMain,
   onSetMain,
 }: PortfolioCardProps) {
+  const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const [currentMemo, setCurrentMemo] = useState(memo); // 메모의 현재 상태를 저장
   const [modalState, setModalState] = useState(initailModalState);
@@ -68,10 +70,14 @@ export default function PortfolioCard({
     }));
   };
 
+  const handleModify = () => {
+    router.push(`/portfolio/${portfolioId}/modify`);
+  };
+
   return (
     <div className=" relative w-[320px] bg-white-0 border border-gray-5 rounded-xl pt-[30px] pb-2.5 px-[30px]">
       <div className="flex justify-between">
-        <Link href={`/portfolio/${portfolioId}/modify`}>
+        <Link href={`/portfolio/${portfolioId}/read`}>
           <h1 className="max-w-[15ch] font-semibold whitespace-nowrap text-ellipsis overflow-hidden hover:text-gray-500">
             {portfolioName}
           </h1>
@@ -94,7 +100,7 @@ export default function PortfolioCard({
           />
         </div>
 
-        {isShowDropdown && <PortfolioDropdown id={portfolioId} onDelete={handleDeleteClick} />}
+        {isShowDropdown && <PortfolioDropdown id={portfolioId} onModify={handleModify} onDelete={handleDeleteClick} />}
       </div>
       <form className="bg-gray-4 rounded-md mt-5 py-[15px] px-[15px]">
         <h1 className="font-semibold text-sm">MEMO</h1>

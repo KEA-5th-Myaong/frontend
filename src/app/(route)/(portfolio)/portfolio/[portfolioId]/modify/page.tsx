@@ -85,8 +85,8 @@ export default function PortfolioWrite() {
           <div className="w-full ml-10">
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
-                <h1 className="font-semibold text-left ">포트폴리오 작성</h1>
-                <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
+                <h1 className="font-semibold text-left ">포트폴리오 수정</h1>
+                <p className="text-left text-gray-0 text-[12px]">포트폴리오는 최대 5개까지 생성 가능합니다</p>
               </div>
               <Link
                 href={`/portfolio/${portfolioId}/read`}
