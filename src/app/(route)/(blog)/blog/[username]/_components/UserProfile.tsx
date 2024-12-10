@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 import FollowButton from './_follow/FollowButton';
 import FollowModal from './_follow/FollowModal';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
@@ -15,6 +16,7 @@ export default function UserProfile() {
   const params = useParams();
   const router = useRouter();
   const { username } = params;
+  const queryClient = useQueryClient();
 
   // url의 username을 가지고 memberId 가져오기
   const { data: userNameData } = useCustomQuery(['user-profile', username], () => fetchProfile(username as string)); // 현재 유저 정보
@@ -71,6 +73,11 @@ export default function UserProfile() {
 
         blogMemberData.data.followerCount = newCount;
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blog-user', username] });
+      queryClient.invalidateQueries({ queryKey: ['followed', memberId] });
+      queryClient.invalidateQueries({ queryKey: ['following', memberId] });
     },
     onError: () => {
       // 에러 발생 시 원래 상태로 롤백
