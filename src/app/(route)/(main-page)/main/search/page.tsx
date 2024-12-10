@@ -119,7 +119,7 @@ export default function SearchPage() {
                 profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
                 content={highlightText(post.content)}
                 timestamp={formatDate(post.timestamp)}
-                userJob={post.userJob || '기타'}
+                prejob={post.prejob[0]}
                 onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
                 isLiked={post.isLiked}
                 likeCount={post.likeCount}

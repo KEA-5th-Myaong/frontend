@@ -18,7 +18,7 @@ export default function Post({
   className,
 
   onBookmarkClick,
-  userJob,
+  prejob,
   isLiked,
   likeCount,
 }: PostProps) {
@@ -63,7 +63,7 @@ export default function Post({
           </div>
         </div>
         <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
-          {userJob}
+          {prejob}
         </div>
       </div>
 

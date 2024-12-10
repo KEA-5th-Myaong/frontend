@@ -12,7 +12,7 @@ export interface PostProps {
   isBookmarked: boolean;
   isLiked: boolean;
   likeCount: number;
-  userJob: string;
+  prejob: string;
 
   onLoveClick?: () => void;
   onBookmarkClick?: () => void;
