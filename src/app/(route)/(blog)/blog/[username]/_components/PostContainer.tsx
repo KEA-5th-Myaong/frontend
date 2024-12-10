@@ -91,7 +91,7 @@ export default function PostContainer() {
               profilePicUrl={post.profilePicUrl === null ? defaultProfilePic.src : bloguserNameData?.data.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
-              prejob={bloguserNameData?.data.prejob[0]}
+              prejob={bloguserNameData?.data.prejob?.[0]}
               onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
               isBookmarked={post.isBookmarked}
               isLiked={post.isLiked}

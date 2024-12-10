@@ -7,6 +7,12 @@ type MutationContext = {
   previousPosts: PostProps[];
 };
 
+interface BookmarkResponse {
+  data: {
+    bookmark: boolean;
+  };
+}
+
 const useLoveAndBookmark = (
   posts: PostProps[],
   setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>,
@@ -48,7 +54,7 @@ const useLoveAndBookmark = (
     },
   });
 
-  const bookmarkMutation = useCustomMutation<unknown, number>(putBookmark, {
+  const bookmarkMutation = useCustomMutation<BookmarkResponse, number>(putBookmark, {
     onMutate: async (postId) => {
       await queryClient.cancelQueries({ queryKey: ['bookmarkPosts', lastId] });
       await queryClient.cancelQueries({ queryKey: ['post', memberId] });
@@ -73,9 +79,10 @@ const useLoveAndBookmark = (
         setPosts((context as MutationContext).previousPosts);
       }
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['bookmarkPosts', lastId] });
       queryClient.invalidateQueries({ queryKey: ['post', memberId] });
+      return response.data.bookmark;
     },
   });
 

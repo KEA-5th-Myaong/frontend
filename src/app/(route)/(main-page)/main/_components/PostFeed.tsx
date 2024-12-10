@@ -145,7 +145,7 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
               profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
-              prejob={post.prejob[0]}
+              prejob={post?.prejob?.[0]}
               onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
               isLiked={post.isLiked}
               likeCount={post.likeCount}
