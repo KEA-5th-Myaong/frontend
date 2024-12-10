@@ -16,10 +16,10 @@ export default function MyPageHeader({ currentPage }: MyPageHeaderProps) {
   };
 
   return (
-    <div className="hidden sm:flex items-center sm:gap-8 md:gap-16 w-full pb-6 max-w-[1300px] border-b border-[#d9d9d9]">
+    <div className="flex items-center gap-4 sm:gap-8 md:gap-16 w-full pb-6 max-w-[1300px] border-b border-gray-5 pt-14 md:pt-0">
       <p className="font-semibold sm:text-[22px] md:text-[32px] whitespace-nowrap">{userData?.data.name} 님</p>
 
-      <div className="flex gap-12 whitespace-nowrap">
+      <div className="flex gap-3 text-xs sm:text-base sm:gap-6 md:gap-12 whitespace-nowrap">
         <Link href="/my-page/change-profile" className={getLinkStyle('change-profile')}>
           기본 정보 수정
         </Link>
