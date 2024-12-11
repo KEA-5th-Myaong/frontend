@@ -1,10 +1,13 @@
 import Image from 'next/image';
+import { useState } from 'react';
 import Icons from '../../../../../../../_components/ui/Icon';
 import { ReplyIcon } from '../../../../../../../_components/ui/iconPath';
 import { CommentProps } from '../../_types/post';
 import EditCommentInput from './EditCommentInput';
 import { formatTime } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../../../../public/mascot.png';
+import { postReport } from '../../../_services/blogService';
+import Modal, { initailModalState } from '@/app/_components/Modal';
 
 interface CommentItemProps {
   comment: CommentProps;
@@ -27,6 +30,45 @@ export default function CommentItem({
   isEditing,
   isMine,
 }: CommentItemProps) {
+  const [modalState, setModalState] = useState(initailModalState);
+  // 포스트 신고 함수
+  const handleReportPost = async (commentId: number) => {
+    try {
+      await postReport({
+        contentId: commentId,
+        contentType: 'comment',
+      });
+
+      setModalState((prev) => ({
+        ...prev,
+        topText: '신고가 완료되었습니다.',
+        hasSubBtn: false,
+        btnText: '확인',
+        onBtnClick: () => setModalState(initailModalState),
+      }));
+    } catch (error) {
+      setModalState((prev) => ({
+        ...prev,
+        topText: '이미 신고한 댓글입니다.',
+        hasSubBtn: false,
+        btnText: '확인',
+        onBtnClick: () => setModalState(initailModalState),
+      }));
+    }
+  };
+  // 포스트,댓글 신고 버튼 누르면 나오는 모달
+  const handleReportCommentClick = (commentId: number) => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '해당 댓글을 신고하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '신고',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () => handleReportPost(commentId),
+    }));
+  };
   return (
     <div className={`flex flex-col py-6 px-1.5 border-b ${isReply && 'pl-6'}`}>
       <div className="flex items-center justify-between ">
@@ -57,7 +99,9 @@ export default function CommentItem({
               </button>
             </>
           ) : (
-            <div>신고</div>
+            <button type="button" onClick={() => handleReportCommentClick(comment.commentId)}>
+              신고
+            </button>
           )}
         </div>
       </div>
@@ -73,6 +117,18 @@ export default function CommentItem({
           </div>
           <div className={`${isReply ? 'ml-16' : 'ml-10'} text-xs text-gray-0`}>{formatTime(comment.timestamp)}</div>
         </>
+      )}
+
+      {modalState.open && (
+        <Modal
+          isWarn
+          hasSubBtn={modalState.hasSubBtn}
+          topText={modalState.topText}
+          subBtnText={modalState.subBtnText}
+          btnText={modalState.btnText}
+          onSubBtnClick={modalState.onSubBtnClick}
+          onBtnClick={modalState.onBtnClick}
+        />
       )}
     </div>
   );

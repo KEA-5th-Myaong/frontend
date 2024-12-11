@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import DOMPurify from 'dompurify'; // 추후에 수정
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 import { useParams, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../../../../../_components/ui/Icon';
@@ -13,7 +14,7 @@ import PostComment from './_comment/PostComment';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { deletePost, fetchMemberInfo, fetchURLPost } from '../../_services/blogService';
+import { deletePost, fetchMemberInfo, fetchURLPost, postReport } from '../../_services/blogService';
 import usePostWriteStore from '@/app/_store/postWirte';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
@@ -98,7 +99,7 @@ export default function PostContent() {
         queryClient.invalidateQueries({ queryKey: ['url-post', postTitle] });
       },
       onError: (error) => {
-        console.error('Bookmark error:', error);
+        console.error('북마크 클릭 에러:', error);
         setIsBookmarked((prev) => !prev); // 에러 발생 시 원래 상태로 되돌림
       },
     });
@@ -142,9 +143,32 @@ export default function PostContent() {
   }, [handleDeletePost, postId]);
 
   // 포스트 신고 함수
-  const handleReportPost = () => {};
+  const handleReportPost = async () => {
+    try {
+      await postReport({
+        contentId: postId,
+        contentType: 'post',
+      });
 
-  // 포스트 신고 버튼 누르면 나오는 모달
+      setModalState((prev) => ({
+        ...prev,
+        topText: '신고가 완료되었습니다.',
+        hasSubBtn: false,
+        btnText: '확인',
+        onBtnClick: () => setModalState(initailModalState),
+      }));
+    } catch (error) {
+      setModalState((prev) => ({
+        ...prev,
+        topText: '이미 신고한 포스트입니다.',
+        hasSubBtn: false,
+        btnText: '확인',
+        onBtnClick: () => setModalState(initailModalState),
+      }));
+    }
+  };
+
+  // 포스트,댓글 신고 버튼 누르면 나오는 모달
   const handleReportPostClick = () => {
     setModalState((prev) => ({
       ...prev,
@@ -159,10 +183,12 @@ export default function PostContent() {
   };
 
   // 컨텐츠 sanitize 메모이제이션
-  const sanitizedContent = useMemo(
-    () => ({ __html: DOMPurify.sanitize(postURLData?.data.content || '') }),
-    [postURLData?.data.content],
-  );
+  const sanitizedContent = useMemo(() => {
+    if (typeof postURLData?.data.content === 'string') {
+      return parse(DOMPurify.sanitize(postURLData?.data.content));
+    }
+    return postURLData?.data.content;
+  }, [postURLData?.data.content]);
   return (
     <>
       {/* 제목과 더보기 아이콘 */}
@@ -221,7 +247,7 @@ export default function PostContent() {
       </div>
 
       {/* 포스트 내용 */}
-      <div className="mt-[19px] px-[7px]" dangerouslySetInnerHTML={sanitizedContent} />
+      <div className="mt-[19px] px-[7px]">{sanitizedContent}</div>
 
       {/* 작성일 댓글 좋아요 */}
       <div className="flex items-center justify-between mt-20 pb-10 border-b">
