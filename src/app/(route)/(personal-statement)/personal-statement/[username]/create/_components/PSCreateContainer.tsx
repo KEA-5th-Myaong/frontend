@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import Modal, { initailModalState } from '../../../../../../_components/Modal';
 import PSFooter from '../../../../_components/PSFooter';
 import PSHeader from '../../../../_components/PSHeader';
@@ -11,10 +12,13 @@ import BackButton from '../../../../../../_components/BackButton';
 import { PSFormData } from '../_types/psCreate';
 import PSForm from './PSForm';
 import { postPS } from '@/app/(route)/(personal-statement)/_services/psServices';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PSCreateContainer() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { psData, setPSData, resetPSData } = usePSStore();
+  const { data: userData } = useMe();
   const [modalState, setModalState] = useState(initailModalState);
 
   const { register, handleSubmit, control, setValue, getValues } = useForm<PSFormData>({
@@ -50,15 +54,18 @@ export default function PSCreateContainer() {
       hasSubBtn: true,
       topText: '자기소개서가 작성되었습니다',
       btnText: '확인',
-      onBtnClick: () => router.push('/personal-statement/1/list'),
+      onBtnClick: () => {
+        resetPSData();
+        router.push(`/personal-statement/${userData?.data.memberId}/list`);
+      },
     }));
   };
 
   // 폼 제출
   const onSubmit = async (data: PSFormData) => {
     await postPS(data);
+    await queryClient.invalidateQueries({ queryKey: ['ps'] }); // 캐시 무효화
     createDone();
-    resetPSData();
   };
 
   const handleDoneClick = () => {
@@ -68,9 +75,8 @@ export default function PSCreateContainer() {
   const handlePreviewClick = () => {
     const data = getValues(); // 인자 없이 getValues()를 호출하면, 폼의 모든 등록된 필드의 현재 값을 포함하는 객체를 반환
     setPSData(data);
-    router.push('/personal-statement/1/preview');
+    router.push(`/personal-statement/${userData?.data.memberId}/preview`);
   };
-
   return (
     <>
       <BackButton className="self-start pb-4" />

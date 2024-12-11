@@ -11,12 +11,14 @@ import useClickOutside from '../../../../../../_hooks/useClickOutside';
 import { PSListBoxProps } from '../_types/psList';
 import { deletePS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import { formatDate } from '@/app/_utils/formatDate';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PSListBox({ psId, title, position, content, timestamp }: PSListBoxProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { data: userData } = useMe();
 
   useClickOutside({
     ref: dropdownRef,
@@ -24,7 +26,7 @@ export default function PSListBox({ psId, title, position, content, timestamp }:
   });
 
   const handlePSListBoxClick = () => {
-    router.push(`/personal-statement/${psId}/read`);
+    router.push(`/personal-statement/${userData?.data.username}/read`);
   };
 
   async function handlePSListDelete(postId: number) {
