@@ -12,7 +12,8 @@ import useMe from '@/app/_hooks/useMe';
 import { putChangeProfile } from '@/app/_services/membersService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchProfile } from '@/app/(route)/(blog)/blog/[username]/_services/blogService';
-import { postPreJobs } from '@/app/(route)/(main-page)/main/_services/mainService';
+import { fetchPreJobs, postPreJobs } from '@/app/(route)/(main-page)/main/_services/mainService';
+import { JobProps } from '@/app/(route)/(main-page)/main/_types/main-page';
 
 export default function ChangeProfileContainer() {
   const { register, handleSubmit, setValue } = useForm<ProfileFormProps>({
@@ -40,6 +41,23 @@ export default function ChangeProfileContainer() {
     setSelectedJobs(jobs);
   };
 
+  const [initialJobs, setInitialJobs] = useState<number[]>([]);
+
+  const { data: preJobsData } = useCustomQuery(['pre-job'], () => fetchPreJobs());
+  useEffect(() => {
+    if (preJobsData?.success && preJobsData.data) {
+      const initialSelectedJobs = preJobsData.data.map((job: JobProps) => job.jobId);
+      setInitialJobs(initialSelectedJobs);
+      setSelectedJobs(initialSelectedJobs);
+    }
+  }, [preJobsData]);
+
+  // 직군이 변경되었는지 확인하는 함수
+  const hasJobsChanged = () => {
+    if (initialJobs.length !== selectedJobs.length) return true;
+    return !initialJobs.every((job) => selectedJobs.includes(job));
+  };
+
   // userData가 변경될 때 폼 값 설정
   useEffect(() => {
     if (userData?.data && blogData?.data) {
@@ -57,7 +75,10 @@ export default function ChangeProfileContainer() {
         formData.append('profileImage', profileImage);
       }
       await putChangeProfile(formData);
-      await postPreJobs({ preJob: selectedJobs });
+      // 직군이 변경되었을 때만 관심직군 업데이트 요청
+      if (hasJobsChanged()) {
+        await postPreJobs({ preJob: selectedJobs });
+      }
       queryClient.invalidateQueries({ queryKey: ['me'] });
       queryClient.invalidateQueries({ queryKey: ['user-profile'] });
       queryClient.clear(); // 모든 쿼리 캐시를 제거
@@ -114,6 +135,7 @@ export default function ChangeProfileContainer() {
           btnText="확인"
           onBtnClick={() => {
             setShowModal(false);
+            window.location.reload();
           }}
         />
       )}

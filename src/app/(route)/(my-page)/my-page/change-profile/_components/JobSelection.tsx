@@ -64,7 +64,6 @@ export default function JobSelection({ onJobsChange }: { onJobsChange: (selected
     },
     [onJobsChange],
   );
-
   return (
     <div className="flex flex-col w-full">
       <p className="font-semibold pb-4">관심 직군</p>
