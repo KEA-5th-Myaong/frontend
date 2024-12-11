@@ -9,25 +9,26 @@ import PSHeader from '../../../../_components/PSHeader';
 import usePSStore from '../../../../_store/psStore';
 import BackButton from '../../../../../../_components/BackButton';
 import PSForm from './PSForm';
-import { postPS, putPS, fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
+import { fetchPS, postPS, putPS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useMe from '@/app/_hooks/useMe';
-import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
+import { usePostWriteStore, usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSCreateContainer() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isEdit = searchParams.get('edit') === 'true';
   const { data: userData } = useMe();
-  const queryClient = useQueryClient();
   // psData = 수정 일 시 초기값 설정을 위한 값
   const { psData, setPSData, resetPSData, isTouch, setIsTouch } = usePSStore();
+  const postData = usePostWriteStore((state) => state);
   const psId = usePersonalStatementStore((state) => state.psId);
+  const queryClient = useQueryClient();
 
   const [formValues, setFormValues] = useState({
-    title: '',
-    position: '',
-    reason: '',
-    content: '',
+    title: postData.postTitle || '',
+    position: postData.postPosition || '',
+    reason: postData.postReason || '',
+    content: postData.postContent || '',
   });
 
   const [modalState, setModalState] = useState(initailModalState);
