@@ -11,6 +11,7 @@ export interface PSCreateHeaderProps {
   mode: 'create' | 'preview' | 'read' | 'editing';
   onButtonClick?: () => void;
   handleDeleteClick?: () => void;
+  handleEditClick?: () => void;
 }
 
 const headerText = {
@@ -28,7 +29,13 @@ const headerText = {
   },
 };
 
-export default function PSHeader({ title, mode, onButtonClick, handleDeleteClick }: PSCreateHeaderProps) {
+export default function PSHeader({
+  title,
+  mode,
+  onButtonClick,
+  handleDeleteClick,
+  handleEditClick,
+}: PSCreateHeaderProps) {
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -60,7 +67,12 @@ export default function PSHeader({ title, mode, onButtonClick, handleDeleteClick
         {mode === 'read' && (
           <div className="relative mr-5" ref={dropdownRef}>
             <Icons onClick={() => setShowDropDown((prev) => !prev)} className="cursor-pointer" name={MoreIcon} />
-            {showDropDown && <MoreOptions handleDeleteClick={handleDeleteClick} />}
+            {showDropDown && (
+              <>
+                <MoreOptions handleDeleteClick={handleDeleteClick} />
+                <MoreOptions handleEditClick={handleEditClick} />
+              </>
+            )}
           </div>
         )}
       </div>

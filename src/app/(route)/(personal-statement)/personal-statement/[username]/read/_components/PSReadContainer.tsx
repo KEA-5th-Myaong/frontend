@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { usePDF, Margin } from 'react-to-pdf';
 import Image from 'next/image';
 import Modal, { initailModalState } from '../../../../../../_components/Modal';
@@ -9,14 +10,18 @@ import { PSFormData } from '../../create/_types/psCreate';
 import PSFooter from '../../../../_components/PSFooter';
 import PSHeader from '../../../../_components/PSHeader';
 import PSReadContent from './PSReadContent';
-import { fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
+import { fetchPS, deletePS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PSReadContainer() {
   const router = useRouter();
   const params = useParams();
+  const queryClient = useQueryClient();
+  const { data: userData } = useMe();
 
   const getPostId = (param: string | string[]): string => {
+    console.log('postId:', param);
     if (Array.isArray(param)) {
       return param[1];
     }
@@ -40,6 +45,10 @@ export default function PSReadContainer() {
     setPsState(psData?.data);
   }, [psData]);
 
+  async function handlePSListDelete(psId: number) {
+    await deletePS(psId);
+  }
+
   // 삭제 클릭
   const handleDeleteClick = () => {
     setModalState((prev) => ({
@@ -50,16 +59,27 @@ export default function PSReadContainer() {
       subBtnText: '취소',
       btnText: '확인',
       onSubBtnClick: () => setModalState(initailModalState),
-      onBtnClick: () =>
+      onBtnClick: () => {
+        handlePSListDelete(Number(postId));
         setModalState((prev2) => ({
           ...prev2,
           open: true,
           hasSubBtn: false,
           topText: '삭제되었습니다.',
           btnText: '확인',
-          onBtnClick: () => setModalState(initailModalState),
-        })),
+          onBtnClick: async () => {
+            setModalState(initailModalState);
+            router.back();
+            queryClient.invalidateQueries({ queryKey: ['ps'] });
+          },
+        }));
+      },
     }));
+  };
+
+  // 수정 클릭
+  const handleEditClick = () => {
+    router.push(`/personal-statement/${userData?.data.username}/create`);
   };
 
   const { toPDF, targetRef } = usePDF({
@@ -79,6 +99,7 @@ export default function PSReadContainer() {
               router.push('/personal-statement/1/editing');
             }}
             handleDeleteClick={handleDeleteClick}
+            handleEditClick={handleEditClick}
           />
 
           <div ref={targetRef} className="self-start w-full mt-8 sm:mt-20">

@@ -6,7 +6,7 @@ import { modalMotion } from '@/app/_components/Modal';
 import Overlay from '@/app/_components/Overlay';
 import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { PSListBoxProps } from '@/app/(route)/(personal-statement)/personal-statement/[id]/list/_types/psList';
+import { PSListBoxProps } from '@/app/(route)/(personal-statement)/personal-statement/[username]/list/_types/psList';
 import Image from 'next/image';
 
 interface LoadPSModalProps {
