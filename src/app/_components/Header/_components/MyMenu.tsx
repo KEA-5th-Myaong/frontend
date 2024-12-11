@@ -152,12 +152,28 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
         </>
       ) : (
         <div className="flex items-center gap-[30px]">
-          <Link className="text-black-0 text-sm font-medium" href="/log-in">
+          <button
+            type="button"
+            onClick={() => {
+              Cookies.remove('accessToken');
+              queryClient.clear();
+              router.push('/log-in');
+            }}
+            className="text-black-0 text-sm font-medium"
+          >
             로그인
-          </Link>
-          <Link className="text-black-0 text-sm font-medium" href="/sign-up">
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              Cookies.remove('accessToken');
+              queryClient.clear();
+              router.push('/sign-up');
+            }}
+            className="text-black-0 text-sm font-medium"
+          >
             회원가입
-          </Link>
+          </button>
         </div>
       )}
     </div>

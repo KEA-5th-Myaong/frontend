@@ -2,7 +2,6 @@
 
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -12,7 +11,6 @@ import FormInput from '../../_components/FormInput';
 import { postLogin } from '@/app/_services/membersService';
 
 export default function LoginForm() {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,13 +30,15 @@ export default function LoginForm() {
     });
     // 모든 캐시 무효화
     queryClient.clear();
+
     return response;
   };
 
   const handleFormSubmit = async (data: LoginState) => {
     try {
       await onSubmit(data);
-      router.replace('/main');
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+      window.location.href = '/main'; // 강제 새로고침
     } catch (error) {
       if (error instanceof AxiosError) {
         setErrorMessage(error.response?.data.message);
