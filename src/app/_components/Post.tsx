@@ -1,4 +1,7 @@
 import Image from 'next/image';
+import { useMemo } from 'react';
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 import { PostProps } from '../(route)/(main-page)/main/_types/main-page';
 import Icons from './ui/Icon';
 import { BookmarkIcon, FavorIcon } from './ui/iconPath';
@@ -6,10 +9,8 @@ import defaultProfilePic from '../../../public/mascot.png'; // 기본 프로필 
 
 export default function Post({
   title,
-  // thumbnail,
   content,
   timestamp,
-  // memberId,
   nickname,
   profilePicUrl,
   isBookmarked,
@@ -36,6 +37,12 @@ export default function Post({
     }
   };
 
+  const sanitizedContent = useMemo(() => {
+    if (typeof content === 'string') {
+      return parse(DOMPurify.sanitize(content));
+    }
+    return content;
+  }, [content]);
   return (
     <div
       onClick={onContentClick}
@@ -70,7 +77,7 @@ export default function Post({
       <div className="flex flex-col pl-[12px] sm:pl-[62px] pr-5 gap-7">
         <div className="flex flex-col gap-4">
           <span className="text-[#030303] font-semibold">{title}</span>
-          <span className="text-[#030303] overflow-hidden line-clamp-3">{content}</span>
+          <span className="text-[#030303] overflow-hidden line-clamp-3">{sanitizedContent}</span>
         </div>
 
         <div className="flex justify-between items-center">
