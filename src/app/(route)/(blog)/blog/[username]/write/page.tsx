@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
 import BackButton from '../../../../../_components/BackButton';
 import { postPic, postPost, putPost } from '../_services/blogService';
 import Modal, { initailModalState } from '@/app/_components/Modal';
@@ -11,6 +13,8 @@ import usePostWriteStore from '@/app/_store/postWirte';
 import useChatWriteStore from '@/app/_store/chatWrite';
 import '@toast-ui/editor/dist/toastui-editor.css'; // toast ui의 기본 스타일
 import useWindowHeight from '@/app/_hooks/useWindowHeight';
+import Overlay from '@/app/_components/Overlay';
+import defaultProfilePic from '../../../../../../../public/mascot.png';
 
 // Next.js의 dynamic import를 사용하여 ToastEditor 컴포넌트를 동적으로 불러옴, 동적으로 불러올 컴포넌트의 경로를 지정
 const ToastEditor = dynamic(() => import('../../../../../_components/ToastEditor'), {
@@ -23,6 +27,8 @@ export default function PostWrite() {
   const searchParams = useSearchParams();
   const isEdit = searchParams.get('edit') === 'true';
   const postId = searchParams.get('postId');
+  const queryClient = useQueryClient();
+  const { username } = useParams();
 
   const postTitle = usePostWriteStore((state) => state.postTitle);
   const postData = usePostWriteStore((state) => state.postData);
@@ -78,6 +84,8 @@ export default function PostWrite() {
     }
   }, []);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // 포스트 제출
   const handleSubmit = useCallback(
     async (data: PostWriteProps) => {
@@ -94,19 +102,26 @@ export default function PostWrite() {
         }
 
         if (isEdit && postId) {
-          await putPost(postId, data); // 수정 API 호출
+          await putPost(postId, data);
         } else {
-          await postPost(data); // 새 글 작성 API 호출
+          await postPost(data);
         }
-        // api 호출 후 나오는 모달
+
         setModalState((prev) => ({
           ...prev,
           open: true,
           topText: `포스트가 ${isEdit ? '수정' : '작성'}되었습니다.`,
-          btnText: '닫기',
-          onBtnClick: () => {
-            resetPost();
-            router.push('/main');
+          btnText: '이동',
+          onBtnClick: async () => {
+            setIsLoading(true); // 로딩 시작
+            try {
+              await queryClient.invalidateQueries();
+              await queryClient.refetchQueries();
+              resetPost();
+              router.push(`/blog/${username}`);
+            } finally {
+              setIsLoading(false); // 로딩 종료
+            }
           },
         }));
       } catch (error) {
@@ -119,7 +134,7 @@ export default function PostWrite() {
         }));
       }
     },
-    [isEdit, postId, resetPost, router],
+    [isEdit, postId, queryClient, resetPost, router, username],
   );
   return (
     <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5 pt-14 md:pt-0">
@@ -162,6 +177,22 @@ export default function PostWrite() {
           onSubBtnClick={modalState.onSubBtnClick}
           onBtnClick={modalState.onBtnClick}
         />
+      )}
+
+      {isLoading && (
+        <Overlay onClick={() => {}}>
+          <div className="flex-center m-4 min-w-[150px] max-w-[310px] w-full pb-6 px-10 pt-10 flex-col gap-12 rounded-2xl bg-white-0 shadow-md z-30">
+            <Image
+              className="min-w-[50px] min-h-[50px] sm:min-w-[101px] sm:min-h-[101px] md:w-[180px] md:h-[180px] rounded-full animate-spin"
+              src={defaultProfilePic.src}
+              alt="프로필사진"
+              width={52}
+              height={52}
+              unoptimized
+            />
+            저장 중..
+          </div>
+        </Overlay>
       )}
     </section>
   );
