@@ -11,7 +11,7 @@ import useMe from '@/app/_hooks/useMe';
 
 export default function MainPage() {
   const { data: userData } = useMe();
-  const [activeTab, setActiveTab] = useState('추천'); // 활성화된 탭
+  const [activeTab, setActiveTab] = useState('최신'); // 활성화된 탭
   const [showInterestedJob, setShowInterestedJob] = useState(false); // 첫 로그인 시 관심 직군 모달 보여주기
   const [selectedJob, setSelectedJob] = useState<string | null>(null); // 선택한 직업
 
@@ -66,7 +66,7 @@ export default function MainPage() {
         />
 
         <div className="flex flex-col items-center w-full pt-4 md:pt-5">
-          {/* 추천 팔로잉 가로 북마크 */}
+          {/* 최신 팔로잉 가로 북마크 */}
           <MainTabMenu activeTab={activeTab} onTabChange={handleTabChange} />
 
           {/* 직군 메뉴 */}

@@ -31,9 +31,9 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
 
   // 각 탭별 무한스크롤 쿼리 설정
   const queries = {
-    추천: useCustomInfiniteQuery(['recommendPosts'], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
+    최신: useCustomInfiniteQuery(['recentPosts'], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
       ...commonQueryOptions,
-      enabled: activeTab === '추천',
+      enabled: activeTab === '최신',
     }),
     팔로잉: useCustomInfiniteQuery(['followingPosts'], ({ pageParam = '0' }) => fetchFollowing(pageParam as string), {
       ...commonQueryOptions,
@@ -77,28 +77,28 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   // 각 탭별 로딩 상태
   const loadingStates = useMemo(
     () => ({
-      추천: queries.추천.isLoading,
+      최신: queries.최신.isLoading,
       팔로잉: queries.팔로잉.isLoading,
       북마크: queries.북마크.isLoading,
       직군: queries.직군.isLoading,
     }),
-    [queries.추천.isLoading, queries.팔로잉.isLoading, queries.북마크.isLoading, queries.직군.isLoading],
+    [queries.최신.isLoading, queries.팔로잉.isLoading, queries.북마크.isLoading, queries.직군.isLoading],
   );
-  // 현재 활성 탭의 로딩 상태, 기본 값은 추천 탭의 로딩 상태
-  const isLoading = loadingStates[activeTab as keyof typeof loadingStates] ?? queries.추천.isLoading;
+  // 현재 활성 탭의 로딩 상태, 기본 값은 최신 탭의 로딩 상태
+  const isLoading = loadingStates[activeTab as keyof typeof loadingStates] ?? queries.최신.isLoading;
 
   // 현재 활성 탭의 다음 데이터 로딩 상태
   const isFetchingNextPage = useMemo(
     () =>
       ({
-        추천: queries.추천.isFetchingNextPage,
+        최신: queries.최신.isFetchingNextPage,
         팔로잉: queries.팔로잉.isFetchingNextPage,
         북마크: queries.북마크.isFetchingNextPage,
         직군: queries.직군.isFetchingNextPage,
       })[activeTab],
     [
       activeTab,
-      queries.추천.isFetchingNextPage,
+      queries.최신.isFetchingNextPage,
       queries.팔로잉.isFetchingNextPage,
       queries.북마크.isFetchingNextPage,
       queries.직군.isFetchingNextPage,
