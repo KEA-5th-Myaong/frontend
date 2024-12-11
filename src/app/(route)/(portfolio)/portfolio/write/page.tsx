@@ -43,6 +43,7 @@ export default function PortfolioWrite() {
       name: '',
       tel: '',
       email: '',
+      picUrl: picUrl || null,
       preferredJob: '',
       educations: [],
       experiences: [],
@@ -60,7 +61,10 @@ export default function PortfolioWrite() {
         setValue(key as keyof PortfolioFormProps, value); // 각 필드의 값을 설정
       });
     }
-  }, [portfolio, setValue]);
+    if (picUrl) {
+      setValue('picUrl', picUrl);
+    }
+  }, [portfolio, setValue, picUrl]);
 
   const cleanData = (data: PortfolioFormProps) => {
     return {
