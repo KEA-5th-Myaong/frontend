@@ -12,10 +12,12 @@ import { PSListBoxProps } from '../_types/psList';
 import { deletePS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import { formatDate } from '@/app/_utils/formatDate';
 import useMe from '@/app/_hooks/useMe';
+import usePSStore from '../../../../_store/psStore';
 import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSListBox({ psId, title, position, content, timestamp }: PSListBoxProps) {
   const router = useRouter();
+  const { setIsTouch } = usePSStore();
   const queryClient = useQueryClient();
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,17 @@ export default function PSListBox({ psId, title, position, content, timestamp }:
     }));
   };
 
+  function handlePSListEdit(postId: number) {
+    setPsId(postId);
+    setIsTouch(false);
+    router.push(`/personal-statement/${userData?.data.username}/create?edit=true&list=true`);
+  }
+
+  // 수정 클릭
+  const handleEditClick = () => {
+    handlePSListEdit(psId);
+  };
+
   return (
     <div className="flex justify-between px-6 pb-4 pt-6 sm:px-8 sm:pb-4 sm:pt-10 border border-gray-2 rounded-lg bg-white-0 cursor-pointer">
       <div onClick={handlePSListBoxClick} className="flex flex-col gap-3 w-2/3">
@@ -88,7 +101,7 @@ export default function PSListBox({ psId, title, position, content, timestamp }:
           name={MoreIcon}
         />
 
-        {showDropDown && <MoreOptions handleDeleteClick={handleDeleteClick} />}
+        {showDropDown && <MoreOptions handleDeleteClick={handleDeleteClick} handleEditClick={handleEditClick} />}
       </div>
 
       {modalState.open && (

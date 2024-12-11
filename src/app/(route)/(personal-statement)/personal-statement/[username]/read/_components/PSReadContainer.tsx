@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { usePDF, Margin } from 'react-to-pdf';
 import Image from 'next/image';
@@ -13,7 +13,8 @@ import PSReadContent from './PSReadContent';
 import { fetchPS, deletePS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import useMe from '@/app/_hooks/useMe';
-import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
+import usePSStore from '../../../../_store/psStore';
+import { usePersonalStatementStore, usePostWriteStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSReadContainer() {
   const router = useRouter();
@@ -22,6 +23,12 @@ export default function PSReadContainer() {
   const postId = usePersonalStatementStore((state) => state.psId);
 
   const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId));
+  const { setIsTouch } = usePSStore();
+
+  const setTitle = usePostWriteStore((state) => state.setPostTitle);
+  const setContent = usePostWriteStore((state) => state.setPostContent);
+  const setReason = usePostWriteStore((state) => state.setPostReason);
+  const setPosition = usePostWriteStore((state) => state.setPostPosition);
 
   const [psState, setPsState] = useState<PSFormData>({
     title: '',
@@ -70,7 +77,12 @@ export default function PSReadContainer() {
 
   // 수정 클릭
   const handleEditClick = () => {
-    router.push(`/personal-statement/${userData?.data.username}/create`);
+    setTitle(psData?.data.title);
+    setContent(psData?.data.content);
+    setReason(psData?.data.title);
+    setPosition(psData?.data.position);
+    setIsTouch(false);
+    router.push(`/personal-statement/${userData?.data.username}/create?edit=true`);
   };
 
   const { toPDF, targetRef } = usePDF({
