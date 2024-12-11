@@ -50,18 +50,17 @@ export default function PortfolioWrite() {
     };
   };
 
-  const [newId, setNewId] = useState(null);
   const onSubmit = async (formData: PortfolioFormProps) => {
     const cleanedData = cleanData(formData); // 데이터 정리
 
     // API 요청
     try {
-      const responseId = await postPorfolios(cleanedData);
-      setNewId(responseId);
-      console.log('Portfolio created with ID:', newId);
+      const response = await postPorfolios(cleanedData);
+      const createdId = response?.data?.portfolioId; // API에서 반환된 ID
+      console.log('Portfolio created with ID:', createdId);
 
-      if (newId) {
-        router.push(`/portfolio/${newId}/read`);
+      if (createdId) {
+        router.push(`/portfolio/${createdId}/read`); // 페이지 이동
       }
     } catch (error) {
       console.error('Error creating portfolio:', error);
@@ -71,7 +70,6 @@ export default function PortfolioWrite() {
   const handleDoneClick = () => {
     //FIX: 포트폴리오 리스트 추가되면 갱신되도록 로직 수정
     handleSubmit(onSubmit)(); // handleSubmit 호출
-    router.push(`/portfolio`);
   };
 
   const handlePreviewClick = () => {
