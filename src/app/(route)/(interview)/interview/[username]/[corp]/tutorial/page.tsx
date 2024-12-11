@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Icons from '@/app/_components/ui/Icon';
-import { ArrowIcon, PlayIcon, PlusIcon, RefreshIcon, TriangleIcon, XIcon } from '@/app/_components/ui/iconPath';
+import { ArrowIcon, PlayIcon, PlusIcon, TriangleIcon, XIcon } from '@/app/_components/ui/iconPath';
 import Tooltip from './_components/ToolTip';
 
 export default function Tutorial() {
@@ -17,12 +17,15 @@ export default function Tutorial() {
   const [num, setNum] = useState(1); // 모여줄 툴팁, 7되면 링크 이동
 
   const handleClick = async () => {
+    const isMobile = window.innerWidth < 768; // md breakpoint는 보통 768px
+
     setNum((prev) => prev + 1);
     // setState는 비동기적으로 작동해서 num이 6일 때 체크해야 실제로 7이 되었을 때 라우팅이 발생
-    if (num === 6) {
+    if ((isMobile && num === 3) || (!isMobile && num === 6)) {
       router.replace(`/interview/${username}/${corp}/chat`);
     }
   };
+
   return (
     <div onClick={handleClick} className="fixed inset-0 flex-center bg-black-3 bg-opacity-25 z-50">
       {/* 면접 기록 */}
@@ -68,24 +71,18 @@ export default function Tutorial() {
         <div className="flex flex-col w-full relative min-w-[360px] max-w-[735px] px-4 border-t border-gray-2">
           {/* 비디오 튜토리얼 */}
           {(num === 5 || num === 6) && (
-            <div className="fixed md:left-12 md:bottom-12 min-w-[360px] z-10">
+            <div className="hidden md:block fixed md:left-12 md:bottom-12 min-w-[360px] z-10">
               <div className="relative bg-white-0 px-10 rounded-xl max-w-[460px] border border-gray-5 pt-5 pb-11">
                 <div className="w-full flex justify-between pb-[14px] border-b border-gray-5">
                   <p className="font-semibold">면접 연습하기</p>
                   <div className="flex items-center border border-primary-3 py-1 px-4 rounded-[28px]">
                     <Icons name={PlayIcon} />
-                    녹화 시작
+                    표정 분석 시작
                   </div>
                 </div>
 
                 <Image width={360} height={208} src="/assets/videoImage.png" alt="표정분석사람 이미지" />
-                <div className="w-full flex justify-between mt-5 ">
-                  <p className="font-semibold">AI 표정 분석 결과</p>
-                  <div className="flex items-center border border-primary-3 py-1 px-4 rounded-[28px]">
-                    <Icons name={RefreshIcon} />
-                    다시 보기
-                  </div>
-                </div>
+                <p className="font-semibold mt-5">AI 표정 분석 결과</p>
                 {/* 면접 연습하기 본문 */}
                 <div className="flex gap-2">
                   <div className="w-12 h-12 flex-shrink-0">
@@ -158,10 +155,6 @@ export default function Tutorial() {
 
               {/* 질문 버튼들 */}
               <div className="flex items-center gap-4 pt-4">
-                <div className={`chat-msg-btn flex md:hidden relative ${num !== 4 && 'bg-opacity-25'}`}>
-                  {num === 4 && <Tooltip msg1="입력한 답변을 말해보며" msg2="AI로 표정 분석을 받을 수 있어요" />}
-                  AI 표정 분석 <Icons className="tail-new-facial-icon" name={ArrowIcon} />
-                </div>
                 <div className={`chat-msg-btn ${num !== 1 && 'bg-opacity-25'} relative`}>
                   {num === 1 && <Tooltip msg1="답변에 대한" msg2="꼬리 질문을 받을 수 있어요" />}
                   꼬리 질문 받기 <Icons className="tail-new-facial-icon" name={ArrowIcon} />

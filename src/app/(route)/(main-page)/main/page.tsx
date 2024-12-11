@@ -7,8 +7,10 @@ import MainTabMenu from './_components/MainTabMenu';
 import PostFeed from './_components/PostFeed';
 import { fetchPreJobs } from './_services/mainService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import useMe from '@/app/_hooks/useMe';
 
 export default function MainPage() {
+  const { data: userData } = useMe();
   const [activeTab, setActiveTab] = useState('추천'); // 활성화된 탭
   const [showInterestedJob, setShowInterestedJob] = useState(false); // 첫 로그인 시 관심 직군 모달 보여주기
   const [selectedJob, setSelectedJob] = useState<string | null>(null); // 선택한 직업
@@ -18,17 +20,18 @@ export default function MainPage() {
 
   // preJob에 직군 목록 저장
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && userData) {
       // 로딩이 완료된 후에만 실행
       if (data?.data) {
         const jobIds = data.data.map((job: { jobId: { toString: () => string } }) => job.jobId.toString());
         setPreJob(jobIds);
-        setShowInterestedJob(jobIds.length === 0); // jobIds가 비어있을 때만 모달 표시
+
+        setShowInterestedJob(userData && jobIds.length === 0); // jobIds가 비어있을 때만 모달 표시
       } else {
         setShowInterestedJob(true); // data가 없는 경우 모달 표시
       }
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, userData]);
 
   // 특정 직군 포스트 불러오기
   const handleJobSelect = useCallback((jobId: string) => {

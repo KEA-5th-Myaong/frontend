@@ -70,6 +70,7 @@ export default function Header() {
         {/* PC 및 Tablet 스크린 */}
         <div className="hidden md:flex">
           <MainMenu
+            userData={userData}
             handleBlogOpen={handleBlogOpen}
             handleJobOpen={handleJobOpen}
             openBlogMenu={openBlogMenu}
@@ -102,7 +103,7 @@ export default function Header() {
       </div>
       <div ref={toggleMenuRef}>
         {/* SideMenu 컴포넌트 */}
-        <SideMenu isOpen={isSideMenuOpen} onClose={toggleSideMenuClose} />
+        <SideMenu isOpen={isSideMenuOpen} onClose={toggleSideMenuClose} userData={userData} />
       </div>
     </div>
   );

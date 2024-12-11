@@ -1,8 +1,9 @@
 export interface ProfileFormProps {
-  userName: string;
-  userEmail: string;
+  nickname: string;
+  blogIntro: string;
 }
 
 export interface ImageChangeProps {
+  defaultPicUrl: string | null | undefined;
   setProfileImage: React.Dispatch<File | null>;
 }

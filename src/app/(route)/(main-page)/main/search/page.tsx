@@ -12,12 +12,14 @@ import { fetchPostSearch } from '../_services/mainService';
 import useCustomInfiniteQuery from '@/app/_hooks/useCustomInfiniteQuery';
 import { PostProps, PostResponse } from '../_types/main-page';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
+import useMe from '@/app/_hooks/useMe';
 
 export default function SearchPage() {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState(''); // searchValue와 searchTerm을 구분해야
   const [searchTerm, setSearchTerm] = useState(''); // onChange가 완료되고 검색 함수 실행 때만 api호출 할 수 있음
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록
+  const { data: userData } = useMe();
 
   // 검색어 하이라이트 처리
   const highlightText = (text: string | JSX.Element): string | JSX.Element => {
@@ -76,10 +78,10 @@ export default function SearchPage() {
     }
   };
 
-  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
+  const { bookmarkMutation } = useLoveAndBookmark(
     posts,
     setPosts,
-    '1', // memberId
+    userData?.data.memberId,
     data?.pages?.[data.pages.length - 1]?.data.lastId?.toString(), // 마지막 페이지의 lastId
   );
   return (
@@ -117,11 +119,10 @@ export default function SearchPage() {
                 profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
                 content={highlightText(post.content)}
                 timestamp={formatDate(post.timestamp)}
-                userJob={post.userJob || '기타'}
+                prejob={post?.prejob?.[0]}
                 onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
-                onLoveClick={() => loveMutation.mutate(post.postId)}
-                isLoved={post.isLoved}
-                lovedCount={post.lovedCount || 0}
+                isLiked={post.isLiked}
+                likeCount={post.likeCount}
               />
             ))}
       </div>

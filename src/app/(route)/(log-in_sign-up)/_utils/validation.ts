@@ -40,7 +40,8 @@ export const validatePwd = <T extends { password: string }>(
   setError: UseFormSetError<T>,
   clearErrors: UseFormClearErrors<T>,
 ): boolean => {
-  const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}:;?~<>]).{10,}$/;
+  const pwdRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?])[A-Za-z\d!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]{8,20}$/;
   if (!pwdRegex.test(pwd)) {
     setError('password' as FieldPath<T>, {
       type: 'manual',
