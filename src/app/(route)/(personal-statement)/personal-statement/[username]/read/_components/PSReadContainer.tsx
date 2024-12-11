@@ -13,22 +13,13 @@ import PSReadContent from './PSReadContent';
 import { fetchPS, deletePS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import useMe from '@/app/_hooks/useMe';
+import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSReadContainer() {
   const router = useRouter();
-  const params = useParams();
   const queryClient = useQueryClient();
   const { data: userData } = useMe();
-
-  const getPostId = (param: string | string[]): string => {
-    console.log('postId:', param);
-    if (Array.isArray(param)) {
-      return param[1];
-    }
-    return param;
-  };
-
-  const postId = decodeURI(getPostId(params.id));
+  const postId = usePersonalStatementStore((state) => state.psId);
 
   const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId));
 
