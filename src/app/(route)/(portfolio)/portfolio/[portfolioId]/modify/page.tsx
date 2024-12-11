@@ -14,19 +14,20 @@ import SkillsSection from './_components/section/SkillsSection';
 import CertificationsSection from './_components/section/CertificationsSection';
 import ActivitiesSection from './_components/section/ActivitiesSection';
 import PSSection from './_components/section/PSSection';
-import Input from './_components/Input';
-import ItemToggle from './_components/ItemToggle';
 import useToggleStore from '@/app/_store/portfolioToggle';
-import UploadImage from './_components/UploadImage';
 import { PortfolioFormProps } from '@/app/_types/portfolio';
-import Tips from './_components/Tips';
 import { fetchPortfolio, putPortfolios } from '../../../_services/portfolioServices';
 import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
 import Footer from '../../../_components/Footer';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import useMe from '@/app/_hooks/useMe';
+import ItemToggle from '../../write/_components/ItemToggle';
+import UploadImage from '../../write/_components/UploadImage';
+import Input from '../../write/_components/Input';
+import Tips from '../../write/_components/Tips';
 
 export default function PortfolioModify() {
+  const [picUrl, setPicUrl] = useState<string | null>(null);
   const params = useParams();
   const { portfolioId } = params;
   console.log('현재 수정 페이지 아이디', portfolioId);
@@ -36,7 +37,7 @@ export default function PortfolioModify() {
 
   // 유저 정보 조회
   const { data: userData } = useMe();
-  setValue('name', String(userData?.data?.name));
+  setValue('name', String(userData?.data?.nickname));
 
   // 포트폴리오 조회
   const { data: portfolio } = useCustomQuery(['portfolio', portfolioId], () => fetchPortfolio(String(portfolioId)), {
@@ -55,7 +56,7 @@ export default function PortfolioModify() {
   const cleanData = (data: PortfolioFormProps) => {
     return {
       ...data,
-      picUrl: data.picUrl || null,
+      picUrl: picUrl || null,
       educations: data.educations || [],
       experiences: data.experiences || [],
       ps: data.ps || null,
@@ -141,7 +142,7 @@ export default function PortfolioModify() {
                 </div>
                 <section className="mt-5 mb-[50px]">
                   <section>
-                    <UploadImage />
+                    <UploadImage onImageUpload={setPicUrl} />
                     <div className="grid grid-flow-col justify-stretch gap-[20px]">
                       <Input
                         register={register}

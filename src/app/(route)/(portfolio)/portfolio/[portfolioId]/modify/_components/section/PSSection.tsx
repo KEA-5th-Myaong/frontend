@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import { Path, UseFormRegister } from 'react-hook-form';
 import { useState } from 'react';
-import Input from '../Input';
 import { PortfolioFormProps } from '@/app/_types/portfolio';
-import LoadPSModal from '../LoadPSModal';
+import LoadPSModal from '../../../../write/_components/LoadPSModal';
+import Input from '../../../../write/_components/Input';
 
 interface PSSectionProps {
   register: UseFormRegister<PortfolioFormProps>;
