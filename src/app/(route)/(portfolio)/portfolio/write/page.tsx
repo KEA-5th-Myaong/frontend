@@ -25,6 +25,7 @@ import Footer from '../../_components/Footer';
 
 export default function PortfolioWrite() {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
+  const [picUrl, setPicUrl] = useState<string | null>(null);
   const { toggles } = useToggleStore();
   const router = useRouter();
 
@@ -38,7 +39,7 @@ export default function PortfolioWrite() {
   const cleanData = (data: PortfolioFormProps) => {
     return {
       ...data,
-      picUrl: data.picUrl || null,
+      picUrl: picUrl || null,
       educations: data.educations || [],
       experiences: data.experiences || [],
       ps: data.ps || null,
@@ -70,6 +71,7 @@ export default function PortfolioWrite() {
   const handleDoneClick = () => {
     //FIX: 포트폴리오 리스트 추가되면 갱신되도록 로직 수정
     handleSubmit(onSubmit)(); // handleSubmit 호출
+    router.push(`/portfolio`);
   };
 
   const handlePreviewClick = () => {
@@ -120,7 +122,7 @@ export default function PortfolioWrite() {
                 </div>
                 <section className="mt-5 mb-[50px]">
                   <section>
-                    <UploadImage />
+                    <UploadImage onImageUpload={setPicUrl} />
                     <div className="grid grid-flow-col justify-stretch gap-[20px]">
                       <Input
                         register={register}

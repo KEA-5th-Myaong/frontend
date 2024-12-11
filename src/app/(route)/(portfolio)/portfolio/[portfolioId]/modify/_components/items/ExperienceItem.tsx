@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { Path, UseFormRegister } from 'react-hook-form';
-import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
 import { PortfolioFormProps } from '@/app/_types/portfolio';
+import Input from '../../../../write/_components/Input';
 
 interface ExperienceItemProps {
   id: number;

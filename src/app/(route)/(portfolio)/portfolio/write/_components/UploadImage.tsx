@@ -6,7 +6,11 @@ import Icons from '@/app/_components/ui/Icon';
 import { XIcon } from '@/app/_components/ui/iconPath';
 import { postPortfoliosPic } from '@/app/(route)/(portfolio)/_services/portfolioServices';
 
-export default function UploadImage() {
+interface UploadImageProps {
+  onImageUpload: (url: string | null) => void; // 업로드 후 URL 전달
+}
+
+export default function UploadImage({ onImageUpload }: UploadImageProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); // 이미지 미리보기 URL
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -23,6 +27,7 @@ export default function UploadImage() {
       try {
         const picUrl = await postPortfoliosPic(formData); // URL 반환
         console.log('이미지 업로드 성공 (핸들러)', picUrl);
+        onImageUpload(String(picUrl)); // 부모 컴포넌트에 URL 전달
         setPreviewUrl(String(picUrl)); // URL 상태 설정
       } catch (error) {
         console.error('이미지 업로드 실패:', error);

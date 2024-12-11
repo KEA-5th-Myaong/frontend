@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
 import { Path, UseFormRegister } from 'react-hook-form';
-import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
 import { PortfolioFormProps } from '@/app/_types/portfolio';
+import Input from '../../../../write/_components/Input';
 
 interface ActivityItemProps {
   id: number;
