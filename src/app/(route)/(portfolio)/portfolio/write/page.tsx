@@ -139,7 +139,14 @@ export default function PortfolioWrite() {
                         size="lg"
                         type="tel"
                         color="transparent"
+                        maxLength={13}
                         placeholder="휴대폰 번호를 입력해주세요"
+                        onChange={(e) => {
+                          const formatted = e.target.value
+                            .replace(/[^\d]/g, '') // 숫자가 아닌 문자를 제거
+                            .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'); // 3-4-4 포맷으로 변환
+                          e.target.value = formatted;
+                        }}
                         required
                       />
                     </div>
