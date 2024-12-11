@@ -56,7 +56,7 @@ export interface PortfolioFormProps {
   picUrl?: string | null;
   educations: Educations[];
   experiences?: Experiences[]; // 경력 정보 (nullable)
-  ps?: PS[] | null; // 자기소개 및 지원 사유 (nullable)
+  ps?: PS | null; // 자기소개 및 지원 사유 (nullable)
   links?: Links[]; // 관련 링크 (nullable)
   skills?: string[] | null; // 기술 정보 (nullable)
   certifications?: Certifications[]; // 자격증 정보 (nullable)
