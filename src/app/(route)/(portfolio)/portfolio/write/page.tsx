@@ -22,20 +22,37 @@ import Tips from './_components/Tips';
 import { postPorfolios } from '../../_services/portfolioServices';
 import PortfolioWriteDropdown from '../../_components/PortfolioWriteDropdown';
 import Footer from '../../_components/Footer';
+import usePortfolioStore from '@/app/_store/portfolio';
 
 export default function PortfolioWrite() {
+  const router = useRouter();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const [picUrl, setPicUrl] = useState<string | null>(null);
   const { toggles } = useToggleStore();
-  const router = useRouter();
+  const { portfolio, setPortfolio } = usePortfolioStore(); // 미리보기를 위한 전역상태 추가
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside({
     ref: dropdownRef,
     callback: () => setIsShowDropdown(false),
   });
-  const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
-  const methods = useForm<PortfolioFormProps>();
+  const { register, handleSubmit, setValue, getValues } = useForm<PortfolioFormProps>();
+  const methods = useForm<PortfolioFormProps>({
+    defaultValues: portfolio || {
+      title: '',
+      name: '',
+      tel: '',
+      email: '',
+      preferredJob: '',
+      educations: [],
+      experiences: [],
+      ps: null,
+      links: [],
+      skills: [],
+      certifications: [],
+      extraActivities: [],
+    },
+  });
   const cleanData = (data: PortfolioFormProps) => {
     return {
       ...data,
@@ -52,15 +69,11 @@ export default function PortfolioWrite() {
 
   const onSubmit = async (formData: PortfolioFormProps) => {
     const cleanedData = cleanData(formData); // 데이터 정리
-
-    // API 요청
     try {
       const response = await postPorfolios(cleanedData);
       const createdId = response?.data?.portfolioId; // API에서 반환된 ID
-      console.log('Portfolio created with ID:', createdId);
-
       if (createdId) {
-        router.push(`/portfolio/${createdId}/read`); // 페이지 이동
+        router.push(`/portfolio/${createdId}/read`);
       }
     } catch (error) {
       console.error('Error creating portfolio:', error);
@@ -73,6 +86,8 @@ export default function PortfolioWrite() {
   };
 
   const handlePreviewClick = () => {
+    const formData = getValues();
+    setPortfolio(formData);
     router.push(`/portfolio/preview`);
   };
 

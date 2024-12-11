@@ -1,29 +1,23 @@
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
 import Icons from '@/app/_components/ui/Icon';
 import { RequiredIcon } from '@/app/_components/ui/iconPath';
-import { fetchPortfolio } from '@/app/(route)/(portfolio)/_services/portfolioServices';
-import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { Certifications, Educations, Experiences, ExtraActivities, Links, PS } from '@/app/_types/portfolio';
 import useMe from '@/app/_hooks/useMe';
+import usePortfolioStore from '@/app/_store/portfolio';
 
 export default function PortfolioContainer() {
   // 유저 정보 조회
   const { data: userData } = useMe();
-  // 포트폴리오 조회
-  const params = useParams();
-  const { portfolioId } = params;
-  const { data: portfolio } = useCustomQuery(
-    ['portfolio', portfolioId], // Query Key에 ID 포함
-    () => fetchPortfolio(String(portfolioId)),
-  );
+
+  const { portfolio } = usePortfolioStore();
+  console.log('미리보기 전역 데이터', portfolio);
 
   return (
     <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] px-5 py-10  lg:mx-auto border rounded-[10px]">
       <section className="flex items-center">
         <Image
           alt="포트폴리오 사용자 기본 이미지"
-          src={portfolio?.data?.picUrl ? portfolio?.data?.picUrl : '/mascot.png'}
+          src={portfolio?.picUrl ? portfolio?.picUrl : '/mascot.png'}
           width={120}
           height={120}
           className="rounded-[20px]"
@@ -37,15 +31,15 @@ export default function PortfolioContainer() {
           </div>
           <div className="flex flex-col ml-10 my-5 gap-2">
             <p className="text-left">{userData?.data.nickname}</p>
-            <p>{portfolio?.data?.tel}</p>
-            <p>{portfolio?.data?.email}</p>
-            <p>{portfolio?.data?.preferredJob}</p>
+            <p>{portfolio?.tel}</p>
+            <p>{portfolio?.email}</p>
+            <p>{portfolio?.preferredJob}</p>
           </div>
         </div>
       </section>
 
-      {portfolio?.data?.educations &&
-        portfolio?.data?.educations.map((item: Educations) => {
+      {portfolio?.educations &&
+        portfolio?.educations.map((item: Educations) => {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">학력</h1>
@@ -69,8 +63,8 @@ export default function PortfolioContainer() {
             </section>
           );
         })}
-      {portfolio?.data?.experiences &&
-        portfolio?.data?.experiences.map((item: Experiences) => {
+      {portfolio?.experiences &&
+        portfolio?.experiences.map((item: Experiences) => {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">경력</h1>
@@ -91,8 +85,8 @@ export default function PortfolioContainer() {
           );
         })}
 
-      {portfolio?.data?.links &&
-        portfolio?.data?.links.map((item: Links) => {
+      {portfolio?.links &&
+        portfolio?.links.map((item: Links) => {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">링크</h1>
@@ -104,8 +98,8 @@ export default function PortfolioContainer() {
             </section>
           );
         })}
-      {portfolio?.data?.skills &&
-        portfolio?.data?.skills.map((item: string) => {
+      {portfolio?.skills &&
+        portfolio?.skills.map((item: string) => {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold"> 기술 </h1>
@@ -117,8 +111,8 @@ export default function PortfolioContainer() {
           );
         })}
 
-      {portfolio?.data?.extraActivities &&
-        portfolio?.data?.extraActivities.map((item: ExtraActivities) => {
+      {portfolio?.extraActivities &&
+        portfolio?.extraActivities.map((item: ExtraActivities) => {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">교육 | 대외활동</h1>
@@ -139,8 +133,8 @@ export default function PortfolioContainer() {
           );
         })}
 
-      {portfolio?.data?.certifications &&
-        portfolio?.data?.certifications.map((item: Certifications) => {
+      {portfolio?.certifications &&
+        portfolio?.certifications.map((item: Certifications) => {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">자격증</h1>
@@ -159,8 +153,8 @@ export default function PortfolioContainer() {
           );
         })}
 
-      {portfolio?.data?.ps &&
-        portfolio?.data?.ps.map((item: PS) => {
+      {portfolio?.ps &&
+        portfolio?.ps.map((item: PS) => {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">자기소개서</h1>
