@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
@@ -53,6 +53,15 @@ export default function PortfolioWrite() {
       extraActivities: [],
     },
   });
+
+  useEffect(() => {
+    if (portfolio && Object.keys(portfolio).length > 0) {
+      Object.entries(portfolio).forEach(([key, value]) => {
+        setValue(key as keyof PortfolioFormProps, value); // 각 필드의 값을 설정
+      });
+    }
+  }, [portfolio, setValue]);
+
   const cleanData = (data: PortfolioFormProps) => {
     return {
       ...data,

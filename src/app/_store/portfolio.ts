@@ -9,7 +9,6 @@ interface PortfolioState {
 const usePortfolioStore = create<PortfolioState>((set) => ({
   portfolio: null, // 초기 상태
   setPortfolio: (data) => {
-    console.log('Updating state with:', data); // 상태 업데이트 확인
     set({ portfolio: data }); // 상태 업데이트
   },
 }));
