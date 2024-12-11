@@ -88,7 +88,7 @@ export default function MainMenu({
             </div>
           </div>
           블로그
-          {openBlogMenu === 'blog' && userData?.data.username && <SubMenu isBlog userName={userData.data.username} />}
+          {openBlogMenu === 'blog' && <SubMenu isBlog userName={userData?.data.username} />}
         </button>
       </div>
 
@@ -113,9 +113,7 @@ export default function MainMenu({
             </div>
           </div>
           구직
-          {openJobMenu === 'job' && userData?.data.username && (
-            <SubMenu isBlog={false} userName={userData.data.username} />
-          )}
+          {openJobMenu === 'job' && <SubMenu isBlog={false} userName={userData?.data.username} />}
         </button>
       </div>
     </div>
