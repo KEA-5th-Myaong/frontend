@@ -60,14 +60,13 @@ export default function PostContent() {
 
   const { loveMutation, bookmarkMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId, postId);
   const [isLiked, setIsLiked] = useState(postURLData?.data.liked); // 낙관적 업데이트를 위한 state
-  const [likeCount, setLikeCount] = useState(postURLData?.data.likeCount);
 
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
     if (postURLData?.data) {
       setIsLiked(postURLData.data.liked);
-      setLikeCount(postURLData.data.likeCount);
+
       setIsBookmarked(postURLData.data.bookmarked);
     }
   }, [postURLData?.data]);
@@ -75,20 +74,15 @@ export default function PostContent() {
   // 좋아요 클릭 핸들러
   const handleLikeClick = () => {
     if (!postId) return;
-
     // 낙관적 업데이트
-    setIsLiked((prev) => !prev);
-    setLikeCount((prev) => (!isLiked ? prev + 1 : prev - 1));
+    setIsLiked((prev: boolean) => !prev);
 
     loveMutation.mutate(postId, {
       onSuccess: () => {
-        // 성공 시에는 서버에서 새로운 카운트를 가져오기 위해 쿼리 무효화
         queryClient.invalidateQueries({ queryKey: ['url-post', postTitle] });
       },
       onError: () => {
-        // 에러 시 원래 상태로 복구
-        setIsLiked((prev) => !prev);
-        setLikeCount((prev) => (isLiked ? prev + 1 : prev - 1));
+        setIsLiked((prev: boolean) => !prev);
       },
     });
   };
