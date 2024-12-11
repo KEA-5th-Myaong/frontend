@@ -12,6 +12,10 @@ interface PersonalStatementStore {
   psId: number | null;
   setPsId: (psId: number | null) => void;
 }
+interface PersonalStatementStore {
+  psId: number | null;
+  setPsId: (psId: number) => void;
+}
 
 // 빈 값, reset할 때 이걸 사용
 const initialState: PSFormData = {
@@ -27,6 +31,11 @@ const usePSStore = create<PSStore>((set) => ({
   resetPSData: () => set({ psData: initialState }), // 초기화 함수
   isTouch: false,
   setIsTouch: (data) => set({ isTouch: data }),
+}));
+
+export const usePersonalStatementStore = create<PersonalStatementStore>((set) => ({
+  psId: null,
+  setPsId: (psId) => set({ psId }),
 }));
 
 export const usePersonalStatementStore = create<PersonalStatementStore>((set) => ({
