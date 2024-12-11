@@ -12,7 +12,7 @@ export async function fetchPSList() {
 }
 
 // (GET) 자기소개서 조회
-export async function fetchPS(psId: string) {
+export async function fetchPS(psId: number | null) {
   try {
     const { data } = await api.get(`/ps/${psId}`);
     return data;
@@ -34,7 +34,7 @@ export async function postPS(psData: unknown) {
 }
 
 // (PUT) 자기소개서 수정
-export async function putPS(psId: string, psData: unknown) {
+export async function putPS(psId: number | null, psData: unknown) {
   try {
     const { data } = await api.put(`/ps/${psId}`, psData);
     return data;

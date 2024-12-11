@@ -1,43 +1,46 @@
-import { UseFormRegister } from 'react-hook-form';
-import { PSFormData } from '../_types/psCreate';
-
 interface FormFieldProps {
   label: string;
-  name: keyof PSFormData;
-  register: UseFormRegister<PSFormData>;
+  name: string;
   placeholder: string;
   isTextarea?: boolean;
   maxLength?: number;
-  value?: string;
+  value: string;
+  onChange: (name: string, value: string) => void;
 }
 
-export default function PSForm({ name, label, isTextarea, maxLength, register, placeholder, value }: FormFieldProps) {
+export default function PSForm({ name, label, isTextarea, maxLength, placeholder, value, onChange }: FormFieldProps) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    onChange(name, e.target.value);
+  };
+
   return (
     <label htmlFor={name} className="ps-label">
       <div className="flex justify-between w-full">
         {label}
         {isTextarea && (
           <p>
-            {value?.length || 0}/{maxLength}
+            {value.length}/{maxLength}
           </p>
         )}
       </div>
 
       {!isTextarea ? (
         <input
-          {...register(name, { required: true })}
           id={name}
           maxLength={maxLength}
           className="py-2.5 ps-input"
           placeholder={placeholder}
+          value={value}
+          onChange={handleChange}
         />
       ) : (
         <textarea
-          {...register(name, { required: true })}
           id={name}
           maxLength={maxLength}
           className={`resize-none ${name === 'reason' ? 'h-32' : 'h-64'}  py-4 whitespace-pre-wrap ps-input`}
           placeholder={placeholder}
+          value={value}
+          onChange={handleChange}
         />
       )}
     </label>
