@@ -22,32 +22,6 @@ const useLoveAndBookmark = (
   const queryClient = useQueryClient();
 
   const loveMutation = useCustomMutation<unknown, number>(putLike, {
-    // mutation 실행 전에 실행되는 onMutate
-    onMutate: async (postId) => {
-      // 진행중인 post 쿼리를 취소하여 충돌 방지
-      await queryClient.cancelQueries({ queryKey: ['post', memberId] });
-      const previousPosts = [...posts]; // 롤백을 위한 현재 posts 상태 저장
-      // 낙관적 업데이트, UI 즉시 업데이트
-      setPosts((prevPosts) =>
-        prevPosts.map((post) => {
-          if (post.postId === postId) {
-            return {
-              ...post,
-              isLiked: !post.isLiked, // 좋아요 상태 토글
-              likeCount: post.isLiked ? post.likeCount - 1 : post.likeCount + 1,
-            };
-          }
-          return post;
-        }),
-      );
-
-      return { previousPosts } as MutationContext; // 이전 상태를 context로 반환하여 오류 발생 시 복구
-    },
-    onError: (_, __, context) => {
-      if ((context as MutationContext)?.previousPosts) {
-        setPosts((context as MutationContext).previousPosts);
-      }
-    },
     // mutation 완료 후 실행되는 함수
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post', memberId] });

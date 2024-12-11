@@ -34,6 +34,7 @@ export default function PostContent() {
   const { data: postURLData } = useCustomQuery(['url-post', postTitle], () =>
     fetchURLPost(username as string, postTitle as string),
   );
+
   const isMe = postURLData?.data.memberId === userData?.data.memberId; // 본인의 게시글인지 확인
   // 유저의 직군 표시하기 위해 블로그 주인장 데이터 가져옴
   const { data: blogUserNameData } = useCustomQuery(['blog-user', username], () =>
@@ -58,15 +59,41 @@ export default function PostContent() {
   });
 
   const { loveMutation, bookmarkMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId, postId);
+  const [isLiked, setIsLiked] = useState(postURLData?.data.liked); // 낙관적 업데이트를 위한 state
+  const [likeCount, setLikeCount] = useState(postURLData?.data.likeCount);
+
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
     if (postURLData?.data) {
+      setIsLiked(postURLData.data.liked);
+      setLikeCount(postURLData.data.likeCount);
       setIsBookmarked(postURLData.data.bookmarked);
     }
   }, [postURLData?.data]);
 
-  // bookmark 클릭 핸들러 수정
+  // 좋아요 클릭 핸들러
+  const handleLikeClick = () => {
+    if (!postId) return;
+
+    // 낙관적 업데이트
+    setIsLiked((prev) => !prev);
+    setLikeCount((prev) => (!isLiked ? prev + 1 : prev - 1));
+
+    loveMutation.mutate(postId, {
+      onSuccess: () => {
+        // 성공 시에는 서버에서 새로운 카운트를 가져오기 위해 쿼리 무효화
+        queryClient.invalidateQueries({ queryKey: ['url-post', postTitle] });
+      },
+      onError: () => {
+        // 에러 시 원래 상태로 복구
+        setIsLiked((prev) => !prev);
+        setLikeCount((prev) => (isLiked ? prev + 1 : prev - 1));
+      },
+    });
+  };
+
+  // bookmark 클릭 핸들러
   const handleBookmarkClick = () => {
     if (!postId) return;
 
@@ -211,10 +238,10 @@ export default function PostContent() {
             <p className="text-sm">{postURLData?.data.commentCount}</p>
           </div>
           <div
-            onClick={() => {}}
-            className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame"
+            onClick={handleLikeClick}
+            className={`${isLiked ? 'text-primary-1' : 'text-gray-1'} bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame`}
           >
-            <Icons name={FavorIcon} />
+            <Icons name={{ ...FavorIcon, fill: isLiked ? '#41AED9' : 'currentColor' }} />
             <span className="text-sm">{postURLData?.data.likeCount}</span>
           </div>
         </div>
