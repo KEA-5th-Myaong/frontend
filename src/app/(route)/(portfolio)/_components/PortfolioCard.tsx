@@ -46,11 +46,13 @@ export default function PortfolioCard({
   const handleDeletePortfolio = async () => {
     try {
       await deletePortfolios(portfolioId); // API 호출
+      queryClient.invalidateQueries({ queryKey: ['portfolios'] }); // 목록 갱신
       console.log(`Portfolio with ID ${portfolioId} deleted`);
     } catch (error) {
       console.error('Error deleting portfolio:', error);
       alert('포트폴리오 삭제에 실패했습니다.');
     } finally {
+      setModalState(initailModalState); // 모달 닫기
       setIsShowDropdown(false); // 항상 마지막에 닫기
     }
   };
