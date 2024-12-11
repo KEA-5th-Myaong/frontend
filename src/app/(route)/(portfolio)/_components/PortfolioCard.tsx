@@ -24,7 +24,6 @@ export default function PortfolioCard({
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const [currentMemo, setCurrentMemo] = useState(memo); // 메모의 현재 상태를 저장
   const [modalState, setModalState] = useState(initailModalState);
-
   const queryClient = useQueryClient();
 
   const handleMemoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

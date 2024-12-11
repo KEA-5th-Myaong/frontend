@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Margin, usePDF } from 'react-to-pdf';
 import { useParams, useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import Icons from '@/app/_components/ui/Icon';
 import PortfolioHeader from './_components/PortfolioHeader';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
@@ -21,8 +22,9 @@ export default function PortfolioRead() {
   //FIX: 로그인 여부 연결
   const [isLogined, setIsLogined] = useState<boolean | null>(true);
   const [showModal, setShowModal] = useState(false);
-
+  const [modalState, setModalState] = useState(initailModalState); // 삭제 모달
   const [isShowDropdown, setIsShowDropdown] = useState(false);
+  const queryClient = useQueryClient();
 
   // PDF 생성 클릭 시
   const { toPDF, targetRef } = usePDF({
@@ -43,21 +45,22 @@ export default function PortfolioRead() {
     alert('링크가 복사되었습니다!'); // 사용자에게 알림
   };
 
-  // 포트폴리오 목록에서 삭제
+  // 포트폴리오 삭제
   const handleDeletePortfolio = async () => {
     try {
       await deletePortfolios(String(portfolioId)); // API 호출
+      queryClient.invalidateQueries({ queryKey: ['portfolios'] });
       console.log(`Portfolio with ID ${portfolioId} deleted`);
     } catch (error) {
       console.error('Error deleting portfolio:', error);
       alert('포트폴리오 삭제에 실패했습니다.');
     } finally {
+      setModalState(initailModalState); // 모달 닫기
       setIsShowDropdown(false); // 항상 마지막에 닫기
     }
   };
 
   // 삭제 버튼 누르면 나오는 모달
-  const [modalState, setModalState] = useState(initailModalState);
   const handleDeleteClick = () => {
     setModalState((prev) => ({
       ...prev,
