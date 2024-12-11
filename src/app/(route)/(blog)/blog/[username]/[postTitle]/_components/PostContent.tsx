@@ -13,7 +13,7 @@ import PostComment from './_comment/PostComment';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { deletePost, fetchURLPost } from '../../_services/blogService';
+import { deletePost, fetchMemberInfo, fetchURLPost } from '../../_services/blogService';
 import usePostWriteStore from '@/app/_store/postWirte';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
@@ -35,6 +35,10 @@ export default function PostContent() {
     fetchURLPost(username as string, postTitle as string),
   );
   const isMe = postURLData?.data.memberId === userData?.data.memberId; // 본인의 게시글인지 확인
+  // 유저의 직군 표시하기 위해 블로그 주인장 데이터 가져옴
+  const { data: blogUserNameData } = useCustomQuery(['blog-user', username], () =>
+    fetchMemberInfo(postURLData?.data.memberId),
+  );
 
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
   useEffect(() => {
@@ -174,10 +178,14 @@ export default function PostContent() {
 
       {/* 작성자 프로필 */}
       <div className="flex items-center justify-between self-stretch mt-[7px] py-[22px] border-b border-gray">
-        <div className="flex items-center gap-2.5">
-          <div id="profile" className="" />
+        <div
+          className="flex items-center gap-2.5 cursor-pointer"
+          onClick={() => {
+            router.push(`/blog/${postURLData?.data.username}`);
+          }}
+        >
           <Image
-            className="min-w-[29px] min-h-[29px] rounded-full"
+            className="min-w-[29px] min-h-[29px] rounded-full ml-2.5"
             src={postURLData?.data.profilePicUrl || defaultProfilePic.src}
             alt="프로필사진"
             width={29}
@@ -187,7 +195,7 @@ export default function PostContent() {
           <span>{postURLData?.data.nickname}</span>
         </div>
         <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
-          프론트엔드 개발자
+          {blogUserNameData?.data?.prejob?.[0]}
         </div>
       </div>
 
