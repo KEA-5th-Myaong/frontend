@@ -29,6 +29,7 @@ import useMe from '@/app/_hooks/useMe';
 export default function PortfolioModify() {
   const params = useParams();
   const { portfolioId } = params;
+  console.log('현재 수정 페이지 아이디', portfolioId);
 
   const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
   const methods = useForm<PortfolioFormProps>();
@@ -38,8 +39,9 @@ export default function PortfolioModify() {
   setValue('name', String(userData?.data?.name));
 
   // 포트폴리오 조회
-  const { data: portfolio } = useCustomQuery(['portfolio'], () => fetchPortfolio(String(portfolioId)));
-  console.log('수정 페이지 포트폴리오 데이터 ', portfolio);
+  const { data: portfolio } = useCustomQuery(['portfolio', portfolioId], () => fetchPortfolio(String(portfolioId)), {
+    enabled: !!portfolioId, // portfolioId가 존재할 때만 쿼리 실행
+  });
 
   // 포트폴리오 데이터를 폼 필드에 설정
   useEffect(() => {
