@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { usePDF, Margin } from 'react-to-pdf';
 import Image from 'next/image';
 import Modal, { initailModalState } from '../../../../../../_components/Modal';
@@ -13,14 +14,24 @@ import { fetchPS, deletePS } from '@/app/(route)/(personal-statement)/_services/
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import useMe from '@/app/_hooks/useMe';
 import usePSStore from '../../../../_store/psStore';
-import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSReadContainer() {
   const router = useRouter();
+  const params = useParams();
+  const queryClient = useQueryClient();
   const { data: userData } = useMe();
-  const postId = usePersonalStatementStore((state) => state.psId);
-  const setPsId = usePersonalStatementStore((state) => state.setPsId);
-  const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId));
+
+  const getPostId = (param: string | string[]): string => {
+    console.log('postId:', param);
+    if (Array.isArray(param)) {
+      return param[1];
+    }
+    return param;
+  };
+
+  const postId = decodeURI(getPostId(params.id));
+
+  const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId as unknown as number));
   const { setIsTouch, resetPSData } = usePSStore();
 
   const [psState, setPsState] = useState<PSFormData>({
@@ -44,6 +55,10 @@ export default function PSReadContainer() {
     await deletePS(psId);
   }
 
+  async function handlePSListDelete(psId: number) {
+    await deletePS(psId);
+  }
+
   // 삭제 클릭
   const handleDeleteClick = () => {
     setModalState((prev) => ({
@@ -56,6 +71,7 @@ export default function PSReadContainer() {
       onSubBtnClick: () => setModalState(initailModalState),
       onBtnClick: () => {
         handlePSDelete(Number(postId));
+        handlePSListDelete(Number(postId));
         setModalState((prev2) => ({
           ...prev2,
           open: true,
@@ -65,6 +81,7 @@ export default function PSReadContainer() {
           onBtnClick: async () => {
             setModalState(initailModalState);
             router.back();
+            queryClient.invalidateQueries({ queryKey: ['ps'] });
           },
         }));
       },
@@ -74,7 +91,7 @@ export default function PSReadContainer() {
   // 수정 클릭
   const handleEditClick = () => {
     resetPSData();
-    setPsId(postId);
+    // setPsId(postId);
     setIsTouch(false);
     router.push(`/personal-statement/${userData?.data.username}/create?edit=true`);
   };
