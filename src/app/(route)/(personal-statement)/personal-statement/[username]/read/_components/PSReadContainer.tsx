@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { usePDF, Margin } from 'react-to-pdf';
 import Image from 'next/image';
 import Modal, { initailModalState } from '../../../../../../_components/Modal';
@@ -9,23 +9,19 @@ import { PSFormData } from '../../create/_types/psCreate';
 import PSFooter from '../../../../_components/PSFooter';
 import PSHeader from '../../../../_components/PSHeader';
 import PSReadContent from './PSReadContent';
-import { fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
+import { fetchPS, deletePS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import useMe from '@/app/_hooks/useMe';
+import usePSStore from '../../../../_store/psStore';
+import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSReadContainer() {
   const router = useRouter();
-  const params = useParams();
-
-  const getPostId = (param: string | string[]): string => {
-    if (Array.isArray(param)) {
-      return param[1];
-    }
-    return param;
-  };
-
-  const postId = decodeURI(getPostId(params.id));
-
+  const { data: userData } = useMe();
+  const postId = usePersonalStatementStore((state) => state.psId);
+  const setPsId = usePersonalStatementStore((state) => state.setPsId);
   const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId));
+  const { setIsTouch, resetPSData } = usePSStore();
 
   const [psState, setPsState] = useState<PSFormData>({
     title: '',
@@ -38,7 +34,15 @@ export default function PSReadContainer() {
 
   useEffect(() => {
     setPsState(psData?.data);
-  }, [psData]);
+  }, [psData, postId]);
+
+  if (postId == null) {
+    router.push(`/personal-statement/${userData?.data.username}/list`);
+  }
+
+  async function handlePSDelete(psId: number) {
+    await deletePS(psId);
+  }
 
   // 삭제 클릭
   const handleDeleteClick = () => {
@@ -50,16 +54,29 @@ export default function PSReadContainer() {
       subBtnText: '취소',
       btnText: '확인',
       onSubBtnClick: () => setModalState(initailModalState),
-      onBtnClick: () =>
+      onBtnClick: () => {
+        handlePSDelete(Number(postId));
         setModalState((prev2) => ({
           ...prev2,
           open: true,
           hasSubBtn: false,
           topText: '삭제되었습니다.',
           btnText: '확인',
-          onBtnClick: () => setModalState(initailModalState),
-        })),
+          onBtnClick: async () => {
+            setModalState(initailModalState);
+            router.back();
+          },
+        }));
+      },
     }));
+  };
+
+  // 수정 클릭
+  const handleEditClick = () => {
+    resetPSData();
+    setPsId(postId);
+    setIsTouch(false);
+    router.push(`/personal-statement/${userData?.data.username}/create?edit=true`);
   };
 
   const { toPDF, targetRef } = usePDF({
@@ -79,6 +96,7 @@ export default function PSReadContainer() {
               router.push('/personal-statement/1/editing');
             }}
             handleDeleteClick={handleDeleteClick}
+            handleEditClick={handleEditClick}
           />
 
           <div ref={targetRef} className="self-start w-full mt-8 sm:mt-20">
@@ -92,7 +110,7 @@ export default function PSReadContainer() {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-3 mt-44">
+        <div className="flex-center flex-col gap-3 mt-44">
           <Image className="animate-bounce" src="/mascot.png" alt="마스코트" width={204} height={193} />
           <p className="text-gray-0">불러오는 중 입니다</p>
         </div>
