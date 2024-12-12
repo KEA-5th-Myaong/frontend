@@ -8,6 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { User } from '@/app/_hooks/useMe';
 import Overlay from '../../Overlay';
+import ThemeToggle from '../../ThemeToggle';
 
 interface SideMenuProps {
   isOpen: boolean;
@@ -44,13 +45,14 @@ export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
           <motion.div
             animate={{ x: 0.1 }} // 나타날 때 왼쪽에서 오른쪽으로 슬라이드
             transition={{ duration: 0.1 }} // 전환 애니메이션 속도
-            className="fixed top-0 -left-1 w-52 pl-4 min-h-full x-10 z-40 bg-white-0 text-black-0 transition-transform transform drop-shadow-md"
+            className="fixed top-0 -left-1 w-52 pl-4 min-h-full x-10 z-40 bg-white-0 dark:bg-black-1 text-black-0 dark:text-white-0 transition-transform transform drop-shadow-md"
           >
             <div>
               <div className="flex w-full">
                 <motion.div layoutId="smallLogo">
                   <Image src="/assets/logo-sm.svg" alt="모바일로고" width={80} height={40} className="flex pt-6 pr-3" />
                 </motion.div>
+                <ThemeToggle />
               </div>
               <div className="font-semibold text-xl border-b border-gray-5 pb-3 pl-6 mr-6">
                 {isLogined ? (

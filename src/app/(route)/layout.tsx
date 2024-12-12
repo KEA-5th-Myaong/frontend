@@ -3,6 +3,7 @@ import '../globals.css';
 import localFont from 'next/font/local';
 import Providers from '../_components/Providers';
 import Header from '../_components/Header/Header';
+import { ThemeProvider } from '../_components/ThemeProvider';
 
 const pretendard = localFont({
   src: '../fonts/PretendardVariable.woff2',
@@ -28,10 +29,12 @@ export default function RootLayout({
     <html lang="ko">
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={`${pretendard.variable} font-pretendard`}>
-        <Providers>
-          <Header />
-          {children}
-        </Providers>
+        <ThemeProvider>
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

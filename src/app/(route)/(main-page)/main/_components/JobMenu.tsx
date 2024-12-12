@@ -29,7 +29,7 @@ export default function JobMenu({ className, onJobSelect, selectedJob, activeTab
           type="button"
           className={`max-w-fit border ${
             selectedJob === job.jobId?.toString() && activeTab === '직군' ? 'border-primary-1' : 'border-gray-5'
-          } hover:border-primary-1 px-4 py-[7px] rounded-[15px] text-sm bg-white-0`}
+          } hover:border-primary-1 px-4 py-[7px] rounded-[15px] text-sm bg-white-0 dark:bg-black-1`}
           onClick={() => onJobSelect(job.jobId?.toString() || '')}
         >
           {job.jobName}

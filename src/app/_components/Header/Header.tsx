@@ -52,7 +52,7 @@ export default function Header() {
   });
 
   return (
-    <div className="fixed md:relative flex text-white-0 px-8 w-full min-w-[360px] bg-white-0 border-b-2 h-20 items-center z-50">
+    <div className="fixed md:relative flex text-white-0 px-8 w-full min-w-[360px] bg-white-0 dark:bg-black-1 border-b-2 h-20 items-center z-50">
       <div className="hidden md:flex w-full items-center">
         {/* 로고 버튼 */}
         <div className="pl-4 w-44">
