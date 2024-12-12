@@ -36,7 +36,7 @@ export default function CommentItem({
     try {
       await postReport({
         contentId: commentId,
-        contentType: 'comment',
+        contentType: 'COMMENT',
       });
 
       setModalState((prev) => ({
