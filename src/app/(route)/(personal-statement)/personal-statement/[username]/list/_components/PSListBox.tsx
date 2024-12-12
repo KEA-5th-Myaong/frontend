@@ -70,7 +70,7 @@ export default function PSListBox({ psId, title, position, content, timestamp }:
   function handlePSListEdit(postId: number) {
     setPsId(postId);
     setIsTouch(false);
-    router.push(`/personal-statement/${userData?.data.username}/create?edit=true&list=true`);
+    router.push(`/personal-statement/${userData?.data.username}/create?edit=true`);
   }
 
   // 수정 클릭

@@ -11,7 +11,7 @@ import BackButton from '../../../../../../_components/BackButton';
 import PSForm from './PSForm';
 import { fetchPS, postPS, putPS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useMe from '@/app/_hooks/useMe';
-import { usePostWriteStore, usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
+import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSCreateContainer() {
   const router = useRouter();
@@ -20,15 +20,14 @@ export default function PSCreateContainer() {
   const { data: userData } = useMe();
   // psData = 수정 일 시 초기값 설정을 위한 값
   const { psData, setPSData, resetPSData, isTouch, setIsTouch } = usePSStore();
-  const postData = usePostWriteStore((state) => state);
   const psId = usePersonalStatementStore((state) => state.psId);
   const queryClient = useQueryClient();
 
   const [formValues, setFormValues] = useState({
-    title: postData.postTitle || '',
-    position: postData.postPosition || '',
-    reason: postData.postReason || '',
-    content: postData.postContent || '',
+    title: '',
+    position: '',
+    reason: '',
+    content: '',
   });
 
   const [modalState, setModalState] = useState(initailModalState);
@@ -86,6 +85,7 @@ export default function PSCreateContainer() {
   const handleEditSubmit = async () => {
     await putPS(psId, formValues);
     await queryClient.invalidateQueries({ queryKey: ['ps'], refetchType: 'all' });
+    console.log('formValues:', formValues);
     createDone();
   };
 
@@ -93,6 +93,7 @@ export default function PSCreateContainer() {
   const handlePreviewClick = () => {
     // 미리 보기 클릭시 폼 데이터 값을 psData로 저장, 미리보기에서 되돌아 갔을 경우 psData를 불러옴
     setPSData(formValues);
+    console.log('내놔:', formValues);
     setIsTouch(true);
     router.push(`/personal-statement/${userData?.data.memberId}/preview`);
   };
@@ -103,6 +104,8 @@ export default function PSCreateContainer() {
       ...prev,
       [name]: value,
     }));
+    console.log('반영!');
+    console.log(formValues);
   };
 
   return (
