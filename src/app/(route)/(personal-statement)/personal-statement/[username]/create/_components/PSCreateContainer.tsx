@@ -18,10 +18,10 @@ export default function PSCreateContainer() {
   const searchParams = useSearchParams();
   const isEdit = searchParams.get('edit') === 'true';
   const { data: userData } = useMe();
+  const queryClient = useQueryClient();
   // psData = 수정 일 시 초기값 설정을 위한 값
   const { psData, setPSData, resetPSData, isTouch, setIsTouch } = usePSStore();
   const psId = usePersonalStatementStore((state) => state.psId);
-  const queryClient = useQueryClient();
 
   const [formValues, setFormValues] = useState({
     title: '',
@@ -93,7 +93,6 @@ export default function PSCreateContainer() {
   const handlePreviewClick = () => {
     // 미리 보기 클릭시 폼 데이터 값을 psData로 저장, 미리보기에서 되돌아 갔을 경우 psData를 불러옴
     setPSData(formValues);
-    console.log('내놔:', formValues);
     setIsTouch(true);
     router.push(`/personal-statement/${userData?.data.memberId}/preview`);
   };
@@ -104,8 +103,6 @@ export default function PSCreateContainer() {
       ...prev,
       [name]: value,
     }));
-    console.log('반영!');
-    console.log(formValues);
   };
 
   return (
