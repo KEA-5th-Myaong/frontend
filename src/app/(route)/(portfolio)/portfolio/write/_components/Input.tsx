@@ -33,6 +33,7 @@ export default function Input<T extends FieldValues>({
   onChange,
   required,
 }: InputProps<T>) {
+  console.log(label);
   const inputWidth = size === 'sm' ? 'w-[260px]' : 'w-full';
   const background = color === 'white' ? 'bg-white-0' : 'bg-transparent';
 
@@ -53,7 +54,7 @@ export default function Input<T extends FieldValues>({
     <div className="my-2.5">
       <div className="flex items-center">
         {required && <Icons name={RequiredIcon} />}
-        <label className="text-sm font-semibold ml-[5px]">{label}</label>
+        {/* <label className="text-sm font-semibold ml-[5px]">{label}</label> */}
       </div>
       {element === 'input' ? (
         <input

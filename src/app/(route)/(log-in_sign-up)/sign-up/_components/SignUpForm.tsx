@@ -186,7 +186,7 @@ export default function SignUpForm() {
           placeholder={FORM_PLACEHOLDER[1]}
           register={register}
           required={FORM_ERROR[10]}
-          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
+          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors, 'confirmPassword')}
           type="password"
           error={errors.confirmPassword}
         />

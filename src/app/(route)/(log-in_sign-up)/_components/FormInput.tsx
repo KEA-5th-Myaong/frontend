@@ -3,7 +3,6 @@ import { FieldValues, Path } from 'react-hook-form';
 import { FormInputProps } from '../_types/forms';
 import Icons from '../../../_components/ui/Icon';
 import { EditIcon, EyeIcon, EyeSlashIcon } from '../../../_components/ui/iconPath';
-import { useTheme } from '@/app/_components/ThemeProvider';
 
 export default function FormInput<T extends FieldValues>({
   id,

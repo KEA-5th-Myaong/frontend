@@ -93,7 +93,7 @@ export default function ChangePwdContainer() {
           placeholder="새 비밀번호를 입력해 주세요"
           register={register}
           required="새 비밀번호를 확인해주세요"
-          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
+          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors, 'newPassword')}
           type="password"
           error={errors.newPassword}
           isEssential={false}

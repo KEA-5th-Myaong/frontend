@@ -75,7 +75,7 @@ export default function ChangePwdForm() {
           placeholder={FORM_PLACEHOLDER[1]}
           register={register}
           required={FORM_ERROR[10]}
-          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
+          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors, 'newPassword')}
           type="originPassword"
           error={errors.newPassword}
         />
