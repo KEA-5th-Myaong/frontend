@@ -74,7 +74,10 @@ export default function PostContainer() {
     <div className="flex flex-col gap-6">
       {isblogUserNameDataLoading
         ? Array.from({ length: 5 }).map(() => (
-            <div key={`skeleton-${uuidv4()}`} className="w-full h-48 bg-gray-200 rounded-md animate-pulse" />
+            <div
+              key={`skeleton-${uuidv4()}`}
+              className="w-full h-48 bg-gray-200 dark:bg-black-3 rounded-md animate-pulse"
+            />
           ))
         : posts.map((post) => (
             <Post
@@ -102,7 +105,7 @@ export default function PostContainer() {
           ))}
 
       <div ref={ref} className="h-1" />
-      {isLoading && <div className="w-full h-48 bg-gray-2 rounded-md animate-pulse" />}
+      {isLoading && <div className="w-full h-48 bg-gray-2 dark:bg-black-3 rounded-md animate-pulse" />}
     </div>
   );
 }

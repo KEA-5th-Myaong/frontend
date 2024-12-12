@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import testData from '../_components/reportTest.json';
+import { useState } from 'react';
+// import testData from '../_components/reportTest.json';
 import Icons from '@/app/_components/ui/Icon';
 import { CheckIcon } from '@/app/_components/ui/iconPath';
 import { ReportedContents } from '../_types/admin-types';
@@ -12,9 +12,9 @@ export default function AdminContents() {
   const [contents, setContents] = useState<ReportedContents[]>([]);
   const [modalState, setModalState] = useState(initailModalState);
 
-  useEffect(() => {
-    setContents(testData.contents);
-  }, []);
+  // useEffect(() => {
+  //   setContents(testData.contents);
+  // }, []);
 
   const handleHideContent = (postId: number) => {
     setContents((prevContents) => {

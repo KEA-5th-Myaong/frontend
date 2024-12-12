@@ -78,7 +78,7 @@ export default function MainMenu({
             }
           }}
           onClick={() => handleBlogOpen('blog')}
-          className="relative text-black-1 text-sm font-semibold w-full h-full pb-2"
+          className="relative text-black-1 dark:text-white-1 text-sm font-semibold w-full h-full pb-2"
         >
           <div className="w-full h-1.5 flex-center">
             <div className="flex-center w-28 h-full">
@@ -103,7 +103,7 @@ export default function MainMenu({
             }
           }}
           onClick={() => handleJobOpen('job')}
-          className="relative text-black-1 text-sm font-semibold w-full h-full pb-2 "
+          className="relative text-black-1 dark:text-white-1 text-sm font-semibold w-full h-full pb-2 "
         >
           <div className="flex -center w-full h-1.5">
             <div className="flex-center w-28 h-full">

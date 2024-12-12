@@ -12,6 +12,22 @@ interface PersonalStatementStore {
   psId: number | null;
   setPsId: (psId: number | null) => void;
 }
+interface PersonalStatementStore {
+  psId: number | null;
+  setPsId: (psId: number | null) => void;
+}
+export interface PostWriteStore {
+  postData: PSFormData;
+  postTitle: string | null;
+  postContent: string | null;
+  postReason: string | null;
+  postPosition: string | null;
+  setPostData: (data: PSFormData) => void;
+  setPostTitle: (title: string) => void;
+  setPostContent: (data: string) => void;
+  setPostReason: (reason: string) => void;
+  setPostPosition: (position: string) => void;
+}
 
 // 빈 값, reset할 때 이걸 사용
 const initialState: PSFormData = {

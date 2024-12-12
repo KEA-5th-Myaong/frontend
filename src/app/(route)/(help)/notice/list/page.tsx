@@ -3,8 +3,8 @@ import testData from '../test.json';
 
 export default function NoticeList() {
   // 추후 페이지 나눌 시 리스트 길이 체크
-  const importListCount = testData.importantNotices.length;
-  const noticeListCount = testData.notices.length;
+  // const importListCount = testData.importantNotices.length;
+  // const noticeListCount = testData.notices.length;
 
   return (
     <div className="w-full max-w-[1000px] min-w-[360px] mx-10 md:my-24 my-32">
@@ -19,7 +19,7 @@ export default function NoticeList() {
       <div>
         <div className="flex py-5 border-y-2 md:text-base text-sm  border-gray-0">
           <div className="flex-center w-[10%]">번호</div>
-          <div className="flex-center w-[20%]"></div>
+          <div className="flex-center w-[20%]" />
           <div className="flex-center w-[45%]">제목</div>
           <div className="flex-center w-[25%]">날짜</div>
         </div>
@@ -41,7 +41,7 @@ export default function NoticeList() {
           {testData.notices.map((data) => (
             <Link href="./1/select" className="flex w-full py-5 border-b-2 md:text-base text-sm border-gray-5">
               <p className="flex-center w-[10%]">{data.noticeId}</p>
-              <p className="w-[20%]"></p>
+              <p className="w-[20%]" />
               <p className="w-[45%] text-center">{data.title}</p>
               <p className="flex-center w-[25%]">{data.timestamp}</p>
             </Link>

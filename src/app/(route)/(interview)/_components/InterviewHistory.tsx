@@ -74,7 +74,7 @@ export default function InterviewHistory() {
 
   return (
     <section
-      className={`bg-white-0 md:max-w-[253px] md:w-full self-stretch max-h-fit border-2 
+      className={`bg-white-0 dark:bg-black-2 md:max-w-[253px] md:w-full self-stretch max-h-fit border-2 
     ${!isChat && !showMore && 'mt-10 md:mt-0'} pt-[29px] pb-[22px] px-5 
     md:px-2 lg:px-5 rounded-2xl font-semibold z-10`}
     >
@@ -94,7 +94,10 @@ export default function InterviewHistory() {
           <p className="pl-[13px] font-medium">면접 기록 불러오는중...</p>
         ) : (
           historyLists?.map((item: HistoryItem) => (
-            <div key={item.interviewId} className="bg-white-0 hover:bg-[#F3F3F3] cursor-pointer interview-history">
+            <div
+              key={item.interviewId}
+              className="bg-white-0 dark:bg-black-2 hover:bg-[#F3F3F3] dark:hover:bg-gray-1 cursor-pointer interview-history"
+            >
               <div onClick={() => handleSelectHistory(item.title, item.interviewId)} className="interview-history-text">
                 {item.title}
               </div>

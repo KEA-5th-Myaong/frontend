@@ -78,7 +78,16 @@ export default function FormInput<T extends FieldValues>({
         </div>
       )}
 
-      {isEdit && <Icons onClick={onEditClick} className="input-icon" name={EditIcon} />}
+      {isEdit && (
+        <Icons
+          onClick={onEditClick}
+          className="input-icon"
+          name={{
+            ...EditIcon,
+            options: { ...EditIcon.options, stroke: '#9FA6B2' },
+          }}
+        />
+      )}
       {error ? (
         <p className="form-error-text">{error.message}</p>
       ) : (

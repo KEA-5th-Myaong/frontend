@@ -125,7 +125,7 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
     <div className="flex flex-col gap-6 w-full pt-5">
       {isLoading
         ? Array.from({ length: 5 }).map(() => (
-            <div key={v4()} className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
+            <div key={v4()} className="w-full h-48 bg-gray-4 dark:bg-black-3 rounded-md animate-pulse" />
           ))
         : posts.map((post) => (
             <Post
@@ -154,7 +154,7 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
 
       {/* 무한 스크롤 트리거용 div */}
       <div ref={ref} className="h-1" />
-      {isFetchingNextPage && <div className="w-full h-48 bg-gray-2 rounded-md animate-pulse" />}
+      {isFetchingNextPage && <div className="w-full h-48 bg-gray-2 dark:bg-black-3 rounded-md animate-pulse" />}
     </div>
   );
 }

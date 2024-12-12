@@ -4,7 +4,7 @@ import Icons from '@/app/_components/ui/Icon';
 import { RequiredIcon } from '@/app/_components/ui/iconPath';
 import { fetchPortfolio } from '@/app/(route)/(portfolio)/_services/portfolioServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { Certifications, Educations, Experiences, ExtraActivities, Links, PS } from '@/app/_types/portfolio';
+import { Certifications, Educations, Experiences, ExtraActivities, Links } from '@/app/_types/portfolio';
 import useMe from '@/app/_hooks/useMe';
 
 export default function PortfolioContainer() {

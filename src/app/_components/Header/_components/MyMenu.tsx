@@ -9,6 +9,8 @@ import Icons from '../../ui/Icon';
 import { SearchIcon, XIcon, UserIcon } from '../../ui/iconPath';
 import useClickOutside from '../../../_hooks/useClickOutside';
 import { User } from '@/app/_hooks/useMe';
+import ThemeToggle from '../../ThemeToggle';
+import { useTheme } from '../../ThemeProvider';
 
 interface MyMenuProps {
   handleMenuOpen: (menu: string | null) => void;
@@ -17,6 +19,7 @@ interface MyMenuProps {
 }
 
 export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuProps) {
+  const { theme } = useTheme();
   const router = useRouter();
   const isLogined = userData?.data?.nickname;
   const queryClient = useQueryClient();
@@ -51,9 +54,13 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
 
   return (
     <div className="hidden md:flex md:justify-end md:items-center w-full gap-10 h-full">
+      <ThemeToggle />
       <Icons
         onClick={() => router.push('/main/search')}
-        name={{ ...SearchIcon, fill: 'black' }}
+        name={{
+          ...SearchIcon,
+          fill: theme === 'dark' ? 'white' : 'black',
+        }}
         className="cursor-pointer"
       />
 
@@ -80,7 +87,9 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
                 </div>
               )}
             </div>
-            <div className="flex-center text-black-0 text-sm font-medium">{userData?.data.nickname} 님</div>
+            <div className="flex-center text-black-0 dark:text-white-0 text-sm font-medium">
+              {userData?.data.nickname} 님
+            </div>
           </div>
           <div className="flex-center w-10 ">
             <div className="w-7 h-7 text-xs relative" ref={alarmMenuRef}>
@@ -159,7 +168,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
               queryClient.clear();
               router.push('/log-in');
             }}
-            className="text-black-0 text-sm font-medium"
+            className="dark:text-white-0 text-black-0 text-sm font-medium"
           >
             로그인
           </button>
@@ -170,7 +179,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
               queryClient.clear();
               router.push('/sign-up');
             }}
-            className="text-black-0 text-sm font-medium"
+            className="dark:text-white-0 text-black-0 text-sm font-medium"
           >
             회원가입
           </button>

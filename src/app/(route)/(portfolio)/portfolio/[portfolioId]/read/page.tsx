@@ -25,9 +25,7 @@ export default function PortfolioRead() {
     () => fetchPortfolio(String(portfolioId)),
   );
 
-  const [title, setTitle] = useState('');
-  // FIX: 로그인 여부 연결
-  const [isLogined, setIsLogined] = useState<boolean | null>(true);
+  const [isLogined] = useState<boolean | null>(true);
   const [showModal, setShowModal] = useState(false);
   const [modalState, setModalState] = useState(initailModalState); // 삭제 모달
   const [isShowDropdown, setIsShowDropdown] = useState(false);

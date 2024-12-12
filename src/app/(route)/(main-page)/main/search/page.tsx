@@ -90,7 +90,7 @@ export default function SearchPage() {
       <div className="flex items-center w-full sm:max-w-[80%] md:max-w-[66%] border border-[#B4B4B4] px-5 py-4 mb-9 rounded-[28px] gap-5">
         <Icons onClick={() => handleSearch()} name={SearchIcon} className="cursor-pointer" />
         <input
-          className="w-full focus:outline-none"
+          className="w-full focus:outline-none dark:bg-black-1"
           placeholder="검색어를 입력해주세요"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
@@ -100,7 +100,7 @@ export default function SearchPage() {
       <div className="flex flex-col gap-5 w-full">
         {isLoading
           ? Array.from({ length: 5 }).map(() => (
-              <div key={v4()} className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
+              <div key={v4()} className="w-full h-48 bg-gray-4 dark:bg-black-3 rounded-md animate-pulse" />
             ))
           : posts?.map((post) => (
               <Post

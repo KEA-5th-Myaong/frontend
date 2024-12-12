@@ -23,6 +23,7 @@ export default function LoadPSModal({ onSelect, onOverlayClick }: LoadPSModalPro
       onOverlayClick();
     }
   };
+  console.log(selectedPSId);
 
   // 자기소개서 목록 불러오기
   const [psList, setPSList] = useState([]); // 자소서 배열

@@ -19,7 +19,7 @@ export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userNa
   };
   return (
     <>
-      <div className="absolute bg-white-0 border-2 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
+      <div className="absolute bg-white-0 dark:bg-gray-4 border-2 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
         {isBlog ? (
           <>
             <div className="w-[88px] h-8 mx-auto m-2">

@@ -44,6 +44,10 @@ export default function PSReadContainer() {
     await deletePS(psId);
   }
 
+  async function handlePSListDelete(psId: number) {
+    await deletePS(psId);
+  }
+
   // 삭제 클릭
   const handleDeleteClick = () => {
     setModalState((prev) => ({
@@ -56,6 +60,7 @@ export default function PSReadContainer() {
       onSubBtnClick: () => setModalState(initailModalState),
       onBtnClick: () => {
         handlePSDelete(Number(postId));
+        handlePSListDelete(Number(postId));
         setModalState((prev2) => ({
           ...prev2,
           open: true,

@@ -57,7 +57,7 @@ export default function Modal({
       <motion.div
         onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 Overlay까지 전달되지 않도록
         {...modalMotion}
-        className="flex m-4 min-w-[300px] max-w-[510px] w-full pb-6 px-10 pt-10 flex-col items-start gap-12 rounded-2xl bg-white-0 shadow-md"
+        className="flex m-4 min-w-[300px] max-w-[510px] w-full pb-6 px-10 pt-10 flex-col items-start gap-12 rounded-2xl bg-white-0 dark:bg-black-3 dark:border shadow-md"
       >
         {/* 텍스트 */}
         <div className="flex items-center flex-col gap-2 self-stretch ">

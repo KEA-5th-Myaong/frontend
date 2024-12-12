@@ -87,6 +87,7 @@ export default function PSCreateContainer() {
   const handleEditSubmit = async () => {
     await putPS(psId, formValues);
     await queryClient.invalidateQueries({ queryKey: ['ps'], refetchType: 'all' });
+    console.log('formValues:', formValues);
     createDone();
   };
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import MessageForm from './MessageForm';
 import useContainerHeight from '../../../../../_hooks/useContainerHeight';
 import useScrollToBottom from '../../../../../../../_hooks/useScrollToBottom';
@@ -22,12 +23,31 @@ import useChatWriteStore from '@/app/_store/chatWrite';
 export default function ChatContainer() {
   const interviewId = useInterviewIdStore((state) => state.interviewId);
   const setMessage = useChatWriteStore((state) => state.setMessages);
+  const router = useRouter();
 
   const [messages, setMessages] = useState<InterviewMessages[]>([]); // 채팅 내용 다 담김
   const [isMaxMessages, setIsMaxMessages] = useState(false); // 최대 채팅 수 도달
   const [isLastMessageUser, setIsLastMessageUser] = useState(false); // 마지막 메시지가 사용자인지
   const [editMessageId, setEditMessageId] = useState<string | null>(null);
   const [editedText, setEditedText] = useState<string>(''); // 수정한 메시지
+
+  useEffect(() => {
+    // 새로고침 방지
+    const preventRefresh = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+
+    window.addEventListener('beforeunload', preventRefresh);
+
+    // interviewId가 없으면 이전 페이지로
+    if (!interviewId) {
+      router.back();
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', preventRefresh);
+    };
+  }, [interviewId, router]);
 
   useEffect(() => {
     if (setMessage) {
@@ -157,7 +177,7 @@ export default function ChatContainer() {
                   />
                 ) : (
                   <div
-                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4' : 'bg-primary-0'}`}
+                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4 dark:bg-black-3' : 'bg-primary-0 dark:bg-gray-4 dark:text-black-0'}`}
                   >
                     {msg.content}
                   </div>

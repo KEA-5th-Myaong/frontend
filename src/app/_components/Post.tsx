@@ -54,7 +54,7 @@ export default function Post({
   return (
     <div
       onClick={onContentClick}
-      className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] rounded-2xl 
+      className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] dark:bg-black-1 rounded-2xl 
         border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out cursor-pointer ${className}`}
     >
       <div className="flex flex-col w-full">
@@ -84,8 +84,8 @@ export default function Post({
 
       <div className="flex flex-col pl-[12px] sm:pl-[62px] pr-5 gap-7">
         <div className="flex flex-col gap-4">
-          <span className="text-[#030303] font-semibold">{title}</span>
-          <span className="text-[#030303] overflow-hidden line-clamp-3">{sanitizedContent}</span>
+          <span className="text-[#030303] font-semibold dark:text-white-1">{title}</span>
+          <span className="text-[#030303] overflow-hidden line-clamp-3 dark:text-white-1">{sanitizedContent}</span>
         </div>
 
         <div className="flex justify-between items-center">

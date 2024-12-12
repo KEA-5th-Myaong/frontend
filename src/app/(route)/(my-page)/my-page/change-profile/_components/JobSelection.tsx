@@ -75,7 +75,7 @@ export default function JobSelection({ onJobsChange }: { onJobsChange: (selected
             type="button"
             onClick={() => setSelectJobCategory('직군 전체')}
             className={`flex justify-between items-center w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
-              selectJobCategory === '직군 전체' ? 'bg-primary-0' : 'text-gray-0'
+              selectJobCategory === '직군 전체' ? 'bg-primary-0 dark:bg-gray-3' : 'text-gray-0'
             }`}
           >
             <p className="w-full text-center">직군 전체</p>
@@ -87,7 +87,7 @@ export default function JobSelection({ onJobsChange }: { onJobsChange: (selected
               type="button"
               onClick={() => setSelectJobCategory(category.categoryName)}
               className={`flex justify-between items-center w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
-                selectJobCategory === category.categoryName ? 'bg-primary-0' : 'text-gray-0'
+                selectJobCategory === category.categoryName ? 'bg-primary-0 dark:bg-gray-3' : 'text-gray-0'
               }`}
             >
               <p className="w-full text-center">{category.categoryName}</p>

@@ -68,12 +68,14 @@ export default function InterviewPersonalStatement() {
         <p className="text-sm">선택 기업</p>
 
         <div className="flex gap-3 pt-3 whitespace-nowrap">
-          <motion.div className="w-full max-w-64 py-4 px-5 bg-gray-4 font-bold rounded-[28px]">{corp}</motion.div>
+          <motion.div className="w-full max-w-64 py-4 px-5 bg-gray-4 dark:bg-black-2 dark:border font-bold rounded-[28px]">
+            {corp}
+          </motion.div>
           <motion.button
             type="button"
             layoutId="select"
             onClick={() => router.back()}
-            className="py-4 px-6 rounded-[28px] primary-1-btn"
+            className="py-4 px-6 rounded-[28px] primary-1-btn hover:bg-primary-2"
           >
             다시 선택
           </motion.button>
@@ -86,7 +88,7 @@ export default function InterviewPersonalStatement() {
       <div className="flex flex-col self-stretch gap-5 w-full pb-12">
         {isLoading
           ? Array.from({ length: 5 }).map(() => (
-              <div key={v4()} className="w-full h-32 bg-gray-200 rounded-md animate-pulse" />
+              <div key={v4()} className="w-full h-32 bg-gray-200 dark:bg-black-3 rounded-md animate-pulse" />
             ))
           : psList?.map((ps: PSBoxProps, index) => (
               <motion.div key={ps.psId} variants={ListVariants} custom={index} initial="hidden" animate="visible">
