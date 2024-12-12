@@ -9,6 +9,7 @@ import Overlay from '@/app/_components/Overlay';
 import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { PSListBoxProps } from '@/app/(route)/(personal-statement)/personal-statement/[id]/list/_types/psList';
+import useMe from '@/app/_hooks/useMe';
 
 interface LoadPSModalProps {
   onOverlayClick?: () => void;
@@ -31,7 +32,8 @@ export default function LoadPSModal({ onOverlayClick }: LoadPSModalProps) {
     }
   }, [psData]);
 
-  // FIX: 자기소개서 없을 때 작성하러 가기 링크 수정 필요
+  // 유저 정보 조회
+  const { data: userData } = useMe();
 
   return (
     <Overlay onClick={handleOverlayClick}>
@@ -52,7 +54,7 @@ export default function LoadPSModal({ onOverlayClick }: LoadPSModalProps) {
               <Image className="animate-bounce" src="/mascot.png" alt="마스코트" width={204} height={193} />
               <p className="text-gray-0">자기소개서를 작성해보세요</p>
             </div>
-            <Link href={`/personal-statement/member2/list`}>
+            <Link href={`/personal-statement/${userData?.data.username}/list`}>
               <button
                 type="button"
                 className=" ml-[370px] flex items-center h-[50px] py-[13px] gap-2.5 md:py-[19px] px-5 md:px-7 rounded-[30px] primary-1-btn hover-animation"

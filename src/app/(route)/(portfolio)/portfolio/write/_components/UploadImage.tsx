@@ -45,11 +45,11 @@ export default function UploadImage({ onImageUpload }: UploadImageProps) {
     <button
       type="button"
       onClick={handleClick}
-      className="flex-center flex-col  w-[150px] h-[150px] my-8 bg-white-0 border border-gray-5 rounded-[12px] cursor-pointer"
+      className="flex-center flex-col  w-[150px] h-[150px] my-8 bg-white-0 border border-gray-5 rounded-xl cursor-pointer"
     >
       {previewUrl ? (
         <div className="relative w-full h-full">
-          <img src={previewUrl} alt="프로필 사진" className="w-full h-full object-cover rounded-[12px]" />
+          <img src={previewUrl} alt="프로필 사진" className="w-full h-full object-cover rounded-xl" />
           <button type="button" onClick={handleImageRemove} className="absolute top-2 right-2 z-[40]">
             <Icons name={XIcon} />
           </button>
