@@ -11,14 +11,22 @@ import PortfolioContainer from './_components/PortfolioContainer';
 import Footer from '../../../_components/Footer';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import PortfolioDropdown from '../../../_components/PortfolioDropdown';
-import { deletePortfolios } from '../../../_services/portfolioServices';
+import { deletePortfolios, fetchPortfolio } from '../../../_services/portfolioServices';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
 
 export default function PortfolioRead() {
   const params = useParams();
   const { portfolioId } = params;
   const router = useRouter();
 
-  const [title, setTitle] = useState('제목');
+  // 포트폴리오 조회
+  const { data: portfolio } = useCustomQuery(
+    ['portfolio', portfolioId], // Query Key에 ID 포함
+    () => fetchPortfolio(String(portfolioId)),
+  );
+  console.log('읽기 페이지 포폴 데이터', portfolio);
+
+  const [title, setTitle] = useState('');
   //FIX: 로그인 여부 연결
   const [isLogined, setIsLogined] = useState<boolean | null>(true);
   const [showModal, setShowModal] = useState(false);
@@ -90,7 +98,7 @@ export default function PortfolioRead() {
 
         <section ref={targetRef}>
           <div className="relative flex justify-between items-center my-10">
-            <h1 className="pre-3xl-semibold">{title}</h1>
+            <h1 className="pre-3xl-semibold">{portfolio?.data?.title}</h1>
             <div>
               <Icons
                 name={MoreIcon}
