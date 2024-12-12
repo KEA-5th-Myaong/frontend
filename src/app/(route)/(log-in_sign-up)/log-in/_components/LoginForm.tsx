@@ -26,7 +26,7 @@ export default function LoginForm() {
     // 쿠키에 토큰 저장
     Cookies.set('accessToken', response.data.accessToken, {
       path: '/', // 모든 경로에서 접근 가능
-      secure: process.env.NODE_ENV === 'production', // HTTPS에서만 작동 (프로덕션 환경에서)
+      secure: window.location.protocol === 'https:', // HTTPS에서만 작동 (프로덕션 환경에서)
       sameSite: 'strict', // CSRF 공격 방지
     });
     // 모든 캐시 무효화
