@@ -39,7 +39,7 @@ export default function LoginForm() {
     try {
       await onSubmit(data);
       await queryClient.invalidateQueries({ queryKey: ['me'] });
-      window.location.href = '/main'; // 강제 새로고침
+      // window.location.href = '/main'; // 강제 새로고침
     } catch (error) {
       if (error instanceof AxiosError) {
         setErrorMessage(error.response?.data.message);
