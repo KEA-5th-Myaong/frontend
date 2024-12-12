@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQueryClient } from '@tanstack/react-query';
 import { usePDF, Margin } from 'react-to-pdf';
 import Image from 'next/image';
 import Modal, { initailModalState } from '../../../../../../_components/Modal';
@@ -14,21 +13,15 @@ import { fetchPS, deletePS } from '@/app/(route)/(personal-statement)/_services/
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import useMe from '@/app/_hooks/useMe';
 import usePSStore from '../../../../_store/psStore';
-import { usePersonalStatementStore, usePostWriteStore } from '@/app/(route)/(personal-statement)/_store/psStore';
+import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSReadContainer() {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { data: userData } = useMe();
   const postId = usePersonalStatementStore((state) => state.psId);
-
+  const setPsId = usePersonalStatementStore((state) => state.setPsId);
   const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId));
-  const { setIsTouch } = usePSStore();
-
-  const setTitle = usePostWriteStore((state) => state.setPostTitle);
-  const setContent = usePostWriteStore((state) => state.setPostContent);
-  const setReason = usePostWriteStore((state) => state.setPostReason);
-  const setPosition = usePostWriteStore((state) => state.setPostPosition);
+  const { setIsTouch, resetPSData } = usePSStore();
 
   const [psState, setPsState] = useState<PSFormData>({
     title: '',
@@ -41,7 +34,11 @@ export default function PSReadContainer() {
 
   useEffect(() => {
     setPsState(psData?.data);
-  }, [psData]);
+  }, [psData, postId]);
+
+  if (postId == null) {
+    router.push(`/personal-statement/${userData?.data.username}/list`);
+  }
 
   async function handlePSListDelete(psId: number) {
     await deletePS(psId);
@@ -68,7 +65,6 @@ export default function PSReadContainer() {
           onBtnClick: async () => {
             setModalState(initailModalState);
             router.back();
-            queryClient.invalidateQueries({ queryKey: ['ps'] });
           },
         }));
       },
@@ -77,10 +73,8 @@ export default function PSReadContainer() {
 
   // 수정 클릭
   const handleEditClick = () => {
-    setTitle(psData?.data.title);
-    setContent(psData?.data.content);
-    setReason(psData?.data.title);
-    setPosition(psData?.data.position);
+    resetPSData();
+    setPsId(postId);
     setIsTouch(false);
     router.push(`/personal-statement/${userData?.data.username}/create?edit=true`);
   };
