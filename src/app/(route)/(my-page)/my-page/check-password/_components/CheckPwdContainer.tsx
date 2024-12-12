@@ -1,17 +1,14 @@
 'use client';
 
 import axios from 'axios';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, FieldValues } from 'react-hook-form';
 import FormInput from '../../../../(log-in_sign-up)/_components/FormInput';
 import { FORM_TEXT, FORM_PLACEHOLDER, FORM_ERROR } from '../../../../(log-in_sign-up)/_constants/forms';
-import Modal from '../../../../../_components/Modal';
 
 export default function CheckPwdContainer() {
   const router = useRouter();
   const { register, handleSubmit } = useForm({});
-  const [showModal, setShowModal] = useState(false);
 
   const onSubmit = async (data: FieldValues) => {
     const response = await axios.post('/api/check-pwd', data); // 임시 api 주소
@@ -22,7 +19,6 @@ export default function CheckPwdContainer() {
     try {
       await onSubmit(data);
     } catch (error) {
-      setShowModal(true);
       router.push('/my-page/change-profile');
     }
   };

@@ -99,10 +99,25 @@ export async function postCheckPassword(passwordData: unknown) {
   }
 }
 
-// (POST) 프로필 사진 수정
-export async function postProfilPic(formData: unknown) {
+// (PUT) 비밀번호 변경
+export async function putChangePassword(passwordData: { originPassword: string; newPassword: string }) {
   try {
-    const { data } = await api.post('/members/profile-pic', formData);
+    const { data } = await api.put('/members/password', passwordData);
+    return data;
+  } catch (error) {
+    console.error('비밀번호 변경 실패:', error);
+    throw error;
+  }
+}
+
+// (POST) 프로필 사진 수정
+export async function postProfilePic(formData: FormData) {
+  try {
+    const { data } = await api.post('/blog/profiles/pic', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return data;
   } catch (error) {
     console.error('프로필 사진 수정 실패:', error);
@@ -110,10 +125,10 @@ export async function postProfilPic(formData: unknown) {
   }
 }
 
-// (PUT) 기본 정보 수정
-export async function putChangeProfile(memberData: unknown) {
+// (PUT) 프로필 정보 수정
+export async function putChangeProfile(profileData: unknown) {
   try {
-    await api.post('/members', memberData);
+    await api.put('/blog/profiles', profileData);
   } catch (error) {
     console.error('기본 정보 수정 실패:', error);
     throw error;

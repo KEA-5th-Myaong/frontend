@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import Icons from '../../../../../../_components/ui/Icon';
 import { ArrowIcon } from '../../../../../../_components/ui/iconPath';
 import { PSBoxProps } from '../_types/corp';
+import { formatDate } from '@/app/_utils/formatDate';
 
 export default function InterviewPSBox({ title, timestamp, onClick }: PSBoxProps) {
   return (
@@ -17,8 +18,8 @@ export default function InterviewPSBox({ title, timestamp, onClick }: PSBoxProps
         <p className="font-semibold overflow-scroll hide-scrollbar">{title}</p>
 
         <div className="flex text-xs text-gray-0 gap-7">
-          <p>작성일자 {timestamp}</p>
-          <p>수정일자 {timestamp}</p>
+          <p>작성일자 {formatDate(timestamp)}</p>
+          <p>수정일자 {formatDate(timestamp)}</p>
         </div>
       </div>
       <div

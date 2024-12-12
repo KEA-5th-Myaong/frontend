@@ -6,59 +6,44 @@ import { CommentProps } from '../../_types/post';
 import CommentItem from './CommentItem';
 import ReplyInput from './ReplyInput';
 import useCustomMutation from '@/app/_hooks/useCustomMutation';
-import { postComments, postReplies } from '../../../_services/blogService';
+import {
+  deleteComments,
+  deleteReplies,
+  postComments,
+  postReplies,
+  putComments,
+  putReplies,
+} from '../../../_services/blogService';
+import Modal, { initailModalState } from '@/app/_components/Modal';
 
 interface PostCommentProps {
   postId: string;
   comments: CommentProps[];
+  currentUserId?: number;
 }
 
-export default function PostComment({ postId, comments }: PostCommentProps) {
+export default function PostComment({ postId, comments, currentUserId }: PostCommentProps) {
   const [commentLists, setCommentLists] = useState<CommentProps[]>([]);
   const [replyingTo, setReplyingTo] = useState<number | null>(null); // 답글을 작성중인 댓글의 id
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null); // 수정중인 댓글의 id
   const [newComment, setNewComment] = useState('');
+  const [modalState, setModalState] = useState(initailModalState);
   const queryClient = useQueryClient();
 
   useEffect(() => {
     setCommentLists(comments);
   }, [comments]);
 
-  // 댓글 제출
-  const postCommentMutation = useCustomMutation(postComments, {
-    onMutate: async (commentData: { postId: string; comment: string }) => {
-      // 진행 중인 쿼리를 취소
-      await queryClient.cancelQueries({ queryKey: ['user-post', commentData.postId] });
-      // 이전 데이터 백업
-      const previousComments = queryClient.getQueryData(['user-post', commentData.postId]);
-      // 낙관적 업데이트
-      const optimisticComment = {
-        comment: commentData.comment,
-        nickname: '김현중',
-        timestamp: '방금 전',
-        profilePicUrl: '/mascot.png',
-        memberId: null,
-      };
-      queryClient.setQueryData(['user-post', commentData.postId], (old: any) => ({
-        ...old,
-        comments: [...(old?.comments || []), optimisticComment],
-      }));
-      return { previousComments };
+  // 댓글 작성 뮤테이션
+  const postCommentMutation = useCustomMutation(
+    ({ comment }: { postId: string; comment: string }) => postComments({ postId, content: comment }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        setNewComment('');
+      },
     },
-    onError: (err, variables, context) => {
-      // 에러 발생 시 이전 상태로 롤백
-      if (context?.previousComments) {
-        queryClient.setQueryData(['user-post', variables.postId], context.previousComments);
-      }
-    },
-    onSuccess: (response, variables) => {
-      setCommentLists((prev) => [...prev, response]); // response: 서버에서 반환한 새로 생성된 댓글 정보
-    },
-    onSettled: () => {
-      // 성공이든 실패든 완료되면 쿼리를 리페치
-      queryClient.invalidateQueries({ queryKey: ['user-post'] });
-    },
-  });
+  );
   // 댓글 제출
   const handleCommentSubmit = () => {
     if (!newComment.trim()) return;
@@ -74,52 +59,48 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
     setReplyingTo(replyingTo === commentId ? null : commentId); // 이미 답글 작성 중이던 댓글을 다시 클릭하면, 답글 작성 UI를 닫음
   };
 
-  const postReplyMutation = useCustomMutation(postReplies, {
-    onMutate: async (commentData: { postId: string; comment: string; parentId: string }) => {
-      // 진행 중인 쿼리를 취소
-      await queryClient.cancelQueries({ queryKey: ['user-post', commentData.postId] });
-      const previousComments = queryClient.getQueryData(['user-post', commentData.postId]);
-      const optimisticComment = {
-        comment: commentData.comment,
-        nickname: '김현중',
-        timestamp: '방금 전',
-        profilePicUrl: null,
-        memberId: null,
-      };
-      queryClient.setQueryData(['user-post', commentData.postId], (old: any) => ({
-        ...old,
-        comments: [...(old?.comments || []), optimisticComment],
-      }));
-      return { previousComments };
+  // 답글 작성 뮤테이션
+  const postReplyMutation = useCustomMutation(
+    ({ content, commentId }: { postId: string; content: string; commentId: string }) =>
+      postReplies({ postId, content, commentId }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        setReplyingTo(null);
+      },
     },
-    onError: (err, variables, context) => {
-      // 에러 발생 시 이전 상태로 롤백
-      if (context?.previousComments) {
-        queryClient.setQueryData(['user-post', variables.postId], context.previousComments);
-      }
-    },
-    onSuccess: (response, variables) => {
-      setCommentLists((prev) => {
-        const parentIndex = prev.findIndex((comment) => comment.commentId === variables.parentId);
-        const newComments = [...prev];
-        newComments.splice(parentIndex + 1, 0, response); // 부모 댓글 바로 다음에 삽입
-        return newComments;
-      });
-    },
-    onSettled: () => {
-      // 성공이든 실패든 완료되면 쿼리를 리페치
-      queryClient.invalidateQueries({ queryKey: ['user-post'] });
-    },
-  });
+  );
+
   // 답글 제출
-  const handleReplySubmit = (parentId: string, content: string) => {
+  const handleReplySubmit = (commentId: string, content: string) => {
     if (!content.trim()) return;
     postReplyMutation.mutate({
       postId,
-      comment: content,
-      parentId,
+      content,
+      commentId,
     });
   };
+
+  // 댓글 수정 뮤테이션
+  const editCommentMutation = useCustomMutation(
+    ({ commentId, content }: { commentId: string; content: string }) => putComments(commentId, { content }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        setEditingCommentId(null);
+      },
+    },
+  );
+  // 답글 수정 뮤테이션
+  const editReplyMutation = useCustomMutation(
+    ({ replyId, content }: { replyId: string; content: string }) => putReplies(replyId, { content }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        setEditingCommentId(null);
+      },
+    },
+  );
 
   // 수정 버튼 클릭
   const handleEditClick = (commentId: number) => {
@@ -128,14 +109,72 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
 
   // 수정 제출
   const handleEditSubmit = (commentId: number, newContent: string) => {
-    if (newContent.trim()) {
-      setCommentLists(
-        commentLists.map((comment) =>
-          comment.commentId === commentId ? { ...comment, comment: newContent, timestamp: '방금 전' } : comment,
-        ),
-      );
-      setEditingCommentId(null); // 수정 종료(id를 null로)
+    if (!newContent.trim()) return;
+    // 수정하려는 항목이 댓글인지 답글인지 확인
+    const targetComment = commentLists.find((comment) => comment.commentId === commentId);
+    if (!targetComment) return;
+
+    if (targetComment.parentCommentId === null) {
+      // 댓글 수정
+      editCommentMutation.mutate({
+        commentId: commentId.toString(),
+        content: newContent,
+      });
+    } else {
+      // 답글 수정
+      editReplyMutation.mutate({
+        replyId: commentId.toString(),
+        content: newContent,
+      });
     }
+  };
+
+  // 댓글 삭제 뮤테이션
+  const deleteCommentMutation = useCustomMutation((commentId: string) => deleteComments(commentId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['url-post'] });
+    },
+  });
+  // 답글 삭제 뮤테이션
+  const deleteReplyMutation = useCustomMutation((replyId: string) => deleteReplies(replyId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['url-post'] });
+    },
+  });
+
+  // 삭제 처리 함수 추가
+  const handleDelete = (commentId: number) => {
+    try {
+      const targetComment = commentLists.find((comment) => comment.commentId === commentId);
+      if (!targetComment) return;
+
+      if (targetComment.parentCommentId === null) {
+        // 댓글 삭제
+        deleteCommentMutation.mutate(commentId.toString());
+      } else {
+        // 답글 삭제
+        deleteReplyMutation.mutate(commentId.toString());
+      }
+    } catch (error) {
+      console.error('댓글 삭제 실패:', error);
+      throw error;
+    } finally {
+      setModalState(initailModalState);
+    }
+  };
+
+  // 삭제 클릭하면 나오는 모달
+  const handleDeleteClick = (commentId: number) => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '해당 댓글을 삭제하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '삭제',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () => handleDelete(commentId),
+    }));
   };
 
   // 댓글과 그에 대한 답글을 렌더링
@@ -155,7 +194,9 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
           onReplyClick={handleReplyClick}
           onEditClick={handleEditClick}
           onEditSubmit={handleEditSubmit}
+          onDelete={handleDeleteClick}
           isEditing={editingCommentId === comment.commentId}
+          isMine={comment.memberId === currentUserId}
         />
         {/* 여기는 답글 */}
         {replies.map((reply) => (
@@ -165,12 +206,16 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
             onReplyClick={handleReplyClick}
             onEditClick={handleEditClick}
             onEditSubmit={handleEditSubmit}
+            onDelete={handleDeleteClick}
             isReply
             isEditing={editingCommentId === reply.commentId}
+            isMine={reply.memberId === currentUserId}
           />
         ))}
         {/* 답글 인풋 보이게 */}
-        {isReplyInputVisible && <ReplyInput onSubmit={(content) => handleReplySubmit(comment.commentId, content)} />}
+        {isReplyInputVisible && (
+          <ReplyInput onSubmit={(content) => handleReplySubmit(comment.commentId as unknown as string, content)} />
+        )}
       </div>
     );
   };
@@ -197,6 +242,18 @@ export default function PostComment({ postId, comments }: PostCommentProps) {
           댓글 등록
         </button>
       </div>
+
+      {modalState.open && (
+        <Modal
+          isWarn
+          hasSubBtn={modalState.hasSubBtn}
+          topText={modalState.topText}
+          subBtnText={modalState.subBtnText}
+          btnText={modalState.btnText}
+          onSubBtnClick={modalState.onSubBtnClick}
+          onBtnClick={modalState.onBtnClick}
+        />
+      )}
     </div>
   );
 }

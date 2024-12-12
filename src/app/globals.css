@@ -76,7 +76,11 @@ body {
     @apply pl-4 mt-1.5 font-medium text-xs text-red-0;
   }
   .form-input {
-    @apply w-full p-4 border-2 rounded-lg border-primary-1 text-black-0 font-medium focus:outline-none;
+    @apply w-full p-4 border-2 rounded-lg border-gray-3 text-black-0 font-medium focus:outline-primary-1;
+  }
+  .form-input:focus,
+  .form-input:not(:placeholder-shown) {
+    @apply border-primary-1;
   }
   .form-btn {
     @apply border-none text-white-0 bg-primary-1 form-input;
@@ -87,10 +91,16 @@ body {
   .form-red-dot {
     @apply bg-red-0 w-[5px] h-[5px] rounded-full;
   }
+  .input-icon {
+    @apply absolute right-4 top-[62px] transform -translate-y-1/2 cursor-pointer;
+  }
 
   /* 블로그 */
   .blog-favor-frame {
     @apply flex items-center gap-[5px] px-3 py-[5px] cursor-pointer;
+  }
+  .user-profile-btn {
+    @apply flex justify-center ml-0 sm:ml-10 md:ml-0 self-stretch text-lg h-fit py-[4.5px] sm:py-[7.5px] md:py-[22px] px-4 sm:px-[30px] font-semibold primary-1-btn;
   }
 
   /* 모의 면접 */

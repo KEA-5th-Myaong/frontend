@@ -103,7 +103,6 @@ export async function postPost(postData: unknown) {
 export async function postPic(file: File): Promise<string> {
   const formData = new FormData();
   formData.append('pic', file);
-
   try {
     const { data } = await api.post('/blog/posts/pic', formData, {
       headers: {
@@ -111,7 +110,7 @@ export async function postPic(file: File): Promise<string> {
       },
     });
 
-    return data.picUrl;
+    return data.data.picUrl;
   } catch (error) {
     console.error('포스트 이미지 업로드 실패:', error);
     throw error;
@@ -233,10 +232,11 @@ export async function putBookmark(postId: number) {
   }
 }
 
-// (PUT) 신고하기
-export async function putReport(postId: string) {
+// (POST) 콘텐츠 신고
+export async function postReport(reportData: unknown) {
   try {
-    await api.put(`/blog/posts/${postId}/report`);
+    const { data } = await api.post(`/blog/posts/report`, reportData);
+    return data;
   } catch (error) {
     console.error('신고하기 실패:', error);
     throw error;
