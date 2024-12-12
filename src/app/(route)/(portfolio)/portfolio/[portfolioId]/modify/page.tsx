@@ -82,21 +82,20 @@ export default function PortfolioModify() {
     }
   }, [portfolioData, reset, portfolio]);
 
-  const onSubmit = handleSubmit(async (formData) => {
+  const onSubmit = async (formData: PortfolioFormProps) => {
     const cleanedData = cleanData(formData); // 데이터 정리
     // API 요청
     try {
       await putPortfolios(String(portfolioId), cleanedData);
       console.log('수정완료');
+      router.push(`/portfolio`);
     } catch (error) {
       console.error('Error creating portfolio:', error);
     }
-  });
+  };
 
   const handleDoneClick = () => {
-    if (portfolioId) {
-      router.push(`/portfolio/${portfolioId}/read`);
-    }
+    handleSubmit(onSubmit)(); // handleSubmit 호출
   };
 
   const handlePreviewClick = () => {
@@ -124,7 +123,7 @@ export default function PortfolioModify() {
               </Link>
             </div>
             <FormProvider {...methods}>
-              <form onSubmit={onSubmit}>
+              <form>
                 <div className="relative flex justify-between items-center mt-5">
                   <input
                     {...register('title')}
@@ -208,7 +207,6 @@ export default function PortfolioModify() {
                   </div>
                   {toggles.personalStatement && <PSSection register={register} />}
                 </section>
-                <button type="submit">제출 테스트</button>
               </form>
             </FormProvider>
           </div>

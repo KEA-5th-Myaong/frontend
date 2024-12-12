@@ -94,7 +94,6 @@ export default function PortfolioWrite() {
   };
 
   const handleDoneClick = () => {
-    //FIX: 포트폴리오 리스트 추가되면 갱신되도록 로직 수정
     handleSubmit(onSubmit)(); // handleSubmit 호출
   };
 
