@@ -438,3 +438,17 @@ export const TrashIcon: IconPathTypes = {
   width: 16,
   height: 16,
 };
+
+// 느낌표 아이콘
+export const BangCircleIcon: IconPathTypes = {
+  path: 'M8.0026 5.33301V7.99967M8.0026 10.6663H8.00927M14.6693 7.99967C14.6693 11.6816 11.6845 14.6663 8.0026 14.6663C4.32071 14.6663 1.33594 11.6816 1.33594 7.99967C1.33594 4.31778 4.32071 1.33301 8.0026 1.33301C11.6845 1.33301 14.6693 4.31778 14.6693 7.99967Z',
+  fill: 'none',
+  options: {
+    stroke: '#B3B3B3',
+    strokeWidth: 1.6,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  },
+  width: 16,
+  height: 16,
+};
