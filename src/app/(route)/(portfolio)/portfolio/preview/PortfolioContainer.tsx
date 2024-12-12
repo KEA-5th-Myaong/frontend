@@ -94,7 +94,7 @@ export default function PortfolioContainer() {
             return (
               <div className="flex gap-4 my-4">
                 <p className="grow font-semibold">{item?.name}</p>
-                <p className="grow">https://github.com/gil-dong</p>
+                <p className="grow">{item?.link}</p>
               </div>
             );
           })}

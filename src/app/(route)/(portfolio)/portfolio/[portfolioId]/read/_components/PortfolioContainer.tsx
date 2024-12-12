@@ -69,83 +69,87 @@ export default function PortfolioContainer() {
             </section>
           );
         })}
-      {portfolio?.data?.experiences &&
-        portfolio?.data?.experiences.map((item: Experiences) => {
-          return (
-            <section className="pf-read-section">
-              <h1 className="pre-3xl-semibold">경력</h1>
-              <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-              <div className="flex items-center gap-4">
-                <Icons
-                  className="mr-2.5"
-                  name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
-                />
-                <p className="grow font-semibold">{item?.name}</p>
-                <p className="grow">{item?.position}</p>
-                <p className="grow">
-                  {item?.start} - {item?.end}
-                </p>
-              </div>
-              <p className="mt-4">{item?.achievement}</p>
-            </section>
-          );
-        })}
 
-      {portfolio?.data?.links &&
-        portfolio?.data?.links.map((item: Links) => {
-          return (
-            <section className="pf-read-section">
-              <h1 className="pre-3xl-semibold">링크</h1>
-              <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-              <div className="flex gap-4">
-                <p className="grow font-semibold">{item?.name}</p>
-                <p className="grow">https://github.com/gil-dong</p>
+      <section className="pf-read-section">
+        <h1 className="pre-3xl-semibold">경력</h1>
+        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        {portfolio?.data?.experiences &&
+          portfolio?.data?.experiences.map((item: Experiences) => {
+            return (
+              <div className="mb-6">
+                <div className="flex items-center gap-4">
+                  <Icons
+                    className="mr-2.5"
+                    name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
+                  />
+                  <p className="grow font-semibold">{item?.name}</p>
+                  <p className="grow">{item?.position}</p>
+                  <p className="grow">
+                    {item?.start} - {item?.end}
+                  </p>
+                </div>
+                <p className="mt-4">{item?.achievement}</p>
               </div>
-            </section>
-          );
-        })}
-      {portfolio?.data?.skills &&
-        portfolio?.data?.skills.map((item: string) => {
-          return (
-            <section className="pf-read-section">
-              <h1 className="pre-3xl-semibold"> 기술 </h1>
-              <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-              <div className="w-full flex items-center gap-3">
-                <div className="py-3 px-5 border border-gray-5 rounded-[50px]">{item}</div>
-              </div>
-            </section>
-          );
-        })}
+            );
+          })}
+      </section>
 
-      {portfolio?.data?.extraActivities &&
-        portfolio?.data?.extraActivities.map((item: ExtraActivities) => {
-          return (
-            <section className="pf-read-section">
-              <h1 className="pre-3xl-semibold">교육 | 대외활동</h1>
-              <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-              <div className="flex items-center gap-4">
-                <Icons
-                  className="mr-2.5"
-                  name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
-                />
+      <section className="pf-read-section">
+        <h1 className="pre-3xl-semibold">링크</h1>
+        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        {portfolio?.data?.links &&
+          portfolio?.data?.links.map((item: Links) => {
+            return (
+              <div className="flex gap-4 my-4">
                 <p className="grow font-semibold">{item?.name}</p>
-                <p className="grow">{item?.institution}</p>
-                <p className="grow">
-                  {item?.start} {item.end ? '-' : ''} {item?.end}
-                </p>
+                <p className="grow">{item?.link}</p>
               </div>
-              <p className="mt-4">{item?.description}</p>
-            </section>
-          );
-        })}
+            );
+          })}
+      </section>
 
-      {portfolio?.data?.certifications &&
-        portfolio?.data?.certifications.map((item: Certifications) => {
-          return (
-            <section className="pf-read-section">
-              <h1 className="pre-3xl-semibold">자격증</h1>
-              <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-              <div className="flex justify-between">
+      <section className="pf-read-section">
+        <h1 className="pre-3xl-semibold"> 기술 </h1>
+        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="w-full flex items-center gap-3">
+          {portfolio?.data?.skills &&
+            portfolio?.data?.skills.map((item: string) => {
+              return <div className="py-3 px-5 border border-gray-5 rounded-[50px]">{item}</div>;
+            })}
+        </div>
+      </section>
+
+      <section className="pf-read-section">
+        <h1 className="pre-3xl-semibold">교육 | 대외활동</h1>
+        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        {portfolio?.data?.extraActivities &&
+          portfolio?.data?.extraActivities.map((item: ExtraActivities) => {
+            return (
+              <div className="mb-6">
+                <div className="flex items-center gap-4">
+                  <Icons
+                    className="mr-2.5"
+                    name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
+                  />
+                  <p className="grow font-semibold">{item?.name}</p>
+                  <p className="grow">{item?.institution}</p>
+                  <p className="grow">
+                    {item?.start} {item.end ? '-' : ''} {item?.end}
+                  </p>
+                </div>
+                <p className="mt-4">{item?.description}</p>
+              </div>
+            );
+          })}
+      </section>
+
+      <section className="pf-read-section">
+        <h1 className="pre-3xl-semibold">자격증</h1>
+        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        {portfolio?.data?.certifications &&
+          portfolio?.data?.certifications.map((item: Certifications) => {
+            return (
+              <div className="flex justify-between mb-2">
                 <div className="flex-center">
                   <Icons
                     className="mr-2.5"
@@ -155,31 +159,32 @@ export default function PortfolioContainer() {
                 </div>
                 <p>{item.date}</p>
               </div>
-            </section>
-          );
-        })}
+            );
+          })}
+      </section>
 
-      {portfolio?.data?.ps &&
-        portfolio?.data?.ps.map((item: PS) => {
-          return (
-            <section className="pf-read-section">
-              <h1 className="pre-3xl-semibold">자기소개서</h1>
-              <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-              <p className="mt-4">
-                지원 제목 <br />
-                {item?.title}
-              </p>
-              <p className="mt-4">
-                지원직무 <br />
-                {item?.position}
-              </p>
-              <p className="mt-4">
-                지원 사유 <br /> {item?.reason}
-              </p>
-              <p className="mt-4">{item?.content}</p>
-            </section>
-          );
-        })}
+      {portfolio?.data?.ps && (
+        <section className="pf-read-section">
+          <h1 className="pre-3xl-semibold">자기소개서</h1>
+          <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+          <p className="mt-4">
+            <p className="font-bold text-[14px] mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md">제목</p>
+            <p className="px-5">{portfolio?.data?.ps?.title}</p>
+          </p>
+          <p className="mt-4">
+            <p className="font-bold text-[14px] mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md"> 지원 직무</p>
+            <p className="px-5">{portfolio?.data?.ps?.position}</p>
+          </p>
+          <p className="mt-4">
+            <p className="font-bold text-[14px] mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md"> 지원 사유</p>
+            <p className="px-5">{portfolio?.data?.ps?.reason}</p>
+          </p>
+          <p className="mt-4 ">
+            <p className="font-bold text-[14px] mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md">자기소개서</p>
+            <p className="px-5">{portfolio?.data?.ps?.content}</p>
+          </p>
+        </section>
+      )}
     </div>
   );
 }

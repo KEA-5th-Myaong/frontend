@@ -118,6 +118,7 @@ export default function PortfolioCard({
 
       {modalState.open && (
         <Modal
+          isWarn
           hasSubBtn={modalState.hasSubBtn}
           topText={modalState.topText}
           subBtnText={modalState.subBtnText}

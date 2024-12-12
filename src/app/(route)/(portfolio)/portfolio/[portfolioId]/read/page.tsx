@@ -24,10 +24,9 @@ export default function PortfolioRead() {
     ['portfolio', portfolioId], // Query Key에 ID 포함
     () => fetchPortfolio(String(portfolioId)),
   );
-  console.log('읽기 페이지 포폴 데이터', portfolio);
 
   const [title, setTitle] = useState('');
-  //FIX: 로그인 여부 연결
+  // FIX: 로그인 여부 연결
   const [isLogined, setIsLogined] = useState<boolean | null>(true);
   const [showModal, setShowModal] = useState(false);
   const [modalState, setModalState] = useState(initailModalState); // 삭제 모달
