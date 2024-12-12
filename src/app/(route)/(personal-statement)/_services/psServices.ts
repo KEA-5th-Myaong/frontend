@@ -12,7 +12,7 @@ export async function fetchPSList() {
 }
 
 // (GET) 자기소개서 조회
-export async function fetchPS(psId: number | null) {
+export async function fetchPS(psId: string | null) {
   try {
     const { data } = await api.get(`/ps/${psId}`);
     return data;

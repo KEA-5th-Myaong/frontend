@@ -20,7 +20,7 @@ export default function PSReadContainer() {
   const { data: userData } = useMe();
   const postId = usePersonalStatementStore((state) => state.psId);
   const setPsId = usePersonalStatementStore((state) => state.setPsId);
-  const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId));
+  const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId as string | null));
   const { setIsTouch, resetPSData } = usePSStore();
 
   const [psState, setPsState] = useState<PSFormData>({
