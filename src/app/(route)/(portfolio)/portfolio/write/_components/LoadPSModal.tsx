@@ -12,10 +12,12 @@ import { PSListBoxProps } from '@/app/(route)/(personal-statement)/personal-stat
 import useMe from '@/app/_hooks/useMe';
 
 interface LoadPSModalProps {
+  onSelect: (id: string) => void;
   onOverlayClick?: () => void;
 }
 
-export default function LoadPSModal({ onOverlayClick }: LoadPSModalProps) {
+export default function LoadPSModal({ onSelect, onOverlayClick }: LoadPSModalProps) {
+  const [selectedPSId, setSelectedPSId] = useState<null | string>(null);
   const handleOverlayClick = () => {
     if (onOverlayClick) {
       onOverlayClick();
@@ -25,6 +27,7 @@ export default function LoadPSModal({ onOverlayClick }: LoadPSModalProps) {
   // 자기소개서 목록 불러오기
   const [psList, setPSList] = useState([]); // 자소서 배열
   const { data: psData } = useCustomQuery(['ps'], () => fetchPSList());
+  console.log(psData);
 
   useEffect(() => {
     if (psData?.data && Array.isArray(psData.data)) {
@@ -34,6 +37,12 @@ export default function LoadPSModal({ onOverlayClick }: LoadPSModalProps) {
 
   // 유저 정보 조회
   const { data: userData } = useMe();
+
+  // 자기소개서 선택
+  const handleSelectPS = (id: string) => {
+    setSelectedPSId(id);
+    onSelect(id);
+  };
 
   return (
     <Overlay onClick={handleOverlayClick}>
@@ -79,6 +88,9 @@ export default function LoadPSModal({ onOverlayClick }: LoadPSModalProps) {
               </div>
               <button
                 type="button"
+                onClick={() => {
+                  handleSelectPS(String(ps.psId));
+                }}
                 className="mt-9 flex items-center h-[50px] py-[13px] gap-2.5 md:py-[19px] px-5 md:px-7 rounded-[30px] primary-1-btn hover-animation"
               >
                 불러오기
