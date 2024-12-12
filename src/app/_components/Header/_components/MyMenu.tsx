@@ -34,7 +34,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
   });
 
   return (
-    <div className="hidden md:flex md:justify-end w-full gap-10">
+    <div className="md:items-center hidden md:flex md:justify-end w-full gap-10">
       <button type="button">
         <Icons onClick={() => router.push('/main/search')} name={{ ...SearchIcon, fill: 'black' }} />
       </button>
@@ -48,7 +48,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
                 className="relative w-7 text-xs flex-center"
                 onClick={() => handleMenuOpen('MyPage')}
               >
-                <Icons name={UserIcon} />
+                <Icons name={UserIcon} className="mt-1" />
                 {openMenu === 'MyPage' && (
                   <div className="absolute bg-white-0 border-2 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
                     <Link
@@ -80,9 +80,9 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
                   e.stopPropagation(); // 클릭 이벤트 전파 방지
                   setIsOpenAlarm(!isOpenAlarm);
                 }}
-                className="relative w-full items-center justify-center"
+                className="relative w-full items-center justify-center mt-2"
               >
-                <Image src="/assets/header/bell.svg" alt="종 이미지" width={30} height={10} />
+                <Image src="/assets/header/bell.svg" alt="종 이미지" width={25} height={25} />
               </button>
               {isOpenAlarm && <Alarm />}
             </div>

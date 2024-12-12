@@ -58,6 +58,7 @@ export default function Alarm() {
                     e.stopPropagation();
                     await handleRead(String(item.notificationId));
                   }}
+                  className="hover:text-gray-0"
                 >
                   {item.title}
                 </button>
