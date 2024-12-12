@@ -76,6 +76,12 @@ export default function PostWrite() {
     }));
   }, [resetPost, router]);
 
+  // 특수문자 필터링 함수
+  const filterSpecialCharacters = (text: string) => {
+    // 특수문자만 필터링하되, 공백은 허용
+    return text.replace(/[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>/?~`]/g, '');
+  };
+
   // 이미지 처리 함수
   const handleImage = useCallback(async (file: File, callback: (url: string) => void) => {
     try {
@@ -116,7 +122,6 @@ export default function PostWrite() {
           queryClient.invalidateQueries({ queryKey: ['followingPosts'], refetchType: 'all' }),
           queryClient.invalidateQueries({ queryKey: ['bookmarkPosts'], refetchType: 'all' }),
           queryClient.invalidateQueries({ queryKey: ['search-posts'], refetchType: 'all' }),
-          queryClient.invalidateQueries({ queryKey: ['blog-user', username] }),
           queryClient.resetQueries({
             queryKey: ['post', memberId],
           }),
@@ -160,7 +165,10 @@ export default function PostWrite() {
           type="text"
           placeholder="제목을 입력해주세요"
           value={title}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const filteredValue = filterSpecialCharacters(e.target.value);
+            setTitle(filteredValue);
+          }}
           className="text-3xl font-semibold outline-none w-full my-3"
         />
       </div>
