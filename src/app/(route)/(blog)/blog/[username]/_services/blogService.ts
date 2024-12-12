@@ -100,7 +100,6 @@ export async function postPost(postData: unknown) {
 }
 
 // (POST) 포스트 이미지 업로드
-// (POST) 포스트 이미지 업로드
 export async function postPic(file: File): Promise<string> {
   const formData = new FormData();
   formData.append('pic', file);
@@ -117,6 +116,7 @@ export async function postPic(file: File): Promise<string> {
     throw error;
   }
 }
+
 // (DELETE) 포스트 이미지 삭제
 export async function deletePic(picUrl: string): Promise<void> {
   try {
