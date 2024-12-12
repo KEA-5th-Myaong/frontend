@@ -2,35 +2,44 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import DOMPurify from 'dompurify'; // 추후에 수정
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 import { useParams, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../../../../../_components/ui/Icon';
-import { CommentIcon, FavorIcon, MoreIcon } from '../../../../../../_components/ui/iconPath';
+import { BookmarkIcon, CommentIcon, FavorIcon, MoreIcon, SirenIcon } from '../../../../../../_components/ui/iconPath';
 import MoreOptions from '../../../../../../_components/MoreOptions';
 import useClickOutside from '../../../../../../_hooks/useClickOutside';
 import PostComment from './_comment/PostComment';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { deletePost, fetchPostPostId, fetchURLPost } from '../../_services/blogService';
+import { deletePost, fetchMemberInfo, fetchURLPost, postReport } from '../../_services/blogService';
 import usePostWriteStore from '@/app/_store/postWirte';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
 import { PostProps } from '@/app/(route)/(main-page)/main/_types/main-page';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PostContent() {
   const router = useRouter();
   const params = useParams();
   const { username, postTitle } = params;
+  const { data: userData } = useMe();
 
   const queryClient = useQueryClient();
   const setTitle = usePostWriteStore((state) => state.setPostTitle);
   const setPost = usePostWriteStore((state) => state.setPostData);
   const [modalState, setModalState] = useState(initailModalState);
 
-  const { data: postURLData } = useCustomQuery(['url-post'], () =>
+  const { data: postURLData } = useCustomQuery(['url-post', postTitle], () =>
     fetchURLPost(username as string, postTitle as string),
+  );
+
+  const isMe = postURLData?.data.memberId === userData?.data.memberId; // 본인의 게시글인지 확인
+  // 유저의 직군 표시하기 위해 블로그 주인장 데이터 가져옴
+  const { data: blogUserNameData } = useCustomQuery(['blog-user', username], () =>
+    fetchMemberInfo(postURLData?.data.memberId),
   );
 
   const [posts, setPosts] = useState<PostProps[]>([]); // 포스트 목록 상태
@@ -40,10 +49,7 @@ export default function PostContent() {
     }
   }, [postURLData]);
 
-  const postId = postURLData?.postId || 1;
-  const memberId = '1';
-
-  const { data } = useCustomQuery(['user-post', postId], () => fetchPostPostId(postId as string));
+  const postId = postURLData?.data.postId;
 
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -53,21 +59,76 @@ export default function PostContent() {
     callback: () => setShowDropDown(false),
   });
 
-  const { bookmarkMutation, loveMutation } = useLoveAndBookmark(posts, setPosts, memberId); // 내 블로그가 아닐 때에는 bookmarkMutation 사용됨
+  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(posts, setPosts, userData?.data.memberId, postId);
+  const [isLiked, setIsLiked] = useState(postURLData?.data.liked); // 낙관적 업데이트를 위한 state
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    if (postURLData?.data) {
+      setIsLiked(postURLData.data.liked);
+
+      setIsBookmarked(postURLData.data.bookmarked);
+    }
+  }, [postURLData?.data]);
+
+  // 좋아요 클릭 핸들러
+  const handleLikeClick = () => {
+    if (!postId) return;
+    // 낙관적 업데이트
+    setIsLiked((prev: boolean) => !prev);
+
+    loveMutation.mutate(postId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['url-post', postTitle] });
+      },
+      onError: () => {
+        setIsLiked((prev: boolean) => !prev);
+      },
+    });
+  };
+
+  // bookmark 클릭 핸들러
+  const handleBookmarkClick = () => {
+    if (!postId) return;
+
+    bookmarkMutation.mutate(postId, {
+      onSuccess: () => {
+        setIsBookmarked((prev) => !prev);
+        // 새로운 북마크 상태를 서버 응답으로부터 받아서 설정
+        queryClient.invalidateQueries({ queryKey: ['url-post', postTitle] });
+      },
+      onError: (error) => {
+        console.error('북마크 클릭 에러:', error);
+        setIsBookmarked((prev) => !prev); // 에러 발생 시 원래 상태로 되돌림
+      },
+    });
+  };
 
   // 포스트 수정, 의존성이 변경되지 않는 한 함수가 재생성되지 않음
   const handleEditClick = useCallback(() => {
     router.push(`/blog/${username}/write?edit=true&postId=${postId}`);
-    setTitle(data?.data.title);
-    setPost(data?.data.content);
-  }, [username, postId, data?.data.title, setTitle, data?.data.content, setPost, router]);
+    setTitle(postURLData?.data.title);
+    setPost(postURLData?.data.content);
+  }, [username, postId, postURLData?.data.title, setTitle, postURLData?.data.content, setPost, router]);
 
   // 포스트 삭제, 자식 컴포넌트의 불필요한 리렌더링 방지
   const handleDeletePost = useCallback(
     async (id: string) => {
       try {
         await deletePost(id as string);
-        await queryClient.invalidateQueries({ queryKey: ['user-post', postId] });
+        // 각 쿼리 무효화를 동시에 실행
+        await Promise.all([
+          queryClient.invalidateQueries({ queryKey: ['url-posts'] }),
+          queryClient.invalidateQueries({ queryKey: ['recentPosts'], refetchType: 'all' }),
+          queryClient.invalidateQueries({ queryKey: ['followingPosts'], refetchType: 'all' }),
+          queryClient.invalidateQueries({ queryKey: ['bookmarkPosts'], refetchType: 'all' }),
+          queryClient.invalidateQueries({ queryKey: ['search-posts'], refetchType: 'all' }),
+          queryClient.invalidateQueries({
+            queryKey: ['post', postURLData?.data.memberId],
+            refetchType: 'all',
+          }),
+        ]);
       } catch (error) {
         console.error('포스트 삭제 실패:', error);
       } finally {
@@ -75,7 +136,7 @@ export default function PostContent() {
         router.push(`/blog/${username}`);
       }
     },
-    [postId, queryClient, router, username],
+    [postURLData?.data.memberId, queryClient, router, username],
   );
 
   // 삭제 버튼 누르면 나오는 모달
@@ -92,71 +153,133 @@ export default function PostContent() {
     }));
   }, [handleDeletePost, postId]);
 
+  // 포스트 신고 함수
+  const handleReportPost = async () => {
+    try {
+      await postReport({
+        contentId: postId,
+        contentType: 'POST',
+      });
+
+      setModalState((prev) => ({
+        ...prev,
+        topText: '신고가 완료되었습니다.',
+        hasSubBtn: false,
+        btnText: '확인',
+        onBtnClick: () => setModalState(initailModalState),
+      }));
+    } catch (error) {
+      setModalState((prev) => ({
+        ...prev,
+        topText: '이미 신고한 포스트입니다.',
+        hasSubBtn: false,
+        btnText: '확인',
+        onBtnClick: () => setModalState(initailModalState),
+      }));
+    }
+  };
+
+  // 포스트,댓글 신고 버튼 누르면 나오는 모달
+  const handleReportPostClick = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: true,
+      hasSubBtn: true,
+      topText: '해당 포스트를 신고하시겠습니까?',
+      subBtnText: '취소',
+      btnText: '신고',
+      onSubBtnClick: () => setModalState(initailModalState),
+      onBtnClick: () => handleReportPost(),
+    }));
+  };
+
   // 컨텐츠 sanitize 메모이제이션
-  const sanitizedContent = useMemo(
-    () => ({ __html: DOMPurify.sanitize(data?.data.content || '') }),
-    [data?.data.content],
-  );
+  const sanitizedContent = useMemo(() => {
+    if (typeof postURLData?.data.content === 'string') {
+      return parse(DOMPurify.sanitize(postURLData?.data.content));
+    }
+    return postURLData?.data.content;
+  }, [postURLData?.data.content]);
   return (
     <>
       {/* 제목과 더보기 아이콘 */}
       <div className="flex justify-between items-center">
-        <span className="text-[22px] font-semibold">{data?.data.title}</span>
-        <div className="relative" ref={dropdownRef}>
-          <Icons
-            onClick={() => {
-              setShowDropDown((prev) => !prev);
-            }}
-            className="cursor-pointer"
-            name={MoreIcon}
-          />
+        <span className="text-[22px] font-semibold">{postURLData?.data.title}</span>
 
-          {showDropDown && <MoreOptions handleEditClick={handleEditClick} handleDeleteClick={handleDeleteClick} />}
-        </div>
+        {isMe ? (
+          <div className="relative" ref={dropdownRef}>
+            <Icons
+              onClick={() => {
+                setShowDropDown((prev) => !prev);
+              }}
+              className="cursor-pointer"
+              name={MoreIcon}
+            />
+
+            {showDropDown && <MoreOptions handleEditClick={handleEditClick} handleDeleteClick={handleDeleteClick} />}
+          </div>
+        ) : (
+          <div className="relative flex items-end gap-5">
+            <div onClick={handleReportPostClick} className="flex items-end gap-0.5 text-gray-0 text-xs">
+              <Icons className="cursor-pointer" name={SirenIcon} />
+              신고
+            </div>
+
+            <Icons
+              onClick={handleBookmarkClick}
+              name={{ ...BookmarkIcon, fill: isBookmarked ? '#41AED9' : 'none' }}
+              className="pt-0.5 cursor-pointer"
+            />
+          </div>
+        )}
       </div>
 
       {/* 작성자 프로필 */}
       <div className="flex items-center justify-between self-stretch mt-[7px] py-[22px] border-b border-gray">
-        <div className="flex items-center gap-2.5">
-          <div id="profile" className="" />
+        <div
+          className="flex items-center gap-2.5 cursor-pointer"
+          onClick={() => {
+            router.push(`/blog/${postURLData?.data.username}`);
+          }}
+        >
           <Image
-            className="min-w-[29px] min-h-[29px] rounded-full"
-            src={data?.data.profilePicUrl || defaultProfilePic.src}
+            className="min-w-[29px] min-h-[29px] rounded-full ml-2.5"
+            src={postURLData?.data.profilePicUrl || defaultProfilePic.src}
             alt="프로필사진"
             width={29}
             height={29}
             unoptimized
           />
-          <span>{data?.data.nickname}</span>
+          <span>{postURLData?.data.nickname}</span>
         </div>
         <div className="ml-[62px] max-w-fit text-xs bg-primary-0 bg-opacity-25 text-primary-2 px-[9.5px] py-1 rounded-md whitespace-nowrap">
-          프론트엔드 개발자
+          {blogUserNameData?.data?.prejob?.[0]}
         </div>
       </div>
 
       {/* 포스트 내용 */}
-      <div className="mt-[19px] px-[7px]" dangerouslySetInnerHTML={sanitizedContent} />
+      <div className="mt-[19px] px-[7px]">{sanitizedContent}</div>
 
       {/* 작성일 댓글 좋아요 */}
       <div className="flex items-center justify-between mt-20 pb-10 border-b">
-        <span className="text-sm text-gray-0">{formatDate(data?.data.timestamp)}</span>
+        <span className="text-sm text-gray-0">{formatDate(postURLData?.data.timestamp)}</span>
         <div className="flex gap-3">
           <div className="text-primary-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame">
             <Icons name={CommentIcon} />
-            <p className="text-sm">{data?.data.commentCount}</p>
+            <p className="text-sm">{postURLData?.data.commentCount}</p>
           </div>
           <div
-            onClick={() => loveMutation.mutate(data?.data.postId)}
-            className="text-gray-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame"
+            onClick={handleLikeClick}
+            className={`${isLiked ? 'text-primary-1' : 'text-gray-1'} bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame`}
           >
-            <Icons name={FavorIcon} />
-            <span className="text-sm">{data?.data.lovedCount || 0}</span>
+            <Icons name={{ ...FavorIcon, fill: isLiked ? '#41AED9' : 'currentColor' }} />
+            <span className="text-sm">{postURLData?.data.likeCount}</span>
           </div>
         </div>
       </div>
 
       {/* 댓글 */}
-      <PostComment postId={postId} comments={data?.data.comments} />
+      <PostComment postId={postId} comments={postURLData?.data.comments} currentUserId={userData?.data.memberId} />
 
       {modalState.open && (
         <Modal

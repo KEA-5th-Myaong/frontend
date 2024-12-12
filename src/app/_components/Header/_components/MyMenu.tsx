@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+import { useQueryClient } from '@tanstack/react-query';
 import testData from '../test.json';
 import Icons from '../../ui/Icon';
 import { SearchIcon, XIcon, UserIcon } from '../../ui/iconPath';
@@ -17,9 +18,8 @@ interface MyMenuProps {
 
 export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuProps) {
   const router = useRouter();
-  console.log(userData);
-
   const isLogined = userData?.data?.nickname;
+  const queryClient = useQueryClient();
 
   const alarmMenuRef = useRef<HTMLDivElement>(null);
   const myPageMenuRef = useRef<HTMLDivElement>(null);
@@ -31,42 +31,54 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
     },
   });
 
+  const handleLogout = async () => {
+    try {
+      // 로그아웃 처리
+      Cookies.remove('accessToken');
+      // 모든 관련 쿼리 무효화
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+
+      // 캐시된 사용자 데이터 제거
+      queryClient.setQueryData(['me'], null);
+      // 다른 관련된 쿼리들도 초기화
+      queryClient.clear();
+      handleMenuOpen(null);
+      router.push('/log-in');
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+    }
+  };
+
   return (
-    <div className="hidden md:flex md:justify-end w-full gap-10">
-      <button type="button">
-        <Icons onClick={() => router.push('/main/search')} name={{ ...SearchIcon, fill: 'black' }} />
-      </button>
+    <div className="hidden md:flex md:justify-end md:items-center w-full gap-10 h-full">
+      <Icons
+        onClick={() => router.push('/main/search')}
+        name={{ ...SearchIcon, fill: 'black' }}
+        className="cursor-pointer"
+      />
+
       {/* 유저 아이콘 */}
       {isLogined ? (
         <>
-          <div className="flex-center w-30">
-            <div ref={myPageMenuRef}>
-              <button
-                type="button"
-                className="relative w-7 text-xs flex-center"
-                onClick={() => handleMenuOpen('MyPage')}
-              >
-                <Icons name={UserIcon} />
-                {openMenu === 'MyPage' && (
-                  <div className="absolute bg-white-0 border-2 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
-                    <Link
-                      href="/my-page/check-password"
-                      className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
-                    >
-                      마이페이지
-                    </Link>
-                    <div
-                      onClick={() => {
-                        Cookies.remove('accessToken');
-                        router.push('/log-in');
-                      }}
-                      className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
-                    >
-                      로그아웃
-                    </div>
+          <div onClick={() => handleMenuOpen('MyPage')} className="flex-center h-full w-30 cursor-pointer">
+            <div ref={myPageMenuRef} className="relative w-7 h-full text-xs flex-center">
+              <Icons name={UserIcon} />
+              {openMenu === 'MyPage' && (
+                <div className="absolute top-5 bg-white-0 border-2 text-gray-0 w-[108px] rounded-md mt-2">
+                  <Link
+                    href="/my-page/check-password"
+                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
+                  >
+                    마이페이지
+                  </Link>
+                  <div
+                    onClick={handleLogout}
+                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
+                  >
+                    로그아웃
                   </div>
-                )}
-              </button>
+                </div>
+              )}
             </div>
             <div className="flex-center text-black-0 text-sm font-medium">{userData?.data.nickname} 님</div>
           </div>
@@ -140,12 +152,28 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
         </>
       ) : (
         <div className="flex items-center gap-[30px]">
-          <Link className="text-black-0 text-sm font-medium" href="/log-in">
+          <button
+            type="button"
+            onClick={() => {
+              Cookies.remove('accessToken');
+              queryClient.clear();
+              router.push('/log-in');
+            }}
+            className="text-black-0 text-sm font-medium"
+          >
             로그인
-          </Link>
-          <Link className="text-black-0 text-sm font-medium" href="/sign-up">
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              Cookies.remove('accessToken');
+              queryClient.clear();
+              router.push('/sign-up');
+            }}
+            className="text-black-0 text-sm font-medium"
+          >
             회원가입
-          </Link>
+          </button>
         </div>
       )}
     </div>

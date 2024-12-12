@@ -11,7 +11,7 @@ import {
   postInterviewMessage,
   putInterviewMessage,
 } from '@/app/(route)/(interview)/_services/interviewService';
-import { Message } from '../_types/messageType';
+import { InterviewMessages } from '../_types/messageType';
 import MsgEditBtn from './MsgEditBtn';
 import Video from './Video'; // 사용자 비디오 컴포넌트
 import { useInterviewIdStore } from '@/app/(route)/(interview)/_store/interviewStore';
@@ -23,7 +23,7 @@ export default function ChatContainer() {
   const interviewId = useInterviewIdStore((state) => state.interviewId);
   const setMessage = useChatWriteStore((state) => state.setMessages);
 
-  const [messages, setMessages] = useState<Message[]>([]); // 채팅 내용 다 담김
+  const [messages, setMessages] = useState<InterviewMessages[]>([]); // 채팅 내용 다 담김
   const [isMaxMessages, setIsMaxMessages] = useState(false); // 최대 채팅 수 도달
   const [isLastMessageUser, setIsLastMessageUser] = useState(false); // 마지막 메시지가 사용자인지
   const [editMessageId, setEditMessageId] = useState<string | null>(null);
@@ -39,27 +39,25 @@ export default function ChatContainer() {
   useEffect(() => {
     setMessages([
       {
-        text: '첫 질문',
-        isAI: true,
         messageId: '',
+        role: 'interviewer',
+        content: '첫 질문', // 여기 실제 첫 질문 넣어야됨
       },
     ]);
   }, []);
+
   // 최대 메시지 도달 확인
   useEffect(() => {
     setIsMaxMessages(messages.length >= 10);
-    setIsLastMessageUser(messages.length > 0 && !messages[messages.length - 1].isAI);
+    setIsLastMessageUser(messages.length > 0 && messages[messages.length - 1].role === 'interviewee');
   }, [messages]);
 
   // 채팅 컨테이너에 대한 참조를 생성(DOM 요소에 접근)
   const { chatContainerRef, textareaRef } = useContainerHeight(editMessageId);
   const messagesEndRef = useScrollToBottom(messages); // 메시지 보내면 하단으로 스크롤
 
-  const addMessage = (message: string, isAI: boolean, messageId?: string) => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: message, isAI, messageId: messageId || String(Date.now()) },
-    ]);
+  const addMessage = (content: string, role: string, messageId?: string) => {
+    setMessages((prevMessages) => [...prevMessages, { content, role, messageId: messageId || String(Date.now()) }]);
   };
 
   // 메시지 전송 함수
@@ -70,7 +68,7 @@ export default function ChatContainer() {
         content: newMessage,
       });
 
-      addMessage(newMessage, false, data?.data.messageId);
+      addMessage(newMessage, 'interviewee', data?.data.messageId);
     }
   };
 
@@ -79,7 +77,7 @@ export default function ChatContainer() {
     if (!isMaxMessages) {
       try {
         const response = await fetchTailQuestion(interviewId);
-        addMessage(response.data.content, true, response.data.messageId);
+        addMessage(response.data.content, 'interviewer', response.data.messageId);
       } catch (error) {
         console.error('꼬리 질문 생성 실패:', error);
       }
@@ -90,17 +88,16 @@ export default function ChatContainer() {
     if (!isMaxMessages) {
       try {
         const response = await fetchNewQuestion(interviewId);
-        addMessage(response.data.content, true, response.data.messageId);
+        addMessage(response.data.content, 'interviewer', response.data.messageId);
       } catch (error) {
         console.error('새 질문 생성 실패:', error);
       }
     }
   };
-
   // 수정 버튼 누르면
-  const handleEdit = (messageId: string, text: string) => {
+  const handleEdit = (messageId: string, content: string) => {
     setEditMessageId(messageId); // 현재 수정하는 메시지id
-    setEditedText(text); // 수정 전 텍스트
+    setEditedText(content); // 수정 전 텍스트
   };
   // 저장 버튼 누르면
   const handleSaveEdit = async (messageId: string) => {
@@ -110,7 +107,7 @@ export default function ChatContainer() {
       }); // put api 호출
       setMessages((prevMessages) =>
         // 수정한 id의 메시지만 editedText로 업데이트
-        prevMessages.map((msg: Message) => (msg.messageId === messageId ? { ...msg, text: editedText } : msg)),
+        prevMessages.map((msg) => (msg.messageId === messageId ? { ...msg, content: editedText } : msg)),
       );
       setEditMessageId(null); // 수정 끝나면 메시지id 비워주기
     } catch (error) {
@@ -136,17 +133,17 @@ export default function ChatContainer() {
               variants={messageVariants}
               initial="hidden"
               animate="visible"
-              className={`flex flex-col ${msg.isAI ? 'items-start' : 'items-end'}`}
+              className={`flex flex-col ${msg.role === 'interviewer' ? 'items-start' : 'items-end'}`}
             >
-              {msg.isAI && <p className="font-semibold pb-3">면접관</p>}
+              {msg.role === 'interviewer' && <p className="font-semibold pb-3">면접관</p>}
 
               <div
                 className={`flex gap-3 ${editMessageId === msg.messageId ? 'w-full' : 'max-w-[90%] sm:max-w-[80%] '}`}
               >
-                {!msg.isAI && index === messages.length - 1 && (
+                {msg.role === 'interviewee' && index === messages.length - 1 && (
                   <MsgEditBtn
                     isEdit={editMessageId === msg.messageId}
-                    onEdit={() => handleEdit(msg.messageId, msg.text)}
+                    onEdit={() => handleEdit(msg.messageId, msg.content)}
                     onCancel={handleCancelEdit}
                     onSave={() => handleSaveEdit(msg.messageId)}
                   />
@@ -159,15 +156,20 @@ export default function ChatContainer() {
                     onChange={(e) => setEditedText(e.target.value)}
                   />
                 ) : (
-                  <div className={`break-words chat-msg-text ${msg.isAI ? 'bg-gray-4' : 'bg-primary-0'}`}>
-                    {msg.text}
+                  <div
+                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4' : 'bg-primary-0'}`}
+                  >
+                    {msg.content}
                   </div>
                 )}
               </div>
               {/* 본인이 보낸 메시지이면서 마지막 메시지에 보이는 새 질문, 꼬리 질문 버튼 */}
-              {!msg.isAI && index === messages.length - 1 && !isMaxMessages && editMessageId !== msg.messageId && (
-                <TailNewBtn TailQuestion={handleTailQuestion} NewQuestion={handleNewQuestion} />
-              )}
+              {msg.role === 'interviewee' &&
+                index === messages.length - 1 &&
+                !isMaxMessages &&
+                editMessageId !== msg.messageId && (
+                  <TailNewBtn TailQuestion={handleTailQuestion} NewQuestion={handleNewQuestion} />
+                )}
             </motion.div>
           ))}
           <div ref={messagesEndRef} />

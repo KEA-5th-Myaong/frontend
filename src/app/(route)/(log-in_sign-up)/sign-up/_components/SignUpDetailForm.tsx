@@ -101,7 +101,7 @@ export default function SignUpDetailForm() {
         <FormInput<SignUpState>
           id="nickname"
           label={FORM_TEXT[11]}
-          placeholder={FORM_PLACEHOLDER[5]}
+          placeholder={FORM_PLACEHOLDER[4]}
           register={register}
           required={FORM_ERROR[12]}
           error={errors.nickname}

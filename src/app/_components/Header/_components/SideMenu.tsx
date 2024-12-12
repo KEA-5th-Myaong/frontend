@@ -3,9 +3,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import Overlay from '../../Overlay';
-import menuData from '../menuData.json';
+import Cookies from 'js-cookie';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { User } from '@/app/_hooks/useMe';
+import Overlay from '../../Overlay';
 
 interface SideMenuProps {
   isOpen: boolean;
@@ -15,6 +17,26 @@ interface SideMenuProps {
 
 export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
   const isLogined = userData?.data?.nickname;
+  const router = useRouter();
+
+  const queryClient = useQueryClient();
+
+  const handleLogout = async () => {
+    try {
+      // 로그아웃 처리
+      Cookies.remove('accessToken');
+      // 모든 관련 쿼리 무효화
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+
+      // 캐시된 사용자 데이터 제거
+      queryClient.setQueryData(['me'], null);
+      // 다른 관련된 쿼리들도 초기화
+      queryClient.clear();
+      router.push('/log-in');
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+    }
+  };
   return (
     <AnimatePresence>
       {isOpen && (
@@ -22,7 +44,7 @@ export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
           <motion.div
             animate={{ x: 0.1 }} // 나타날 때 왼쪽에서 오른쪽으로 슬라이드
             transition={{ duration: 0.1 }} // 전환 애니메이션 속도
-            className="fixed top-0 -left-1 w-52 pl-4 h-full x-10 z-40 bg-white-0 text-black-0 transition-transform transform drop-shadow-md"
+            className="fixed top-0 -left-1 w-52 pl-4 min-h-full x-10 z-40 bg-white-0 text-black-0 transition-transform transform drop-shadow-md"
           >
             <div>
               <div className="flex w-full">
@@ -39,32 +61,58 @@ export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
               </div>
             </div>
             <div className="flex-col pl-6">
-              <ul className="pt-5">
+              <div className="pt-5">
                 <p className="text-xl pb-1.5 font-semibold">블로그</p>
-                {menuData.blogSubMenuItems.map((menu) => (
-                  <Link
-                    href={menu.path}
-                    onClick={() => {
-                      onClose();
-                    }}
-                  >
-                    <li className="text-sm text-gray-0 pt-2 pl-5">{menu.name}</li>
-                  </Link>
-                ))}
-              </ul>
-              <ul className="pt-5">
+
+                <Link
+                  href={`/blog/${userData?.data.username}`}
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">내 블로그</p>
+                </Link>
+
+                <Link
+                  href={`/blog/${userData?.data.username}/write`}
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">글 쓰기</p>
+                </Link>
+              </div>
+              <div className="pt-5">
                 <p className="text-xl pb-1.5 font-semibold">구직</p>
-                {menuData.jobSubMenuItems.map((menu) => (
-                  <Link
-                    href={menu.path}
-                    onClick={() => {
-                      onClose();
-                    }}
-                  >
-                    <li className="text-sm text-gray-0 pt-2 pl-5">{menu.name}</li>
-                  </Link>
-                ))}
-              </ul>
+
+                <Link
+                  href={`/interview/${userData?.data.username}/select`}
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">모의 면접</p>
+                </Link>
+                <Link
+                  href={`/personal-statement/${userData?.data.username}/list`}
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">자소서 첨삭</p>
+                </Link>
+                <Link
+                  href="/portfolio"
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">내 포트폴리오</p>
+                </Link>
+              </div>
+            </div>
+            <div onClick={handleLogout} className="w-full flex-center pr-8 mt-12 text-sm text-gray-3">
+              로그아웃
             </div>
           </motion.div>
         </Overlay>
