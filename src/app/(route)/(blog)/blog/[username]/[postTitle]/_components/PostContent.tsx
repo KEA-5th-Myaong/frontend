@@ -117,7 +117,15 @@ export default function PostContent() {
     async (id: string) => {
       try {
         await deletePost(id as string);
-        await queryClient.invalidateQueries({ queryKey: ['user-post', postId] });
+        await queryClient.invalidateQueries({ queryKey: ['url-posts'] });
+        await queryClient.invalidateQueries({ queryKey: ['recentPosts'], refetchType: 'all' }); // 모든 페이지를 리패치하도록 설정
+        await queryClient.invalidateQueries({ queryKey: ['followingPosts'], refetchType: 'all' });
+        await queryClient.invalidateQueries({ queryKey: ['bookmarkPosts'], refetchType: 'all' });
+        queryClient.invalidateQueries({ queryKey: ['blog-user', username] });
+        queryClient.invalidateQueries({
+          queryKey: ['post', postURLData?.data.memberId],
+          refetchType: 'all', // 모든 페이지를 리패치하도록 설정
+        });
       } catch (error) {
         console.error('포스트 삭제 실패:', error);
       } finally {
@@ -125,7 +133,7 @@ export default function PostContent() {
         router.push(`/blog/${username}`);
       }
     },
-    [postId, queryClient, router, username],
+    [postURLData?.data.memberId, queryClient, router, username],
   );
 
   // 삭제 버튼 누르면 나오는 모달

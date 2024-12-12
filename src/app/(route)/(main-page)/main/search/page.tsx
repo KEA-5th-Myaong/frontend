@@ -49,7 +49,7 @@ export default function SearchPage() {
   };
   // 무한스크롤 포스트 데이터 가져오기
   const { data, isLoading } = useCustomInfiniteQuery(
-    ['search-posts', searchTerm],
+    ['search-posts'],
     ({ pageParam = '0' }) => fetchPostSearch(pageParam as string, searchTerm),
     {
       // 다음 페이지 파라미터를 결정하는 함수
