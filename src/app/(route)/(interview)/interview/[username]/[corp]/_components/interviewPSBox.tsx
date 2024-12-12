@@ -10,7 +10,7 @@ export default function InterviewPSBox({ title, timestamp, onClick }: PSBoxProps
       className="flex gap-10 justify-between self-stretch w-full min-w-[333px] max-w-[735px] 
       h-32 bg-gray-4 text-start rounded-[10px] 
       pl-8 pr-3 pt-8 lg:pt-6 xl:pt-8 pb-4 lg:pb-6 
-      overflow-scroll hide-scrollbar cursor-pointer hover-animation"
+      overflow-scroll hide-scrollbar cursor-pointer hover-animation dark:bg-black-2 dark:border"
       onClick={onClick}
       type="button"
     >

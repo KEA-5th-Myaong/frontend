@@ -157,7 +157,7 @@ export default function ChatContainer() {
                   />
                 ) : (
                   <div
-                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4' : 'bg-primary-0'}`}
+                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4 dark:bg-black-3' : 'bg-primary-0 dark:bg-gray-4 dark:text-black-0'}`}
                   >
                     {msg.content}
                   </div>
