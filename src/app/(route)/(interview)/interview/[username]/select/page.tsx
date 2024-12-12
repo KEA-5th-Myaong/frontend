@@ -78,7 +78,7 @@ export default function InterviewSelect() {
           ? Array.from({ length: 28 }).map(() => (
               <div
                 key={v4()}
-                className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 animate-pulse"
+                className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 dark:bg-black-3 animate-pulse"
               />
             ))
           : corpList?.map((corp: { companyId: string; companyName: string }) => (

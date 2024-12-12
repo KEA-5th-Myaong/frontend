@@ -86,7 +86,7 @@ export default function InterviewPersonalStatement() {
       <div className="flex flex-col self-stretch gap-5 w-full pb-12">
         {isLoading
           ? Array.from({ length: 5 }).map(() => (
-              <div key={v4()} className="w-full h-32 bg-gray-200 rounded-md animate-pulse" />
+              <div key={v4()} className="w-full h-32 bg-gray-200 dark:bg-black-3 rounded-md animate-pulse" />
             ))
           : psList?.map((ps: PSBoxProps, index) => (
               <motion.div key={ps.psId} variants={ListVariants} custom={index} initial="hidden" animate="visible">

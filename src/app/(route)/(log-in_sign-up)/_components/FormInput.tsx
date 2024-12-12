@@ -3,6 +3,7 @@ import { FieldValues, Path } from 'react-hook-form';
 import { FormInputProps } from '../_types/forms';
 import Icons from '../../../_components/ui/Icon';
 import { EditIcon, EyeIcon, EyeSlashIcon } from '../../../_components/ui/iconPath';
+import { useTheme } from '@/app/_components/ThemeProvider';
 
 export default function FormInput<T extends FieldValues>({
   id,
@@ -78,7 +79,16 @@ export default function FormInput<T extends FieldValues>({
         </div>
       )}
 
-      {isEdit && <Icons onClick={onEditClick} className="input-icon" name={EditIcon} />}
+      {isEdit && (
+        <Icons
+          onClick={onEditClick}
+          className="input-icon"
+          name={{
+            ...EditIcon,
+            options: { ...EditIcon.options, stroke: '#9FA6B2' },
+          }}
+        />
+      )}
       {error ? (
         <p className="form-error-text">{error.message}</p>
       ) : (

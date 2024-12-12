@@ -11,9 +11,11 @@ import SideMenu from './_components/SideMenu';
 import useClickOutside from '../../_hooks/useClickOutside';
 import MyMenu from './_components/MyMenu';
 import useMe from '@/app/_hooks/useMe';
+import { useTheme } from '../ThemeProvider';
 
 export default function Header() {
   const { data: userData } = useMe();
+  const { theme } = useTheme();
 
   // 상태 관리
   const [openMenu, setOpenMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
@@ -85,7 +87,12 @@ export default function Header() {
       {/* Mobile 스크린 */}
       <div className="flex-center md:hidden w-full">
         <div className="absolute left-1 pl-4 cursor-pointer" onClick={toggleSideMenuOpen}>
-          <Icons name={MenuIcon} />
+          <Icons
+            name={{
+              ...MenuIcon,
+              fill: theme === 'dark' ? 'white' : 'black',
+            }}
+          />
         </div>
         <Link href="/main" className="">
           {!isSideMenuOpen && (

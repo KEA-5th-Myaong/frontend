@@ -168,7 +168,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
               queryClient.clear();
               router.push('/log-in');
             }}
-            className="text-black-0 text-sm font-medium"
+            className="dark:text-white-0 text-black-0 text-sm font-medium"
           >
             로그인
           </button>
@@ -179,7 +179,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
               queryClient.clear();
               router.push('/sign-up');
             }}
-            className="text-black-0 text-sm font-medium"
+            className="dark:text-white-0 text-black-0 text-sm font-medium"
           >
             회원가입
           </button>

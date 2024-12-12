@@ -138,7 +138,6 @@ export default function SignUpForm() {
           required={FORM_ERROR[12]}
           error={errors.nickname}
           maxLength={10}
-          infoText={FORM_TEXT[8]}
         />
         {/* 이메일 input */}
         <FormInput<SignUpState>
