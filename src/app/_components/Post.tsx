@@ -39,7 +39,15 @@ export default function Post({
 
   const sanitizedContent = useMemo(() => {
     if (typeof content === 'string') {
-      return parse(DOMPurify.sanitize(content));
+      // img 태그에 스타일을 추가(일단은 none으로 안보이게)
+      const modifiedContent = content.replace(/<img/g, '<img style="display:none;"');
+      // img 태그를 아예 안보이게 하는 법
+      // const contentWithoutImages = content.replace(/<img[^>]*>/g, '');
+      return parse(
+        DOMPurify.sanitize(modifiedContent, {
+          ADD_ATTR: ['style'], // style 속성 허용
+        }),
+      );
     }
     return content;
   }, [content]);
