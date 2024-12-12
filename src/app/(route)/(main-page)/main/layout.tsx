@@ -6,7 +6,7 @@ export const metadata = {
     template: '%s | PPLOG',
   },
   description: '모의면접과 자소서첨삭, 포트폴리오 관리를 한 번에',
-  keywords: ['개발자 커뮤니티', '기술 블로그', '개발자 SNS', '프로그래밍', '개발자 네트워크'],
+  keywords: ['커뮤니티', '모의면접', '자소서', '블로그', '소통'],
   openGraph: {
     title: 'PPLOG',
     description: '모의면접과 자소서첨삭, 포트폴리오 관리를 한 번에',
