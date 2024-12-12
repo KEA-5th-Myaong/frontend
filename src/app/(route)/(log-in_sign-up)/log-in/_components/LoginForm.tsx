@@ -22,6 +22,7 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginState) => {
     const response = await postLogin(data);
+    console.log(response);
     // 쿠키에 토큰 저장
     Cookies.set('accessToken', response.data.accessToken, {
       path: '/', // 모든 경로에서 접근 가능
