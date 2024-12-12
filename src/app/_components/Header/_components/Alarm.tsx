@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import Icons from '../../ui/Icon';
 import { XIcon } from '../../ui/iconPath';
-import { deleteNotification, fetchNotifications } from '@/app/_services/notificationsService';
+import { deleteNotification, fetchNotifications, putNotification } from '@/app/_services/notificationsService';
 import { NotificationItem } from '../_types/notifications';
 
 export default function Alarm() {
@@ -10,18 +10,27 @@ export default function Alarm() {
   const LAST_ID = 15;
 
   const { data: notifications } = useCustomQuery(['notifications'], () => fetchNotifications(String(LAST_ID)));
-  console.log(notifications);
+  console.log('알림', notifications);
   const handleAllClick = () => {
     alert('모두 지우기 클릭');
   };
 
+  const handleRead = async (notificationId: string) => {
+    try {
+      await putNotification(notificationId); // API 호출
+      queryClient.invalidateQueries({ queryKey: ['notifications'] }); // 알림 목록 갱신
+      console.log(`Notification with ID ${notificationId} read`);
+    } catch (error) {
+      console.error('Error read notification:', error);
+    }
+  };
   const handleDelete = async (notificationId: string) => {
     try {
       await deleteNotification(notificationId); // API 호출
       queryClient.invalidateQueries({ queryKey: ['notifications'] }); // 알림 목록 갱신
       console.log(`Notification with ID ${notificationId} deleted`);
     } catch (error) {
-      console.error('Error deleting portfolio:', error);
+      console.error('Error deleting notification:', error);
     }
   };
 
@@ -43,7 +52,15 @@ export default function Alarm() {
             <div className="flex justify-between items-start hover:bg-gray-50 bg-gray-4 text-black-0 text-xs font-semibold rounded-lg w-full h-full px-2">
               <div className="flex items-center h-12 w-[260px]">
                 <div className={`rounded-xl w-[7px] h-[7px] mx-2 ${item.isRead ? 'bg-gray-3' : 'bg-green-0'}`} />
-                <div>{item.title}</div>
+                <button
+                  type="button"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    await handleRead(String(item.notificationId));
+                  }}
+                >
+                  {item.title}
+                </button>
               </div>
               <button
                 type="button"
