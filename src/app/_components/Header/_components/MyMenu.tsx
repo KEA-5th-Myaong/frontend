@@ -4,10 +4,12 @@ import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import Icons from '../../ui/Icon';
-import { SearchIcon, UserIcon } from '../../ui/iconPath';
+import { ArrowIcon, SearchIcon, UserIcon } from '../../ui/iconPath';
 import useClickOutside from '../../../_hooks/useClickOutside';
 import { User } from '@/app/_hooks/useMe';
 import Alarm from './Alarm';
+import SubMenu from './SubMenu';
+import menuData from '../menuData.json';
 
 interface MyMenuProps {
   handleMenuOpen: (menu: string | null) => void;
@@ -25,6 +27,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
   const alarmRef = useRef<HTMLDivElement>(null);
 
   const [isOpenAlarm, setIsOpenAlarm] = useState(false);
+  const [moreButtonOpen, setMoreButtonOpen] = useState(false);
 
   useClickOutside({
     ref: myPageMenuRef,
@@ -34,7 +37,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
   });
 
   return (
-    <div className="md:items-center hidden md:flex md:justify-end w-full gap-10">
+    <div className="md:items-center hidden md:flex md:justify-end w-full gap-8">
       <button type="button">
         <Icons onClick={() => router.push('/main/search')} name={{ ...SearchIcon, fill: 'black' }} />
       </button>
@@ -87,6 +90,22 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
               {isOpenAlarm && <Alarm />}
             </div>
           </div>
+          <button
+            type="button"
+            onClick={() => {
+              setMoreButtonOpen(!moreButtonOpen);
+            }}
+            className="relative flex-center text-center text-gray-0 text-xs py-1 pl-4 pr-3 border border-gray-2 rounded-xl"
+          >
+            더보기
+            <Icons
+              name={ArrowIcon}
+              className={`transition-transform duration-200 ${moreButtonOpen ? 'rotate-90' : '-rotate-90'}`}
+            />
+            <div className="absolute right-12 top-6">
+              {moreButtonOpen && <SubMenu menuItems={menuData.moreMenuItems} />}
+            </div>
+          </button>
         </>
       ) : (
         <div className="flex items-center gap-[30px]">

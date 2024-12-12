@@ -11,5 +11,9 @@
   "myPageMenuItems": [
     { "id": 1, "name": "마이페이지", "path": "/my-page/check-password" },
     { "id": 2, "name": "로그아웃", "path": "/main" }
+  ],
+  "moreMenuItems": [
+    { "id": 1, "name": "문의하기", "path": "/my-page/check-password" },
+    { "id": 2, "name": "공지 게시판", "path": "/main" }
   ]
 }
