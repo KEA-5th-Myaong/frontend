@@ -7,13 +7,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
-import EducationSection from './_components/section/EducationSection';
-import ExperienceSection from './_components/section/ExperienceSection';
-import LinksSection from './_components/section/LinksSection';
-import SkillsSection from './_components/section/SkillsSection';
-import CertificationsSection from './_components/section/CertificationsSection';
-import ActivitiesSection from './_components/section/ActivitiesSection';
-import PSSection from './_components/section/PSSection';
 import useToggleStore from '@/app/_store/portfolioToggle';
 import { PortfolioFormProps } from '@/app/_types/portfolio';
 import { fetchPortfolio, putPortfolios } from '../../../_services/portfolioServices';
@@ -25,33 +18,35 @@ import ItemToggle from '../../write/_components/ItemToggle';
 import UploadImage from '../../write/_components/UploadImage';
 import Input from '../../write/_components/Input';
 import Tips from '../../write/_components/Tips';
+import EducationSection from '../../write/_components/section/EducationSection';
+import ExperienceSection from '../../write/_components/section/ExperienceSection';
+import LinksSection from '../../write/_components/section/LinksSection';
+import SkillsSection from '../../write/_components/section/SkillsSection';
+import CertificationsSection from '../../write/_components/section/CertificationsSection';
+import ActivitiesSection from '../../write/_components/section/ActivitiesSection';
+import PSSection from '../../write/_components/section/PSSection';
+import usePortfolioStore from '@/app/_store/portfolio';
 
 export default function PortfolioModify() {
-  const [picUrl, setPicUrl] = useState<string | null>(null);
+  const router = useRouter();
   const params = useParams();
   const { portfolioId } = params;
-  console.log('현재 수정 페이지 아이디', portfolioId);
 
-  const { register, handleSubmit, setValue } = useForm<PortfolioFormProps>();
-  const methods = useForm<PortfolioFormProps>();
+  const [picUrl, setPicUrl] = useState<string | null>(null);
+  const [isShowDropdown, setIsShowDropdown] = useState(false);
 
-  // 유저 정보 조회
-  const { data: userData } = useMe();
-  setValue('name', String(userData?.data?.nickname));
+  const { toggles } = useToggleStore();
+  const { portfolio, setPortfolio } = usePortfolioStore();
 
-  // 포트폴리오 조회
-  const { data: portfolio } = useCustomQuery(['portfolio', portfolioId], () => fetchPortfolio(String(portfolioId)), {
-    enabled: !!portfolioId, // portfolioId가 존재할 때만 쿼리 실행
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useClickOutside({
+    ref: dropdownRef,
+    callback: () => setIsShowDropdown(false),
   });
-
-  // 포트폴리오 데이터를 폼 필드에 설정
-  useEffect(() => {
-    if (portfolio) {
-      Object.keys(portfolio.data).forEach((key) => {
-        setValue(key as keyof PortfolioFormProps, portfolio.data[key]); // React Hook Form 필드 값 설정
-      });
-    }
-  }, [portfolio, setValue]);
+  const { register, handleSubmit, setValue, getValues, reset } = useForm<PortfolioFormProps>({
+    defaultValues: portfolio || {}, // 초기화는 `portfolioData` 또는 로컬스토리지에서 설정
+  });
+  const methods = useForm<PortfolioFormProps>();
 
   const cleanData = (data: PortfolioFormProps) => {
     return {
@@ -67,9 +62,28 @@ export default function PortfolioModify() {
     };
   };
 
+  // 유저 정보 조회
+  const { data: userData } = useMe();
+  setValue('name', String(userData?.data?.nickname));
+
+  // 포트폴리오 조회
+  const { data: portfolioData } = useCustomQuery(
+    ['portfolio', portfolioId],
+    () => fetchPortfolio(String(portfolioId)),
+    {
+      enabled: !!portfolioId, // portfolioId가 존재할 때만 쿼리 실행
+    },
+  );
+
+  // 초기화 시 포트폴리오 데이터 설정
+  useEffect(() => {
+    if (portfolioData && !portfolio) {
+      reset({ ...portfolioData.data, picUrl: portfolioData.data.picUrl || null });
+    }
+  }, [portfolioData, reset, portfolio]);
+
   const onSubmit = handleSubmit(async (formData) => {
     const cleanedData = cleanData(formData); // 데이터 정리
-
     // API 요청
     try {
       await putPortfolios(String(portfolioId), cleanedData);
@@ -79,16 +93,6 @@ export default function PortfolioModify() {
     }
   });
 
-  const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const { toggles } = useToggleStore();
-  const router = useRouter();
-
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  useClickOutside({
-    ref: dropdownRef,
-    callback: () => setIsShowDropdown(false),
-  });
-
   const handleDoneClick = () => {
     if (portfolioId) {
       router.push(`/portfolio/${portfolioId}/read`);
@@ -96,9 +100,9 @@ export default function PortfolioModify() {
   };
 
   const handlePreviewClick = () => {
-    if (portfolioId) {
-      router.push(`/portfolio/${portfolioId}/preview`);
-    }
+    const formData = getValues();
+    setPortfolio(formData);
+    router.push(`/portfolio/preview`);
   };
 
   return (
