@@ -43,7 +43,7 @@ export default function PostContainer() {
         if (lastPage.data.lastId === -1) return undefined;
         return lastPage.data.lastId;
       },
-      initialPageParam: '100',
+      initialPageParam: '0',
     },
   );
 

@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import BackButton from '../../../../../_components/BackButton';
-import { postPic, postPost, putPost } from '../_services/blogService';
+import { fetchProfile, postPic, postPost, putPost } from '../_services/blogService';
 import Modal, { initailModalState } from '@/app/_components/Modal';
 import { PostWriteProps } from '../_types/blog';
 import usePostWriteStore from '@/app/_store/postWirte';
@@ -15,6 +15,7 @@ import '@toast-ui/editor/dist/toastui-editor.css'; // toast ui의 기본 스타�
 import useWindowHeight from '@/app/_hooks/useWindowHeight';
 import Overlay from '@/app/_components/Overlay';
 import defaultProfilePic from '../../../../../../../public/mascot.png';
+import useCustomQuery from '@/app/_hooks/useCustomQuery';
 
 // Next.js의 dynamic import를 사용하여 ToastEditor 컴포넌트를 동적으로 불러옴, 동적으로 불러올 컴포넌트의 경로를 지정
 const ToastEditor = dynamic(() => import('../../../../../_components/ToastEditor'), {
@@ -29,6 +30,7 @@ export default function PostWrite() {
   const postId = searchParams.get('postId');
   const queryClient = useQueryClient();
   const { username } = useParams();
+  const { data: userNameData } = useCustomQuery(['user-profile', username], () => fetchProfile(username as string));
 
   const postTitle = usePostWriteStore((state) => state.postTitle);
   const postData = usePostWriteStore((state) => state.postData);
@@ -107,6 +109,19 @@ export default function PostWrite() {
           await postPost(data);
         }
 
+        const memberId = userNameData?.data?.memberId;
+        await Promise.all([
+          queryClient.invalidateQueries({ queryKey: ['url-posts'] }),
+          queryClient.invalidateQueries({ queryKey: ['recentPosts'], refetchType: 'all' }),
+          queryClient.invalidateQueries({ queryKey: ['followingPosts'], refetchType: 'all' }),
+          queryClient.invalidateQueries({ queryKey: ['bookmarkPosts'], refetchType: 'all' }),
+          queryClient.invalidateQueries({ queryKey: ['search-posts'], refetchType: 'all' }),
+          queryClient.invalidateQueries({ queryKey: ['blog-user', username] }),
+          queryClient.resetQueries({
+            queryKey: ['post', memberId],
+          }),
+        ]);
+
         setModalState((prev) => ({
           ...prev,
           open: true,
@@ -115,8 +130,6 @@ export default function PostWrite() {
           onBtnClick: async () => {
             setIsLoading(true); // 로딩 시작
             try {
-              await queryClient.invalidateQueries();
-              await queryClient.refetchQueries();
               resetPost();
               router.push(`/blog/${username}`);
             } finally {
@@ -134,7 +147,7 @@ export default function PostWrite() {
         }));
       }
     },
-    [isEdit, postId, queryClient, resetPost, router, username],
+    [isEdit, postId, queryClient, resetPost, router, userNameData?.data?.memberId, username],
   );
   return (
     <section className="flex mx-auto flex-col w-full min-w-[360px] max-w-[1000px] pb-12 px-5 pt-14 md:pt-0">
