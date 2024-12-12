@@ -124,7 +124,6 @@ export default function PostContent() {
           queryClient.invalidateQueries({ queryKey: ['followingPosts'], refetchType: 'all' }),
           queryClient.invalidateQueries({ queryKey: ['bookmarkPosts'], refetchType: 'all' }),
           queryClient.invalidateQueries({ queryKey: ['search-posts'], refetchType: 'all' }),
-          queryClient.invalidateQueries({ queryKey: ['blog-user', username] }),
           queryClient.invalidateQueries({
             queryKey: ['post', postURLData?.data.memberId],
             refetchType: 'all',
