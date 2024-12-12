@@ -22,7 +22,6 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginState) => {
     const response = await postLogin(data);
-    console.log(response);
     // 쿠키에 토큰 저장
     Cookies.set('accessToken', response.data.accessToken, {
       path: '/', // 모든 경로에서 접근 가능
@@ -39,7 +38,7 @@ export default function LoginForm() {
     try {
       await onSubmit(data);
       await queryClient.invalidateQueries({ queryKey: ['me'] });
-      // window.location.href = '/main'; // 강제 새로고침
+      window.location.href = '/main'; // 강제 새로고침
     } catch (error) {
       if (error instanceof AxiosError) {
         setErrorMessage(error.response?.data.message);
