@@ -110,7 +110,7 @@ export default function PSReadContainer() {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-3 mt-44">
+        <div className="flex-center flex-col gap-3 mt-44">
           <Image className="animate-bounce" src="/mascot.png" alt="마스코트" width={204} height={193} />
           <p className="text-gray-0">불러오는 중 입니다</p>
         </div>
