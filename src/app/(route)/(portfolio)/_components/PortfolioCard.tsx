@@ -27,12 +27,15 @@ export default function PortfolioCard({
   const queryClient = useQueryClient();
 
   const handleMemoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newMemo = e.target.value;
-    setCurrentMemo(newMemo); // 미리 상태 업데이트
-    const memoPayload: PortfolioListMemo = { memo: newMemo };
+    setCurrentMemo(e.target.value);
+  };
+
+  const handleMemoBlur = async () => {
+    if (currentMemo === memo) return;
+
+    const memoPayload: PortfolioListMemo = { memo: currentMemo as string };
 
     try {
-      // API : 메모 등록
       await postPortfoliosMemo(portfolioId, memoPayload);
       queryClient.invalidateQueries({ queryKey: ['portfolios'] });
     } catch (error) {
@@ -111,6 +114,7 @@ export default function PortfolioCard({
           placeholder="메모 입력"
           value={currentMemo}
           onChange={handleMemoChange}
+          onBlur={handleMemoBlur}
           className="whitespace-nowrap overflow-hidden mt-2.5 bg-gray-4 text-gray-0 text-sm"
         />
       </form>
