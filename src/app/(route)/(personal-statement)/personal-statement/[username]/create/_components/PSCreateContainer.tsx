@@ -48,7 +48,7 @@ export default function PSCreateContainer() {
     if (!isTouch) {
       (async () => {
         try {
-          const fetchedData = await fetchPS(psId);
+          const fetchedData = await fetchPS(psId as string | null);
           setFormValues({
             title: fetchedData.data.title || '',
             position: fetchedData.data.position || '',
