@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -21,8 +21,10 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
 
   const isLogined = userData?.data?.nickname;
 
-  const alarmMenuRef = useRef<HTMLDivElement>(null);
   const myPageMenuRef = useRef<HTMLDivElement>(null);
+  const alarmRef = useRef<HTMLDivElement>(null);
+
+  const [isOpenAlarm, setIsOpenAlarm] = useState(false);
 
   useClickOutside({
     ref: myPageMenuRef,
@@ -71,15 +73,18 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
             <div className="flex-center text-black-0 text-sm font-medium">{userData?.data.nickname} 님</div>
           </div>
           <div className="flex-center w-10 ">
-            <div className="w-7 h-7 text-xs relative" ref={alarmMenuRef}>
+            <div ref={alarmRef}>
               <button
                 type="button"
-                onClick={() => handleMenuOpen('alarm')}
+                onClick={(e) => {
+                  e.stopPropagation(); // 클릭 이벤트 전파 방지
+                  setIsOpenAlarm(!isOpenAlarm);
+                }}
                 className="relative w-full items-center justify-center"
               >
                 <Image src="/assets/header/bell.svg" alt="종 이미지" width={30} height={10} />
-                {openMenu === 'alarm' && <Alarm />}
               </button>
+              {isOpenAlarm && <Alarm />}
             </div>
           </div>
         </>
