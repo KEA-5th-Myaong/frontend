@@ -40,7 +40,7 @@ export default function PSReadContainer() {
     router.push(`/personal-statement/${userData?.data.username}/list`);
   }
 
-  async function handlePSListDelete(psId: number) {
+  async function handlePSDelete(psId: number) {
     await deletePS(psId);
   }
 
@@ -55,7 +55,7 @@ export default function PSReadContainer() {
       btnText: '확인',
       onSubBtnClick: () => setModalState(initailModalState),
       onBtnClick: () => {
-        handlePSListDelete(Number(postId));
+        handlePSDelete(Number(postId));
         setModalState((prev2) => ({
           ...prev2,
           open: true,

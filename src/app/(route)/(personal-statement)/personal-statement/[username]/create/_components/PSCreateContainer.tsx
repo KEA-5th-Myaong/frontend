@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import Modal, { initailModalState } from '../../../../../../_components/Modal';
 import PSFooter from '../../../../_components/PSFooter';
 import PSHeader from '../../../../_components/PSHeader';
@@ -17,6 +18,7 @@ export default function PSCreateContainer() {
   const searchParams = useSearchParams();
   const isEdit = searchParams.get('edit') === 'true';
   const { data: userData } = useMe();
+  const queryClient = useQueryClient();
   // psData = 수정 일 시 초기값 설정을 위한 값
   const { psData, setPSData, resetPSData, isTouch, setIsTouch } = usePSStore();
   const psId = usePersonalStatementStore((state) => state.psId);
@@ -76,12 +78,13 @@ export default function PSCreateContainer() {
   // 폼 제출
   const handleSubmit = async () => {
     await postPS(formValues);
+    await queryClient.invalidateQueries({ queryKey: ['ps'], refetchType: 'all' });
     createDone();
   };
   // 수정 완료
   const handleEditSubmit = async () => {
     await putPS(psId, formValues);
-    console.log('formValues:', formValues);
+    await queryClient.invalidateQueries({ queryKey: ['ps'], refetchType: 'all' });
     createDone();
   };
 
@@ -89,7 +92,6 @@ export default function PSCreateContainer() {
   const handlePreviewClick = () => {
     // 미리 보기 클릭시 폼 데이터 값을 psData로 저장, 미리보기에서 되돌아 갔을 경우 psData를 불러옴
     setPSData(formValues);
-    console.log('내놔:', formValues);
     setIsTouch(true);
     router.push(`/personal-statement/${userData?.data.memberId}/preview`);
   };
@@ -100,8 +102,6 @@ export default function PSCreateContainer() {
       ...prev,
       [name]: value,
     }));
-    console.log('반영!');
-    console.log(formValues);
   };
 
   return (
