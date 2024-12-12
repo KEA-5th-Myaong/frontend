@@ -68,7 +68,7 @@ pipeline {
                     // 2. 새로 빌드한 이미지를 실행
                     sh """
                         ssh -o StrictHostKeyChecking=no ${env.onpremServerUsername}@${env.onpremServerIp} '
-                        docker run -d --name ${env.imageName} -p 3000:3000 ${env.fullImageName}:latest
+                        docker run -d --name ${env.imageName} -p 3000:3000 ${env.fullImageName}:${env.BUILD_ID.toInteger()}
                         '
                     """
                 }
