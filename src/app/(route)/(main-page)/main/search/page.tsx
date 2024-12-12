@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { v4 } from 'uuid';
+import parse from 'html-react-parser';
+import DOMPurify from 'dompurify';
 import Post from '@/app/_components/Post';
 import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
@@ -23,29 +25,28 @@ export default function SearchPage() {
 
   // 검색어 하이라이트 처리
   const highlightText = (text: string | JSX.Element): string | JSX.Element => {
-    if (typeof text !== 'string') return text; //  string이 아닐 경우 함수 종료
-    if (!searchTerm) return text;
+    if (typeof text !== 'string') return text;
+    if (!searchTerm) {
+      const parsed = parse(DOMPurify.sanitize(text));
+      // eslint-disable-next-line react/jsx-no-useless-fragment
+      return <>{parsed}</>;
+    }
 
     // 검색어의 특수문자 이스케이프 처리
     const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-    // 전체 텍스트를 검색어 기준으로 분할, 'gi' 플래그: g(전역 검색), i(대소문자 구분 없음)
+    // 전체 텍스트를 검색어 기준으로 분할
     const contexts = text.split(new RegExp(`(${escapedSearchTerm})`, 'gi'));
-    // 검색어가 포함되지 않은 경우 원본 텍스트 반환
-    if (contexts.length === 1) return text;
-    return (
-      <>
-        {contexts.map((context) =>
-          context.toLowerCase() === searchTerm.toLowerCase() ? (
-            <span key={v4()} className="text-[#F6C000]">
-              {context}
-            </span>
-          ) : (
-            context
-          ),
-        )}
-      </>
-    );
+
+    const highlightedText = contexts
+      .map((context) =>
+        context.toLowerCase() === searchTerm.toLowerCase() ? `<span class="text-[#F6C000]">${context}</span>` : context,
+      )
+      .join('');
+
+    const parsed = parse(DOMPurify.sanitize(highlightedText));
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    return <>{parsed}</>;
   };
   // 무한스크롤 포스트 데이터 가져오기
   const { data, isLoading } = useCustomInfiniteQuery(
@@ -96,7 +97,7 @@ export default function SearchPage() {
           onKeyDown={handleSearch}
         />
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 w-full">
         {isLoading
           ? Array.from({ length: 5 }).map(() => (
               <div key={v4()} className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
