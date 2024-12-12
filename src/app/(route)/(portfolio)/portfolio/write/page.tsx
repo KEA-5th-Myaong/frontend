@@ -1,8 +1,7 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
@@ -17,62 +16,116 @@ import PSSection from './_components/section/PSSection';
 import Input from './_components/Input';
 import ItemToggle from './_components/ItemToggle';
 import useToggleStore from '@/app/_store/portfolioToggle';
-import PortfolioWriteDropdown from '../../../_components/PortfolioWriteDropdown';
-import Footer from '../../../_components/Footer';
 import UploadImage from './_components/UploadImage';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 import Tips from './_components/Tips';
+import { postPorfolios } from '../../_services/portfolioServices';
+import PortfolioWriteDropdown from '../../_components/PortfolioWriteDropdown';
+import Footer from '../../_components/Footer';
+import usePortfolioStore from '@/app/_store/portfolio';
 
 export default function PortfolioWrite() {
-  const { register, handleSubmit, setValue } = useForm<PortfolioProps>();
-  const methods = useForm<PortfolioProps>();
-
-  const onSubmit = handleSubmit((data) => console.log(data));
-
-  const [isShowDropdown, setIsShowDropdown] = useState(false);
-  const { toggles } = useToggleStore();
   const router = useRouter();
-  const params = useParams();
-  const { portfolioId } = params;
+  const [isShowDropdown, setIsShowDropdown] = useState(false);
+  const [picUrl, setPicUrl] = useState<string | null>(null);
+  const { toggles } = useToggleStore();
+  const { portfolio, setPortfolio } = usePortfolioStore(); // 미리보기를 위한 전역상태 추가
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside({
     ref: dropdownRef,
     callback: () => setIsShowDropdown(false),
   });
+  const { register, handleSubmit, setValue, getValues } = useForm<PortfolioFormProps>();
+  const methods = useForm<PortfolioFormProps>({
+    defaultValues: portfolio || {
+      title: '',
+      name: '',
+      tel: '',
+      email: '',
+      picUrl: picUrl || null,
+      preferredJob: '',
+      educations: [],
+      experiences: [],
+      ps: null,
+      links: [],
+      skills: [],
+      certifications: [],
+      extraActivities: [],
+    },
+  });
 
-  const handleDoneClick = () => {
-    if (portfolioId) {
-      router.push(`/portfolio/${portfolioId}/read`);
+  useEffect(() => {
+    if (portfolio && Object.keys(portfolio).length > 0) {
+      Object.entries(portfolio).forEach(([key, value]) => {
+        setValue(key as keyof PortfolioFormProps, value); // 각 필드의 값을 설정
+      });
+    }
+    if (picUrl) {
+      setValue('picUrl', picUrl);
+    }
+  }, [portfolio, setValue, picUrl]);
+
+  const cleanData = (data: PortfolioFormProps) => {
+    return {
+      ...data,
+      picUrl: picUrl || null,
+      educations: data.educations || [],
+      experiences: data.experiences || [],
+      ps: data.ps || null,
+      links: data.links || [],
+      skills: data.skills || [],
+      certifications: data.certifications || [],
+      extraActivities: data.extraActivities || [],
+    };
+  };
+
+  const onSubmit = async (formData: PortfolioFormProps) => {
+    const cleanedData = cleanData(formData); // 데이터 정리
+    try {
+      const response = await postPorfolios(cleanedData);
+      const createdId = response?.data?.portfolioId; // API에서 반환된 ID
+      if (createdId) {
+        router.push(`/portfolio/${createdId}/read`);
+      }
+    } catch (error) {
+      console.error('Error creating portfolio:', error);
     }
   };
 
+  const handleDoneClick = () => {
+    handleSubmit(onSubmit)(); // handleSubmit 호출
+  };
+
   const handlePreviewClick = () => {
-    if (portfolioId) {
-      router.push(`/portfolio/${portfolioId}/preview`);
-    }
+    const formData = getValues();
+    setPortfolio(formData);
+    router.push(`/portfolio/preview`);
   };
 
   return (
     <div className="relative ">
-      <div className="relative flex pl-[200px] mt-[60px] mb-[100px] w-full lg:mx-auto">
+      <div className="relative flex sm:pl-[30px] md:pl-[80px] lg:pl-[200px] pt-[100px] xl:pt-[60px] mb-[100px] w-full lg:mx-auto">
         <ItemToggle />
-        <section className="flex max-w-[1200px] min-w-[900px] md:px-[60px] lg:px-0 ">
+        <section className="flex max-w-[1200px] min-w-[900px] px-0 ">
           <div className="w-full ml-10">
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
                 <h1 className="font-semibold text-left ">포트폴리오 작성</h1>
                 <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
               </div>
-              <Link
-                href={`/portfolio/${portfolioId}/read`}
+              <button
+                type="submit"
+                onClick={() => {
+                  handleDoneClick();
+                }}
                 className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation"
               >
                 작성 완료
-              </Link>
+              </button>
             </div>
             <FormProvider {...methods}>
-              <form onSubmit={onSubmit}>
+              <form>
                 <div className="relative flex justify-between items-center mt-5">
                   <input
                     {...register('title')}
@@ -94,7 +147,7 @@ export default function PortfolioWrite() {
                 </div>
                 <section className="mt-5 mb-[50px]">
                   <section>
-                    <UploadImage />
+                    <UploadImage onImageUpload={setPicUrl} />
                     <div className="grid grid-flow-col justify-stretch gap-[20px]">
                       <Input
                         register={register}
@@ -115,7 +168,14 @@ export default function PortfolioWrite() {
                         size="lg"
                         type="tel"
                         color="transparent"
+                        maxLength={13}
                         placeholder="휴대폰 번호를 입력해주세요"
+                        onChange={(e) => {
+                          const formatted = e.target.value
+                            .replace(/[^\d]/g, '') // 숫자가 아닌 문자를 제거
+                            .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'); // 3-4-4 포맷으로 변환
+                          e.target.value = formatted;
+                        }}
                         required
                       />
                     </div>
@@ -154,9 +214,8 @@ export default function PortfolioWrite() {
                     {toggles.activities && <ActivitiesSection register={register} />}{' '}
                     {toggles.activities && <Tips item="activities" />}
                   </div>
-                  {toggles.personalStatement && <PSSection register={register} />}
+                  {toggles.personalStatement && <PSSection setValue={setValue} register={register} />}
                 </section>
-                {/* <button type="submit">제출 테스트</button> */}
               </form>
             </FormProvider>
           </div>

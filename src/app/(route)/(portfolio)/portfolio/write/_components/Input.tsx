@@ -15,6 +15,7 @@ interface InputProps<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Input<T extends FieldValues>({
@@ -29,6 +30,7 @@ export default function Input<T extends FieldValues>({
   name,
   register,
   onClick,
+  onChange,
   required,
 }: InputProps<T>) {
   const inputWidth = size === 'sm' ? 'w-[260px]' : 'w-full';
@@ -36,6 +38,16 @@ export default function Input<T extends FieldValues>({
 
   // 학점 패턴 정의
   const gradePattern = '^\\d(\\.\\d{1,2})?/[0-4](\\.\\d{1,2})?$';
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (type === 'tel') {
+      const formatted = e.target.value
+        .replace(/[^\d]/g, '') // 숫자가 아닌 문자를 제거
+        .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'); // 3-4-4 포맷으로 변환
+      e.target.value = formatted;
+    }
+    if (onChange) onChange(e);
+  };
 
   return (
     <div className="my-2.5">
@@ -53,6 +65,7 @@ export default function Input<T extends FieldValues>({
           onClick={(event: React.MouseEvent<HTMLInputElement>) => {
             if (onClick) onClick(event);
           }}
+          onChange={handleInputChange}
           required={required}
           className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-sm font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
         />

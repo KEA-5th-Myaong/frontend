@@ -1,65 +1,73 @@
 import Image from 'next/image';
-import { UseFormRegister } from 'react-hook-form';
+import { Path, UseFormRegister } from 'react-hook-form';
 import Input from '../Input';
 import MotionWrapper from '@/app/_components/MotionWrapper';
-import { PortfolioProps } from '@/app/_types/portfolio';
+import { PortfolioFormProps } from '@/app/_types/portfolio';
 
-interface EducationItemProps {
+interface ExperienceItemProps {
   id: number;
-  register: UseFormRegister<PortfolioProps>;
   onDelete: (id: number) => void;
+  register: UseFormRegister<PortfolioFormProps>;
 }
 
-export default function EducationItem({ id, register, onDelete }: EducationItemProps) {
+function ExperienceItem({ id, onDelete, register }: ExperienceItemProps) {
   return (
     <MotionWrapper>
       <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
             register={register}
-            name={`educations.${id}.name`}
+            name={`experiences.${id}.name` as Path<PortfolioFormProps>}
             element="input"
-            label="학교명"
+            label="회사명"
             size="lg"
             type="text"
             color="white"
             maxLength={50}
-            placeholder="학교명을 입력해주세요"
+            placeholder="회사명을 입력해주세요"
             required
           />
           <Input
             register={register}
-            name={`educations.${id}.major`}
+            name={`experiences.${id}.position` as Path<PortfolioFormProps>}
             element="input"
-            label="학과"
+            label="직책"
             size="lg"
             type="text"
             color="white"
             maxLength={50}
-            placeholder="학과를 입력해주세요"
+            placeholder="직책을 입력해주세요"
             required
           />
         </div>
         <Input
           register={register}
-          name={`educations.${id}.graduation`}
+          name={`experiences.${id}.start` as Path<PortfolioFormProps>}
           element="input"
-          label="졸업 일자"
+          label="시작 일자"
           size="lg"
           type="date"
           color="white"
-          required
         />
         <Input
           register={register}
-          name={`educations.${id}.gpa`}
+          name={`experiences.${id}.end` as Path<PortfolioFormProps>}
           element="input"
-          label="학점"
+          label="종료 일자"
+          size="lg"
+          type="date"
+          color="white"
+        />
+        <Input
+          register={register}
+          name={`experiences.${id}.achievement` as Path<PortfolioFormProps>}
+          element="textarea"
+          label="주요 업무/성과"
           size="lg"
           type="text"
-          pattern="grade"
           color="white"
-          placeholder="학점/기준학점"
+          maxLength={2000}
+          placeholder="주요 업무/성과를 입력해주세요"
         />
         <button type="button" onClick={() => onDelete(id)} className="absolute top-[20px] right-10">
           <Image src="/assets/ic-delete.svg" alt="삭제" width={25} height={25} />
@@ -68,3 +76,5 @@ export default function EducationItem({ id, register, onDelete }: EducationItemP
     </MotionWrapper>
   );
 }
+
+export default ExperienceItem;

@@ -101,20 +101,23 @@ export async function postPost(postData: unknown) {
 
 // (POST) 포스트 이미지 업로드
 export async function postPic(file: File): Promise<string> {
-  const formData = new FormData();
-  formData.append('pic', file);
-
   try {
-    const { data } = await api.post('/blog/posts/pic', formData, {
+    // FormData 생성 및 파일 추가
+    const formData = new FormData();
+    formData.append('pic', file);
+
+    // API 요청
+    const response = await api.post<{ picUrl: string }>('/blog/posts/pic', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
 
-    return data.picUrl;
+    // 응답에서 이미지 URL 반환
+    return response.data.picUrl;
   } catch (error) {
     console.error('포스트 이미지 업로드 실패:', error);
-    throw error;
+    throw new Error('이미지 업로드에 실패했습니다.');
   }
 }
 
