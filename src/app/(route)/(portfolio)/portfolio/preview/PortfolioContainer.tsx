@@ -6,12 +6,8 @@ import useMe from '@/app/_hooks/useMe';
 import usePortfolioStore from '@/app/_store/portfolio';
 
 export default function PortfolioContainer() {
-  // 유저 정보 조회
   const { data: userData } = useMe();
-
   const { portfolio } = usePortfolioStore();
-  console.log('미리보기 전역 데이터', portfolio);
-  console.log('ExtraActivities 데이터:', portfolio?.extraActivities);
 
   return (
     <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] px-5 py-10  lg:mx-auto border rounded-[10px]">
