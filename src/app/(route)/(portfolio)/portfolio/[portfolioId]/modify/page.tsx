@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
 import Icons from '@/app/_components/ui/Icon';
 import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
@@ -44,7 +45,7 @@ export default function PortfolioModify() {
     callback: () => setIsShowDropdown(false),
   });
   const { register, handleSubmit, setValue, getValues, reset } = useForm<PortfolioFormProps>({
-    defaultValues: portfolio || {}, // 초기화는 `portfolioData` 또는 로컬스토리지에서 설정
+    defaultValues: {},
   });
   const methods = useForm<PortfolioFormProps>();
 
@@ -75,13 +76,23 @@ export default function PortfolioModify() {
     },
   );
 
-  // 초기화 시 포트폴리오 데이터 설정
+  // 포트폴리오 데이터를 폼 필드에 설정
+  const isFirstLoad = useRef(true);
   useEffect(() => {
-    if (portfolioData && !portfolio) {
-      reset({ ...portfolioData.data, picUrl: portfolioData.data.picUrl || null });
+    if (portfolio) {
+      // 전역 상태가 있을 경우 폼 필드 초기화
+      Object.keys(portfolio).forEach((key) => {
+        setValue(key as keyof PortfolioFormProps, portfolio[key as keyof PortfolioFormProps]);
+      });
+    } else if (isFirstLoad.current && portfolioData) {
+      // 전역 상태가 없고 API 데이터가 처음 로드된 경우
+      setPortfolio(portfolioData.data); // 전역 상태 설정
+      reset({ ...portfolioData.data }); // 폼 상태 초기화
+      isFirstLoad.current = false; // 첫 실행 이후 방지
     }
-  }, [portfolioData, reset, portfolio]);
+  }, [portfolio, portfolioData, setValue, setPortfolio, reset]);
 
+  const queryClient = useQueryClient();
   const onSubmit = async (formData: PortfolioFormProps) => {
     const cleanedData = cleanData(formData); // 데이터 정리
     // API 요청
@@ -89,6 +100,7 @@ export default function PortfolioModify() {
       await putPortfolios(String(portfolioId), cleanedData);
       console.log('수정완료');
       router.push(`/portfolio`);
+      queryClient.invalidateQueries({ queryKey: ['portfolio', portfolioId] });
     } catch (error) {
       console.error('Error creating portfolio:', error);
     }
