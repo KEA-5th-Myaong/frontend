@@ -8,9 +8,9 @@ import PSHeader from '../../../../_components/PSHeader';
 import usePSStore from '../../../../_store/psStore';
 import BackButton from '../../../../../../_components/BackButton';
 import PSForm from './PSForm';
-import { postPS, putPS } from '@/app/(route)/(personal-statement)/_services/psServices';
+import { postPS, putPS, fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useMe from '@/app/_hooks/useMe';
-import { usePostWriteStore, usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
+import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 
 export default function PSCreateContainer() {
   const router = useRouter();
@@ -19,14 +19,13 @@ export default function PSCreateContainer() {
   const { data: userData } = useMe();
   // psData = 수정 일 시 초기값 설정을 위한 값
   const { psData, setPSData, resetPSData, isTouch, setIsTouch } = usePSStore();
-  const postData = usePostWriteStore((state) => state);
   const psId = usePersonalStatementStore((state) => state.psId);
 
   const [formValues, setFormValues] = useState({
-    title: postData.postTitle || '',
-    position: postData.postPosition || '',
-    reason: postData.postReason || '',
-    content: postData.postContent || '',
+    title: '',
+    position: '',
+    reason: '',
+    content: '',
   });
 
   const [modalState, setModalState] = useState(initailModalState);
@@ -42,7 +41,22 @@ export default function PSCreateContainer() {
         title: psData.title || '',
       }));
     }
-  }, [isTouch, psData.position, psData.title, psData.reason, psData.content]);
+    if (!isTouch) {
+      (async () => {
+        try {
+          const fetchedData = await fetchPS(psId);
+          setFormValues({
+            title: fetchedData.data.title || '',
+            position: fetchedData.data.position || '',
+            reason: fetchedData.data.reason || '',
+            content: fetchedData.data.content || '',
+          });
+        } catch (error) {
+          console.error('Error fetching PS:', error);
+        }
+      })();
+    }
+  }, [isTouch, psData.position, psData.title, psData.reason, psData.content, psId]);
 
   // 완료 모달
   const createDone = () => {
@@ -67,6 +81,7 @@ export default function PSCreateContainer() {
   // 수정 완료
   const handleEditSubmit = async () => {
     await putPS(psId, formValues);
+    console.log('formValues:', formValues);
     createDone();
   };
 
@@ -74,6 +89,7 @@ export default function PSCreateContainer() {
   const handlePreviewClick = () => {
     // 미리 보기 클릭시 폼 데이터 값을 psData로 저장, 미리보기에서 되돌아 갔을 경우 psData를 불러옴
     setPSData(formValues);
+    console.log('내놔:', formValues);
     setIsTouch(true);
     router.push(`/personal-statement/${userData?.data.memberId}/preview`);
   };
@@ -84,6 +100,8 @@ export default function PSCreateContainer() {
       ...prev,
       [name]: value,
     }));
+    console.log('반영!');
+    console.log(formValues);
   };
 
   return (
