@@ -125,7 +125,7 @@ export default function PortfolioWrite() {
               </button>
             </div>
             <FormProvider {...methods}>
-              <form onSubmit={onSubmit}>
+              <form>
                 <div className="relative flex justify-between items-center mt-5">
                   <input
                     {...register('title')}
@@ -214,7 +214,7 @@ export default function PortfolioWrite() {
                     {toggles.activities && <ActivitiesSection register={register} />}{' '}
                     {toggles.activities && <Tips item="activities" />}
                   </div>
-                  {toggles.personalStatement && <PSSection register={register} />}
+                  {toggles.personalStatement && <PSSection setValue={setValue} register={register} />}
                 </section>
               </form>
             </FormProvider>

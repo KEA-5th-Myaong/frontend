@@ -1,18 +1,39 @@
 'use client';
 
 import Image from 'next/image';
-import { Path, UseFormRegister } from 'react-hook-form';
+import { Path, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { useState } from 'react';
 import Input from '../Input';
 import { PortfolioFormProps } from '@/app/_types/portfolio';
 import LoadPSModal from '../LoadPSModal';
+import { fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
 
 interface PSSectionProps {
+  setValue: UseFormSetValue<PortfolioFormProps>;
   register: UseFormRegister<PortfolioFormProps>;
 }
 
-export default function PSSection({ register }: PSSectionProps) {
+export default function PSSection({ register, setValue }: PSSectionProps) {
   const [showModal, setShowModal] = useState(false);
+
+  // 자기소개서를 조회 및 폼에 설정하는 함수
+  const handleSelectPS = async (id: string) => {
+    try {
+      const response = await fetchPS(id); // API 호출
+      const psData = response?.data;
+
+      if (psData) {
+        // 폼 필드에 데이터 설정
+        setValue('ps.title', psData.title || '');
+        setValue('ps.position', psData.position || '');
+        setValue('ps.reason', psData.reason || '');
+        setValue('ps.content', psData.content || '');
+      }
+      setShowModal(false); // 모달 닫기
+    } catch (error) {
+      console.error('Failed to fetch personal statement:', error);
+    }
+  };
   return (
     <div className="mt-10">
       <div className="flex justify-between items-center">
@@ -29,6 +50,7 @@ export default function PSSection({ register }: PSSectionProps) {
         </button>
         {showModal && (
           <LoadPSModal
+            onSelect={handleSelectPS}
             onOverlayClick={() => {
               setShowModal(false);
             }}
