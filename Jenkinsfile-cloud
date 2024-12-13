@@ -18,8 +18,6 @@ pipeline {
                         // 환경 변수 설정
                         env.dockerHubUsername = DOCKER_HUB_USERNAME
                         env.fullImageName = "${env.dockerHubUsername}/${env.imageName}" // fullImageName 설정
-                        env.onpremServerUsername = ONPREM_SERVER_USERNAME
-                        env.onpremServerIp = ONPREM_SERVER_IP
                         env.nextPublicBaseUrl = NEXT_PUBLIC_BASE_URL
                         env.nextPublicTempUrl = NEXT_PUBLIC_TEMP_URL
                         env.nextPublicDomain = NEXT_PUBLIC_DOMAIN
