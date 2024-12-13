@@ -19,14 +19,14 @@ export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userNa
   };
   return (
     <>
-      <div className="absolute bg-white-0 dark:bg-gray-4 border-2 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
+      <div className="absolute bg-white-0 dark:bg-black-4 dark:border-black-5 border-2 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
         {isBlog ? (
           <>
             <div className="w-[88px] h-8 mx-auto m-2">
               <button
                 type="button"
                 onClick={() => handleNavigation(`/blog/${userName}`)}
-                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal  dark:text-white-1 text-gray-0 text-xs rounded-md w-full h-full"
               >
                 내 블로그
               </button>
@@ -35,7 +35,7 @@ export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userNa
               <button
                 type="button"
                 onClick={() => handleNavigation(`/blog/${userName}/write`)}
-                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal  dark:text-white-1 text-gray-0 text-xs rounded-md w-full h-full"
               >
                 글쓰기
               </button>
@@ -47,7 +47,7 @@ export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userNa
               <button
                 type="button"
                 onClick={() => handleNavigation(`/interview/${userName}/select`)}
-                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal  dark:text-white-1 text-gray-0 text-xs rounded-md w-full h-full"
               >
                 모의 면접
               </button>
@@ -56,7 +56,7 @@ export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userNa
               <button
                 type="button"
                 onClick={() => handleNavigation(`/personal-statement/${userName}/list`)}
-                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal  dark:text-white-1 text-gray-0 text-xs rounded-md w-full h-full"
               >
                 자소서 첨삭
               </button>
@@ -65,7 +65,7 @@ export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userNa
               <button
                 type="button"
                 onClick={() => handleNavigation('/portfolio')}
-                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal  dark:text-white-1 text-gray-0 text-xs rounded-md w-full h-full"
               >
                 내 포트폴리오
               </button>
