@@ -5,11 +5,11 @@ export const metadata = {
     default: 'PPLOG',
     template: '%s | PPLOG',
   },
-  description: '모의면접과 자소서첨삭, 포트폴리오 관리를 한 번에',
+  description: '블로그 서비스에서 모의면접과 자소서첨삭, 포트폴리오 관리를 한 번에',
   keywords: ['커뮤니티', '모의면접', '자소서', '블로그', '소통'],
   openGraph: {
     title: 'PPLOG',
-    description: '모의면접과 자소서첨삭, 포트폴리오 관리를 한 번에',
+    description: '블로그 서비스에서 모의면접과 자소서첨삭, 포트폴리오 관리를 한 번에',
     images: [
       {
         url: '/mya.png', // 메인 피드 대표 이미지

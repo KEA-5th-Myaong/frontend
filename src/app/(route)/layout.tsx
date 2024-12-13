@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import '../globals.css';
 import localFont from 'next/font/local';
 import Providers from '../_components/Providers';
@@ -12,12 +12,19 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 });
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'), // 나중에 실제 도메인으로 변경
   title: {
     default: 'PPLOG',
     template: '%s | PPLOG', // 하위 페이지의 타이틀 템플릿
   },
-  description: '개발자들의 일상과 기술을 공유하는 소셜 플랫폼',
+  description: '블로그 서비스에서 모의면접과 자소서첨삭, 포트폴리오 관리를 한 번에',
   keywords: [
     '커뮤니티',
     '기술 블로그',
@@ -44,17 +51,12 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
     siteName: 'PPLOG',
     title: 'PPLOG',
-    description: '개발자들의 일상과 기술을 공유하는 소셜 플랫폼',
+    description: '블로그 서비스에서 모의면접과 자소서첨삭, 포트폴리오 관리를 한 번에',
     images: [
       {
         url: '/mya.png',
