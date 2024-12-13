@@ -4,12 +4,12 @@ import { Metadata } from 'next';
 export async function generateMetadata({ params }: { params: { username: string } }): Promise<Metadata> {
   return {
     title: {
-      default: `${params.username}님의 블로그 | Popolog`,
-      template: `%s | ${params.username}님의 블로그 | Popolog`,
+      default: `${params.username}님의 블로그`,
+      template: `%s | ${params.username}님의 블로그`,
     },
     description: `${params.username}님의 기술 블로그`,
     openGraph: {
-      title: `${params.username}님의 블로그 | Popolog`,
+      title: `${params.username}님의 블로그`,
       description: `${params.username}님의 기술 블로그`,
       images: [
         {
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: { username: string 
       ],
       type: 'article',
       locale: 'ko_KR',
-      siteName: 'Popolog',
+      siteName: 'PPLOG',
     },
   };
 }
