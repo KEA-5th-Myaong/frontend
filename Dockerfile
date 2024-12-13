@@ -4,11 +4,6 @@ FROM node:18 AS builder
 # 작업 디렉토리 설정
 WORKDIR /app
 
-# 환경 변수 주입
-ENV NEXT_PUBLIC_BASE_URL="http://172.16.210.30:8000/"
-ENV NEXT_PUBLIC_TEMP_URL="http://172.16.210.30:5000/"
-ENV NEXT_PUBLIC_DOMAIN="172.16.210.30"  
-
 # 패키지 파일 복사
 COPY package.json package-lock.json ./
 

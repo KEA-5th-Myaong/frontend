@@ -13,7 +13,10 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'docker-hub-username', variable: 'DOCKER_HUB_USERNAME'),
                                      string(credentialsId: 'onprem-server-username', variable: 'ONPREM_SERVER_USERNAME'),
-                                     string(credentialsId: 'onprem-server-ip', variable: 'ONPREM_SERVER_IP')]) {
+                                     string(credentialsId: 'onprem-server-ip', variable: 'ONPREM_SERVER_IP'),
+                                     string(credentialsId: 'next-public-base-url', variable: 'NEXT_PUBLIC_BASE_URL'),
+                                     string(credentialsId: 'next-public-temp-url', variable: 'NEXT_PUBLIC_TEMP_URL'),
+                                     string(credentialsId: 'next-public-domain', variable: 'NEXT_PUBLIC_DOMAIN')]) { 
                         // 환경 변수 설정
                         env.dockerHubUsername = DOCKER_HUB_USERNAME
                         env.fullImageName = "${env.dockerHubUsername}/${env.imageName}" // fullImageName 설정
@@ -30,6 +33,20 @@ pipeline {
                 git url: 'https://github.com/KEA-5th-Myaong/frontend.git',
                     branch: 'main', // 적절한 브랜치로 변경
                     credentialsId: 'github-token'
+            }
+        }
+
+        stage('Create .env File') {
+            steps {
+                script {
+                    // .env 파일 생성 및 Secret Text의 내용을 넣기
+                    sh '''
+                        touch ./frontend/.env
+                        echo "NEXT_PUBLIC_BASE_URL='${NEXT_PUBLIC_BASE_URL}'" >> ./frontend/.env
+                        echo "NEXT_PUBLIC_TEMP_URL='${NEXT_PUBLIC_TEMP_URL}'" >> ./frontend/.env
+                        echo "NEXT_PUBLIC_DOMAIN='${NEXT_PUBLIC_DOMAIN}'" >> ./frontend/.env
+                    '''
+                }
             }
         }
 
