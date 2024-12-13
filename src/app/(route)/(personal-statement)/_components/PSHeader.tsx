@@ -8,14 +8,16 @@ import useClickOutside from '../../../_hooks/useClickOutside';
 
 export interface PSCreateHeaderProps {
   title: string;
-  mode: 'create' | 'preview' | 'read' | 'editing';
+  mode: 'create' | 'preview' | 'read' | 'editing' | 'edit';
   onButtonClick?: () => void;
   handleDeleteClick?: () => void;
+  handleEditClick?: () => void;
 }
 
 const headerText = {
   buttonText: {
     create: '작성 완료',
+    edit: '작성 완료',
     preview: '뒤로 가기',
     read: 'AI 첨삭 바로가기',
     editing: '포스트 작성',
@@ -25,10 +27,17 @@ const headerText = {
     preview: '자기소개서 미리보기',
     read: '자기소개서',
     editing: '자기소개서 첨삭',
+    edit: '자기소개서 수정',
   },
 };
 
-export default function PSHeader({ title, mode, onButtonClick, handleDeleteClick }: PSCreateHeaderProps) {
+export default function PSHeader({
+  title,
+  mode,
+  onButtonClick,
+  handleDeleteClick,
+  handleEditClick,
+}: PSCreateHeaderProps) {
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -60,7 +69,12 @@ export default function PSHeader({ title, mode, onButtonClick, handleDeleteClick
         {mode === 'read' && (
           <div className="relative mr-5" ref={dropdownRef}>
             <Icons onClick={() => setShowDropDown((prev) => !prev)} className="cursor-pointer" name={MoreIcon} />
-            {showDropDown && <MoreOptions handleDeleteClick={handleDeleteClick} />}
+            {showDropDown && (
+              <>
+                <MoreOptions handleDeleteClick={handleDeleteClick} />
+                <MoreOptions handleEditClick={handleEditClick} />
+              </>
+            )}
           </div>
         )}
       </div>

@@ -13,8 +13,9 @@ export interface SignUpState extends LoginState {
 }
 
 export interface ChangePwdProps {
+  originPassword: string;
   password: string;
-  confirmPassword: string;
+  newPassword: string;
 }
 
 export interface FormInputProps<T extends FieldValues> {

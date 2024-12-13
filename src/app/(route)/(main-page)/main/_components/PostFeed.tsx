@@ -11,11 +11,13 @@ import { formatDate } from '@/app/_utils/formatDate';
 import defaultProfilePic from '../../../../../../public/mascot.png';
 import useCustomInfiniteQuery from '@/app/_hooks/useCustomInfiniteQuery';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   const router = useRouter();
   const { ref, inView } = useInView(); // 무한 스크롤을 위한 InterSection Observer 훅
   const [posts, setPosts] = useState<PostProps[]>([]);
+  const { data: userData } = useMe();
 
   // 모든 무한 쿼리에 공통적으로 사용할 옵션
   const commonQueryOptions = {
@@ -29,9 +31,9 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
 
   // 각 탭별 무한스크롤 쿼리 설정
   const queries = {
-    추천: useCustomInfiniteQuery(['recommendPosts'], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
+    최신: useCustomInfiniteQuery(['recentPosts'], ({ pageParam = '0' }) => fetchPosts(pageParam as string), {
       ...commonQueryOptions,
-      enabled: activeTab === '추천',
+      enabled: activeTab === '최신',
     }),
     팔로잉: useCustomInfiniteQuery(['followingPosts'], ({ pageParam = '0' }) => fetchFollowing(pageParam as string), {
       ...commonQueryOptions,
@@ -75,28 +77,28 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   // 각 탭별 로딩 상태
   const loadingStates = useMemo(
     () => ({
-      추천: queries.추천.isLoading,
+      최신: queries.최신.isLoading,
       팔로잉: queries.팔로잉.isLoading,
       북마크: queries.북마크.isLoading,
       직군: queries.직군.isLoading,
     }),
-    [queries.추천.isLoading, queries.팔로잉.isLoading, queries.북마크.isLoading, queries.직군.isLoading],
+    [queries.최신.isLoading, queries.팔로잉.isLoading, queries.북마크.isLoading, queries.직군.isLoading],
   );
-  // 현재 활성 탭의 로딩 상태, 기본 값은 추천 탭의 로딩 상태
-  const isLoading = loadingStates[activeTab as keyof typeof loadingStates] ?? queries.추천.isLoading;
+  // 현재 활성 탭의 로딩 상태, 기본 값은 최신 탭의 로딩 상태
+  const isLoading = loadingStates[activeTab as keyof typeof loadingStates] ?? queries.최신.isLoading;
 
   // 현재 활성 탭의 다음 데이터 로딩 상태
   const isFetchingNextPage = useMemo(
     () =>
       ({
-        추천: queries.추천.isFetchingNextPage,
+        최신: queries.최신.isFetchingNextPage,
         팔로잉: queries.팔로잉.isFetchingNextPage,
         북마크: queries.북마크.isFetchingNextPage,
         직군: queries.직군.isFetchingNextPage,
       })[activeTab],
     [
       activeTab,
-      queries.추천.isFetchingNextPage,
+      queries.최신.isFetchingNextPage,
       queries.팔로잉.isFetchingNextPage,
       queries.북마크.isFetchingNextPage,
       queries.직군.isFetchingNextPage,
@@ -113,17 +115,17 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
     setPosts(currentPosts);
   }, [currentPosts]);
 
-  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
+  const { bookmarkMutation } = useLoveAndBookmark(
     posts,
     setPosts,
-    '1', // memberId
+    userData?.data.memberId,
     currentQuery?.data?.pages?.[currentQuery.data.pages.length - 1]?.data.lastId?.toString(), // 마지막 페이지의 lastId
   );
   return (
     <div className="flex flex-col gap-6 w-full pt-5">
       {isLoading
         ? Array.from({ length: 5 }).map(() => (
-            <div key={v4()} className="w-full h-48 bg-gray-4 rounded-md animate-pulse" />
+            <div key={v4()} className="w-full h-48 bg-gray-4 dark:bg-black-3 rounded-md animate-pulse" />
           ))
         : posts.map((post) => (
             <Post
@@ -143,17 +145,16 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
               profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
-              userJob={post.userJob || '기타'}
+              prejob={post?.prejob?.[0]}
               onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
-              onLoveClick={() => loveMutation.mutate(post.postId)}
-              isLoved={post.isLoved}
-              lovedCount={post.lovedCount || 0}
+              isLiked={post.isLiked}
+              likeCount={post.likeCount}
             />
           ))}
 
       {/* 무한 스크롤 트리거용 div */}
       <div ref={ref} className="h-1" />
-      {isFetchingNextPage && <div className="w-full h-48 bg-gray-2 rounded-md animate-pulse" />}
+      {isFetchingNextPage && <div className="w-full h-48 bg-gray-2 dark:bg-black-3 rounded-md animate-pulse" />}
     </div>
   );
 }

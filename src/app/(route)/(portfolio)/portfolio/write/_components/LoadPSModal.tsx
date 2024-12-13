@@ -8,7 +8,7 @@ import { modalMotion } from '@/app/_components/Modal';
 import Overlay from '@/app/_components/Overlay';
 import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
-import { PSListBoxProps } from '@/app/(route)/(personal-statement)/personal-statement/[id]/list/_types/psList';
+import { PSListBoxProps } from '@/app/(route)/(personal-statement)/personal-statement/[username]/list/_types/psList';
 import useMe from '@/app/_hooks/useMe';
 
 interface LoadPSModalProps {
@@ -23,6 +23,7 @@ export default function LoadPSModal({ onSelect, onOverlayClick }: LoadPSModalPro
       onOverlayClick();
     }
   };
+  console.log(selectedPSId);
 
   // 자기소개서 목록 불러오기
   const [psList, setPSList] = useState([]); // 자소서 배열

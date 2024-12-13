@@ -9,7 +9,7 @@ import BackButton from '@/app/_components/BackButton';
 import useClickOutside from '@/app/_hooks/useClickOutside';
 
 export default function QASelect() {
-  const [isLocked, setIsLocked] = useState(true);
+  const [isLocked] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 

@@ -43,7 +43,7 @@ export default function FollowModal({ isOpen, onClose, title, list }: FollowModa
         <p className="font-semibold text-2xl">{title}</p>
 
         <div className="flex flex-col gap-6 w-full h-[514px] overflow-scroll pb-2 hide-scrollbar">
-          {list?.map((followList, index) => (
+          {list?.map((followList) => (
             <div key={followList.memberId} className="flex items-center justify-between">
               <div className="flex items-center gap-5">
                 <Image

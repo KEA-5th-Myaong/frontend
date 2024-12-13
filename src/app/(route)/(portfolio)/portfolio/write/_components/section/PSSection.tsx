@@ -9,7 +9,7 @@ import LoadPSModal from '../LoadPSModal';
 import { fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
 
 interface PSSectionProps {
-  setValue: UseFormSetValue<PortfolioFormProps>;
+  setValue?: UseFormSetValue<PortfolioFormProps>;
   register: UseFormRegister<PortfolioFormProps>;
 }
 
@@ -22,8 +22,7 @@ export default function PSSection({ register, setValue }: PSSectionProps) {
       const response = await fetchPS(id); // API 호출
       const psData = response?.data;
 
-      if (psData) {
-        // 폼 필드에 데이터 설정
+      if (psData && setValue) {
         setValue('ps.title', psData.title || '');
         setValue('ps.position', psData.position || '');
         setValue('ps.reason', psData.reason || '');

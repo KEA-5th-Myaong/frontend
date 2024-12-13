@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function SocialLogin() {
   const handleKakaoLogin = () => {
-    const KAKAO_AUTH_URL = 'http://172.16.210.30:8000/oauth2/authorization/kakao';
+    const KAKAO_AUTH_URL = `${process.env.NEXT_PUBLIC_BASE_URL}oauth2/authorization/kakao`;
     const REDIRECT_URI = 'http://localhost:3000/sign-up/detail';
 
     window.location.href = `${KAKAO_AUTH_URL}?redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;

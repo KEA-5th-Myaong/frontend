@@ -10,9 +10,9 @@ export interface PostProps {
   username?: string | null;
   profilePicUrl: string | null;
   isBookmarked: boolean;
-  isLoved: boolean;
-  lovedCount: number;
-  userJob: string;
+  isLiked: boolean;
+  likeCount: number;
+  prejob: string;
 
   onLoveClick?: () => void;
   onBookmarkClick?: () => void;
@@ -38,8 +38,8 @@ export interface PostResponse {
 
 // 관심 직군(JobProps, InterestedJobProps, Category, CategoryData)
 export interface JobProps {
-  jobId: number | undefined;
-  jobName: string | undefined;
+  jobId: number;
+  jobName: string;
 }
 export interface InterestedJobProps {
   onClose: () => void;

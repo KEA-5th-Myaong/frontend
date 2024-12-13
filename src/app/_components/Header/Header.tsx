@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -11,9 +11,11 @@ import SideMenu from './_components/SideMenu';
 import useClickOutside from '../../_hooks/useClickOutside';
 import MyMenu from './_components/MyMenu';
 import useMe from '@/app/_hooks/useMe';
+import { useTheme } from '../ThemeProvider';
 
 export default function Header() {
   const { data: userData } = useMe();
+  const { theme } = useTheme();
 
   // 상태 관리
   const [openMenu, setOpenMenu] = useState<string | null>(null); // 현재 열려 있는 메뉴를 추적
@@ -52,7 +54,7 @@ export default function Header() {
   });
 
   return (
-    <div className="fixed md:relative flex text-white-0 px-8 w-full min-w-[360px] bg-white-0 border-b-2 h-20 items-center z-50">
+    <div className="fixed md:relative flex text-white-0 px-8 w-full min-w-[360px] bg-white-0 dark:bg-black-1 border-b-2 h-20 items-center z-50">
       <div className="hidden md:flex w-full items-center">
         {/* 로고 버튼 */}
         <div className="pl-4 w-44">
@@ -69,12 +71,15 @@ export default function Header() {
         </div>
         {/* PC 및 Tablet 스크린 */}
         <div className="hidden md:flex">
-          <MainMenu
-            handleBlogOpen={handleBlogOpen}
-            handleJobOpen={handleJobOpen}
-            openBlogMenu={openBlogMenu}
-            openJobMenu={openJobMenu}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <MainMenu
+              userData={userData}
+              handleBlogOpen={handleBlogOpen}
+              handleJobOpen={handleJobOpen}
+              openBlogMenu={openBlogMenu}
+              openJobMenu={openJobMenu}
+            />
+          </Suspense>
         </div>
       </div>
       <div className="hidden md:flex w-full">
@@ -84,7 +89,12 @@ export default function Header() {
       {/* Mobile 스크린 */}
       <div className="flex-center md:hidden w-full">
         <div className="absolute left-1 pl-4 cursor-pointer" onClick={toggleSideMenuOpen}>
-          <Icons name={MenuIcon} />
+          <Icons
+            name={{
+              ...MenuIcon,
+              fill: theme === 'dark' ? 'white' : 'black',
+            }}
+          />
         </div>
         <Link href="/main" className="">
           {!isSideMenuOpen && (
@@ -102,7 +112,7 @@ export default function Header() {
       </div>
       <div ref={toggleMenuRef}>
         {/* SideMenu 컴포넌트 */}
-        <SideMenu isOpen={isSideMenuOpen} onClose={toggleSideMenuClose} />
+        <SideMenu isOpen={isSideMenuOpen} onClose={toggleSideMenuClose} userData={userData} />
       </div>
     </div>
   );

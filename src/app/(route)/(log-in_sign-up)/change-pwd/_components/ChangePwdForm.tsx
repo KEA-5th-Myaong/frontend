@@ -25,7 +25,7 @@ export default function ChangePwdForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  const userPwdValue = watch('password');
+  const userPwdValue = watch('originPassword');
 
   const onSubmit = async (data: ChangePwdProps) => {
     console.log('비밀번호 데이터', data);
@@ -51,34 +51,33 @@ export default function ChangePwdForm() {
       setErrorMessage(FORM_CATCH_ERROR[2]);
     }
   };
-
   return (
     <>
       <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* 비밀번호 input */}
         <FormInput<ChangePwdProps>
-          id="password"
+          id="originPassword"
           label={FORM_TEXT[2]}
           placeholder={FORM_PLACEHOLDER[1]}
           register={register}
           required={FORM_ERROR[1]}
           onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
-          type="password"
-          error={errors.password}
+          type="originPassword"
+          error={errors.originPassword}
           minLength={10}
           infoText={FORM_TEXT[9]}
         />
 
         {/* 비밀번호 확인 input */}
         <FormInput<ChangePwdProps>
-          id="confirmPassword"
+          id="newPassword"
           label={FORM_TEXT[3]}
-          placeholder={FORM_PLACEHOLDER[4]}
+          placeholder={FORM_PLACEHOLDER[1]}
           register={register}
           required={FORM_ERROR[10]}
-          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors)}
-          type="password"
-          error={errors.confirmPassword}
+          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors, 'newPassword')}
+          type="originPassword"
+          error={errors.newPassword}
         />
 
         {/* 비밀번호 변경 button */}

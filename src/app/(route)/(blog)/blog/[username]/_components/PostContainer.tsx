@@ -5,22 +5,35 @@ import { useParams, useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import { useInView } from 'react-intersection-observer';
 import Post from '../../../../../_components/Post';
-import { fetchPost, fetchProfile } from '../_services/blogService';
+import { fetchMemberInfo, fetchPost, fetchProfile } from '../_services/blogService';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { PostProps, PostResponse } from '@/app/(route)/(main-page)/main/_types/main-page';
 import { formatDate } from '@/app/_utils/formatDate';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
 import defaultProfilePic from '../../../../../../../public/mascot.png';
 import useCustomInfiniteQuery from '@/app/_hooks/useCustomInfiniteQuery';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PostContainer() {
   const router = useRouter();
   const { ref, inView } = useInView(); // 무한 스크롤을 위한 InterSection Observer 훅
   const params = useParams();
   const { username } = params;
-  const { data: memberData } = useCustomQuery(['member', username], () => fetchProfile(username as string));
+  const { data: userNameData } = useCustomQuery(['user-profile', username], () => fetchProfile(username as string));
+  const memberId = userNameData?.data?.memberId; // 다른 사람
 
-  const memberId = memberData?.memberId;
+  // memberId써서 더 상세한 정보 가져옴
+  const { data: blogUserNameData, isLoading: isblogUserNameDataLoading } = useCustomQuery(['blog-user', username], () =>
+    fetchMemberInfo(memberId),
+  );
+
+  const { data: userData } = useMe();
+  const [isMe, setIsMe] = useState(false);
+  useEffect(() => {
+    if (userData?.data.username === username) {
+      setIsMe(true);
+    }
+  }, [isMe, userData?.data.username, username]);
 
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useCustomInfiniteQuery(
     ['post', memberId],
@@ -51,7 +64,7 @@ export default function PostContainer() {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const { loveMutation, bookmarkMutation } = useLoveAndBookmark(
+  const { bookmarkMutation } = useLoveAndBookmark(
     posts,
     setPosts,
     memberId,
@@ -59,38 +72,40 @@ export default function PostContainer() {
   );
   return (
     <div className="flex flex-col gap-6">
-      {isLoading
+      {isblogUserNameDataLoading
         ? Array.from({ length: 5 }).map(() => (
-            <div key={`skeleton-${uuidv4()}`} className="w-full h-48 bg-gray-200 rounded-md animate-pulse" />
+            <div
+              key={`skeleton-${uuidv4()}`}
+              className="w-full h-48 bg-gray-200 dark:bg-black-3 rounded-md animate-pulse"
+            />
           ))
         : posts.map((post) => (
             <Post
               key={post.postId}
               postId={post.postId}
               title={post.title}
-              nickname={post.nickname ?? ''}
-              memberId={post.memberId ?? ''}
+              nickname={blogUserNameData?.data.nickname}
+              memberId={memberId}
               onUserClick={() => {
-                router.push(`/blog/${post.username}`);
+                router.push(`/blog/${blogUserNameData?.data.username}`);
               }}
               onContentClick={() => {
-                router.push(`/blog/${post.username}/${post.title}`);
+                router.push(`/blog/${blogUserNameData?.data.username}/${post.title}`);
               }}
               thumbnail={null}
-              profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
+              profilePicUrl={post.profilePicUrl === null ? defaultProfilePic.src : blogUserNameData?.data.profilePicUrl} // 여기를 수정
               content={post.content}
               timestamp={formatDate(post.timestamp)}
-              userJob="프론트엔드 개발자"
+              prejob={blogUserNameData?.data.prejob?.[0]}
               onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
               isBookmarked={post.isBookmarked}
-              onLoveClick={() => loveMutation.mutate(post.postId)}
-              isLoved={post.isLoved}
-              lovedCount={post.lovedCount || 0}
+              isLiked={post.isLiked}
+              likeCount={post.likeCount}
             />
           ))}
 
       <div ref={ref} className="h-1" />
-      {isLoading && <div className="w-full h-48 bg-gray-2 rounded-md animate-pulse" />}
+      {isLoading && <div className="w-full h-48 bg-gray-2 dark:bg-black-3 rounded-md animate-pulse" />}
     </div>
   );
 }

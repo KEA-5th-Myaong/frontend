@@ -1,4 +1,4 @@
-import { UseFormSetError, UseFormClearErrors, FieldPath } from 'react-hook-form';
+import { UseFormSetError, UseFormClearErrors, FieldPath, Path } from 'react-hook-form';
 import { SignUpState } from '../_types/forms';
 import { FORM_ERROR } from '../_constants/forms';
 
@@ -40,7 +40,8 @@ export const validatePwd = <T extends { password: string }>(
   setError: UseFormSetError<T>,
   clearErrors: UseFormClearErrors<T>,
 ): boolean => {
-  const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}:;?~<>]).{10,}$/;
+  const pwdRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?])[A-Za-z\d!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]{8,20}$/;
   if (!pwdRegex.test(pwd)) {
     setError('password' as FieldPath<T>, {
       type: 'manual',
@@ -52,21 +53,29 @@ export const validatePwd = <T extends { password: string }>(
   return true;
 };
 
+interface PasswordFormFields {
+  password?: string;
+  confirmPassword?: string;
+  newPassword?: string;
+  originPassword?: string;
+}
+
 // 비밀번호 체크, 제네릭 타입 T에 대해 필요한 속성을 extends로 명시
 // 제네릭을 사용하여 T 자리에 모든 인터페이스가 들어갈 수 있음
-export const validateCheckPwd = <T extends { password: string; confirmPassword: string }>(
+export const validateCheckPwd = <T extends PasswordFormFields>(
   confirmPassword: string,
   userPwdValue: string,
   setError: UseFormSetError<T>,
   clearErrors: UseFormClearErrors<T>,
+  checkPasswordField: Path<T>,
 ): boolean => {
   if (confirmPassword !== userPwdValue) {
-    setError('confirmPassword' as FieldPath<T>, {
+    setError(checkPasswordField, {
       type: 'manual',
       message: FORM_ERROR[11],
     });
     return false;
   }
-  clearErrors('confirmPassword' as FieldPath<T>);
+  clearErrors(checkPasswordField);
   return true;
 };
