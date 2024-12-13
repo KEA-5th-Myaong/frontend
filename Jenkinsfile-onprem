@@ -41,10 +41,10 @@ pipeline {
                 script {
                     // .env 파일 생성 및 Secret Text의 내용을 넣기
                     sh '''
-                        touch ./frontend/.env
-                        echo "NEXT_PUBLIC_BASE_URL='${NEXT_PUBLIC_BASE_URL}'" >> ./frontend/.env
-                        echo "NEXT_PUBLIC_TEMP_URL='${NEXT_PUBLIC_TEMP_URL}'" >> ./frontend/.env
-                        echo "NEXT_PUBLIC_DOMAIN='${NEXT_PUBLIC_DOMAIN}'" >> ./frontend/.env
+                        touch .env
+                        echo "NEXT_PUBLIC_BASE_URL='${NEXT_PUBLIC_BASE_URL}'" >> .env
+                        echo "NEXT_PUBLIC_TEMP_URL='${NEXT_PUBLIC_TEMP_URL}'" >> .env
+                        echo "NEXT_PUBLIC_DOMAIN='${NEXT_PUBLIC_DOMAIN}'" >> .env
                     '''
                 }
             }
