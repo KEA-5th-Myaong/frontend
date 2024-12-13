@@ -40,6 +40,7 @@ export default function PostComment({ postId, comments, currentUserId }: PostCom
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
         setNewComment('');
       },
     },
@@ -66,6 +67,7 @@ export default function PostComment({ postId, comments, currentUserId }: PostCom
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['url-post'] });
+        queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
         setReplyingTo(null);
       },
     },

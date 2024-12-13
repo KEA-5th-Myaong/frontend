@@ -81,6 +81,7 @@ export default function PostContent() {
     loveMutation.mutate(postId, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['url-post', postTitle] });
+        queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
       },
       onError: () => {
         setIsLiked((prev: boolean) => !prev);
@@ -97,6 +98,7 @@ export default function PostContent() {
         setIsBookmarked((prev) => !prev);
         // 새로운 북마크 상태를 서버 응답으로부터 받아서 설정
         queryClient.invalidateQueries({ queryKey: ['url-post', postTitle] });
+        queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
       },
       onError: (error) => {
         console.error('북마크 클릭 에러:', error);

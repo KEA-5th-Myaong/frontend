@@ -86,6 +86,7 @@ export default function UserProfile() {
       queryClient.invalidateQueries({ queryKey: ['blog-user', username] });
       queryClient.invalidateQueries({ queryKey: ['followed', memberId] });
       queryClient.invalidateQueries({ queryKey: ['following', memberId] });
+      queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
     },
     onError: () => {
       // 에러 발생 시 원래 상태로 롤백

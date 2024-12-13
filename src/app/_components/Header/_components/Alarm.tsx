@@ -21,6 +21,7 @@ export default function Alarm() {
         return lastPage.data.lastId;
       },
       initialPageParam: '0',
+      refetchInterval: 1000 * 60, // 1분마다 갱신
     },
   );
 
@@ -36,7 +37,6 @@ export default function Alarm() {
     try {
       await putNotification(notificationId); // API 호출
       queryClient.invalidateQueries({ queryKey: ['notifications'] }); // 알림 목록 갱신
-      console.log(`Notification with ID ${notificationId} read`);
     } catch (error) {
       console.error('Error read notification:', error);
     }
@@ -47,7 +47,6 @@ export default function Alarm() {
     try {
       await deleteNotification(notificationId); // API 호출
       queryClient.invalidateQueries({ queryKey: ['notifications'] }); // 알림 목록 갱신
-      console.log(`Notification with ID ${notificationId} deleted`);
     } catch (error) {
       console.error('Error deleting notification:', error);
     }
