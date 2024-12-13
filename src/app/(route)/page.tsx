@@ -18,7 +18,6 @@ export default function Home() {
       },
     },
   };
-
   const easeInOutAnimation = {
     hidden: { opacity: 0, y: 50 },
     visible: {
@@ -32,9 +31,21 @@ export default function Home() {
     },
   };
   return (
-    <div className="flex flex-col relative items-center text-center pt-[50px] bg-gradient-to-b from-[#F1F1F5] to-[#D8ECFF] h-full ">
-      <Image src="/assets/logo-lg.svg" alt="PPLOG 로고" width={130} height={130} className="hidden sm:block" />
-      <Image src="/assets/logo-sm.svg" alt="PPLOG 로고" width={80} height={80} className="block sm:hidden" />
+    <div className="flex flex-col relative items-center text-center pt-[50px] bg-gradient-to-b from-[#F1F1F5] dark:from-[#191919] to-[#D8ECFF] dark:to-[#8b8b8b] h-full ">
+      <Image
+        src="/assets/logo-lg.svg"
+        alt="PPLOG 로고"
+        width={130}
+        height={130}
+        className="hidden md:block dark:hidden"
+      />
+      <Image
+        src="/assets/logo_dark-ver.svg"
+        alt="PPLOG 로고"
+        width={130}
+        height={130}
+        className="hidden dark:md:block"
+      />
       <Image
         src="/assets/landing-page/img-orange-circle.svg"
         alt="주황색 배경 효과"
@@ -67,7 +78,7 @@ export default function Home() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false }}
-          className="flex items-center z-[2] text-left bg-white-0 sm:w-[500px] md:w-[700px] lg:w-[900px] sm:h-[250px] md:h-[300px] rounded-[80px] mt-[50px] py-[50px] sm:pl-[50px] md:pl-[60px] lg:pl-[90px]"
+          className="flex items-center z-[2] text-left dark:bg-black-4 bg-white-0 dark sm:w-[500px] md:w-[700px] lg:w-[900px] sm:h-[250px] md:h-[300px] rounded-[80px] mt-[50px] py-[50px] sm:pl-[50px] md:pl-[60px] lg:pl-[90px]"
         >
           <div>
             <p className="sm:text-[12px]  md:text-[15px] font-semibold text-blue-0 mb-[8px]">AI 자소서 첨삭</p>
@@ -97,7 +108,7 @@ export default function Home() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false }}
-          className="flex z-[2] text-left bg-white-0 sm:w-[500px] md:w-[700px] lg:w-[900px] sm:h-[250px] md:h-[300px] rounded-[80px] mt-[20px] py-[50px]  sm:pl-[50px] md:pl-[60px] lg:pl-[90px]"
+          className="flex z-[2] text-left dark:bg-black-4 bg-white-0 sm:w-[500px] md:w-[700px] lg:w-[900px] sm:h-[250px] md:h-[300px] rounded-[80px] mt-[20px] py-[50px]  sm:pl-[50px] md:pl-[60px] lg:pl-[90px]"
         >
           <div>
             <p className="sm:text-[12px] md:text-[15px] font-semibold text-blue-0 mb-[8px]">AI 모의 면접</p>
@@ -262,7 +273,7 @@ export default function Home() {
           <div className="flex mt-[55px] ">
             <button
               type="button"
-              className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 mx-2.5 py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
+              className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 mx-2.5 py-[15px] px-[35px] rounded-[100px] dark:border-[#4d6a88] border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
             >
               <Image src="/assets/landing-page/ic-eye.svg" alt="눈 아이콘" width={20} height={20} className="mr-2.5" />
               구경해보기
@@ -270,7 +281,7 @@ export default function Home() {
             <Link href="/log-in">
               <button
                 type="button"
-                className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-black-0 text-white-0 mx-2.5 py-[15px] px-[35px] rounded-[100px] border border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
+                className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-black-0 text-white-0 mx-2.5 py-[15px] px-[35px] rounded-[100px] dark:border-[#505050] border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
               >
                 <Image
                   src="/assets/landing-page/ic-lightning.svg"

@@ -12,8 +12,6 @@ import PSForm from './PSForm';
 import { postPS, putPS, fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useMe from '@/app/_hooks/useMe';
 import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
-import Icons from '@/app/_components/ui/Icon';
-import { BangCircleIcon } from '../../../../../../_components/ui/iconPath';
 
 export default function PSCreateContainer() {
   const router = useRouter();
@@ -48,7 +46,7 @@ export default function PSCreateContainer() {
     if (!isTouch) {
       (async () => {
         try {
-          const fetchedData = await fetchPS(psId as string | null);
+          const fetchedData = await fetchPS(psId);
           setFormValues({
             title: fetchedData.data.title || '',
             position: fetchedData.data.position || '',
@@ -72,7 +70,7 @@ export default function PSCreateContainer() {
       btnText: '확인',
       onBtnClick: () => {
         resetPSData();
-        router.push(`/personal-statement/${userData?.data.memberId}/list`);
+        router.replace(`/personal-statement/${userData?.data.memberId}/list`);
       },
     }));
   };
@@ -87,7 +85,6 @@ export default function PSCreateContainer() {
   const handleEditSubmit = async () => {
     await putPS(psId, formValues);
     await queryClient.invalidateQueries({ queryKey: ['ps'], refetchType: 'all' });
-    console.log('formValues:', formValues);
     createDone();
   };
 
@@ -165,8 +162,8 @@ export default function PSCreateContainer() {
 
         {/* 안내문구 */}
         <div className="mt-4 mb-24 px-11 py-5 bg-[#F3F3F3] text-gray-0 text-xs flex gap-4">
-          <p>
-            <Icons name={BangCircleIcon} />
+          <p id="임시" className="text-white-0 bg-gray-0 rounded-full px-1.5">
+            !
           </p>
           자기소개서는 최대 2000자까지 입력 가능합니다.
         </div>

@@ -20,7 +20,7 @@ export default function PSReadContainer() {
   const { data: userData } = useMe();
   const postId = usePersonalStatementStore((state) => state.psId);
   const setPsId = usePersonalStatementStore((state) => state.setPsId);
-  const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId as string | null));
+  const { data: psData } = useCustomQuery(['ps', postId], () => fetchPS(postId));
   const { setIsTouch, resetPSData } = usePSStore();
 
   const [psState, setPsState] = useState<PSFormData>({
@@ -44,10 +44,6 @@ export default function PSReadContainer() {
     await deletePS(psId);
   }
 
-  async function handlePSListDelete(psId: number) {
-    await deletePS(psId);
-  }
-
   // 삭제 클릭
   const handleDeleteClick = () => {
     setModalState((prev) => ({
@@ -60,7 +56,6 @@ export default function PSReadContainer() {
       onSubBtnClick: () => setModalState(initailModalState),
       onBtnClick: () => {
         handlePSDelete(Number(postId));
-        handlePSListDelete(Number(postId));
         setModalState((prev2) => ({
           ...prev2,
           open: true,
