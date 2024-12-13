@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -92,13 +92,15 @@ export default function Header() {
         </div>
         {/* PC 및 Tablet 스크린 */}
         <div className="hidden md:flex">
-          <MainMenu
-            userData={userData}
-            handleBlogOpen={handleBlogOpen}
-            handleJobOpen={handleJobOpen}
-            openBlogMenu={openBlogMenu}
-            openJobMenu={openJobMenu}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <MainMenu
+              userData={userData}
+              handleBlogOpen={handleBlogOpen}
+              handleJobOpen={handleJobOpen}
+              openBlogMenu={openBlogMenu}
+              openJobMenu={openJobMenu}
+            />
+          </Suspense>
         </div>
       </div>
       <div className="hidden md:flex w-full">

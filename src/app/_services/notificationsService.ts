@@ -11,12 +11,22 @@ export async function fetchNotifications(lastId: string) {
   }
 }
 
-// (POST) 알림 생성
-export async function postNotifications(notificationData: unknown) {
+// (PUT) 알림 수정
+export async function putNotification(notificationId: string) {
   try {
-    await api.post('/notifications', notificationData);
+    await api.put(`/notifications/${notificationId}`);
   } catch (error) {
-    console.error('알림 생성 실패:', error);
+    console.error('알림 수정 실패:', error);
+    throw error;
+  }
+}
+
+// (DELETE) 알림 삭제
+export async function deleteNotification(notificationId: string): Promise<void> {
+  try {
+    await api.delete(`/notifications/${notificationId}`);
+  } catch (error) {
+    console.error('알림 삭제 실패:', error);
     throw error;
   }
 }
