@@ -22,6 +22,14 @@ pipeline {
                         env.fullImageName = "${env.dockerHubUsername}/${env.imageName}" // fullImageName 설정
                         env.onpremServerUsername = ONPREM_SERVER_USERNAME
                         env.onpremServerIp = ONPREM_SERVER_IP
+                        env.nextPublicBaseUrl = NEXT_PUBLIC_BASE_URL
+                        env.nextPublicTempUrl = NEXT_PUBLIC_TEMP_URL
+                        env.nextPublicDomain = NEXT_PUBLIC_DOMAIN
+
+                        // 디버깅: 환경 변수 출력
+                        echo "NEXT_PUBLIC_BASE_URL: ${env.nextPublicBaseUrl}"
+                        echo "NEXT_PUBLIC_TEMP_URL: ${env.nextPublicTempUrl}"
+                        echo "NEXT_PUBLIC_DOMAIN: ${env.nextPublicDomain}"
                     }
                 }
             }
@@ -40,12 +48,12 @@ pipeline {
             steps {
                 script {
                     // .env 파일 생성 및 Secret Text의 내용을 넣기
-                    sh '''
+                    sh """
                         touch .env
-                        echo "NEXT_PUBLIC_BASE_URL='${NEXT_PUBLIC_BASE_URL}'" >> .env
-                        echo "NEXT_PUBLIC_TEMP_URL='${NEXT_PUBLIC_TEMP_URL}'" >> .env
-                        echo "NEXT_PUBLIC_DOMAIN='${NEXT_PUBLIC_DOMAIN}'" >> .env
-                    '''
+                        echo "NEXT_PUBLIC_BASE_URL='${env.nextPublicBaseUrl}'" >> .env
+                        echo "NEXT_PUBLIC_TEMP_URL='${env.nextPublicTempUrl}'" >> .env
+                        echo "NEXT_PUBLIC_DOMAIN='${env.nextPublicDomain}'" >> .env
+                    """
                 }
             }
         }
