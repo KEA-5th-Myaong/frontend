@@ -25,8 +25,12 @@ api.interceptors.request.use(
       ?.split('=')[1]; // 쿠키 문자열을 분리하고 accessToken으로 시작하는 항목을 찾아서 값을 추출합니다
     // 토큰이 있으면 헤더에 추가
     if (token) {
+      const decodedToken = decodeURIComponent(token);
+      // Bearer가 없는 경우에만 추가
+      const authHeader = decodedToken.startsWith('Bearer ') ? decodedToken : `Bearer ${decodedToken}`;
+
       // eslint-disable-next-line no-param-reassign
-      config.headers.Authorization = decodeURIComponent(token); // config.headers에 Authorization 헤더를 추가
+      config.headers.Authorization = authHeader;
     }
     return config; // 수정된 설정 반환
   },

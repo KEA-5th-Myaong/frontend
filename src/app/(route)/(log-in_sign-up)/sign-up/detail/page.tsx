@@ -4,7 +4,7 @@ import SignUpDetailForm from '../_components/SignUpDetailForm';
 export default function SingUpDetail() {
   return (
     <section className="form-screen">
-      <div className="form-container">
+      <div className="form-container pt-12">
         <div className="flex flex-col items-center w-full max-w-[660px] px-5">
           <p className="mb-9 form-title">{FORM_TEXT[4]}</p>
           <SignUpDetailForm />

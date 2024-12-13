@@ -63,7 +63,7 @@ export default function SignUpDetailForm() {
   // Modal 확인 버튼 클릭 핸들러
   const handleModalConfirm = () => {
     setShowSuccessModal(false);
-    router.replace('/log-in');
+    router.replace('/main');
   };
 
   // 에러 객체에 값이 있는지 검사
@@ -86,7 +86,7 @@ export default function SignUpDetailForm() {
   };
   return (
     <>
-      <form className="flex flex-col gap-10 self-stretch pb-12" onSubmit={handleSubmit(handleFormSubmit)}>
+      <form className="flex flex-col gap-10 self-stretch pb-12  md:pt-0" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* 이름 input */}
         <FormInput<SignUpState>
           id="name"
