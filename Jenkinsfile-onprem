@@ -81,19 +81,18 @@ pipeline {
             steps {
                 echo 'Pull Docker Image & Docker Image Run'
                 sshagent (credentials: ['onprem-ssh']) {
-                    // 1. 컨테이너가 존재하는 경우 삭제
                     sh """
                         ssh -o StrictHostKeyChecking=no ${env.onpremServerUsername}@${env.onpremServerIp} '
+                        # 1. 컨테이너가 존재하는 경우 삭제
                         if [ \$(docker ps -q --filter name=${env.imageName}) ]; then
                             docker rm -f ${env.imageName} || true
                         fi
-                        '
-                    """
 
-                    // 2. 새로 빌드한 이미지를 실행
-                    sh """
-                        ssh -o StrictHostKeyChecking=no ${env.onpremServerUsername}@${env.onpremServerIp} '
+                        # 2. 새로 빌드한 이미지를 실행
                         docker run -d --name ${env.imageName} -p 3000:3000 ${env.fullImageName}:${env.BUILD_ID.toInteger()}
+
+                        # 3. 이전 태그의 Docker 이미지 삭제
+                        docker rmi ${env.fullImageName}:${env.BUILD_ID.toInteger() - 1} || true
                         '
                     """
                 }
