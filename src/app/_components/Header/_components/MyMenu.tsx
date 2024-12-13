@@ -10,7 +10,6 @@ import useClickOutside from '../../../_hooks/useClickOutside';
 import { User } from '@/app/_hooks/useMe';
 import Alarm from './Alarm';
 import SubMenu from './SubMenu';
-import menuData from '../menuData.json';
 import ThemeToggle from '../../ThemeToggle';
 import { useTheme } from '../../ThemeProvider';
 
@@ -124,7 +123,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
             />
             {moreButtonOpen && (
               <div className="absolute right-12 top-6">
-                <SubMenu menuItems={menuData.moreMenuItems} />
+                <SubMenu isMore />
               </div>
             )}
           </button>

@@ -2,7 +2,15 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Modal from '../../Modal';
 
-export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userName?: string }) {
+export default function SubMenu({
+  isBlog,
+  userName,
+  isMore,
+}: {
+  isBlog?: boolean;
+  isMore?: boolean;
+  userName?: string;
+}) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
@@ -41,6 +49,35 @@ export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userNa
               </button>
             </div>
           </>
+        ) : isMore ? (
+          <>
+            <div className="w-[88px] h-8 mx-auto m-2">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation(); // 이벤트 전파 방지
+                  handleNavigation(`/blog/${userName}`);
+                }}
+                // FIX: 링크 수정 필요
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+              >
+                문의하기
+              </button>
+            </div>
+            <div className="w-[88px] h-8 mx-auto m-2">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation(); // 이벤트 전파 방지
+                  handleNavigation(`/blog/${userName}`);
+                }}
+                // FIX: 링크 수정 필요
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+              >
+                공지 게시판
+              </button>
+            </div>
+          </>
         ) : (
           <>
             <div className="w-[88px] h-8 mx-auto m-2">
@@ -73,6 +110,7 @@ export default function SubMenu({ isBlog, userName }: { isBlog?: boolean; userNa
           </>
         )}
       </div>
+
       {showModal && (
         <Modal
           topText="로그인이 필요한 서비스입니다."
