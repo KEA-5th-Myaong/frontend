@@ -22,6 +22,14 @@ pipeline {
                         env.fullImageName = "${env.dockerHubUsername}/${env.imageName}" // fullImageName 설정
                         env.onpremServerUsername = ONPREM_SERVER_USERNAME
                         env.onpremServerIp = ONPREM_SERVER_IP
+                        env.nextPublicBaseUrl = NEXT_PUBLIC_BASE_URL
+                        env.nextPublicTempUrl = NEXT_PUBLIC_TEMP_URL
+                        env.nextPublicDomain = NEXT_PUBLIC_DOMAIN
+
+                        // 디버깅: 환경 변수 출력
+                        echo "NEXT_PUBLIC_BASE_URL: ${env.nextPublicBaseUrl}"
+                        echo "NEXT_PUBLIC_TEMP_URL: ${env.nextPublicTempUrl}"
+                        echo "NEXT_PUBLIC_DOMAIN: ${env.nextPublicDomain}"
                     }
                 }
             }
@@ -40,12 +48,12 @@ pipeline {
             steps {
                 script {
                     // .env 파일 생성 및 Secret Text의 내용을 넣기
-                    sh '''
-                        touch ./frontend/.env
-                        echo "NEXT_PUBLIC_BASE_URL='${NEXT_PUBLIC_BASE_URL}'" >> ./frontend/.env
-                        echo "NEXT_PUBLIC_TEMP_URL='${NEXT_PUBLIC_TEMP_URL}'" >> ./frontend/.env
-                        echo "NEXT_PUBLIC_DOMAIN='${NEXT_PUBLIC_DOMAIN}'" >> ./frontend/.env
-                    '''
+                    sh """
+                        touch .env
+                        echo "NEXT_PUBLIC_BASE_URL='${env.nextPublicBaseUrl}'" >> .env
+                        echo "NEXT_PUBLIC_TEMP_URL='${env.nextPublicTempUrl}'" >> .env
+                        echo "NEXT_PUBLIC_DOMAIN='${env.nextPublicDomain}'" >> .env
+                    """
                 }
             }
         }
@@ -73,19 +81,18 @@ pipeline {
             steps {
                 echo 'Pull Docker Image & Docker Image Run'
                 sshagent (credentials: ['onprem-ssh']) {
-                    // 1. 컨테이너가 존재하는 경우 삭제
                     sh """
                         ssh -o StrictHostKeyChecking=no ${env.onpremServerUsername}@${env.onpremServerIp} '
+                        # 1. 컨테이너가 존재하는 경우 삭제
                         if [ \$(docker ps -q --filter name=${env.imageName}) ]; then
                             docker rm -f ${env.imageName} || true
                         fi
-                        '
-                    """
 
-                    // 2. 새로 빌드한 이미지를 실행
-                    sh """
-                        ssh -o StrictHostKeyChecking=no ${env.onpremServerUsername}@${env.onpremServerIp} '
+                        # 2. 새로 빌드한 이미지를 실행
                         docker run -d --name ${env.imageName} -p 3000:3000 ${env.fullImageName}:${env.BUILD_ID.toInteger()}
+
+                        # 3. 이전 태그의 Docker 이미지 삭제
+                        docker rmi ${env.fullImageName}:${env.BUILD_ID.toInteger() - 1} || true
                         '
                     """
                 }
