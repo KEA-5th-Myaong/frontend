@@ -114,12 +114,13 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
           <button
             type="button"
             onClick={() => setMoreButtonOpen(!moreButtonOpen)}
-            className="relative flex-center text-center text-gray-0 text-xs py-1 pl-4 pr-3 border border-gray-2 rounded-xl"
+            className="relative flex-center text-center text-gray-0 group  hover:text-primary-1 text-xs py-1 pl-4 pr-3 border border-gray-2 hover:border-primary-1 rounded-xl"
           >
             더보기
             <Icons
               name={ArrowIcon}
-              className={`transition-transform duration-200 ${moreButtonOpen ? 'rotate-90' : '-rotate-90'}`}
+              hoverFill="#41AED9"
+              className={`transition-transform duration-200  group-hover:fill-[#41AED9] ${moreButtonOpen ? 'rotate-90' : '-rotate-90'}`}
             />
             {moreButtonOpen && (
               <div className="absolute right-12 top-6">
