@@ -260,7 +260,9 @@ export default function PostContent() {
       </div>
 
       {/* 포스트 내용 */}
-      <div className="mt-[19px] px-[7px]">{sanitizedContent}</div>
+      <div className="mt-[19px] px-[7px] whitespace-pre-wrap overflow-wrap-break-word break-all">
+        {sanitizedContent}
+      </div>
 
       {/* 작성일 댓글 좋아요 */}
       <div className="flex items-center justify-between mt-20 pb-10 border-b">
