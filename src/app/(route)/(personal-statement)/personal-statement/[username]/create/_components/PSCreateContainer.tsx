@@ -70,7 +70,7 @@ export default function PSCreateContainer() {
       btnText: '확인',
       onBtnClick: () => {
         resetPSData();
-        router.push(`/personal-statement/${userData?.data.memberId}/list`);
+        router.replace(`/personal-statement/${userData?.data.memberId}/list`);
       },
     }));
   };
