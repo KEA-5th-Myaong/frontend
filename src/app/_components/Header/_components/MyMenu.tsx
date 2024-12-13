@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../ui/Icon';
-import { ArrowIcon, SearchIcon, UserIcon } from '../../ui/iconPath';
+import { AlertIcon, ArrowIcon, SearchIcon, UserIcon } from '../../ui/iconPath';
 import useClickOutside from '../../../_hooks/useClickOutside';
 import { User } from '@/app/_hooks/useMe';
 import Alarm from './Alarm';
@@ -72,9 +72,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
         <>
           <div className="flex-center w-30">
             <div ref={myPageMenuRef} className="relative">
-              <button type="button" className="w-7 text-xs flex-center" onClick={() => handleMenuOpen('MyPage')}>
-                <Icons name={UserIcon} className="mt-1" />
-              </button>
+              <Icons onClick={() => handleMenuOpen('MyPage')} name={UserIcon} className="mt-1" />
               {openMenu === 'MyPage' && (
                 <div className="absolute bg-white-0 border-2 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
                   <Link
