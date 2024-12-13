@@ -54,18 +54,39 @@ export default function Header() {
   });
 
   return (
-    <div className="fixed md:relative flex text-white-0 px-8 w-full min-w-[360px] bg-white-0 dark:bg-black-1 border-b-2 h-20 items-center z-50">
+    <div className="fixed md:relative flex text-white-0 px-8 w-full min-w-[360px] bg-white-0 dark:bg-black-1 dark:border-black-5 border-b-2 h-20 items-center z-50">
       <div className="hidden md:flex w-full items-center">
         {/* 로고 버튼 */}
         <div className="pl-4 w-44">
           <Link href="/main">
-            <Image src="/assets/logo-lg.svg" alt="로고" width={117} height={30} className="hidden lg:flex mr-3" />
+            <Image
+              src="/assets/logo-lg.svg"
+              alt="로고"
+              width={117}
+              height={30}
+              className="hidden lg:flex dark:hidden mr-3"
+            />
             <Image
               src="/assets/logo-md.svg"
               alt="로고"
               width={117}
               height={30}
-              className="hidden md:flex pt-1 lg:hidden"
+              className="hidden pt-1 dark:hidden lg:hidden md:flex"
+            />
+            {/* 다크 모드 로고 이미지 */}
+            <Image
+              src="/assets/logo_dark-ver.svg"
+              alt="로고"
+              width={120}
+              height={30}
+              className="hidden md:hidden mr-3 dark:lg:flex"
+            />
+            <Image
+              src="/assets/logo_dark-ver.svg"
+              alt="로고"
+              width={110}
+              height={30}
+              className="hidden pt-1 dark:lg:hidden dark:md:flex ml-2"
             />
           </Link>
         </div>
@@ -102,7 +123,15 @@ export default function Header() {
                 alt="모바일로고"
                 width={80}
                 height={40}
-                className="flex md:hidden pt-6 pr-3"
+                className="flex dark:hidden md:hidden pt-6 pr-3"
+              />
+              {/* PC 및 Tablet 스크린 */}
+              <Image
+                src="/assets/logo_mobile_dark-ver.svg"
+                alt="모바일로고"
+                width={80}
+                height={40}
+                className="hidden md:hidden dark:flex pt-6 pr-3"
               />
             </motion.div>
           )}
