@@ -19,7 +19,7 @@ export default function PSSection({ register, setValue }: PSSectionProps) {
   // 자기소개서를 조회 및 폼에 설정하는 함수
   const handleSelectPS = async (id: string) => {
     try {
-      const response = await fetchPS(id); // API 호출
+      const response = await fetchPS(id as unknown as number); // API 호출
       const psData = response?.data;
 
       if (psData && setValue) {
