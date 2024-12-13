@@ -2,6 +2,7 @@ import Link from 'next/link';
 import '../../globals.css';
 import Image from 'next/image';
 import AdminSideBar from './_components/AdminSideBar';
+import Providers from '@/app/_components/Providers';
 
 export const metadata = {
   title: 'PPLOG 관리자',
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <section className="flex bg-[#F5F5F5] min-h-screen pt-28 px-5">
           <AdminSideBar />
-          {children}
+          <Providers>{children}</Providers>
         </section>
       </body>
     </html>

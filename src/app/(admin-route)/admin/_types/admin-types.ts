@@ -5,5 +5,9 @@ export interface ReportedContents {
   contentsId: number | string;
   content: string;
   reportCount: number;
-  isHidden: boolean;
+}
+
+export interface AdminContents {
+  lastId: string;
+  contents: ReportedContents[];
 }

@@ -103,7 +103,7 @@ export default function AdminSideBar() {
           <Icons
             name={{
               ...NoticeIcon,
-              options: { ...NoticeIcon, stroke: 'var(--icon-stroke)' },
+              options: { ...NoticeIcon.options, stroke: 'var(--icon-stroke)' },
             }}
           />
           <div className="flex flex-col gap-1">
@@ -115,7 +115,7 @@ export default function AdminSideBar() {
           <Icons
             name={{
               ...FaqIcon,
-              options: { ...FaqIcon, stroke: 'var(--icon-stroke)' },
+              options: { ...FaqIcon.options, stroke: 'var(--icon-stroke)' },
             }}
           />
           <div className="flex flex-col gap-1">
