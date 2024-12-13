@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import Icons from '../../ui/Icon';
-import { AlertIcon, ArrowIcon, SearchIcon, UserIcon } from '../../ui/iconPath';
+import { ArrowIcon, SearchIcon, UserIcon } from '../../ui/iconPath';
 import useClickOutside from '../../../_hooks/useClickOutside';
 import { User } from '@/app/_hooks/useMe';
 import Alarm from './Alarm';
