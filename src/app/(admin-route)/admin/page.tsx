@@ -91,6 +91,16 @@ export default function AdminMain() {
           <Image width={40} height={40} src="/assets/arrow-right.svg" alt=">" />
         </Link>
       </div>
+
+      {/* 푸터 */}
+      <footer className="absolute bottom-0 flex-center flex-col gap-3 bg-black-3 w-full py-6 whitespace-nowrap">
+        <div className="flex gap-1.5 items-center text-white-0 font-medium">
+          <Link href="/main">서비스 소개</Link>
+          <p className="text-gray-3">|</p>
+          <Link href="/main">서비스 홈</Link>
+        </div>
+        <p className="text-gray-2">Copyright ⓒ Myaong Corp. All Right Reserved.</p>
+      </footer>
     </section>
   );
 }
