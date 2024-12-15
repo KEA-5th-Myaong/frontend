@@ -40,7 +40,7 @@ export default function PSListContainer() {
             {psLength < 3 && (
               <Link
                 href="/personal-statement/1/create"
-                className="flex-center gap-6 w-full py-4 sm:py-11 border border-gray-2 rounded-lg bg-white-0"
+                className="flex-center gap-6 w-full py-4 sm:py-11 border border-gray-2 dark:border-black-5 rounded-lg bg-white-0 dark:bg-black-4"
               >
                 <div className="flex-center pb-1 border border-primary-1 rounded-full text-primary-1 w-6 h-6 sm:w-8 sm:h-8">
                   <p className="text-2xl">+</p>
