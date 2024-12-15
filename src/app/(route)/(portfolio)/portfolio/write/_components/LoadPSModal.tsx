@@ -50,7 +50,7 @@ export default function LoadPSModal({ onSelect, onOverlayClick }: LoadPSModalPro
       <motion.div
         onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 Overlay까지 전달되지 않도록
         {...modalMotion}
-        className="flex m-4 min-w-[300px]  max-w-[1000px] max-h-[600px] hide-scrollbar overflow-y-scroll w-full pb-6 px-[65px] pt-[58px] flex-col items-start gap-6 rounded-2xl bg-white-0 shadow-md"
+        className="flex m-4 min-w-[300px]  max-w-[1000px] max-h-[600px] hide-scrollbar overflow-y-scroll w-full pb-6 px-[65px] pt-[58px] flex-col items-start gap-6 rounded-2xl bg-white-0 dark:bg-black-4 shadow-md"
       >
         <div className="flex items-center gap-[20px]">
           <h1 className="pre-2xl-semibold">자기소개서 불러오기</h1>
@@ -75,7 +75,7 @@ export default function LoadPSModal({ onSelect, onOverlayClick }: LoadPSModalPro
           </>
         ) : (
           psList?.map((ps: PSListBoxProps) => (
-            <section className="flex justify-between w-full max-h-[400px] px px-6 pb-4 pt-6 sm:px-8 sm:pb-4 sm:pt-10 border border-gray-2 rounded-lg bg-white-0 cursor-pointer">
+            <section className="flex justify-between w-full max-h-[400px] px px-6 pb-4 pt-6 sm:px-8 sm:pb-4 sm:pt-10 border border-gray-2 rounded-lg bg-white-0 dark:bg-black-4 cursor-pointer">
               <div>
                 <div className="flex items-center gap-4">
                   <p className="font-semibold text-lg sm:text-xl line-clamp-2">{ps.title}</p>
@@ -84,8 +84,8 @@ export default function LoadPSModal({ onSelect, onOverlayClick }: LoadPSModalPro
                   </div>
                 </div>
 
-                <p className="mr-5 text-gray-0 text-sm line-clamp-5 mt-3">{ps.content}</p>
-                <p className="text-gray-0 text-xs sm:text-sm pt-4">{ps.timestamp} 등록</p>
+                <p className="mr-5 text-gray-0 dark:text-gray-3 text-sm line-clamp-5 mt-3">{ps.content}</p>
+                <p className="text-gray-0 dark:text-gray-3 text-xs sm:text-sm pt-4">{ps.timestamp} 등록</p>
               </div>
               <button
                 type="button"

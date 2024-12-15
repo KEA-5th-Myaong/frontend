@@ -7,7 +7,7 @@ export default function ItemToggle() {
   const { toggles, setToggle } = useToggleStore();
   return (
     <div className="sticky top-20 z-20 min-w-[200px] lg:min-w-[270px] xl:min-w-[300px] h-[500px] y-[20px] px-[30px] py-5 bg-white-0  dark:bg-black-4 dark:border-black-5 rounded-[10px] border border-gray-5 ">
-      <div className="p-2.5 font-semibold  bg-gray-4  dark:bg-gray-3 rounded-[10px]">항목 편집</div>
+      <div className="p-2.5 font-semibold  bg-gray-4  dark:bg-gray-3 dark:text-black-0 rounded-[10px]">항목 편집</div>
       <div className="p-2.5 flex items-center gap-2.5">
         <Icons name={RequiredIcon} />
         기본 정보
