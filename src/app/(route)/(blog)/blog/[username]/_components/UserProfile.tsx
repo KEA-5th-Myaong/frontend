@@ -133,7 +133,7 @@ export default function UserProfile() {
               />
 
               <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
-                <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
+                <span className="sm:text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
                   {blogMemberData?.data.nickname}
                   <span className="inline md:hidden">님의 블로그</span>
                 </span>
