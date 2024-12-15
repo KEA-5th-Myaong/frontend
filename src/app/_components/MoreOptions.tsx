@@ -6,7 +6,7 @@ export default function MoreOptions({
   handleDeleteClick?: () => void;
 }) {
   return (
-    <div className="absolute border rounded-lg p-2.5 bg-white-0 dark:bg-black-3 right-0">
+    <div className="absolute border dark:border-black-5 rounded-lg p-2.5 bg-white-0 dark:bg-black-4 right-0">
       <button
         type="button"
         onClick={handleEditClick}
