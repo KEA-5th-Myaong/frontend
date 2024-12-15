@@ -57,7 +57,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
   };
 
   return (
-    <div className="md:items-center hidden md:flex md:justify-end w-full gap-8">
+    <div className="md:items-center hidden md:flex md:justify-end w-full gap-3 lg:gap-8">
       <ThemeToggle />
       <Icons
         onClick={() => router.push('/main/search')}
@@ -90,9 +90,9 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
                 </div>
               )}
             </div>
-            <div className="flex-center text-black-0 dark:text-white-0 text-sm font-medium">
+            <p className="flex-center text-black-0 dark:text-white-0 text-sm font-medium whitespace-nowrap">
               {userData?.data.nickname} 님
-            </div>
+            </p>
           </div>
           <div className="flex-center w-10">
             <div ref={alarmRef}>
@@ -109,23 +109,6 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
               {isOpenAlarm && <Alarm />}
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => setMoreButtonOpen(!moreButtonOpen)}
-            className="relative flex-center text-center text-gray-0 group  hover:text-primary-1 text-xs py-1 pl-4 pr-3 border border-gray-2 hover:border-primary-1 rounded-xl"
-          >
-            더보기
-            <Icons
-              name={ArrowIcon}
-              hoverFill="#41AED9"
-              className={`transition-transform duration-200  group-hover:fill-[#41AED9] ${moreButtonOpen ? 'rotate-90' : '-rotate-90'}`}
-            />
-            {moreButtonOpen && (
-              <div className="absolute right-12 top-6">
-                <SubMenu isMore />
-              </div>
-            )}
-          </button>
         </>
       ) : (
         <div className="flex items-center gap-[30px]">
@@ -145,7 +128,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
             onClick={() => {
               Cookies.remove('accessToken');
               queryClient.clear();
-              router.push('/sign-up');
+              router.push('/terms-of-use');
             }}
             className="dark:text-white-0 text-black-0 text-sm font-medium"
           >
@@ -153,6 +136,23 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
           </button>
         </div>
       )}
+      <button
+        type="button"
+        onClick={() => setMoreButtonOpen(!moreButtonOpen)}
+        className="relative flex-center text-center text-gray-0 group  hover:text-primary-1 text-xs py-1 pl-4 pr-3 border border-gray-2 hover:border-primary-1 rounded-xl whitespace-nowrap"
+      >
+        더보기
+        <Icons
+          name={ArrowIcon}
+          hoverFill="#41AED9"
+          className={`transition-transform duration-200  group-hover:fill-[#41AED9] ${moreButtonOpen ? 'rotate-90' : '-rotate-90'}`}
+        />
+        {moreButtonOpen && (
+          <div className="absolute right-12 top-6">
+            <SubMenu isMore />
+          </div>
+        )}
+      </button>
     </div>
   );
 }
