@@ -54,8 +54,8 @@ export default function Post({
   return (
     <div
       onClick={onContentClick}
-      className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] dark:bg-black-1 rounded-2xl 
-        border border-gray-4 hover:scale-105 transform transition-transform duration-200 ease-out cursor-pointer ${className}`}
+      className={`flex flex-col gap-3 py-[30px] pl-[30px] pr-3 sm:p-[30px] bg-[#FBFBFB] dark:bg-black-4 rounded-2xl 
+        border border-gray-4 dark:border-black-6 hover:scale-105 transform transition-transform duration-200 ease-out cursor-pointer ${className}`}
     >
       <div className="flex flex-col w-full">
         <div className="flex items-center w-full" onClick={handleUserClick}>
