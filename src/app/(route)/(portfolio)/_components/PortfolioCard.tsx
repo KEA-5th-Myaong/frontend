@@ -80,7 +80,7 @@ export default function PortfolioCard({
   };
 
   return (
-    <div className=" relative w-[320px] bg-white-0 border border-gray-5 rounded-xl pt-[30px] pb-2.5 px-[30px]">
+    <div className="relative max-w-[320px] w-full bg-white-0 border border-gray-5 rounded-xl pt-[30px] pb-2.5 px-[30px] transition-transform duration-200 hover:scale-105">
       <div className="flex justify-between">
         <Link href={`/portfolio/${portfolioId}/read`}>
           <h1 className="max-w-[15ch] font-semibold whitespace-nowrap text-ellipsis overflow-hidden hover:text-gray-500">
@@ -115,7 +115,7 @@ export default function PortfolioCard({
           value={currentMemo}
           onChange={handleMemoChange}
           onBlur={handleMemoBlur}
-          className="whitespace-nowrap overflow-hidden mt-2.5 bg-gray-4 text-gray-0 text-sm"
+          className="whitespace-nowrap overflow-hidden mt-2.5 bg-gray-4 text-gray-0 text-sm w-full"
         />
       </form>
       <p className="text-right mt-2.5 text-gray-0 text-xs">{formatDate(timestamp)} 등록</p>

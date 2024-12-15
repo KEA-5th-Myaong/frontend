@@ -31,7 +31,7 @@ export default function PSListHeader({ userData, psLength }: { userData: User | 
           <Icons name={{ ...PlusIcon, fill: '#fff', options: { ...PlusIcon.options, stroke: '#fff' } }} />
 
           <div className="flex">
-            <p className="hidden sm:block">자기소개서</p> 추가
+            <p className="hidden sm:block">자기소개서</p>&nbsp; 추가
           </div>
         </button>
       )}

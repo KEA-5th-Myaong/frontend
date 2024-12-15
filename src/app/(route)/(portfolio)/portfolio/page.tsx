@@ -25,13 +25,12 @@ export default function PortfolioList() {
     }
   };
   return (
-    <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full h-screen pt-14 md:pt-0 bg-gray-4">
+    <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full min-h-screen pt-14 md:pt-0 bg-gray-4">
       <div className="pt-[60px] flex justify-between items-center w-full max-w-[1000px] md:pr-[60px] lg:pr-[50px] ">
         <div className="flex items-center">
-          <div className="bg-black-0 w-[4px] h-10 mr-6" />
-          <div className="flex flex-col justify-center w-full">
+          <div className="flex flex-col justify-center w-full border-l-4 pl-6 border-black-0">
             <h1 className="font-semibold text-left">포트폴리오 관리</h1>
-            <p className="text-left text-gray-0 text-[12px]">최대 5개까지 생성 가능합니다</p>
+            <p className="text-left text-gray-0 text-xs">최대 5개까지 생성 가능합니다</p>
           </div>
         </div>
         <Link href="/portfolio/write">
@@ -40,13 +39,15 @@ export default function PortfolioList() {
             className="flex items-center py-[13px] gap-2.5 md:py-[19px] px-5 md:px-7 rounded-[30px] primary-1-btn hover-animation"
           >
             <Icons name={{ ...PlusIcon, fill: '#fff', options: { ...PlusIcon.options, stroke: '#fff' } }} />
-            포트폴리오 추가
+            <div className="flex">
+              <p className="hidden sm:block">포트폴리오</p>&nbsp; 추가
+            </div>
           </button>
         </Link>
       </div>
 
-      <div className="flex flex-col items-center mt-[30px] mb-[100px] px-[50px]">
-        <div className="w-full lg:max-w-[1000px] grid justify-center sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-[25px] gap-4">
+      <div className="flex-center flex-col mt-[30px] mb-[100px] w-full">
+        <div className="w-full lg:max-w-[1000px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* main 객체 렌더링 */}
           {portfolioList?.data?.main && portfolioList.data.main.portfolioId && (
             <PortfolioCard
