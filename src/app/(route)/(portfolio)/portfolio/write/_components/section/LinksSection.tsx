@@ -46,7 +46,7 @@ export default function LinksSection({ register }: LinksSectionProps) {
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">링크</h1>
       </div>
-      <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+      <div className="h-[2px] w-full bg-gray-5  dark:bg-black-4  my-[20px]" />
       <div className="flex flex-col items-center">
         {linkItems.map((item) => item.component)}
         <Image

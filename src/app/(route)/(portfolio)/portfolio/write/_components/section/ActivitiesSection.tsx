@@ -56,7 +56,7 @@ export default function ActivitiesSection({ register }: ActivitiesSectionProps) 
           활동 추가
         </button>
       </div>
-      <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+      <div className="h-[2px] w-full bg-gray-5  dark:bg-black-4  my-[20px]" />
 
       {activityItems.map((item) => item.component)}
     </div>

@@ -56,8 +56,8 @@ export default function PSSection({ register, setValue }: PSSectionProps) {
           />
         )}
       </div>
-      <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-      <section className="w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px]">
+      <div className="h-[2px] w-full bg-gray-5  dark:bg-black-4  my-[20px]" />
+      <section className="w-full py-[20px] px-[30px] bg-gray-4  dark:bg-black-4  rounded-[10px]">
         <Input
           register={register}
           name={`ps.title` as Path<PortfolioFormProps>}

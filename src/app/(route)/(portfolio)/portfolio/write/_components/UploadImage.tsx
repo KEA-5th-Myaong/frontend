@@ -45,7 +45,7 @@ export default function UploadImage({ onImageUpload }: UploadImageProps) {
     <button
       type="button"
       onClick={handleClick}
-      className="flex-center flex-col  w-[150px] h-[150px] my-8 bg-white-0 border border-gray-5 rounded-xl cursor-pointer"
+      className="flex-center flex-col  w-[150px] h-[150px] my-8 bg-white-0 border  dark:bg-black-8 border-gray-5 rounded-xl cursor-pointer"
     >
       {previewUrl ? (
         <div className="relative w-full h-full">
