@@ -76,10 +76,10 @@ export default function PSEditingContainer() {
               label="작성한 자기소개서"
               content="저는 웹 개발에 대한 열정과 사용자 경험을 향상시키는 데 기여하고 싶은 목표로 프론트엔드 개발자로서 커리어를 쌓아왔습니다. 웹사이트가 단순한 정보 전달을 넘어서 사용자와 소통하고, 브랜드 가치를 전달하는 중요한 매체로 자리잡는 과정에서 프론트엔드 개발자의 역할이 매우 중요하다는 것을 깨달았습니다. 그동안 React, Vue.js와 같은 프레임워크를 사용하며 인터랙티브하고 반응형 웹사이트를 구축하면서 사용자 경험을 극대화할 수 있다는 사실에 매료되었습니다. 귀사의 프로젝트가 사용자의 필요와 트렌드를 반영하며, 혁신적인 기술을 통해 더 나은 웹 경험을 제공하려는 비전을 보았고, 이에 함께 기여하고 싶어 지원하게 되었습니다."
             />
-            <PSEditingBox label="AI 첨삭 자기소개서" content={edState.content} isEditing />
+            <PSEditingBox label="AI 첨삭 자기소개서" content="{edState.content}" isEditing />
           </div>
           {/* 안내문구 */}
-          <div className="flex gap-4 items-center w-full text-[10px] sm:text-base mt-4 px-11 py-5 bg-[#F3F3F3] text-gray-0">
+          <div className="flex gap-4 items-center w-full text-[10px] sm:text-base mt-4 px-11 py-5 bg-[#F3F3F3] dark:bg-black-4 text-gray-0 dark:text-white-0">
             <p id="임시" className="h-4 text-xs text-white-0 bg-gray-0 rounded-full px-1.5">
               !
             </p>
@@ -96,7 +96,7 @@ export default function PSEditingContainer() {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-3 mt-44">
+        <div className="flex-center flex-col gap-3 mt-44">
           <Image className="animate-bounce" src="/mascot.png" alt="마스코트" width={204} height={193} />
           <p className="text-gray-0">불러오는 중 입니다</p>
         </div>

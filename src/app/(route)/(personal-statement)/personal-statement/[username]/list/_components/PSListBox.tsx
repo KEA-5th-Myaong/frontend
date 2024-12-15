@@ -79,7 +79,7 @@ export default function PSListBox({ psId, title, position, content, timestamp }:
   };
 
   return (
-    <div className="flex justify-between px-6 pb-4 pt-6 sm:px-8 sm:pb-4 sm:pt-10 border border-gray-2 rounded-lg bg-white-0 cursor-pointer">
+    <div className="flex justify-between px-6 pb-4 pt-6 sm:px-8 sm:pb-4 sm:pt-10 border border-gray-2 rounded-lg bg-white-0 dark:bg-black-4 dark:border-black-5 cursor-pointer">
       <div onClick={handlePSListBoxClick} className="flex flex-col gap-3 w-2/3">
         <div className="flex items-center gap-4">
           <p className="font-semibold text-lg sm:text-xl line-clamp-2">{title}</p>
@@ -88,8 +88,8 @@ export default function PSListBox({ psId, title, position, content, timestamp }:
           </div>
         </div>
 
-        <p className="text-gray-0 text-sm line-clamp-5">{content}</p>
-        <p className="text-gray-0 text-xs sm:text-sm pt-4">{formatDate(timestamp)} 등록</p>
+        <p className="text-gray-0 dark:text-gray-2 text-sm line-clamp-5">{content}</p>
+        <p className="text-gray-0 dark:text-gray-3 text-xs sm:text-sm pt-4">{formatDate(timestamp)} 등록</p>
       </div>
 
       <div className="relative" ref={dropdownRef}>
