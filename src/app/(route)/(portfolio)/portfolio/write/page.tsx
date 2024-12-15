@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
-import Icons from '@/app/_components/ui/Icon';
-import { MoreIcon } from '@/app/_components/ui/iconPath';
+// import Icons from '@/app/_components/ui/Icon';
+// import { MoreIcon } from '@/app/_components/ui/iconPath';
 import useClickOutside from '@/app/_hooks/useClickOutside';
 import EducationSection from './_components/section/EducationSection';
 import ExperienceSection from './_components/section/ExperienceSection';
@@ -104,11 +104,11 @@ export default function PortfolioWrite() {
   };
 
   return (
-    <div className="relative ">
-      <div className="relative flex sm:pl-[30px] md:pl-[80px] lg:pl-[200px] pt-[100px] xl:pt-[60px] mb-[100px] w-full lg:mx-auto">
+    <div className="relative">
+      <div className="relative flex pl-3 pt-[100px] xl:pt-[60px] mb-[100px] w-full lg:mx-auto">
         <ItemToggle />
-        <section className="flex max-w-[1200px] min-w-[900px] px-0 ">
-          <div className="w-full ml-10">
+        <section className="flex max-w-[1200px] px-3 md:px-[60px] w-full">
+          <div className="w-full ml-3 md:ml-10">
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
                 <h1 className="font-semibold text-left ">포트폴리오 작성</h1>
@@ -133,7 +133,7 @@ export default function PortfolioWrite() {
                     type="text"
                     className="pre-3xl-semibold w-full focus:outline-none"
                   />
-                  <div ref={dropdownRef}>
+                  {/* <div ref={dropdownRef}>
                     <Icons
                       name={MoreIcon}
                       onClick={() => {
@@ -141,7 +141,7 @@ export default function PortfolioWrite() {
                       }}
                       className="cursor-pointer"
                     />
-                  </div>
+                  </div> */}
 
                   {isShowDropdown && <PortfolioWriteDropdown />}
                 </div>

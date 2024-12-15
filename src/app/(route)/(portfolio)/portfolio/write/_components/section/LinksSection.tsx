@@ -40,13 +40,12 @@ export default function LinksSection({ register }: LinksSectionProps) {
       alert('링크 항목은 최대 50개까지 추가할 수 있습니다.'); // 경고 메시지
     }
   };
-
   return (
     <div className="mt-10">
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">링크</h1>
       </div>
-      <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+      <div className="h-0.5 w-full bg-gray-5 my-5" />
       <div className="flex flex-col items-center">
         {linkItems.map((item) => item.component)}
         <Image
@@ -54,7 +53,7 @@ export default function LinksSection({ register }: LinksSectionProps) {
           alt="링크 추가"
           width={40}
           height={40}
-          className="hover-animation mr-2.5 mt-[20px]"
+          className="hover-animation mr-2.5 mt-5"
           onClick={addLinkItem}
         />
       </div>
