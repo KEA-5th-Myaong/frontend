@@ -31,7 +31,7 @@ export default function Home() {
     },
   };
   return (
-    <div className="flex flex-col relative items-center text-center pt-[50px] bg-gradient-to-b from-[#F1F1F5] dark:from-[#191919] to-[#D8ECFF] dark:to-[#8b8b8b] h-full ">
+    <div className="flex flex-col relative items-center text-center pt-[50px] bg-gradient-to-b from-[#F1F1F5] dark:from-black-8 to-[#D8ECFF] dark:to-[#8b8b8b] h-full ">
       <Image
         src="/assets/logo-lg.svg"
         alt="PPLOG 로고"
