@@ -27,6 +27,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
 
   const myPageMenuRef = useRef<HTMLDivElement>(null);
   const alarmRef = useRef<HTMLDivElement>(null);
+  const moreRef = useRef<HTMLDivElement>(null);
 
   const [isOpenAlarm, setIsOpenAlarm] = useState(false);
   const [moreButtonOpen, setMoreButtonOpen] = useState(false);
@@ -35,6 +36,20 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
     ref: myPageMenuRef,
     callback: () => {
       handleMenuOpen(null);
+    },
+  });
+
+  useClickOutside({
+    ref: alarmRef,
+    callback: () => {
+      setIsOpenAlarm(false);
+    },
+  });
+
+  useClickOutside({
+    ref: moreRef,
+    callback: () => {
+      setMoreButtonOpen(false);
     },
   });
 
@@ -70,11 +85,15 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
       {/* 유저 아이콘 */}
       {isLogined ? (
         <>
-          <div className="flex-center w-30">
-            <div ref={myPageMenuRef} className="relative">
-              <Icons onClick={() => handleMenuOpen('MyPage')} name={UserIcon} className="mt-1" />
+          <div
+            ref={myPageMenuRef}
+            onClick={() => handleMenuOpen('MyPage')}
+            className="relativce flex-center w-30 cursor-pointer"
+          >
+            <div>
+              <Icons name={UserIcon} className="mt-1" />
               {openMenu === 'MyPage' && (
-                <div className="absolute bg-white-0 border-2 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
+                <div className="absolute bg-white-0 border-2 text-gray-0 w-[108px] rounded-md mt-2">
                   <Link
                     href="/my-page/check-password"
                     className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
@@ -94,8 +113,8 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
               {userData?.data.nickname} 님
             </p>
           </div>
-          <div className="flex-center w-10">
-            <div ref={alarmRef}>
+          <div ref={alarmRef} className="flex-center w-10">
+            <div>
               <button
                 type="button"
                 onClick={(e) => {
@@ -136,23 +155,25 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
           </button>
         </div>
       )}
-      <button
-        type="button"
-        onClick={() => setMoreButtonOpen(!moreButtonOpen)}
-        className="relative flex-center text-center text-gray-0 group  hover:text-primary-1 text-xs py-1 pl-4 pr-3 border border-gray-2 hover:border-primary-1 rounded-xl whitespace-nowrap"
-      >
-        더보기
-        <Icons
-          name={ArrowIcon}
-          hoverFill="#41AED9"
-          className={`transition-transform duration-200  group-hover:fill-[#41AED9] ${moreButtonOpen ? 'rotate-90' : '-rotate-90'}`}
-        />
-        {moreButtonOpen && (
-          <div className="absolute right-12 top-6">
-            <SubMenu isMore />
-          </div>
-        )}
-      </button>
+      <div ref={moreRef}>
+        <button
+          type="button"
+          onClick={() => setMoreButtonOpen(!moreButtonOpen)}
+          className="relative flex-center text-center text-gray-0 group hover:text-primary-1 text-xs py-1 pl-4 pr-3 border border-gray-2 hover:border-primary-1 rounded-xl whitespace-nowrap"
+        >
+          더보기
+          <Icons
+            name={ArrowIcon}
+            hoverFill="#41AED9"
+            className={`transition-transform duration-200  group-hover:fill-[#41AED9] ${moreButtonOpen ? 'rotate-90' : '-rotate-90'}`}
+          />
+          {moreButtonOpen && (
+            <div className="absolute right-12 top-6">
+              <SubMenu isMore />
+            </div>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

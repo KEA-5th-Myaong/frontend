@@ -56,9 +56,8 @@ export default function SubMenu({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation(); // 이벤트 전파 방지
-                  handleNavigation(`/blog/${userName}`);
+                  router.push('/qa/list');
                 }}
-                // FIX: 링크 수정 필요
                 className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
               >
                 문의하기
@@ -69,9 +68,8 @@ export default function SubMenu({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation(); // 이벤트 전파 방지
-                  handleNavigation(`/blog/${userName}`);
+                  router.push('/notice/list');
                 }}
-                // FIX: 링크 수정 필요
                 className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
               >
                 공지 게시판
