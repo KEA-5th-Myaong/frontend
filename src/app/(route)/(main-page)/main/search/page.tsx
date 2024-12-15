@@ -100,7 +100,7 @@ export default function SearchPage() {
       <div className="flex flex-col gap-5 w-full">
         {isLoading
           ? Array.from({ length: 5 }).map(() => (
-              <div key={v4()} className="w-full h-48 bg-gray-4 dark:bg-black-3 rounded-md animate-pulse" />
+              <div key={v4()} className="w-full h-48 bg-gray-4 dark:bg-black-5 rounded-md animate-pulse" />
             ))
           : posts?.map((post) => (
               <Post
