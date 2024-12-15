@@ -51,7 +51,7 @@ export default function SubMenu({
           </>
         ) : isMore ? (
           <>
-            <div className="w-[88px] h-8 mx-auto m-2">
+            <div className="w-[88px] h-8 mx-auto m-2 ">
               <button
                 type="button"
                 onClick={(e) => {
@@ -59,7 +59,7 @@ export default function SubMenu({
                   handleNavigation(`/blog/${userName}`);
                 }}
                 // FIX: 링크 수정 필요
-                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal dark:text-white-1 text-gray-0 text-xs rounded-md w-full h-full"
               >
                 문의하기
               </button>
@@ -72,7 +72,7 @@ export default function SubMenu({
                   handleNavigation(`/blog/${userName}`);
                 }}
                 // FIX: 링크 수정 필요
-                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md w-full h-full"
+                className="flex-center hover:bg-primary-1 hover:text-white-0 font-normal  dark:text-white-1 text-gray-0 text-xs rounded-md w-full h-full"
               >
                 공지 게시판
               </button>
