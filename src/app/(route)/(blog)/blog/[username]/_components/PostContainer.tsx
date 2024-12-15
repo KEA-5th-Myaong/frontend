@@ -72,37 +72,54 @@ export default function PostContainer() {
   );
   return (
     <div className="flex flex-col gap-6">
-      {isblogUserNameDataLoading
-        ? Array.from({ length: 5 }).map(() => (
-            <div
-              key={`skeleton-${uuidv4()}`}
-              className="w-full h-48 bg-gray-200 dark:bg-black-3 rounded-md animate-pulse"
-            />
-          ))
-        : posts.map((post) => (
-            <Post
-              key={post.postId}
-              postId={post.postId}
-              title={post.title}
-              nickname={blogUserNameData?.data.nickname}
-              memberId={memberId}
-              onUserClick={() => {
-                router.push(`/blog/${blogUserNameData?.data.username}`);
-              }}
-              onContentClick={() => {
-                router.push(`/blog/${blogUserNameData?.data.username}/${post.title}`);
-              }}
-              thumbnail={null}
-              profilePicUrl={post.profilePicUrl === null ? defaultProfilePic.src : blogUserNameData?.data.profilePicUrl} // 여기를 수정
-              content={post.content}
-              timestamp={formatDate(post.timestamp)}
-              prejob={blogUserNameData?.data.prejob?.[0]}
-              onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
-              isBookmarked={post.isBookmarked}
-              isLiked={post.isLiked}
-              likeCount={post.likeCount}
-            />
-          ))}
+      {isblogUserNameDataLoading ? (
+        Array.from({ length: 5 }).map(() => (
+          <div
+            key={`skeleton-${uuidv4()}`}
+            className="w-full h-48 bg-gray-200 dark:bg-black-3 rounded-md animate-pulse"
+          />
+        ))
+      ) : posts.length === 0 ? (
+        <div className="flex-center flex-col bg-[#FBFBFB] dark:bg-black-1 p-10 border border-gray-2 rounded-lg">
+          <p className="text-xl mb-4 text-gray-600 dark:text-gray-300">
+            {isMe ? '아직 작성된 글이 없습니다.' : `${blogUserNameData?.data.nickname}님이 작성한 글이 없습니다.`}
+          </p>
+          {isMe && (
+            <button
+              type="button"
+              onClick={() => router.push(`/blog/${blogUserNameData?.data.username}/write`)}
+              className="px-6 py-3 bg-primary-1 text-white-0 font-semibold rounded-lg hover:bg-primary-2 "
+            >
+              첫 글 작성하기
+            </button>
+          )}
+        </div>
+      ) : (
+        posts.map((post) => (
+          <Post
+            key={post.postId}
+            postId={post.postId}
+            title={post.title}
+            nickname={blogUserNameData?.data.nickname}
+            memberId={memberId}
+            onUserClick={() => {
+              router.push(`/blog/${blogUserNameData?.data.username}`);
+            }}
+            onContentClick={() => {
+              router.push(`/blog/${blogUserNameData?.data.username}/${post.title}`);
+            }}
+            thumbnail={null}
+            profilePicUrl={post.profilePicUrl === null ? defaultProfilePic.src : blogUserNameData?.data.profilePicUrl}
+            content={post.content}
+            timestamp={formatDate(post.timestamp)}
+            prejob={blogUserNameData?.data.prejob?.[0]}
+            onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
+            isBookmarked={post.isBookmarked}
+            isLiked={post.isLiked}
+            likeCount={post.likeCount}
+          />
+        ))
+      )}
 
       <div ref={ref} className="h-1" />
       {isLoading && <div className="w-full h-48 bg-gray-2 dark:bg-black-3 rounded-md animate-pulse" />}
