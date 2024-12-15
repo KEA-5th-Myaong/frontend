@@ -115,7 +115,7 @@ export default function PortfolioCard({
           value={currentMemo}
           onChange={handleMemoChange}
           onBlur={handleMemoBlur}
-          className="whitespace-nowrap overflow-hidden mt-2.5 focus:outline-none bg-gray-4 dark:bg-gray-5 text-gray-0 text-sm"
+          className="whitespace-nowrap overflow-hidden mt-2.5 focus:outline-none bg-transparent text-gray-0 text-sm"
         />
       </form>
       <p className="text-right mt-2.5 text-gray-0 dark:text-gray-3 text-xs">{formatDate(timestamp)} 등록</p>
