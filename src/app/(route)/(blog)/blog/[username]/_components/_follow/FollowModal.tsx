@@ -17,6 +17,7 @@ interface FollowModalProps {
   title: string;
   list: FollowUserProps[];
   userData: User | undefined;
+  isMe?: boolean;
 }
 
 const followMotion = {
@@ -32,7 +33,7 @@ const followMotion = {
   },
 };
 
-export default function FollowModal({ isOpen, onClose, title, list, userData }: FollowModalProps) {
+export default function FollowModal({ isOpen, onClose, title, list, userData, isMe }: FollowModalProps) {
   if (!isOpen) return null;
   const MyId = userData?.data?.memberId;
   return (
@@ -60,7 +61,7 @@ export default function FollowModal({ isOpen, onClose, title, list, userData }: 
                   {followList.nickname}
                 </p>
               </div>
-              {MyId !== followList?.memberId && (
+              {!isMe && MyId !== followList?.memberId && (
                 <button
                   type="button"
                   className="pre-2xl-medium primary-1-btn py-2 px-6 rounded-[10px] hover:bg-primary-2"

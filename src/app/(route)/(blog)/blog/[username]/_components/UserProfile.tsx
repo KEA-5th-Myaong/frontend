@@ -23,7 +23,7 @@ export default function UserProfile() {
   const memberId = userNameData?.data.memberId; // 멤버 아이디
 
   const { data: userData } = useMe();
-  const [isMe, setIsMe] = useState(false);
+  const [isMe, setIsMe] = useState(false); // 현재 조회하는 블로그가 본인의 블로그인지
   useEffect(() => {
     if (userData?.data.username === username) {
       setIsMe(true);
@@ -202,6 +202,7 @@ export default function UserProfile() {
         title={`${blogMemberData?.data.nickname}님이 팔로우하는 유저`}
         list={followingList}
         userData={userData}
+        isMe={isMe}
       />
     </>
   );
