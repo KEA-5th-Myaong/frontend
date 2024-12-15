@@ -20,7 +20,7 @@ import useCustomQuery from '@/app/_hooks/useCustomQuery';
 // Next.js의 dynamic import를 사용하여 ToastEditor 컴포넌트를 동적으로 불러옴, 동적으로 불러올 컴포넌트의 경로를 지정
 const ToastEditor = dynamic(() => import('../../../../../_components/ToastEditor'), {
   ssr: false, // 서버사이드 렌더링 비활성화
-  loading: () => <div className="w-full h-96 bg-gray-200 dark:bg-black-3 rounded-md animate-pulse" />,
+  loading: () => <div className="w-full h-96 bg-gray-200 dark:bg-black-5 rounded-md animate-pulse" />,
 });
 
 export default function PostWrite() {
@@ -169,7 +169,7 @@ export default function PostWrite() {
             const filteredValue = filterSpecialCharacters(e.target.value);
             setTitle(filteredValue);
           }}
-          className="text-3xl font-semibold outline-none w-full my-3 dark:bg-black-1 dark:border-b dark:pb-1"
+          className="text-3xl font-semibold outline-none w-full my-3 dark:bg-black-8 dark:border-b dark:pb-1"
         />
       </div>
       {/* 본문 */}

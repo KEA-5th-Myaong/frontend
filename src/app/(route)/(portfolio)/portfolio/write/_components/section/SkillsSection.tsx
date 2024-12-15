@@ -37,7 +37,7 @@ export default function SkillsSection({ setValue }: SkillSectionProps) {
       <div className="flex justify-between items-center">
         <h1 className="pre-3xl-semibold">기술</h1>
       </div>
-      <div className="h-0.5 w-full bg-gray-5 my-5" />
+      <div className="h-0.5 w-full bg-gray-5  dark:bg-black-4  my-5" />
       <input
         type="text"
         value={skill}

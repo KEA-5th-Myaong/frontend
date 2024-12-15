@@ -12,6 +12,8 @@ import PSForm from './PSForm';
 import { postPS, putPS, fetchPS } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useMe from '@/app/_hooks/useMe';
 import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
+import { BangCircleIcon } from '../../../../../../_components/ui/iconPath';
+import Icons from '@/app/_components/ui/Icon';
 
 export default function PSCreateContainer() {
   const router = useRouter();
@@ -114,9 +116,11 @@ export default function PSCreateContainer() {
       )}
 
       <div className="self-start w-full mt-0 sm:mt-12">
-        <p className="w-full pre-2xl-semibold sm:text-[28px] pb-5 mb-9 border-b-2 border-gray-5">자기소개서</p>
+        <p className="w-full pre-2xl-semibold sm:text-[28px] pb-5 mb-9 border-b-2 border-gray-5 dark:border-black-4">
+          자기소개서
+        </p>
 
-        <div className="flex flex-col gap-[18px] bg-gray-4 pt-5 px-4 sm:px-14 pb-10 rounded-[10px]">
+        <div className="flex flex-col gap-[18px] bg-gray-4 dark:bg-black-4 pt-5 px-4 sm:px-14 pb-10 rounded-[10px]">
           {/* 제목 */}
           <PSForm
             name="title"
@@ -161,9 +165,9 @@ export default function PSCreateContainer() {
         </div>
 
         {/* 안내문구 */}
-        <div className="mt-4 mb-24 px-11 py-5 bg-[#F3F3F3] text-gray-0 text-xs flex gap-4">
-          <p id="임시" className="text-white-0 bg-gray-0 rounded-full px-1.5">
-            !
+        <div className="mt-4 mb-24 px-11 py-5 bg-[#F3F3F3] dark:bg-black-4 text-gray-0 text-xs flex gap-4 dark:text-white-0">
+          <p>
+            <Icons name={BangCircleIcon} />
           </p>
           자기소개서는 최대 2000자까지 입력 가능합니다.
         </div>

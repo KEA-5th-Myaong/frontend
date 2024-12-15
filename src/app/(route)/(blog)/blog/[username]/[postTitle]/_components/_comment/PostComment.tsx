@@ -231,7 +231,7 @@ export default function PostComment({ postId, comments, currentUserId }: PostCom
         <textarea
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          className="resize-none px-[18px] py-2.5 w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3 focus:outline-none dark:bg-gray-5"
+          className="resize-none px-[18px] py-2.5 w-full border min-h-[104px] rounded-[15px] placeholder:text-gray-3 dark:text-black-4 focus:outline-none"
           placeholder="댓글을 작성해주세요"
           maxLength={255}
         />

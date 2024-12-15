@@ -20,7 +20,7 @@ export default function PSListHeader({ psLength }: { psLength: number }) {
         <div className="bg-black-0 w-[3px] h-10 mr-6" />
         <div className="flex flex-col justify-center w-full">
           <h1 className="font-semibold text-left">자기소개서 관리</h1>
-          <p className="text-left text-gray-0 text-[12px]">최대 3개까지 생성 가능합니다</p>
+          <p className="text-left text-gray-0 dark:text-gray-3 text-[12px]">최대 3개까지 생성 가능합니다</p>
         </div>
       </div>
       {psLength < 3 && (

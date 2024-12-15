@@ -74,16 +74,16 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
             <div ref={myPageMenuRef} className="relative">
               <Icons onClick={() => handleMenuOpen('MyPage')} name={UserIcon} className="mt-1" />
               {openMenu === 'MyPage' && (
-                <div className="absolute bg-white-0 border-2 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
+                <div className="absolute bg-white-0 border-2 dark:border-black-5 dark:bg-black-5 text-gray-0 w-[108px] left-1/2 transform -translate-x-1/2 rounded-md mt-2">
                   <Link
                     href="/my-page/check-password"
-                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
+                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 dark:text-white-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
                   >
                     마이페이지
                   </Link>
                   <div
                     onClick={handleLogout}
-                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
+                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 dark:text-white-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
                   >
                     로그아웃
                   </div>
@@ -112,7 +112,7 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
           <button
             type="button"
             onClick={() => setMoreButtonOpen(!moreButtonOpen)}
-            className="relative flex-center text-center text-gray-0 group  hover:text-primary-1 text-xs py-1 pl-4 pr-3 border border-gray-2 hover:border-primary-1 rounded-xl"
+            className="relative flex-center text-center text-gray-0 group hover:text-primary-1 text-xs py-1 pl-4 pr-3 border border-gray-2 hover:border-primary-1 rounded-xl"
           >
             더보기
             <Icons

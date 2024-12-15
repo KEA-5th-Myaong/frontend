@@ -28,7 +28,7 @@ export default function PSForm({ name, label, isTextarea, maxLength, placeholder
         <input
           id={name}
           maxLength={maxLength}
-          className="py-2.5 ps-input"
+          className="py-2.5 ps-input dark:text-black-0"
           placeholder={placeholder}
           value={value}
           onChange={handleChange}
@@ -37,7 +37,7 @@ export default function PSForm({ name, label, isTextarea, maxLength, placeholder
         <textarea
           id={name}
           maxLength={maxLength}
-          className={`resize-none ${name === 'reason' ? 'h-32' : 'h-64'}  py-4 whitespace-pre-wrap ps-input`}
+          className={`resize-none ${name === 'reason' ? 'h-32' : 'h-64'}  py-4 whitespace-pre-wrap ps-input dark:text-black-0`}
           placeholder={placeholder}
           value={value}
           onChange={handleChange}
