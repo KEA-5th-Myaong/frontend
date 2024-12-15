@@ -115,12 +115,12 @@ export default function Video() {
   return (
     <div className="fixed left-12 bottom-12 z-50">
       {showPractice && (
-        <div className="fixed left-12 bottom-28 max-w-[420px] z-10 bg-white-0 dark:bg-black-3 px-10 rounded-xl border border-gray-5 pt-5 pb-11">
+        <div className="fixed left-12 bottom-28 max-w-[420px] z-10 bg-white-0 dark:bg-black-4 dark:border-black-6 px-10 rounded-xl border border-gray-5 pt-5 pb-11">
           <div className="w-full flex justify-between items-center pb-[14px] border-b border-gray-5 mb-4">
             <p className="font-semibold">면접 연습하기</p>
             <div
               onClick={() => setShowFace((prev) => !prev)}
-              className="flex items-center border border-primary-3 py-1 px-4 rounded-[28px] cursor-pointer"
+              className="flex items-center border dark:border-gray-5 border-primary-3 py-1 px-4 rounded-[28px] cursor-pointer"
             >
               <Icons name={PlayIcon} />
               {showFace ? '표정 분석 종료' : '표정 분석 시작'}
@@ -137,7 +137,7 @@ export default function Video() {
             <div className="w-12 h-12 flex-shrink-0">
               <Image className="w-full h-full" width={33} height={33} src="/mascot.png" alt="이미지" />
             </div>
-            <p className="mt-3 font-medium text-[11px] bg-[#F5F5F5] dark:bg-gray-0 rounded-[20px] py-4 px-8">
+            <p className="mt-3 font-medium text-[11px] bg-[#F5F5F5]  text-black-0 rounded-[20px] py-4 px-8">
               {expressionMapping[responseExpression]}
             </p>
           </div>

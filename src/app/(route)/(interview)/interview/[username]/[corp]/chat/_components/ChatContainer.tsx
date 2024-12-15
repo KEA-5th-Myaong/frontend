@@ -171,13 +171,13 @@ export default function ChatContainer() {
                 {editMessageId === msg.messageId ? (
                   <textarea
                     ref={textareaRef}
-                    className="break-words w-full chat-msg-text bg-primary-0 bg-opacity-35 hide-scrollbar resize-none focus:outline-none mr-0.5"
+                    className="break-words w-full chat-msg-text bg-primary-0 dark:bg-gray-5 dark:text-black-0 bg-opacity-35 hide-scrollbar resize-none focus:outline-none mr-0.5"
                     value={editedText}
                     onChange={(e) => setEditedText(e.target.value)}
                   />
                 ) : (
                   <div
-                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4 dark:bg-black-3' : 'bg-primary-0 dark:bg-gray-4 dark:text-black-0'}`}
+                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4 dark:bg-black-4' : 'bg-primary-0 dark:bg-gray-4 dark:text-black-0'}`}
                   >
                     {msg.content}
                   </div>

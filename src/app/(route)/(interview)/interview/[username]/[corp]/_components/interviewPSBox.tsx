@@ -10,14 +10,14 @@ export default function InterviewPSBox({ title, timestamp, onClick }: PSBoxProps
       className="flex gap-10 justify-between self-stretch w-full min-w-[333px] max-w-[735px] 
       h-32 bg-gray-4 text-start rounded-[10px] 
       pl-8 pr-3 pt-8 lg:pt-6 xl:pt-8 pb-4 lg:pb-6 
-      overflow-scroll hide-scrollbar cursor-pointer hover-animation dark:bg-black-2 dark:border"
+      overflow-scroll hide-scrollbar cursor-pointer hover-animation dark:bg-black-4 dark:border-black-6"
       onClick={onClick}
       type="button"
     >
       <div className="flex flex-col h-full justify-between">
         <p className="font-semibold overflow-scroll hide-scrollbar">{title}</p>
 
-        <div className="flex text-xs text-gray-0 gap-7">
+        <div className="flex text-xs text-gray-0 dark:text-gray-3 gap-7">
           <p>작성일자 {formatDate(timestamp)}</p>
           <p>수정일자 {formatDate(timestamp)}</p>
         </div>

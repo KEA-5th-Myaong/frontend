@@ -27,7 +27,10 @@ export default function Tutorial() {
   };
 
   return (
-    <div onClick={handleClick} className="fixed inset-0 flex-center bg-black-3 bg-opacity-25 z-50">
+    <div
+      onClick={handleClick}
+      className="fixed inset-0 flex-center bg-black-3 dark:bg-gray-200 dark:bg-opacity-25 bg-opacity-25 z-50"
+    >
       {/* 면접 기록 */}
       <div className="hidden md:block mt-24 mr-4 md:max-w-[253px] md:w-full self-stretch max-h-fit border-2 border-gray-3 border-opacity-25 pt-[29px] pb-[22px] px-5 md:px-2 lg:px-5 rounded-2xl font-semibold">
         <div className="flex justify-between w-full">
@@ -51,7 +54,7 @@ export default function Tutorial() {
         </div>
       </div>
       {/* 본문 */}
-      <section className="relative bg-[#CBCBCE] dark:bg-black-2 flex flex-col pb-8 pt-6 sm:pt-3.5 interview-container px-4 min-w-[360px] z-50">
+      <section className="relative bg-[#CBCBCE] dark:bg-black-8 flex flex-col pb-8 pt-6 sm:pt-3.5 interview-container px-4 min-w-[360px] z-50">
         <p className="font-semibold self-start">모의 면접</p>
         <div className="flex flex-col self-stretch pt-2 w-full pb-8">
           <p className="text-sm">선택 기업</p>
@@ -72,10 +75,10 @@ export default function Tutorial() {
           {/* 비디오 튜토리얼 */}
           {(num === 5 || num === 6) && (
             <div className="hidden md:block fixed md:left-12 md:bottom-12 min-w-[360px] z-10">
-              <div className="relative bg-white-0 dark:bg-black-1 px-10 rounded-xl max-w-[460px] border border-gray-5 pt-5 pb-11">
+              <div className="relative bg-white-0 dark:bg-black-4 dark:border-black-6 px-10 rounded-xl max-w-[460px] border border-gray-5 pt-5 pb-11">
                 <div className="w-full flex justify-between pb-[14px] border-b border-gray-5">
                   <p className="font-semibold">면접 연습하기</p>
-                  <div className="flex items-center border border-primary-3 py-1 px-4 rounded-[28px]">
+                  <div className="flex items-center border dark:border-gray-5 border-primary-3 py-1 px-4 rounded-[28px]">
                     <Icons name={PlayIcon} />
                     표정 분석 시작
                   </div>
@@ -88,7 +91,7 @@ export default function Tutorial() {
                   <div className="w-12 h-12 flex-shrink-0">
                     <Image className="w-full h-full" width={33} height={33} src="/mascot.png" alt="이미지" />
                   </div>
-                  <div className="mt-3 font-medium text-[11px] bg-[#F5F5F5] dark:bg-black-3 dark:border rounded-[20px] py-4 px-8">
+                  <div className="mt-3 font-medium text-[11px] bg-[#F5F5F5] dark:bg-black-5 dark:border-black-6 rounded-[20px] py-4 px-8">
                     <p>
                       면접 초반의 간단한 질문에 대해 미소와 안정적인 표정을 유지하며 긍정적인 태도가 잘 나타났습니다.
                       이는 지원자의 자신감과 호감도를 높이는 데 도움이 됩니다.
@@ -145,7 +148,7 @@ export default function Tutorial() {
             {/* 내 답변 */}
             <div className="flex flex-col items-end">
               <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
-                <div className="break-words chat-msg-text bg-primary-0 bg-opacity-25">
+                <div className="break-words chat-msg-text dark:bg-white-0 dark:text-black-1 bg-primary-0 bg-opacity-25">
                   저는 위볼린이 속한 산업에서 최신 기술 트렌드를 파악하기 위해 여러 가지 방법을 활용하고 있습니다. 첫째,
                   관련 분야의 최신 논문이나 기술 블로그를 정기적으로 구독하고 읽습니다. 특히 위볼린이 속한 산업에서
                   중요한 역할을 하는 AI, 클라우드 기술, 또는 데이터 분석 관련 기술 트렌드에 주목하고 있습니다. 둘째,
@@ -167,9 +170,9 @@ export default function Tutorial() {
             </div>
 
             {/* 채팅입력 */}
-            <div className="flex items-center py-2 w-full border border-primary-1 rounded-xl mt-auto bg-white-0 bg-opacity-25">
+            <div className="flex items-center py-2 w-full border dark:bg-black-4 dark:border-gray-5 border-primary-1 rounded-xl mt-auto bg-white-0 bg-opacity-25">
               <textarea
-                className="flex-grow pl-5 md:pl-8 pr-2 py-2 focus:outline-none rounded-xl resize-none bg-gray-2 bg-opacity-25 "
+                className="flex-grow pl-5 md:pl-8 pr-2 py-2 focus:outline-none rounded-xl resize-none dark:bg-black-4 bg-gray-2 bg-opacity-25 "
                 placeholder="답변을 입력해주세요"
               />
               <div className="pr-2 sm:pr-3 md:pr-4 cursor-pointer">
