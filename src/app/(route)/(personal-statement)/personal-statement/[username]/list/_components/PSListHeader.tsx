@@ -1,11 +1,10 @@
 import { useRouter } from 'next/navigation';
 import Icons from '../../../../../../_components/ui/Icon';
 import { PlusIcon } from '../../../../../../_components/ui/iconPath';
-import useMe from '@/app/_hooks/useMe';
+import { User } from '@/app/_hooks/useMe';
 import usePSStore from '@/app/(route)/(personal-statement)/_store/psStore';
 
-export default function PSListHeader({ psLength }: { psLength: number }) {
-  const { data: userData } = useMe();
+export default function PSListHeader({ userData, psLength }: { userData: User | undefined; psLength: number }) {
   const router = useRouter();
   const { resetPSData } = usePSStore();
 

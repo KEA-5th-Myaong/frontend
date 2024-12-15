@@ -8,8 +8,10 @@ import PSListBox from './PSListBox';
 import PSListHeader from './PSListHeader';
 import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import useMe from '@/app/_hooks/useMe';
 
 export default function PSListContainer() {
+  const { data: userData } = useMe();
   const [personalStatement, setPersonalStatement] = useState<PSListBoxProps[]>([]);
 
   const psLength = personalStatement?.length;
@@ -19,11 +21,10 @@ export default function PSListContainer() {
   useEffect(() => {
     setPersonalStatement(psListData?.data.slice(0, 3));
   }, [psListData?.data]);
-
   return (
     <>
       {/* 자소서 관리 헤더 */}
-      <PSListHeader psLength={psLength} />
+      <PSListHeader userData={userData} psLength={psLength} />
       <div className="flex-center w-full h-full">
         {personalStatement ? (
           <div className="flex flex-col gap-4 w-full max-w-[1000px] mt-7">
@@ -39,7 +40,7 @@ export default function PSListContainer() {
 
             {psLength < 3 && (
               <Link
-                href="/personal-statement/1/create"
+                href={`/personal-statement/${userData?.data.username}/create?edit=false`}
                 className="flex-center gap-6 w-full py-4 sm:py-11 border border-gray-2 rounded-lg bg-white-0"
               >
                 <div className="flex-center pb-1 border border-primary-1 rounded-full text-primary-1 w-6 h-6 sm:w-8 sm:h-8">
