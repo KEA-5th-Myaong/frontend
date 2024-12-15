@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Overlay from '../../../../../../_components/Overlay';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
+import { User } from '@/app/_hooks/useMe';
 
 interface FollowUserProps {
   followed: boolean;
@@ -15,6 +16,7 @@ interface FollowModalProps {
   onClose: () => void;
   title: string;
   list: FollowUserProps[];
+  userData: User | undefined;
 }
 
 const followMotion = {
@@ -30,9 +32,9 @@ const followMotion = {
   },
 };
 
-export default function FollowModal({ isOpen, onClose, title, list }: FollowModalProps) {
+export default function FollowModal({ isOpen, onClose, title, list, userData }: FollowModalProps) {
   if (!isOpen) return null;
-
+  const MyId = userData?.data?.memberId;
   return (
     <Overlay onClick={onClose}>
       <motion.div
@@ -58,13 +60,14 @@ export default function FollowModal({ isOpen, onClose, title, list }: FollowModa
                   {followList.nickname}
                 </p>
               </div>
-
-              <button
-                type="button"
-                className="pre-2xl-medium primary-1-btn py-2 px-6 rounded-[10px] hover:bg-primary-2"
-              >
-                팔로잉
-              </button>
+              {MyId !== followList?.memberId && (
+                <button
+                  type="button"
+                  className="pre-2xl-medium primary-1-btn py-2 px-6 rounded-[10px] hover:bg-primary-2"
+                >
+                  팔로잉
+                </button>
+              )}
             </div>
           ))}
         </div>

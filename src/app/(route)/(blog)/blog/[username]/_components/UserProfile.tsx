@@ -40,6 +40,7 @@ export default function UserProfile() {
   const { data: followingData, isLoading: isFollowingLoading } = useCustomQuery(['following', memberId], () =>
     fetchFollowing(memberId, '10'),
   );
+
   // 모든 로딩 한 번에 관리
   const isLoading = isBlogMemberLoading || isFollowedLoading || isFollowingLoading;
 
@@ -193,12 +194,14 @@ export default function UserProfile() {
         onClose={() => setIsFollowerOpen(false)}
         title={`${blogMemberData?.data.nickname}님을 팔로우하는 유저`}
         list={followedList}
+        userData={userData}
       />
       <FollowModal
         isOpen={isFollowingOpen}
         onClose={() => setIsFollowingOpen(false)}
         title={`${blogMemberData?.data.nickname}님이 팔로우하는 유저`}
         list={followingList}
+        userData={userData}
       />
     </>
   );
