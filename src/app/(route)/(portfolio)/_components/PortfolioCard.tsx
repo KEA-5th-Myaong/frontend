@@ -80,10 +80,10 @@ export default function PortfolioCard({
   };
 
   return (
-    <div className=" relative w-[320px] bg-white-0 border border-gray-5 rounded-xl pt-[30px] pb-2.5 px-[30px]">
+    <div className=" relative w-[320px] bg-white-0 dark:bg-black-4 border border-gray-5 dark:border-black-5 rounded-xl pt-[30px] pb-2.5 px-[30px]">
       <div className="flex justify-between">
         <Link href={`/portfolio/${portfolioId}/read`}>
-          <h1 className="max-w-[15ch] font-semibold whitespace-nowrap text-ellipsis overflow-hidden hover:text-gray-500">
+          <h1 className="max-w-[15ch] font-semibold whitespace-nowrap text-ellipsis overflow-hidden hover:text-gray-500 dark:hover:text-gray-5">
             {portfolioName}
           </h1>
         </Link>
@@ -107,18 +107,18 @@ export default function PortfolioCard({
 
         {isShowDropdown && <PortfolioDropdown id={portfolioId} onModify={handleModify} onDelete={handleDeleteClick} />}
       </div>
-      <form className="bg-gray-4 rounded-md mt-5 py-[15px] px-[15px]">
-        <h1 className="font-semibold text-sm">MEMO</h1>
+      <form className="bg-gray-4 dark:bg-gray-5 rounded-md mt-5 py-[15px] px-[15px]">
+        <h1 className="font-semibold text-sm dark:text-black-4">MEMO</h1>
         <input
           type="text"
           placeholder="메모 입력"
           value={currentMemo}
           onChange={handleMemoChange}
           onBlur={handleMemoBlur}
-          className="whitespace-nowrap overflow-hidden mt-2.5 bg-gray-4 text-gray-0 text-sm"
+          className="whitespace-nowrap overflow-hidden mt-2.5 focus:outline-none bg-gray-4 dark:bg-gray-5 text-gray-0 text-sm"
         />
       </form>
-      <p className="text-right mt-2.5 text-gray-0 text-xs">{formatDate(timestamp)} 등록</p>
+      <p className="text-right mt-2.5 text-gray-0 dark:text-gray-3 text-xs">{formatDate(timestamp)} 등록</p>
 
       {modalState.open && (
         <Modal

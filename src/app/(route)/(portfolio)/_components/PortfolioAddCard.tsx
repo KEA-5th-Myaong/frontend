@@ -5,10 +5,10 @@ export default function PortfolioAddCard() {
   return (
     <Link
       href="/portfolio/write"
-      className="flex-center flex-col w-[320px] py-[51px] bg-white-0 border border-gray-5 rounded-xl"
+      className="flex-center flex-col w-[320px] py-[51px] bg-white-0 border border-gray-5 dark:bg-black-4 dark:border-black-5 rounded-xl"
     >
       <Image src="/assets/add-button.svg" alt="포트폴리오 추가" width={50} height={50} className="hover-animation" />
-      <p className="mt-2.5 text-gray-0">포트폴리오를 추가해보세요</p>
+      <p className="mt-2.5 text-gray-0 dark:text-white-0">포트폴리오를 추가해보세요</p>
     </Link>
   );
 }
