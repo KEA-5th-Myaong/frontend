@@ -237,7 +237,7 @@ export default function PostContent() {
       </div>
 
       {/* 작성자 프로필 */}
-      <div className="flex items-center justify-between self-stretch mt-[7px] py-[22px] border-b border-gray">
+      <div className="flex items-center justify-between self-stretch mt-[7px] py-[22px] border-b border-gray dark:border-black-4 ">
         <div
           className="flex items-center gap-2.5 cursor-pointer"
           onClick={() => {
@@ -265,16 +265,16 @@ export default function PostContent() {
       </div>
 
       {/* 작성일 댓글 좋아요 */}
-      <div className="flex items-center justify-between mt-20 pb-10 border-b">
-        <span className="text-sm text-gray-0">{formatDate(postURLData?.data.timestamp)}</span>
+      <div className="flex items-center justify-between mt-20 pb-10 border-b dark:border-black-4">
+        <span className="text-sm text-gray-0 dark:text-gray-3">{formatDate(postURLData?.data.timestamp)}</span>
         <div className="flex gap-3">
-          <div className="text-primary-1 bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame">
+          <div className="text-primary-1 bg-[#252530] dark:bg-black-4 rounded-[100px] border border-[#353542] blog-favor-frame">
             <Icons name={CommentIcon} />
             <p className="text-sm">{postURLData?.data.commentCount}</p>
           </div>
           <div
             onClick={handleLikeClick}
-            className={`${isLiked ? 'text-primary-1' : 'text-gray-1'} bg-[#252530] rounded-[100px] border border-[#353542] blog-favor-frame`}
+            className={`${isLiked ? 'text-primary-1' : 'text-gray-1'} bg-[#252530] dark:bg-black-4 rounded-[100px] border border-[#353542] blog-favor-frame`}
           >
             <Icons name={{ ...FavorIcon, fill: isLiked ? '#41AED9' : 'currentColor' }} />
             <span className="text-sm">{postURLData?.data.likeCount}</span>

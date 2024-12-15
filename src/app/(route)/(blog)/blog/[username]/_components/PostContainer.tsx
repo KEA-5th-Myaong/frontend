@@ -76,7 +76,7 @@ export default function PostContainer() {
         ? Array.from({ length: 5 }).map(() => (
             <div
               key={`skeleton-${uuidv4()}`}
-              className="w-full h-48 bg-gray-200 dark:bg-black-3 rounded-md animate-pulse"
+              className="w-full h-48 bg-gray-200 dark:bg-black-5 rounded-md animate-pulse"
             />
           ))
         : posts.map((post) => (
@@ -105,7 +105,7 @@ export default function PostContainer() {
           ))}
 
       <div ref={ref} className="h-1" />
-      {isLoading && <div className="w-full h-48 bg-gray-2 dark:bg-black-3 rounded-md animate-pulse" />}
+      {isLoading && <div className="w-full h-48 bg-gray-2 dark:bg-black-5 rounded-md animate-pulse" />}
     </div>
   );
 }

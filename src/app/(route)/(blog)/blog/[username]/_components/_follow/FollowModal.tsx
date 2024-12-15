@@ -38,7 +38,7 @@ export default function FollowModal({ isOpen, onClose, title, list }: FollowModa
       <motion.div
         onClick={(e) => e.stopPropagation()}
         {...followMotion}
-        className="flex m-4 min-w-[300px] max-w-[510px] w-full pt-14 pb-4 px-10 flex-col items-start gap-8 rounded-2xl bg-white-0 shadow-md"
+        className="flex m-4 min-w-[300px] max-w-[510px] w-full pt-14 pb-4 px-10 flex-col items-start gap-8 rounded-2xl dark:bg-black-4 bg-white-0 shadow-md"
       >
         <p className="font-semibold text-2xl">{title}</p>
 
