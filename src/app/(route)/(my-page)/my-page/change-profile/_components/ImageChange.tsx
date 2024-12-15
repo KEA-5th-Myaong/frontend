@@ -57,7 +57,7 @@ export default function ImageChange({ defaultPicUrl, setProfileImage }: ImageCha
       <p className="font-semibold pb-[18px]">프로필 사진</p>
       <div className="w-[160px] h-[160px] rounded-[10px] bg-[#FBFBFB] border border-gray-5">
         {previewUrl ? (
-          <img src={previewUrl} alt="Profile" className="w-full h-full object-cover rounded-[10px]" />
+          <img src={previewUrl} alt="Profile" className="w-full h-full object-cover rounded-[10px] dark:bg-black-4" />
         ) : (
           <Icons className="h-full m-auto" name={PictureIcon} />
         )}
