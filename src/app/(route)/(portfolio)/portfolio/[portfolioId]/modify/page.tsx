@@ -117,19 +117,19 @@ export default function PortfolioModify() {
   };
 
   return (
-    <div className="relative ">
-      <div className="relative flex sm:pl-[30px] md:pl-[80px] lg:pl-[200px] pt-[100px] xl:pt-[60px] mb-[100px] w-full lg:mx-auto">
+    <div className="relative">
+      <div className="relative flex pl-3 pt-[100px] xl:pt-[60px] mb-[100px] w-full lg:mx-auto">
         <ItemToggle />
-        <section className="flex max-w-[1200px] min-w-[900px] px-0 ">
+        <section className="flex max-w-[1200px] px-3 md:px-[60px] w-full">
           <div className="w-full ml-10">
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
-                <h1 className="font-semibold text-left ">포트폴리오 수정</h1>
-                <p className="text-left text-gray-0 text-[12px]">포트폴리오는 최대 5개까지 생성 가능합니다</p>
+                <h1 className="font-semibold text-left">포트폴리오 수정</h1>
+                <p className="text-left text-gray-0 text-xs">포트폴리오는 최대 5개까지 생성 가능합니다</p>
               </div>
               <Link
                 href={`/portfolio/${portfolioId}/read`}
-                className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation"
+                className="flex items-center font-bold text-white-0 py-[13px] md:py-[19px] px-[20px] md:px-[28px] bg-primary-1 rounded-[30px] hover-animation whitespace-nowrap"
               >
                 작성 완료
               </Link>

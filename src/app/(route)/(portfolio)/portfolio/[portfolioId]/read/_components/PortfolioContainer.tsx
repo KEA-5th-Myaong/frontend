@@ -49,7 +49,7 @@ export default function PortfolioContainer() {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">학력</h1>
-              <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+              <div className="h-1.5 w-full bg-gray-5 my-5" />
               <div className="flex flex-wrap items-center gap-1 whitespace-nowrap text-xs sm:text-base">
                 <Icons
                   className="mr-2.5"
@@ -72,7 +72,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">경력</h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-0.5 w-full bg-gray-5 my-5" />
         {portfolio?.data?.experiences &&
           portfolio?.data?.experiences.map((item: Experiences) => {
             return (
