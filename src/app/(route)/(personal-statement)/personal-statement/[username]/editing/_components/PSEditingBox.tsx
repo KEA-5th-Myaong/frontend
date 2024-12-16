@@ -8,8 +8,8 @@ interface PSEditingBoxProps {
 
 export default function PSEditingBox({ label, content, isEditing }: PSEditingBoxProps) {
   const formatContent = (text: string) => {
-    const parts = text.split(/(\*\*.*?\*\*)/); // 정규 표현식을 사용하여 **로 둘러싸인 부분을 찾음
-    return parts.map((part) => {
+    const parts = text?.split(/(\*\*.*?\*\*)/); // 정규 표현식을 사용하여 **로 둘러싸인 부분을 찾음
+    return parts?.map((part) => {
       if (part.startsWith('**') && part.endsWith('**')) {
         return (
           <span key={v4()} className="text-[#FFBF84]">

@@ -16,6 +16,7 @@ import useWindowHeight from '@/app/_hooks/useWindowHeight';
 import Overlay from '@/app/_components/Overlay';
 import defaultProfilePic from '../../../../../../../public/mascot.png';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import usePSStore from '@/app/(route)/(personal-statement)/_store/psStore';
 
 // Next.js의 dynamic import를 사용하여 ToastEditor 컴포넌트를 동적으로 불러옴, 동적으로 불러올 컴포넌트의 경로를 지정
 const ToastEditor = dynamic(() => import('../../../../../_components/ToastEditor'), {
@@ -42,9 +43,10 @@ export default function PostWrite() {
     () => messages.map((msg) => `${msg.role === 'interviewer' ? '면접관' : '나'}: ${msg.content}`).join('\n\n'),
     [messages],
   );
+  const highlightedContent = usePSStore((state) => state.highlightedContent);
 
   const [title, setTitle] = useState(postTitle || ''); // 포스트 제목
-  const [content, setContent] = useState(postData || formattedMessages || ' '); // 포스트 내용
+  const [content, setContent] = useState(postData || formattedMessages || highlightedContent || ' '); // 포스트 내용
   const [modalState, setModalState] = useState(initailModalState);
   // 에디터 높이 설정, 비율은 55%와 기본 높이는 400px
   const editorHeight = useWindowHeight({

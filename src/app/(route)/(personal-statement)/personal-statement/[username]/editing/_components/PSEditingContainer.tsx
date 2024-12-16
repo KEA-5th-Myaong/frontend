@@ -10,13 +10,14 @@ import PSEditingBox from './PSEditingBox';
 import { fetchPSEditing } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import useMe from '@/app/_hooks/useMe';
-import { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
+import usePSStore, { usePersonalStatementStore } from '@/app/(route)/(personal-statement)/_store/psStore';
 import { PSEditingProps } from '@/app/(route)/(personal-statement)/_types/ps';
 
 export default function PSEditingContainer() {
   const { data: userData } = useMe();
   const router = useRouter();
   const [modalState, setModalState] = useState(initailModalState);
+  const { setHighlightedContent } = usePSStore();
 
   const [edState, setEdtate] = useState<PSEditingProps>({
     psId: 0,
@@ -54,7 +55,10 @@ export default function PSEditingContainer() {
             title=""
             mode="editing"
             onButtonClick={() => {
-              router.push(`/blog/${userData?.data.username}/write`);
+              if (setHighlightedContent) {
+                setHighlightedContent(edData?.data?.highlightedContent || '');
+                router.push(`/blog/${userData?.data.username}/write`);
+              }
             }}
           />
           {/* 메인 컨텐츠 */}
