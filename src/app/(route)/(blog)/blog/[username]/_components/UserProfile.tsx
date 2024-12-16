@@ -107,7 +107,7 @@ export default function UserProfile() {
   };
   return (
     <>
-      <div className="xl:pt-[51px] xl:pb-[41px] md:py-3 xl:px-5 pt-12 px-2 rounded-2xl bg-white-0 dark:bg-black-5 md:border md:border-gray-2 h-fit">
+      <div className="xl:pt-[51px] xl:pb-[41px] md:py-3 xl:px-5 pt-12 px-2 rounded-2xl bg-white-0 dark:bg-black-4 dark:border-black-6 md:border md:border-gray-2 h-fit">
         <div className="flex items-center sm:gap-0 gap-8">
           {isLoading ? (
             <div className="flex flex-col sm:flex-row md:flex-col min-w-[100px] md:min-w-[250px] items-center gap-3 sm:gap-3 md:gap-10">

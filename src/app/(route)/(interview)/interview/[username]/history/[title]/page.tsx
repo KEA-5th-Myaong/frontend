@@ -41,7 +41,7 @@ export default function InterviewHistoryPage() {
         <p className="text-sm">과거 기록</p>
 
         <div className="flex gap-3 justify-between pt-3 whitespace-nowrap">
-          <div className="w-full max-w-64 py-4 px-4 sm:px-5 bg-gray-4 dark:bg-black-3 dark:border font-bold rounded-[28px]">
+          <div className="w-full max-w-64 py-4 px-4 sm:px-5 bg-gray-4 dark:bg-black-4 dark:border font-bold rounded-[28px]">
             {encodedTitle}
           </div>
           <Link href={`/blog/${username}/write`} className="py-4 px-7 lg:px-9 rounded-[28px] primary-1-btn">
@@ -62,7 +62,7 @@ export default function InterviewHistoryPage() {
 
                 <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
                   <div
-                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4 dark:bg-black-3' : 'bg-primary-0 dark:bg-gray-4 dark:text-black-0'}`}
+                    className={`break-words chat-msg-text ${msg.role === 'interviewer' ? 'bg-gray-4 dark:bg-black-4' : 'bg-primary-0 dark:bg-gray-4 dark:text-black-0'}`}
                   >
                     {msg.content}
                   </div>

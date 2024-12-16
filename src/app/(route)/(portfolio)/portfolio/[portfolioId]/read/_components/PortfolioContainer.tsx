@@ -49,7 +49,7 @@ export default function PortfolioContainer() {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">학력</h1>
-              <div className="h-1.5 w-full bg-gray-5 my-5" />
+              <div className="h-1.5 w-full bg-gray-5 dark:bg-black-4 my-5" />
               <div className="flex flex-wrap items-center gap-1 whitespace-nowrap text-xs sm:text-base">
                 <Icons
                   className="mr-2.5"
@@ -72,7 +72,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">경력</h1>
-        <div className="h-0.5 w-full bg-gray-5 my-5" />
+        <div className="h-0.5 w-full bg-gray-5 dark:bg-black-4 my-5" />
         {portfolio?.data?.experiences &&
           portfolio?.data?.experiences.map((item: Experiences) => {
             return (
@@ -96,7 +96,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">링크</h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-[2px] w-full bg-gray-5 dark:bg-black-4 my-[20px]" />
         {portfolio?.data?.links &&
           portfolio?.data?.links.map((item: Links) => {
             return (
@@ -110,7 +110,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold"> 기술 </h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-[2px] w-full bg-gray-5 dark:bg-black-4 my-[20px]" />
         <div className="w-full flex items-center gap-3">
           {portfolio?.data?.skills &&
             portfolio?.data?.skills.map((item: string) => {
@@ -121,7 +121,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">교육 | 대외활동</h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-[2px] w-full bg-gray-5 dark:bg-black-4 my-[20px]" />
         {portfolio?.data?.extraActivities &&
           portfolio?.data?.extraActivities.map((item: ExtraActivities) => {
             return (
@@ -145,7 +145,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">자격증</h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-[2px] w-full bg-gray-5 dark:bg-black-4 my-[20px]" />
         {portfolio?.data?.certifications &&
           portfolio?.data?.certifications.map((item: Certifications) => {
             return (

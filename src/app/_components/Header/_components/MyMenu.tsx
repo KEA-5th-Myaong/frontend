@@ -93,16 +93,16 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
             <div>
               <Icons name={UserIcon} className="mt-1" />
               {openMenu === 'MyPage' && (
-                <div className="absolute bg-white-0 border-2 text-gray-0 w-[108px] rounded-md mt-2">
+                <div className="absolute bg-white-0 border-2 dark:border-black-5 dark:bg-black-5 text-gray-0 w-[108px] rounded-md mt-2">
                   <Link
                     href="/my-page/check-password"
-                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
+                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 dark:text-white-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
                   >
                     마이페이지
                   </Link>
                   <div
                     onClick={handleLogout}
-                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
+                    className="py-2 w-[88px] m-2 flex-center hover:bg-primary-1 dark:text-white-1 hover:text-white-0 font-normal text-gray-0 text-xs rounded-md"
                   >
                     로그아웃
                   </div>

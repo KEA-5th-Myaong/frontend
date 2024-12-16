@@ -53,10 +53,10 @@ export default function InterviewSelect() {
       <p className="font-semibold self-start">모의 면접</p>
 
       <div className="flex gap-4 self-stretch pt-6 min-w-[318px] w-full">
-        <div className="flex self-stretch items-center px-5 py:1 md:py-4 gap-5 rounded-[3rem] border border-primary-1 w-full bg-white-0 dark:bg-black-2">
+        <div className="flex self-stretch items-center px-5 py:1 md:py-4 gap-5 rounded-[3rem] border border-primary-1 w-full bg-white-0 dark:bg-black-4">
           <Icons name={SearchIcon} />
           <input
-            className="w-full focus:outline-none dark:bg-black-2"
+            className="w-full focus:outline-none dark:bg-black-4"
             placeholder="기업 이름을 검색하거나 선택하세요"
             value={searchCorp}
             onChange={(e) => setSearchCorp(e.target.value)}
@@ -73,12 +73,12 @@ export default function InterviewSelect() {
         </motion.button>
       </div>
 
-      <div className="flex flex-wrap mx-auto pt-5 w-full min-w-[263px] max-w-[440px]">
+      <div className="flex flex-wrap mx-auto pt-5 w-full min-w-[263px] max-w-[440px] ">
         {isLoading
           ? Array.from({ length: 28 }).map(() => (
               <div
                 key={v4()}
-                className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 dark:bg-black-3 animate-pulse"
+                className="h-7 py-1.5 px-1 sm:px-4 md:px-6 lg:px-8 my-2  rounded-lg w-1/3 bg-gray-4 dark:bg-black-5 animate-pulse"
               />
             ))
           : corpList?.map((corp: { companyId: string; companyName: string }) => (
@@ -86,7 +86,7 @@ export default function InterviewSelect() {
                 key={corp.companyId}
                 type="button"
                 onClick={() => handleCorpClick(corp)}
-                className="corp-block"
+                className="corp-block "
               >
                 {corp.companyName}
               </motion.button>

@@ -13,7 +13,7 @@ interface EducationItemProps {
 export default function EducationItem({ id, register, onDelete }: EducationItemProps) {
   return (
     <MotionWrapper>
-      <section className="relative w-full py-[20px] px-[30px] bg-gray-4 rounded-[10px] mb-4">
+      <section className="relative w-full py-[20px] px-[30px] bg-gray-4  dark:bg-black-4 rounded-[10px] mb-4">
         <div className="grid grid-flow-col justify-stretch gap-[20px]">
           <Input
             register={register}

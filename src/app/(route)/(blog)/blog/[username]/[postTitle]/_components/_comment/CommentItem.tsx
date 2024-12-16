@@ -70,7 +70,7 @@ export default function CommentItem({
     }));
   };
   return (
-    <div className={`flex flex-col py-6 px-1.5 border-b ${isReply && 'pl-6'}`}>
+    <div className={`flex flex-col py-6 px-1.5 border-b dark:border-black-4 ${isReply && 'pl-6'}`}>
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-2.5">
           {isReply && <Icons name={ReplyIcon} />}
@@ -115,7 +115,9 @@ export default function CommentItem({
           <div className={`${isReply ? 'ml-16' : 'ml-10'} mb-[18px] py-2 text-[13px] break-words`}>
             {comment.comment}
           </div>
-          <div className={`${isReply ? 'ml-16' : 'ml-10'} text-xs text-gray-0`}>{formatTime(comment.timestamp)}</div>
+          <div className={`${isReply ? 'ml-16' : 'ml-10'} text-xs text-gray-0 dark:text-gray-3`}>
+            {formatTime(comment.timestamp)}
+          </div>
         </>
       )}
 

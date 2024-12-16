@@ -65,7 +65,7 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
         onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 Overlay까지 전달되지 않도록
         {...modalMotion}
         className="flex-center flex-col m-4 min-w-[360px] max-w-[891px] w-full 
-        py-6 px-4 sm:px-16 md:px-32 gap-3 rounded-2xl bg-white-0 shadow-md"
+        py-6 px-4 sm:px-16 md:px-32 gap-3 rounded-2xl bg-white-0 dark:bg-black-4 shadow-md"
       >
         <Image width={204} height={193} src="/mascot.png" alt="마스코트" />
         <div className="flex items-center flex-col gap-1 pre-xl-semibold md:pre-2xl-semibold">
@@ -82,7 +82,7 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
                 type="button"
                 onClick={() => setSelectJobCategory('직군 전체')}
                 className={`flex justify-between items-center w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
-                  selectJobCategory === '직군 전체' ? 'bg-primary-0' : 'text-gray-0'
+                  selectJobCategory === '직군 전체' ? 'bg-primary-0 dark:text-black-5' : 'text-gray-0 dark:text-white-0'
                 }`}
               >
                 <p className="w-full text-center">직군 전체</p>
@@ -94,7 +94,9 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
                   type="button"
                   onClick={() => setSelectJobCategory(category.categoryName)}
                   className={`flex justify-between items-center w-full py-2 px-3 rounded-[10px] font-medium whitespace-nowrap ${
-                    selectJobCategory === category.categoryName ? 'bg-primary-0' : 'text-gray-0'
+                    selectJobCategory === category.categoryName
+                      ? 'bg-primary-0 dark:text-black-5'
+                      : 'text-gray-0 dark:text-white-0'
                   }`}
                 >
                   <p className="w-full text-center">{category.categoryName}</p>
@@ -115,7 +117,7 @@ export default function InterestedJob({ onClose }: InterestedJobProps) {
                 >
                   <p
                     className={`w-full text-center font-medium text-sm md:text-base 
-                      line-clamp-2 ${preJob.includes(job.jobId) ? '' : 'text-gray-0'}`}
+                      line-clamp-2 ${preJob.includes(job.jobId) ? '' : 'text-gray-0 dark:text-gray-3'}`}
                   >
                     {job.jobName}
                   </p>

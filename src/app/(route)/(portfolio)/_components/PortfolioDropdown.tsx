@@ -6,7 +6,7 @@ interface PortfolioDropdownProps {
 
 export default function PortfolioDropdown({ id, onDelete, onModify }: PortfolioDropdownProps) {
   return (
-    <div className="absolute flex-center flex-col right-[30px] top-[60px] p-2.5 bg-white-0 text-sm rounded-lg border  border-gray-5">
+    <div className="absolute flex-center flex-col right-[5px] top-[35px] p-2.5 bg-white-0 dark:bg-black-4 dark:border-black-5 text-sm rounded-lg border  border-gray-5">
       <button
         type="button"
         onClick={(e) => {

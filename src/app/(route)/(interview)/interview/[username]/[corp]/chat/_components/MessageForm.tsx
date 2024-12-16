@@ -40,7 +40,7 @@ export default function MessageForm({ onSubmit, disabled }: MessageFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`flex items-center py-2 w-full border border-primary-1 dark:bg-black-3 rounded-xl mt-auto ${disabled ? 'bg-gray-4' : 'bg-white-0'}`}
+      className={`flex items-center py-2 w-full border text-black-0 dark:border-gray-5 border-primary-1 rounded-xl mt-auto ${disabled ? 'bg-gray-4' : 'bg-white-0'}`}
     >
       <textarea
         ref={textareaRef}
@@ -49,7 +49,7 @@ export default function MessageForm({ onSubmit, disabled }: MessageFormProps) {
         onKeyDown={handleKeyDown}
         disabled={disabled}
         className="flex-grow pl-5 md:pl-8 pr-2 py-2 focus:outline-none rounded-xl resize-none hide-scrollbar
-         max-h-[160px] overflow-y-auto dark:bg-black-3"
+         max-h-[160px] overflow-y-auto"
         placeholder={disabled ? '다음 질문을 생성해주세요' : '답변을 입력해주세요'}
       />
       <button type="submit" tabIndex={-1} className="pr-2 sm:pr-3 md:pr-4 cursor-pointer">

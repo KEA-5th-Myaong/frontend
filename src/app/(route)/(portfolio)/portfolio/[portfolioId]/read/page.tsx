@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Margin, usePDF } from 'react-to-pdf';
 import { useParams, useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
@@ -13,6 +13,7 @@ import Modal, { initailModalState } from '@/app/_components/Modal';
 import PortfolioDropdown from '../../../_components/PortfolioDropdown';
 import { deletePortfolios, fetchPortfolio } from '../../../_services/portfolioServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
+import useClickOutside from '@/app/_hooks/useClickOutside';
 
 export default function PortfolioRead() {
   const params = useParams();
@@ -30,6 +31,14 @@ export default function PortfolioRead() {
   const [modalState, setModalState] = useState(initailModalState); // 삭제 모달
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const queryClient = useQueryClient();
+  const moreMenuRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside({
+    ref: moreMenuRef,
+    callback: () => {
+      setIsShowDropdown(false);
+    },
+  });
 
   // PDF 생성 클릭 시
   const { toPDF, targetRef } = usePDF({
@@ -96,7 +105,7 @@ export default function PortfolioRead() {
         <section ref={targetRef}>
           <div className="relative flex justify-between items-center my-10">
             <h1 className="pre-3xl-semibold">{portfolio?.data?.title}</h1>
-            <div>
+            <div className="relative" ref={moreMenuRef}>
               <Icons
                 name={MoreIcon}
                 onClick={() => {
@@ -105,7 +114,6 @@ export default function PortfolioRead() {
                 className="cursor-pointer"
               />
             </div>
-
             {isShowDropdown && isLogined && (
               <PortfolioDropdown id={String(portfolioId)} onModify={handleModify} onDelete={handleDeleteClick} />
             )}
