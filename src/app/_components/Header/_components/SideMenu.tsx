@@ -50,7 +50,20 @@ export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
             <div>
               <div className="flex w-full">
                 <motion.div layoutId="smallLogo">
-                  <Image src="/assets/logo-sm.svg" alt="모바일로고" width={80} height={40} className="flex pt-6 pr-3" />
+                  <Image
+                    src="/assets/logo-sm.svg"
+                    alt="모바일로고"
+                    width={80}
+                    height={40}
+                    className="flex pt-6 pr-3 dark:hidden"
+                  />
+                  <Image
+                    src="/assets/logo_mobile_dark-ver.svg"
+                    alt="모바일로고"
+                    width={80}
+                    height={40}
+                    className="hidden dark:flex pt-6 pr-3"
+                  />
                 </motion.div>
                 <ThemeToggle />
               </div>

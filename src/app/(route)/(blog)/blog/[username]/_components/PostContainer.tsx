@@ -80,7 +80,7 @@ export default function PostContainer() {
           />
         ))
       ) : posts.length === 0 ? (
-        <div className="flex-center flex-col bg-[#FBFBFB] dark:bg-black-1 p-10 border border-gray-2 rounded-lg">
+        <div className="flex-center flex-col bg-[#FBFBFB] dark:bg-black-4 p-10 border border-gray-2 rounded-lg">
           <p className="text-xl mb-4 text-gray-600 dark:text-gray-300">
             {isMe ? '아직 작성된 글이 없습니다.' : `${blogUserNameData?.data.nickname}님이 작성한 글이 없습니다.`}
           </p>
