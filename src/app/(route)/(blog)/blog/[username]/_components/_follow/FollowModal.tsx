@@ -18,6 +18,7 @@ interface FollowModalProps {
   list: FollowUserProps[];
   userData: User | undefined;
   isMe?: boolean;
+  handleFollow: (memberId: number) => void;
 }
 
 const followMotion = {
@@ -33,7 +34,7 @@ const followMotion = {
   },
 };
 
-export default function FollowModal({ isOpen, onClose, title, list, userData, isMe }: FollowModalProps) {
+export default function FollowModal({ isOpen, onClose, title, list, userData, isMe, handleFollow }: FollowModalProps) {
   if (!isOpen) return null;
   const MyId = userData?.data?.memberId;
   return (
@@ -64,6 +65,7 @@ export default function FollowModal({ isOpen, onClose, title, list, userData, is
               {!isMe && MyId !== followList?.memberId && (
                 <button
                   type="button"
+                  onClick={() => handleFollow(followList.memberId)}
                   className="pre-2xl-medium primary-1-btn py-2 px-6 rounded-[10px] hover:bg-primary-2"
                 >
                   팔로잉

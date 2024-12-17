@@ -35,10 +35,10 @@ export default function UserProfile() {
     fetchMemberInfo(memberId),
   );
   const { data: followedData, isLoading: isFollowedLoading } = useCustomQuery(['followed', memberId], () =>
-    fetchFollowed(memberId, '10'),
+    fetchFollowed(memberId, '0'),
   );
   const { data: followingData, isLoading: isFollowingLoading } = useCustomQuery(['following', memberId], () =>
-    fetchFollowing(memberId, '10'),
+    fetchFollowing(memberId, '0'),
   );
 
   // 모든 로딩 한 번에 관리
@@ -101,9 +101,11 @@ export default function UserProfile() {
   });
 
   // 팔로우 버튼 누르기
-  const handleFollow = () => {
-    if (!memberId) return;
-    followMutation.mutate(memberId);
+  const handleFollow = (targetMemberId?: number) => {
+    // targetMemberId가 없으면 블로그 주인의 memberId를 사용
+    const idToFollow = targetMemberId || memberId;
+    if (!idToFollow) return;
+    followMutation.mutate(idToFollow);
   };
   return (
     <>
@@ -167,7 +169,7 @@ export default function UserProfile() {
               ) : (
                 <button
                   type="button"
-                  onClick={handleFollow}
+                  onClick={() => handleFollow()}
                   className={`${isFollowed ? 'bg-gray-0 hover:bg-gray-1' : 'bg-primary-1 hover:bg-primary-2'} user-profile-btn`}
                 >
                   {isFollowed ? '언팔로우' : '팔로우'}
@@ -195,6 +197,7 @@ export default function UserProfile() {
         title={`${blogMemberData?.data.nickname}님을 팔로우하는 유저`}
         list={followedList}
         userData={userData}
+        handleFollow={handleFollow}
       />
       <FollowModal
         isOpen={isFollowingOpen}
@@ -203,6 +206,7 @@ export default function UserProfile() {
         list={followingList}
         userData={userData}
         isMe={isMe}
+        handleFollow={handleFollow}
       />
     </>
   );
