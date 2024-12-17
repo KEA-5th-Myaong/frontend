@@ -12,7 +12,7 @@ export default function AdminFaq() {
         {/* title */}
         <div className="text-2xl border-b border-gray-5 pb-4 mb-5 w-full font-semibold ">문의 관리</div>
 
-        <section>
+        <section className="max-w-[800px]">
           <div className="flex py-5 border-y-2 md:text-base text-sm  border-gray-0">
             <div className="flex-center w-[10%]">번호</div>
             <div className="flex-center w-[50%]">제목</div>
@@ -21,7 +21,10 @@ export default function AdminFaq() {
           </div>
           <div>
             {testData.listData.inquiries.map((data) => (
-              <Link href="/main" className="flex w-full py-5 border-b-2 md:text-base text-sm border-gray-5">
+              <Link
+                href={`/admin/faq/${data.inquiryId}/answer`}
+                className="flex w-full py-5 border-b-2 md:text-base text-sm border-gray-5"
+              >
                 <p className="flex-center w-[10%]">{data.inquiryId}</p>
                 <div className="flex-center w-[50%]">
                   <div className="w-7">{data.isSecret && <Icons name={LockIcon} className="w-4 h-4" />}</div>
