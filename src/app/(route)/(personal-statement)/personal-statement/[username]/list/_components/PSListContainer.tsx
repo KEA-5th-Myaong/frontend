@@ -9,6 +9,7 @@ import PSListHeader from './PSListHeader';
 import { fetchPSList } from '@/app/(route)/(personal-statement)/_services/psServices';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import useMe from '@/app/_hooks/useMe';
+import PSBanner from './PSBanner';
 
 export default function PSListContainer() {
   const { data: userData } = useMe();
@@ -23,6 +24,8 @@ export default function PSListContainer() {
   }, [psListData?.data]);
   return (
     <>
+      {/* 자소서 관리 배너 */}
+      <PSBanner />
       {/* 자소서 관리 헤더 */}
       <PSListHeader userData={userData} psLength={psLength} />
       <div className="flex-center w-full h-full">
