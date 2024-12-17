@@ -19,7 +19,7 @@ export default function EmptyStateMessage({ type }: { type: string }) {
     <div className="flex-center flex-col py-20 text-center">
       <div className="p-4 mb-6 bg-gray-4 rounded-full flex-center">
         {type === '팔로잉' ? (
-          <Icons name={UserIcon} />
+          <Icons name={UserIcon} className="mx-1" />
         ) : (
           <Icons name={{ ...BookmarkIcon, options: { stroke: '#c2c2c2', strokeWidth: 2 } }} />
         )}
