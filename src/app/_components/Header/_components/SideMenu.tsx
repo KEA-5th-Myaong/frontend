@@ -112,6 +112,26 @@ export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
                   <p className="text-sm text-gray-0 pt-2 pl-5">내 포트폴리오</p>
                 </Link>
               </div>
+              <div className="pt-5">
+                <p className="text-xl pb-1.5 font-semibold">더보기</p>
+
+                <Link
+                  href="/qa/list"
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">문의하기</p>
+                </Link>
+                <Link
+                  href="/notice/list"
+                  onClick={() => {
+                    onClose();
+                  }}
+                >
+                  <p className="text-sm text-gray-0 pt-2 pl-5">공지 게시판</p>
+                </Link>
+              </div>
             </div>
             <div onClick={handleLogout} className="w-full flex-center pr-8 mt-12 text-sm text-gray-3 cursor-pointer">
               로그아웃
