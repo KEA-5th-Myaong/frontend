@@ -35,10 +35,10 @@ export default function UserProfile() {
     fetchMemberInfo(memberId),
   );
   const { data: followedData, isLoading: isFollowedLoading } = useCustomQuery(['followed', memberId], () =>
-    fetchFollowed(memberId, '10'),
+    fetchFollowed(memberId, '0'),
   );
   const { data: followingData, isLoading: isFollowingLoading } = useCustomQuery(['following', memberId], () =>
-    fetchFollowing(memberId, '10'),
+    fetchFollowing(memberId, '0'),
   );
 
   // 모든 로딩 한 번에 관리
@@ -70,13 +70,12 @@ export default function UserProfile() {
 
     fetchData();
   }, [followedData?.data.followedDTOList, followingData?.data.followingDTOList]);
-  // 팔로우 뮤테이션(낙관적 업데이트)
-  const followMutation = useCustomMutation(postFollow, {
+  // UserProfile 컴포넌트
+  const profileFollowMutation = useCustomMutation(postFollow, {
     onMutate: async () => {
-      // 낙관적 업데이트
+      // 프로필 페이지 주인에 대한 팔로우/언팔로우일 때만 낙관적 업데이트
       setIsFollowed((prev) => !prev);
 
-      // 팔로워 수 업데이트
       if (blogMemberData?.data) {
         const newCount = isFollowed ? blogMemberData.data.followerCount - 1 : blogMemberData.data.followerCount + 1;
 
@@ -90,7 +89,6 @@ export default function UserProfile() {
       queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
     },
     onError: () => {
-      // 에러 발생 시 원래 상태로 롤백
       setIsFollowed((prev) => !prev);
       if (blogMemberData?.data) {
         const newCount = isFollowed ? blogMemberData.data.followerCount + 1 : blogMemberData.data.followerCount - 1;
@@ -100,14 +98,31 @@ export default function UserProfile() {
     },
   });
 
+  const modalFollowMutation = useCustomMutation(postFollow, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blog-user', username] });
+      queryClient.invalidateQueries({ queryKey: ['followed', memberId] });
+      queryClient.invalidateQueries({ queryKey: ['following', memberId] });
+      queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
+    },
+  });
+
   // 팔로우 버튼 누르기
-  const handleFollow = () => {
-    if (!memberId) return;
-    followMutation.mutate(memberId);
+  const handleFollow = (targetMemberId?: number) => {
+    const idToFollow = targetMemberId || memberId;
+    if (!idToFollow) return;
+
+    // 프로필 주인의 팔로우/언팔로우인 경우
+    if (idToFollow === memberId) {
+      profileFollowMutation.mutate(idToFollow);
+    } else {
+      // 모달 내의 다른 유저 팔로우/언팔로우인 경우
+      modalFollowMutation.mutate(idToFollow);
+    }
   };
   return (
     <>
-      <div className="xl:pt-[51px] xl:pb-[41px] md:py-3 xl:px-5 pt-12 px-2 rounded-2xl bg-white-0 dark:bg-black-4 dark:border-black-6 md:border md:border-gray-2 h-fit">
+      <div className="xl:pt-[51px] xl:pb-[41px] pb-5 md:py-3 xl:px-5 mt-7 md:mt-0 pt-4 md:pt-12 px-4 sm:px-2 rounded-2xl bg-white-0 dark:bg-black-4 dark:border-black-6 md:border md:border-gray-2 h-fit">
         <div className="flex items-center sm:gap-0 gap-8">
           {isLoading ? (
             <div className="flex flex-col sm:flex-row md:flex-col min-w-[100px] md:min-w-[250px] items-center gap-3 sm:gap-3 md:gap-10">
@@ -133,7 +148,7 @@ export default function UserProfile() {
               />
 
               <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
-                <span className="sm:text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
+                <span className="sm:text-lg md:text-2xl font-semibold md:text-primary-1 dark:md:text-primary-1 dark:sm:text-white-0 sm:text-black-1 whitespace-nowrap">
                   {blogMemberData?.data.nickname}
                   <span className="inline md:hidden">님의 블로그</span>
                 </span>
@@ -167,7 +182,7 @@ export default function UserProfile() {
               ) : (
                 <button
                   type="button"
-                  onClick={handleFollow}
+                  onClick={() => handleFollow()}
                   className={`${isFollowed ? 'bg-gray-0 hover:bg-gray-1' : 'bg-primary-1 hover:bg-primary-2'} user-profile-btn`}
                 >
                   {isFollowed ? '언팔로우' : '팔로우'}
@@ -178,7 +193,7 @@ export default function UserProfile() {
 
           {/* 작은 화면일 때 보이는 */}
           <div className="flex flex-col items-start gap-3 sm:hidden md:gap-5 md:w-[300px] md:items-center">
-            <span className="text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1">
+            <span className="text-lg md:text-2xl font-semibold dark:text-white-0 sm:dark:text-white-0">
               {blogMemberData?.data.nickname}
               <span className="inline md:hidden">님의 블로그</span>
             </span>
@@ -195,6 +210,7 @@ export default function UserProfile() {
         title={`${blogMemberData?.data.nickname}님을 팔로우하는 유저`}
         list={followedList}
         userData={userData}
+        handleFollow={handleFollow}
       />
       <FollowModal
         isOpen={isFollowingOpen}
@@ -203,6 +219,7 @@ export default function UserProfile() {
         list={followingList}
         userData={userData}
         isMe={isMe}
+        handleFollow={handleFollow}
       />
     </>
   );
