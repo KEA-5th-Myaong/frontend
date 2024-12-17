@@ -6,9 +6,9 @@ export default function PSBanner() {
   const { data: userData } = useMe();
 
   return (
-    <div className="drop-shadow-sm w-full h-52 flex-center px-2 sm:pr-4 mb-8 max-w-[1000px] min-w-[360px] bg-primary-4 rounded-2xl">
-      <div className="flex flex-col items-start text-left text-black-4">
-        <h1 className=" text-[32px] font-bold">자기소개서</h1>
+    <div className="w-full h-52 flex-center px-2 sm:pr-4 mb-10 max-w-[1000px] min-w-[360px] bg-primary-4 border-[2px] border-gray-50 rounded-2xl">
+      <div className="flex flex-col items-start text-left text-black-4 ml-7">
+        <h1 className="text-[32px] font-bold">자기소개서</h1>
         <p className="text-sm mt-2 font-semibold">자기소개서에서 강점을 명확하게 표현하지 못해 고민이라면,</p>
         <p className="text-sm font-semibold">
           <span className="text-blue-400">AI 맞춤형 피드백으로</span> 개선 방안을 제안받아 보세요{' '}

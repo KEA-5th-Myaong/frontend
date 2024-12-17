@@ -9,6 +9,7 @@ import PortfolioAddCard from '../_components/PortfolioAddCard';
 import { PortfolioCardProps } from '../../../_types/portfolio';
 import useCustomQuery from '@/app/_hooks/useCustomQuery';
 import { fetchPortfolios, putPortfoliosMain } from '../_services/portfolioServices';
+import PortfolioBanner from '../_components/PortfolioBanner';
 
 export default function PortfolioList() {
   // 포트폴리오 목록 조회
@@ -25,8 +26,9 @@ export default function PortfolioList() {
     }
   };
   return (
-    <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full h-screen pt-14 md:pt-0 bg-gray-4 dark:bg-black-8">
-      <div className="pt-[60px] flex justify-between items-center w-full max-w-[1000px] md:pr-[60px] lg:pr-[50px] ">
+    <div className="flex flex-col items-center px-[50px] min-w-[360px] w-full h-screen pt-14  md:pt-0 bg-gray-4 dark:bg-black-8">
+      <PortfolioBanner />
+      <div className="pt-[40px] flex justify-between items-center w-full max-w-[1000px] md:pr-[60px] lg:pr-[50px] ">
         <div className="flex items-center">
           <div className="bg-black-0 w-[4px] h-10 mr-6" />
           <div className="flex flex-col justify-center w-full">

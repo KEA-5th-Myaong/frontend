@@ -59,7 +59,7 @@ const config: Config = {
           1: '#41AED9',
           2: '#3BBCD9',
           3: '#52E2F2',
-          4: '#F2F5FF', // banner 연한 하늘색
+          4: '#F2F5FF', // banner
         },
         yellow: {
           0: '#FFC83C',
