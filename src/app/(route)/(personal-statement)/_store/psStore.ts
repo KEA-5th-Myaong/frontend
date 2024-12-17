@@ -7,6 +7,8 @@ interface PSStore {
   resetPSData: () => void;
   isTouch: boolean;
   setIsTouch: (isTouch: boolean) => void;
+  highlightedContent?: string;
+  setHighlightedContent?: (content: string) => void;
 }
 interface PersonalStatementStore {
   psId: number | null;
@@ -27,6 +29,8 @@ const usePSStore = create<PSStore>((set) => ({
   resetPSData: () => set({ psData: initialState }), // 초기화 함수
   isTouch: false,
   setIsTouch: (data) => set({ isTouch: data }),
+  highlightedContent: '',
+  setHighlightedContent: (content) => set({ highlightedContent: content }),
 }));
 
 export const usePersonalStatementStore = create<PersonalStatementStore>((set) => ({

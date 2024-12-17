@@ -74,7 +74,7 @@ export default function LoginForm() {
 
       {/* 로그인 button */}
       <div className="pt-5">
-        <button type="submit" className="form-btn">
+        <button type="submit" className="form-btn dark:bg-primary-1">
           {FORM_TEXT[0]}
         </button>
       </div>

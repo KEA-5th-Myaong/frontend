@@ -2,6 +2,8 @@
 
 import { useRef, useEffect } from 'react';
 import { Editor } from '@toast-ui/react-editor'; // Toast UI Editor의 React 래퍼 컴포넌트
+import '@toast-ui/editor/dist/toastui-editor.css'; // 기본 스타일
+import '@/app/ToastEditor.css';
 
 interface ToastEditorProps {
   initialValue: string;
@@ -32,14 +34,16 @@ export default function ToastEditor({ initialValue = '', onChange, height, handl
   }, [onChange]);
 
   return (
-    <Editor
-      ref={editorRef}
-      initialValue={initialValue}
-      initialEditType="wysiwyg" // 기본 모드를 위지윅으로 지정
-      hideModeSwitch // 마크다운으로 전환하지 못하게
-      height={height}
-      useCommandShortcut // 키보드 단축키 사용 활성화
-      hooks={{ addImageBlobHook: handleImage }}
-    />
+    <div className="toast-editor-wrapper">
+      <Editor
+        ref={editorRef}
+        initialValue={initialValue}
+        initialEditType="wysiwyg" // 기본 모드를 위지윅으로 지정
+        hideModeSwitch // 마크다운으로 전환하지 못하게
+        height={height}
+        useCommandShortcut // 키보드 단축키 사용 활성화
+        hooks={{ addImageBlobHook: handleImage }}
+      />
+    </div>
   );
 }

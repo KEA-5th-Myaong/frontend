@@ -1,0 +1,79 @@
+/* 기본 스타일 */
+.toast-editor-wrapper .toastui-editor-defaultUI {
+  background-color: white;
+}
+
+.toast-editor-wrapper .toastui-editor-defaultUI-toolbar {
+  background-color: #f8f9fa;
+}
+
+.toast-editor-wrapper .toastui-editor-contents {
+  background-color: white;
+}
+
+/* 헤딩 드롭다운 메뉴 스타일 */
+.toastui-editor-popup {
+  background-color: white;
+}
+
+.toastui-editor-popup-body {
+  color: black;
+}
+
+.toastui-editor-popup-body button {
+  color: black;
+}
+
+.toastui-editor-popup-body button:hover {
+  background-color: #f1f1f1;
+}
+
+/* 다크모드 스타일 */
+@media (prefers-color-scheme: dark) {
+  .dark .toast-editor-wrapper .toastui-editor-defaultUI {
+    background-color: #1a1a1a;
+    border-color: #404040;
+  }
+
+  .dark .toast-editor-wrapper .toastui-editor-defaultUI-toolbar {
+    background-color: #262626;
+    border-bottom-color: #404040;
+  }
+
+  .dark .toast-editor-wrapper .toastui-editor-contents {
+    background-color: #1a1a1a;
+    color: #e5e5e5;
+  }
+
+  .dark .toast-editor-wrapper .toastui-editor-toolbar-icons {
+    filter: invert(1);
+  }
+
+  /* 다크모드 헤딩 드롭다운 메뉴 스타일 */
+  .dark .toastui-editor-popup {
+    background-color: #262626;
+    border-color: #404040;
+  }
+
+  .dark .toastui-editor-popup-body {
+    color: #e5e5e5;
+  }
+
+  .dark .toastui-editor-popup-body button {
+    color: #e5e5e5;
+  }
+
+  .dark .toastui-editor-popup-body button:hover {
+    background-color: #404040;
+  }
+
+  .dark .toast-editor-wrapper .toastui-editor-contents p,
+  .dark .toast-editor-wrapper .toastui-editor-contents h1,
+  .dark .toast-editor-wrapper .toastui-editor-contents h2,
+  .dark .toast-editor-wrapper .toastui-editor-contents h3,
+  .dark .toast-editor-wrapper .toastui-editor-contents h4,
+  .dark .toast-editor-wrapper .toastui-editor-contents h5,
+  .dark .toast-editor-wrapper .toastui-editor-contents h6 {
+    color: #e5e5e5;
+  }
+}

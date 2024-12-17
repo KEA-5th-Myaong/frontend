@@ -10,7 +10,7 @@ export default function PortfolioContainer() {
   const { portfolio } = usePortfolioStore();
 
   return (
-    <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] px-5 py-10  lg:mx-auto border rounded-[10px]">
+    <div className="mt-[60px] w-full max-w-[1000px] min-w-[360px] md:px-[60px] px-5 py-10 lg:mx-auto border rounded-[10px]">
       <h1 className="pre-3xl-semibold mb-5">{portfolio?.title}</h1>
       <section className="flex items-center">
         <Image
@@ -20,12 +20,12 @@ export default function PortfolioContainer() {
           height={120}
           className="rounded-[20px]"
         />
-        <div className="flex ml-10 text-left my-3">
-          <div className="flex flex-col my-5 gap-2">
-            <p className="font-semibold ">이름</p>
-            <p className="font-semibold">휴대폰 번호</p>
-            <p className="font-semibold">이메일 주소</p>
-            <p className="font-semibold">관심 직무</p>
+        <div className="flex md-0 md:ml-10 text-left my-3 gap-2 md:gap-10 text-xs sm:text-base">
+          <div className="flex flex-col my-5 gap-2 font-semibold whitespace-nowrap">
+            <p>이름</p>
+            <p>휴대폰 번호</p>
+            <p>이메일 주소</p>
+            <p>관심 직무</p>
           </div>
           <div className="flex flex-col ml-10 my-5 gap-2">
             <p className="text-left">{userData?.data.nickname}</p>
@@ -41,8 +41,8 @@ export default function PortfolioContainer() {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">학력</h1>
-              <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
-              <div className="flex items-center gap-4">
+              <div className="h-0.5 w-full bg-gray-5 my-5" />
+              <div className="flex flex-wrap items-center gap-1 whitespace-nowrap text-xs sm:text-base">
                 <Icons
                   className="mr-2.5"
                   name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
@@ -64,7 +64,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">경력</h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-0.5 w-full bg-gray-5 my-5" />
         {portfolio?.experiences &&
           portfolio?.experiences.map((item: Experiences) => {
             return (
@@ -88,7 +88,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">링크</h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-0.5 w-full bg-gray-5 my-5" />
         {portfolio?.links &&
           portfolio?.links.map((item: Links) => {
             return (
@@ -102,7 +102,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold"> 기술 </h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-0.5 w-full bg-gray-5 my-5" />
         <div className="w-full flex items-center gap-3">
           {portfolio?.skills &&
             portfolio?.skills.map((item: string) => {
@@ -113,7 +113,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">교육 | 대외활동</h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-0.5 w-full bg-gray-5 my-5" />
         {portfolio?.extraActivities &&
           portfolio?.extraActivities.map((item: ExtraActivities) => {
             return (
@@ -137,7 +137,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">자격증</h1>
-        <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+        <div className="h-0.5 w-full bg-gray-5 my-5" />
         {portfolio?.certifications &&
           portfolio?.certifications.map((item: Certifications) => {
             return (
@@ -158,21 +158,21 @@ export default function PortfolioContainer() {
       {portfolio?.ps && (
         <section className="pf-read-section">
           <h1 className="pre-3xl-semibold">자기소개서</h1>
-          <div className="h-[2px] w-full bg-gray-5 my-[20px]" />
+          <div className="h-0.5 w-full bg-gray-5 my-5" />
           <p className="mt-4">
-            <p className="font-bold text-[14px] mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md">제목</p>
+            <p className="font-bold text-sm mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md">제목</p>
             <p className="px-5">{portfolio?.ps?.title}</p>
           </p>
           <p className="mt-4">
-            <p className="font-bold text-[14px] mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md"> 지원 직무</p>
+            <p className="font-bold text-sm mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md"> 지원 직무</p>
             <p className="px-5">{portfolio?.ps?.position}</p>
           </p>
           <p className="mt-4">
-            <p className="font-bold text-[14px] mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md"> 지원 사유</p>
+            <p className="font-bold text-sm mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md"> 지원 사유</p>
             <p className="px-5">{portfolio?.ps?.reason}</p>
           </p>
           <p className="mt-4 ">
-            <p className="font-bold text-[14px] mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md">자기소개서</p>
+            <p className="font-bold text-sm mb-4 py-2 px-4 border bg-gray-4 border-gray-2 rounded-md">자기소개서</p>
             <p className="px-5">{portfolio?.ps?.content}</p>
           </p>
         </section>

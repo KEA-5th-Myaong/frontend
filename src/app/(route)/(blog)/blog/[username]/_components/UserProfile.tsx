@@ -23,7 +23,7 @@ export default function UserProfile() {
   const memberId = userNameData?.data.memberId; // 멤버 아이디
 
   const { data: userData } = useMe();
-  const [isMe, setIsMe] = useState(false);
+  const [isMe, setIsMe] = useState(false); // 현재 조회하는 블로그가 본인의 블로그인지
   useEffect(() => {
     if (userData?.data.username === username) {
       setIsMe(true);
@@ -40,6 +40,7 @@ export default function UserProfile() {
   const { data: followingData, isLoading: isFollowingLoading } = useCustomQuery(['following', memberId], () =>
     fetchFollowing(memberId, '10'),
   );
+
   // 모든 로딩 한 번에 관리
   const isLoading = isBlogMemberLoading || isFollowedLoading || isFollowingLoading;
 
@@ -132,7 +133,7 @@ export default function UserProfile() {
               />
 
               <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
-                <span className="text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
+                <span className="sm:text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
                   {blogMemberData?.data.nickname}
                   <span className="inline md:hidden">님의 블로그</span>
                 </span>
@@ -193,12 +194,15 @@ export default function UserProfile() {
         onClose={() => setIsFollowerOpen(false)}
         title={`${blogMemberData?.data.nickname}님을 팔로우하는 유저`}
         list={followedList}
+        userData={userData}
       />
       <FollowModal
         isOpen={isFollowingOpen}
         onClose={() => setIsFollowingOpen(false)}
         title={`${blogMemberData?.data.nickname}님이 팔로우하는 유저`}
         list={followingList}
+        userData={userData}
+        isMe={isMe}
       />
     </>
   );

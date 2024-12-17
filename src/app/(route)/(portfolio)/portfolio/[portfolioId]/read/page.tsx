@@ -95,8 +95,8 @@ export default function PortfolioRead() {
   };
 
   return (
-    <div className="flex px-[50px] md:px-0 mb-[100px]">
-      <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] lg:px-0 lg:mx-auto">
+    <div className="flex px-3 sm:px-[50px] md:px-0 mb-[100px] min-w-[360px] sm:md-0 md:mx-20">
+      <div className="mt-[60px] w-full max-w-[1000px] lg:px-0 lg:mx-auto">
         <div className="flex justify-between items-center">
           <h1 className="font-semibold text-left ">포트폴리오 조회</h1>
         </div>

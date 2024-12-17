@@ -36,6 +36,7 @@ export default function ChangePwdContainer() {
   // 모달 확인 버튼 클릭 핸들러
   const handleModalConfirm = () => {
     setShowModal(false);
+    window.location.reload();
   };
 
   // 모든 필드의 값을 감시
@@ -56,7 +57,6 @@ export default function ChangePwdContainer() {
       setErrorMessage('폼 제출에 실패했습니다. 다시 시도해주세요.');
     }
   };
-
   return (
     <>
       <form
