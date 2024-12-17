@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import '../../globals.css';
-import localFont from 'next/dist/compiled/@next/font/dist/local';
+import localFont from 'next/font/local';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import AdminSideBar from './_components/AdminSideBar';
 import Providers from '@/app/_components/Providers';
 
 const pretendard = localFont({
-  src: '../fonts/PretendardVariable.woff2',
+  src: '../../fonts/PretendardVariable.woff2',
   display: 'swap', // 폰트 로딩 전략
   weight: '45 920', // 지원하는 폰트 두께 범위
   variable: '--font-pretendard',
