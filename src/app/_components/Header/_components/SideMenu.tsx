@@ -133,9 +133,11 @@ export default function SideMenu({ isOpen, onClose, userData }: SideMenuProps) {
                 </Link>
               </div>
             </div>
-            <div onClick={handleLogout} className="w-full flex-center pr-8 mt-12 text-sm text-gray-3 cursor-pointer">
-              로그아웃
-            </div>
+            {isLogined && (
+              <div onClick={handleLogout} className="w-full flex-center pr-8 mt-12 text-sm text-gray-3 cursor-pointer">
+                로그아웃
+              </div>
+            )}
           </motion.div>
         </Overlay>
       )}
