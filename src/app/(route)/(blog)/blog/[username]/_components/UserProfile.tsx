@@ -122,7 +122,7 @@ export default function UserProfile() {
   };
   return (
     <>
-      <div className="xl:pt-[51px] xl:pb-[41px] md:py-3 xl:px-5 pt-12 px-2 rounded-2xl bg-white-0 dark:bg-black-4 dark:border-black-6 md:border md:border-gray-2 h-fit">
+      <div className="xl:pt-[51px] xl:pb-[41px] pb-5 md:py-3 xl:px-5 mt-7 md:mt-0 pt-4 md:pt-12 px-4 sm:px-2 rounded-2xl bg-white-0 dark:bg-black-4 dark:border-black-6 md:border md:border-gray-2 h-fit">
         <div className="flex items-center sm:gap-0 gap-8">
           {isLoading ? (
             <div className="flex flex-col sm:flex-row md:flex-col min-w-[100px] md:min-w-[250px] items-center gap-3 sm:gap-3 md:gap-10">
@@ -148,7 +148,7 @@ export default function UserProfile() {
               />
 
               <div className="hidden sm:flex flex-col items-start md:items-center md:gap-5 pl-0 sm:pl-3 md:pl-0 md:w-[300px] gap-3">
-                <span className="sm:text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1 whitespace-nowrap">
+                <span className="sm:text-lg md:text-2xl font-semibold md:text-primary-1 dark:md:text-primary-1 dark:sm:text-white-0 sm:text-black-1 whitespace-nowrap">
                   {blogMemberData?.data.nickname}
                   <span className="inline md:hidden">님의 블로그</span>
                 </span>
@@ -193,7 +193,7 @@ export default function UserProfile() {
 
           {/* 작은 화면일 때 보이는 */}
           <div className="flex flex-col items-start gap-3 sm:hidden md:gap-5 md:w-[300px] md:items-center">
-            <span className="text-lg md:text-2xl font-semibold md:text-primary-1 text-black-1">
+            <span className="text-lg md:text-2xl font-semibold dark:text-white-0 sm:dark:text-white-0">
               {blogMemberData?.data.nickname}
               <span className="inline md:hidden">님의 블로그</span>
             </span>
