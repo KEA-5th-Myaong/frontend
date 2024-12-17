@@ -70,13 +70,12 @@ export default function UserProfile() {
 
     fetchData();
   }, [followedData?.data.followedDTOList, followingData?.data.followingDTOList]);
-  // 팔로우 뮤테이션(낙관적 업데이트)
-  const followMutation = useCustomMutation(postFollow, {
+  // UserProfile 컴포넌트
+  const profileFollowMutation = useCustomMutation(postFollow, {
     onMutate: async () => {
-      // 낙관적 업데이트
+      // 프로필 페이지 주인에 대한 팔로우/언팔로우일 때만 낙관적 업데이트
       setIsFollowed((prev) => !prev);
 
-      // 팔로워 수 업데이트
       if (blogMemberData?.data) {
         const newCount = isFollowed ? blogMemberData.data.followerCount - 1 : blogMemberData.data.followerCount + 1;
 
@@ -90,7 +89,6 @@ export default function UserProfile() {
       queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
     },
     onError: () => {
-      // 에러 발생 시 원래 상태로 롤백
       setIsFollowed((prev) => !prev);
       if (blogMemberData?.data) {
         const newCount = isFollowed ? blogMemberData.data.followerCount + 1 : blogMemberData.data.followerCount - 1;
@@ -100,12 +98,27 @@ export default function UserProfile() {
     },
   });
 
+  const modalFollowMutation = useCustomMutation(postFollow, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blog-user', username] });
+      queryClient.invalidateQueries({ queryKey: ['followed', memberId] });
+      queryClient.invalidateQueries({ queryKey: ['following', memberId] });
+      queryClient.invalidateQueries({ queryKey: ['notifications'], refetchType: 'all' });
+    },
+  });
+
   // 팔로우 버튼 누르기
   const handleFollow = (targetMemberId?: number) => {
-    // targetMemberId가 없으면 블로그 주인의 memberId를 사용
     const idToFollow = targetMemberId || memberId;
     if (!idToFollow) return;
-    followMutation.mutate(idToFollow);
+
+    // 프로필 주인의 팔로우/언팔로우인 경우
+    if (idToFollow === memberId) {
+      profileFollowMutation.mutate(idToFollow);
+    } else {
+      // 모달 내의 다른 유저 팔로우/언팔로우인 경우
+      modalFollowMutation.mutate(idToFollow);
+    }
   };
   return (
     <>

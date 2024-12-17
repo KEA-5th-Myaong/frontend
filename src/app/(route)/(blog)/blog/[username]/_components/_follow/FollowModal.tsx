@@ -1,11 +1,25 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import Overlay from '../../../../../../_components/Overlay';
 import defaultProfilePic from '../../../../../../../../public/mascot.png';
 import { User } from '@/app/_hooks/useMe';
 
+const followMotion = {
+  variants: {
+    hidden: { y: 50, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  },
+  transition: {
+    type: 'spring',
+    stiffness: 300,
+    damping: 30,
+    duration: 0.3,
+  },
+};
 interface FollowUserProps {
-  followed: boolean;
+  followed?: boolean;
+  following?: boolean; // following 추가
   memberId: number;
   nickname: string;
   profilePicUrl: string;
@@ -21,22 +35,32 @@ interface FollowModalProps {
   handleFollow: (memberId: number) => void;
 }
 
-const followMotion = {
-  variants: {
-    hidden: { y: 50, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  },
-  transition: {
-    type: 'spring',
-    stiffness: 300,
-    damping: 30,
-    duration: 0.3,
-  },
-};
-
 export default function FollowModal({ isOpen, onClose, title, list, userData, isMe, handleFollow }: FollowModalProps) {
+  const [followState, setFollowState] = useState<{ [key: number]: boolean }>({});
+
+  useEffect(() => {
+    // 초기 following 상태를 state에 설정
+    const initialState = list?.reduce(
+      (acc, user) => ({
+        ...acc,
+        [user.memberId]: user.following || user.followed || false,
+      }),
+      {},
+    );
+    setFollowState(initialState || {});
+  }, [list]);
+
   if (!isOpen) return null;
   const MyId = userData?.data?.memberId;
+
+  const handleFollowClick = (memberId: number) => {
+    setFollowState((prev) => ({
+      ...prev,
+      [memberId]: !prev[memberId],
+    }));
+    handleFollow(memberId);
+  };
+
   return (
     <Overlay onClick={onClose}>
       <motion.div
@@ -65,10 +89,12 @@ export default function FollowModal({ isOpen, onClose, title, list, userData, is
               {!isMe && MyId !== followList?.memberId && (
                 <button
                   type="button"
-                  onClick={() => handleFollow(followList.memberId)}
-                  className="pre-2xl-medium primary-1-btn py-2 px-6 rounded-[10px] hover:bg-primary-2"
+                  onClick={() => handleFollowClick(followList.memberId)}
+                  className={`pre-2xl-medium text-white-0 ${
+                    followState[followList.memberId] ? 'bg-gray-0 hover:bg-gray-1' : 'bg-primary-1 hover:bg-primary-2'
+                  } py-2 px-6 rounded-[10px]`}
                 >
-                  팔로잉
+                  {followState[followList.memberId] ? '언팔로우' : '팔로우'}
                 </button>
               )}
             </div>
