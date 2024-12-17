@@ -20,7 +20,7 @@ const settings = {
 
 export default function Carousel() {
   const { data: userData } = useMe();
-  console.log(userData);
+
   return (
     <div
       id="캐러셀"
