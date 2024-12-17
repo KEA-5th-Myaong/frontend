@@ -55,6 +55,30 @@ export async function fetchCorp() {
   }
 }
 
+// (GET) 문의 조회
+export async function fetchAdminInquery(page: number) {
+  try {
+    const { data } = await api.get(`/admin/inquiries`, {
+      params: { page },
+    });
+    return data;
+  } catch (error) {
+    console.error('문의 조회 실패:', error);
+    throw error;
+  }
+}
+
+// (PUT) 문의 답변
+export async function putInqueryAnswer(inqueryId: string, content: string) {
+  try {
+    const { data } = await api.put(`/admin/inquiries/${inqueryId}`, content);
+    return data;
+  } catch (error) {
+    console.error('댓글/답글 블라인드 토글');
+    throw error;
+  }
+}
+
 // (POST) 알림 생성 (구현 아직 안됨)
 export async function addCorp(name: string) {
   try {
