@@ -56,10 +56,10 @@ export async function fetchCorp() {
 }
 
 // (GET) 문의 조회
-export async function fetchAdminInquery(page: number) {
+export async function fetchAdminInquery(page: number, pageSize: number) {
   try {
     const { data } = await api.get(`/admin/inquiries`, {
-      params: { page },
+      params: { page, pageSize },
     });
     return data;
   } catch (error) {
