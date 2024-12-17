@@ -55,14 +55,14 @@ export default function Alarm() {
   const notifications = data?.pages.flatMap((page) => page.data.notifications) || [];
 
   return (
-    <div className="absolute bg-white-0 border-2 w-80 h-[330px] -translate-x-72 mt-2 rounded-xl overflow-y-auto hide-scrollbar">
+    <div className="absolute bg-white-0 dark:bg-black-4 border-2 dark:border-black-5 w-80 h-[330px] -translate-x-72 mt-2 rounded-xl overflow-y-auto hide-scrollbar">
       <div className="flex items-center py-1">
-        <div className="flex h-4 font-semibold text-sm text-black-0 ml-5 my-3">알림</div>
+        <div className="flex h-4 font-semibold text-sm text-black-0 ml-5 my-3 dark:text-white-0">알림</div>
       </div>
       <div className="flex-col w-full px-2">
         {notifications?.map((item: NotificationItem) => (
           <div key={item.notificationId} className="flex w-72 h-16 mx-auto mb-3">
-            <div className="flex justify-between items-start hover:bg-gray-50 bg-gray-4 text-black-0 text-xs font-semibold rounded-lg w-full h-full px-2">
+            <div className="flex justify-between items-start hover:bg-gray-50 bg-gray-4 dark:bg-gray-5 dark:text-black-5 text-black-0 text-xs font-semibold rounded-lg w-full h-full px-2">
               <div className="flex items-center h-12 w-[230px]">
                 <div className={`rounded-xl w-[7px] h-[7px] mx-2 ${item.isRead ? 'bg-gray-3' : 'bg-green-0'}`} />
                 <button

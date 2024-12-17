@@ -152,7 +152,7 @@ export const UserIcon: IconPathTypes = {
     'M7 7C8.65685 7 10 5.65685 10 4C10 2.34315 8.65685 1 7 1C5.34315 1 4 2.34315 4 4C4 5.65685 5.34315 7 7 7Z',
   ],
   fill: '#A6A6A6',
-  width: 18,
+  width: 14,
   height: 20,
   options: {
     stroke: '#A6A6A6',
