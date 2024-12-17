@@ -1,4 +1,6 @@
 import Carousel from './_components/Carousel';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export const metadata = {
   title: {
