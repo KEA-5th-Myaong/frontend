@@ -111,6 +111,7 @@ export default function ChangeProfileContainer() {
           isEdit
           isDisabled={isDisabled.nickname}
           onEditClick={() => toggleDisabled('nickname')}
+          maxLength={10}
         />
         <FormInput
           id="blogIntro"
@@ -122,6 +123,7 @@ export default function ChangeProfileContainer() {
           isEdit
           isDisabled={isDisabled.blogIntro}
           onEditClick={() => toggleDisabled('blogIntro')}
+          maxLength={20}
         />
 
         <button type="submit" className="mt-5 primary-1-btn py-5">

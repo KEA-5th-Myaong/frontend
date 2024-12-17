@@ -1,7 +1,7 @@
 export const metadata = {
   title: {
-    default: '마이페이지 | Popolog',
-    template: '%s | 마이페이지 | Popolog',
+    default: '마이페이지',
+    template: '%s | 마이페이지',
   },
   description: '사용자의 프로필을 한눈에 확인할 수 있는 마이페이지',
   keywords: ['프로필', '비밀번호', '직군', '탈퇴'],

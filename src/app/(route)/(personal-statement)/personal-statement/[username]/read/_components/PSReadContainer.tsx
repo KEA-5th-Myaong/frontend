@@ -84,7 +84,6 @@ export default function PSReadContainer() {
     page: { margin: Margin.SMALL, format: 'A4' },
     method: 'save',
   });
-
   return (
     <>
       {psState ? (
@@ -93,7 +92,7 @@ export default function PSReadContainer() {
             title={psState.title}
             mode="read"
             onButtonClick={() => {
-              router.push('/personal-statement/1/editing');
+              router.push(`/personal-statement/${userData?.data.username}/editing`);
             }}
             handleDeleteClick={handleDeleteClick}
             handleEditClick={handleEditClick}

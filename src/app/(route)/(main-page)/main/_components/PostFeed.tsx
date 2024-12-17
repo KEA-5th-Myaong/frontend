@@ -12,6 +12,7 @@ import defaultProfilePic from '../../../../../../public/mascot.png';
 import useCustomInfiniteQuery from '@/app/_hooks/useCustomInfiniteQuery';
 import useLoveAndBookmark from '@/app/_hooks/useLoveAndBookmark';
 import useMe from '@/app/_hooks/useMe';
+import EmptyStateMessage from './EmptyStateMessage';
 
 export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   const router = useRouter();
@@ -123,34 +124,38 @@ export default function PostFeed({ activeTab, preJob }: PostFeedProps) {
   );
   return (
     <div className="flex flex-col gap-6 w-full pt-5">
-      {isLoading
-        ? Array.from({ length: 5 }).map(() => (
-            <div key={v4()} className="w-full h-48 bg-gray-4 dark:bg-black-5 rounded-md animate-pulse" />
-          ))
-        : posts.map((post) => (
-            <Post
-              key={post.postId}
-              postId={post.postId}
-              title={post.title}
-              nickname={post.nickname || ''}
-              memberId={post.memberId || ''}
-              isBookmarked={post.isBookmarked}
-              onUserClick={() => {
-                router.push(`/blog/${post.username}`);
-              }}
-              onContentClick={() => {
-                router.push(`/blog/${post.username}/${post.title}`);
-              }}
-              thumbnail={null}
-              profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
-              content={post.content}
-              timestamp={formatDate(post.timestamp)}
-              prejob={post?.prejob?.[0]}
-              onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
-              isLiked={post.isLiked}
-              likeCount={post.likeCount}
-            />
-          ))}
+      {isLoading ? (
+        Array.from({ length: 5 }).map(() => (
+          <div key={v4()} className="w-full h-48 bg-gray-4 dark:bg-black-5 rounded-md animate-pulse" />
+        ))
+      ) : posts.length === 0 && !isLoading ? (
+        <EmptyStateMessage type={activeTab} />
+      ) : (
+        posts.map((post) => (
+          <Post
+            key={post.postId}
+            postId={post.postId}
+            title={post.title}
+            nickname={post.nickname || ''}
+            memberId={post.memberId || ''}
+            isBookmarked={post.isBookmarked}
+            onUserClick={() => {
+              router.push(`/blog/${post.username}`);
+            }}
+            onContentClick={() => {
+              router.push(`/blog/${post.username}/${post.title}`);
+            }}
+            thumbnail={null}
+            profilePicUrl={post.profilePicUrl === 'null' ? defaultProfilePic.src : post.profilePicUrl} // 여기를 수정
+            content={post.content}
+            timestamp={formatDate(post.timestamp)}
+            prejob={post?.prejob?.[0]}
+            onBookmarkClick={() => bookmarkMutation.mutate(post.postId)}
+            isLiked={post.isLiked}
+            likeCount={post.likeCount}
+          />
+        ))
+      )}
 
       {/* 무한 스크롤 트리거용 div */}
       <div ref={ref} className="h-1" />

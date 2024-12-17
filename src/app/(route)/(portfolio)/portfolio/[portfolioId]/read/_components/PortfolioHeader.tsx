@@ -29,7 +29,7 @@ export default function PortfolioHeader() {
 
   return (
     <div className="flex flex-col gap-2 w-full mt-10 sm:w-[calc(100%-28px)] md:w-[calc(100%-64px)] lg:w-[calc(100%-80px)] xl:w-[calc(100%-96px)]">
-      <div className="flex justify-between w-full text-sm font-semibold">
+      <div className="flex gap-10 w-full text-sm font-semibold">
         {/* main 객체 렌더링 */}
         {portfolioList?.data?.main && portfolioList.data.main.portfolioId && (
           <button

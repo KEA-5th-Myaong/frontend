@@ -1,11 +1,10 @@
 import { useRouter } from 'next/navigation';
 import Icons from '../../../../../../_components/ui/Icon';
 import { PlusIcon } from '../../../../../../_components/ui/iconPath';
-import useMe from '@/app/_hooks/useMe';
+import { User } from '@/app/_hooks/useMe';
 import usePSStore from '@/app/(route)/(personal-statement)/_store/psStore';
 
-export default function PSListHeader({ psLength }: { psLength: number }) {
-  const { data: userData } = useMe();
+export default function PSListHeader({ userData, psLength }: { userData: User | undefined; psLength: number }) {
   const router = useRouter();
   const { resetPSData } = usePSStore();
 
@@ -32,7 +31,7 @@ export default function PSListHeader({ psLength }: { psLength: number }) {
           <Icons name={{ ...PlusIcon, fill: '#fff', options: { ...PlusIcon.options, stroke: '#fff' } }} />
 
           <div className="flex">
-            <p className="hidden sm:block">자기소개서</p> 추가
+            <p className="hidden sm:block">자기소개서</p>&nbsp; 추가
           </div>
         </button>
       )}

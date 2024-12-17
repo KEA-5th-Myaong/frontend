@@ -19,7 +19,7 @@ export default function PortfolioContainer() {
   );
 
   return (
-    <div className="mt-[60px]  w-full max-w-[1000px] md:px-[60px] px-5 py-10  lg:mx-auto border rounded-[10px]">
+    <div className="mt-[60px] w-full max-w-[1000px] min-w-[360px] md:px-[60px] px-5 py-10 lg:mx-auto border rounded-[10px]">
       <section className="flex items-center">
         <Image
           alt="포트폴리오 사용자 기본 이미지"
@@ -28,14 +28,14 @@ export default function PortfolioContainer() {
           height={120}
           className="rounded-[20px]"
         />
-        <div className="flex ml-10 text-left my-3">
-          <div className="flex flex-col my-5 gap-2">
-            <p className="font-semibold ">이름</p>
-            <p className="font-semibold">휴대폰 번호</p>
-            <p className="font-semibold">이메일 주소</p>
-            <p className="font-semibold">관심 직무</p>
+        <div className="flex md-0 md:ml-10 text-left my-3 gap-2 md:gap-10 text-xs sm:text-base">
+          <div className="flex flex-col my-5 gap-2 font-semibold whitespace-nowrap">
+            <p>이름</p>
+            <p>휴대폰 번호</p>
+            <p>이메일 주소</p>
+            <p>관심 직무</p>
           </div>
-          <div className="flex flex-col ml-10 my-5 gap-2">
+          <div className="flex flex-col my-5 gap-2">
             <p className="text-left">{userData?.data.nickname}</p>
             <p>{portfolio?.data?.tel}</p>
             <p>{portfolio?.data?.email}</p>
@@ -49,8 +49,8 @@ export default function PortfolioContainer() {
           return (
             <section className="pf-read-section">
               <h1 className="pre-3xl-semibold">학력</h1>
-              <div className="h-[2px] w-full bg-gray-5 dark:bg-black-4 my-[20px]" />
-              <div className="flex items-center gap-4">
+              <div className="h-1.5 w-full bg-gray-5 dark:bg-black-4 my-5" />
+              <div className="flex flex-wrap items-center gap-1 whitespace-nowrap text-xs sm:text-base">
                 <Icons
                   className="mr-2.5"
                   name={{ ...RequiredIcon, fill: '#41AED9', options: { ...RequiredIcon.options, stroke: '#41AED9' } }}
@@ -72,7 +72,7 @@ export default function PortfolioContainer() {
 
       <section className="pf-read-section">
         <h1 className="pre-3xl-semibold">경력</h1>
-        <div className="h-[2px] w-full bg-gray-5 dark:bg-black-4 my-[20px]" />
+        <div className="h-0.5 w-full bg-gray-5 dark:bg-black-4 my-5" />
         {portfolio?.data?.experiences &&
           portfolio?.data?.experiences.map((item: Experiences) => {
             return (
