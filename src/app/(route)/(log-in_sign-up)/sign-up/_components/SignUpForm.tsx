@@ -193,7 +193,11 @@ export default function SignUpForm() {
         {/* 회원가입 button */}
         <div className="mt-[60px]">
           {errorMessage && <p className="form-error-text">{errorMessage}</p>}
-          <button type="submit" className={`form-btn ${!isFormValid ? 'bg-gray-1' : ''}`} disabled={!isFormValid}>
+          <button
+            type="submit"
+            className={`form-btn ${!isFormValid ? 'bg-gray-1' : 'dark:bg-primary-1'}`}
+            disabled={!isFormValid}
+          >
             {FORM_TEXT[10]}
           </button>
         </div>
