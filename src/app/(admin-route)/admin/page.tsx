@@ -17,8 +17,8 @@ import {
 export default function AdminMain() {
   const handleLogoutClick = () => {};
   return (
-    <section className="flex-center w-full">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 font-semibold min-w-[360px] w-full max-w-[768px] pb-40">
+    <section className="flex-center flex-col w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 font-semibold min-w-[360px] w-full max-w-[768px] pb-20">
         {/* 관리자 */}
         <div className="flex-center flex-col bg-black-3 h-[286px] pt-10 pb-9 text-white-0 font-semibold w-full max-w-h-96 shadow-xl">
           <Image width={120} height={120} src="/assets/admin/main-admin.svg" alt="" />
@@ -93,7 +93,7 @@ export default function AdminMain() {
       </div>
 
       {/* 푸터 */}
-      <footer className="absolute bottom-0 flex-center flex-col gap-3 bg-black-3 w-full py-6 whitespace-nowrap">
+      <footer className="bottom-0 flex-center flex-col gap-3 bg-black-3 w-full py-6 whitespace-nowrap">
         <div className="flex gap-1.5 items-center text-white-0 font-medium">
           <Link href="/main">서비스 소개</Link>
           <p className="text-gray-3">|</p>
