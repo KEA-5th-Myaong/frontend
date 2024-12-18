@@ -79,7 +79,7 @@ export default function Video() {
 
   const startAnalysis = useCallback(() => {
     if (intervalRef.current) return;
-    intervalRef.current = setInterval(captureFrame, 1000);
+    intervalRef.current = setInterval(captureFrame, 2000);
   }, [captureFrame]);
 
   const stopAnalysis = useCallback(() => {
