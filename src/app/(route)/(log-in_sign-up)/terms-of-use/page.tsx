@@ -6,6 +6,7 @@ import BackButton from '@/app/_components/BackButton';
 import Icons from '@/app/_components/ui/Icon';
 import { TermCheckIcon } from '@/app/_components/ui/iconPath';
 import { privacyPolicy, termsOfService } from './_data/terms';
+import PageWrapper from '@/app/_components/ui/PageWrapper';
 
 type CheckboxName = 'all' | 'terms1' | 'terms2';
 
@@ -64,7 +65,7 @@ export default function TermsOfUse() {
           <div className="flex flex-col items-center w-full min-w-[360px] max-w-[660px] px-5">
             <p className="mb-9 form-title">이용약관</p>
 
-            <div className="flex flex-col gap-8 self-stretch pb-12">
+            <PageWrapper className="flex flex-col gap-8 self-stretch pb-12">
               <div
                 className="terms-check"
                 onClick={() => {
@@ -150,7 +151,7 @@ export default function TermsOfUse() {
               >
                 다음
               </button>
-            </div>
+            </PageWrapper>
           </div>
         </div>
       </div>

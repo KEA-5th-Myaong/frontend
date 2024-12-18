@@ -8,6 +8,7 @@ import FormInput from '../../_components/FormInput';
 import Modal from '../../../../_components/Modal';
 import { validateCheckPwd, validatePwd } from '../../_utils/validation';
 import { ChangePwdProps } from '../../_types/forms';
+import PageWrapper from '@/app/_components/ui/PageWrapper';
 
 export default function ChangePwdForm() {
   const {
@@ -27,9 +28,7 @@ export default function ChangePwdForm() {
 
   const userPwdValue = watch('originPassword');
 
-  const onSubmit = async (data: ChangePwdProps) => {
-    console.log('비밀번호 데이터', data);
-
+  const onSubmit = async () => {
     return { success: true };
   };
 
@@ -41,9 +40,9 @@ export default function ChangePwdForm() {
 
   const isFormValid = Object.keys(errors).length === 0;
 
-  const handleFormSubmit = async (data: ChangePwdProps) => {
+  const handleFormSubmit = async () => {
     try {
-      const result = await onSubmit(data);
+      const result = await onSubmit();
       if (result.success) {
         setShowModal(true);
       }
@@ -52,7 +51,7 @@ export default function ChangePwdForm() {
     }
   };
   return (
-    <>
+    <PageWrapper className="w-full">
       <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* 비밀번호 input */}
         <FormInput<ChangePwdProps>
@@ -90,6 +89,6 @@ export default function ChangePwdForm() {
       </form>
 
       {showModal && <Modal topText={MODAL_TEXT[3]} btnText={MODAL_TEXT[0]} onBtnClick={handleModalConfirm} />}
-    </>
+    </PageWrapper>
   );
 }

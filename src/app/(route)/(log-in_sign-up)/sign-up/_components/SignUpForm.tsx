@@ -9,6 +9,7 @@ import FormInput from '../../_components/FormInput';
 import { validateCheckPwd, validateEmail, validateId, validatePwd } from '../../_utils/validation';
 import Modal from '../../../../_components/Modal';
 import { fetchCheckEmail, fetchCheckUsername, postSignUp } from '@/app/_services/membersService';
+import PageWrapper from '@/app/_components/ui/PageWrapper';
 
 export default function SignUpForm() {
   const {
@@ -65,7 +66,6 @@ export default function SignUpForm() {
         setIsEmailChecked(true); // 중복이 아닐 때만 true로 설정
       }
     } catch (error) {
-      console.log(error);
       setError('email', {
         type: 'manual',
         message: FORM_CATCH_ERROR[0],
@@ -118,91 +118,92 @@ export default function SignUpForm() {
   };
   return (
     <>
-      <form className="flex flex-col gap-10 self-stretch pb-12" onSubmit={handleSubmit(handleFormSubmit)}>
-        {/* 이름 input */}
-        <FormInput<SignUpState>
-          id="name"
-          label={FORM_TEXT[6]}
-          placeholder={FORM_PLACEHOLDER[2]}
-          register={register}
-          required={FORM_ERROR[3]}
-          error={errors.name}
-          maxLength={20}
-        />
-        {/* 닉네임 input */}
-        <FormInput<SignUpState>
-          id="nickname"
-          label={FORM_TEXT[11]}
-          placeholder={FORM_PLACEHOLDER[4]}
-          register={register}
-          required={FORM_ERROR[12]}
-          error={errors.nickname}
-          maxLength={10}
-        />
-        {/* 이메일 input */}
-        <FormInput<SignUpState>
-          id="email"
-          label={FORM_TEXT[7]}
-          placeholder={FORM_PLACEHOLDER[3]}
-          register={register}
-          onBlur={(e) => checkEMailDuplicate(e.target.value)}
-          onChange={() => setIsEmailChecked(false)}
-          type="email"
-          error={errors.email}
-          required={FORM_ERROR[4]}
-        />
-        {/* 아이디 input */}
-        <FormInput<SignUpState>
-          id="username"
-          label={FORM_TEXT[1]}
-          placeholder={FORM_PLACEHOLDER[0]}
-          register={register}
-          required={FORM_ERROR[0]}
-          onBlur={(e) => checkUsername(e.target.value)}
-          onChange={() => setIsUsernameChecked(false)}
-          error={errors.username}
-          minLength={6}
-          maxLength={12}
-          infoText={FORM_TEXT[8]}
-        />
-        {/* 비밀번호 input */}
-        <FormInput<SignUpState>
-          id="password"
-          label={FORM_TEXT[2]}
-          placeholder={FORM_PLACEHOLDER[1]}
-          register={register}
-          required={FORM_ERROR[1]}
-          onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
-          type="password"
-          error={errors.password}
-          minLength={8}
-          maxLength={20}
-          infoText={FORM_TEXT[9]}
-        />
-        {/* 비밀번호 확인 input */}
-        <FormInput<SignUpState>
-          id="confirmPassword"
-          label={FORM_TEXT[3]}
-          placeholder={FORM_PLACEHOLDER[1]}
-          register={register}
-          required={FORM_ERROR[10]}
-          onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors, 'confirmPassword')}
-          type="password"
-          error={errors.confirmPassword}
-        />
-        {/* 회원가입 button */}
-        <div className="mt-[60px]">
-          {errorMessage && <p className="form-error-text">{errorMessage}</p>}
-          <button
-            type="submit"
-            className={`form-btn ${!isFormValid ? 'bg-gray-1' : 'dark:bg-primary-1'}`}
-            disabled={!isFormValid}
-          >
-            {FORM_TEXT[10]}
-          </button>
-        </div>
-      </form>
-
+      <PageWrapper className="w-full">
+        <form className="flex flex-col gap-10 self-stretch pb-12" onSubmit={handleSubmit(handleFormSubmit)}>
+          {/* 이름 input */}
+          <FormInput<SignUpState>
+            id="name"
+            label={FORM_TEXT[6]}
+            placeholder={FORM_PLACEHOLDER[2]}
+            register={register}
+            required={FORM_ERROR[3]}
+            error={errors.name}
+            maxLength={20}
+          />
+          {/* 닉네임 input */}
+          <FormInput<SignUpState>
+            id="nickname"
+            label={FORM_TEXT[11]}
+            placeholder={FORM_PLACEHOLDER[4]}
+            register={register}
+            required={FORM_ERROR[12]}
+            error={errors.nickname}
+            maxLength={10}
+          />
+          {/* 이메일 input */}
+          <FormInput<SignUpState>
+            id="email"
+            label={FORM_TEXT[7]}
+            placeholder={FORM_PLACEHOLDER[3]}
+            register={register}
+            onBlur={(e) => checkEMailDuplicate(e.target.value)}
+            onChange={() => setIsEmailChecked(false)}
+            type="email"
+            error={errors.email}
+            required={FORM_ERROR[4]}
+          />
+          {/* 아이디 input */}
+          <FormInput<SignUpState>
+            id="username"
+            label={FORM_TEXT[1]}
+            placeholder={FORM_PLACEHOLDER[0]}
+            register={register}
+            required={FORM_ERROR[0]}
+            onBlur={(e) => checkUsername(e.target.value)}
+            onChange={() => setIsUsernameChecked(false)}
+            error={errors.username}
+            minLength={6}
+            maxLength={12}
+            infoText={FORM_TEXT[8]}
+          />
+          {/* 비밀번호 input */}
+          <FormInput<SignUpState>
+            id="password"
+            label={FORM_TEXT[2]}
+            placeholder={FORM_PLACEHOLDER[1]}
+            register={register}
+            required={FORM_ERROR[1]}
+            onBlur={(e) => validatePwd(e.target.value, setError, clearErrors)}
+            type="password"
+            error={errors.password}
+            minLength={8}
+            maxLength={20}
+            infoText={FORM_TEXT[9]}
+          />
+          {/* 비밀번호 확인 input */}
+          <FormInput<SignUpState>
+            id="confirmPassword"
+            label={FORM_TEXT[3]}
+            placeholder={FORM_PLACEHOLDER[1]}
+            register={register}
+            required={FORM_ERROR[10]}
+            onBlur={(e) => validateCheckPwd(e.target.value, userPwdValue, setError, clearErrors, 'confirmPassword')}
+            type="password"
+            error={errors.confirmPassword}
+          />
+          {/* 회원가입 button */}
+          <div className="mt-[60px]">
+            {errorMessage && <p className="form-error-text">{errorMessage}</p>}
+            <button
+              type="submit"
+              className={`form-btn ${!isFormValid ? 'bg-gray-1' : 'dark:bg-primary-1'}`}
+              disabled={!isFormValid}
+            >
+              {FORM_TEXT[10]}
+            </button>
+          </div>
+        </form>
+      </PageWrapper>
       {showSuccessModal && (
         <Modal
           topText={MODAL_TEXT[1]}

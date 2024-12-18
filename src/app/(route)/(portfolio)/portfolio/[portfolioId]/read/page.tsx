@@ -64,7 +64,6 @@ export default function PortfolioRead() {
     try {
       await deletePortfolios(String(portfolioId)); // API 호출
       queryClient.invalidateQueries({ queryKey: ['portfolios'] });
-      console.log(`Portfolio with ID ${portfolioId} deleted`);
     } catch (error) {
       console.error('Error deleting portfolio:', error);
       alert('포트폴리오 삭제에 실패했습니다.');

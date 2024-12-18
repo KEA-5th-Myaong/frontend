@@ -11,8 +11,7 @@ export default function CheckPwdContainer() {
   const { register, handleSubmit } = useForm({});
 
   const onSubmit = async (data: FieldValues) => {
-    const response = await axios.post('/api/check-pwd', data); // 임시 api 주소
-    console.log(response); // 콘솔로그는 나중에 제거
+    await axios.post('/api/check-pwd', data); // 임시 api 주소
   };
 
   const handleFormSubmit = async (data: FieldValues) => {

@@ -22,6 +22,7 @@ import useChatWriteStore from '@/app/_store/chatWrite';
 
 export default function ChatContainer() {
   const interviewId = useInterviewIdStore((state) => state.interviewId);
+  const firstQ = useInterviewIdStore((state) => state.firstQ);
   const setMessage = useChatWriteStore((state) => state.setMessages);
   const router = useRouter();
 
@@ -61,10 +62,10 @@ export default function ChatContainer() {
       {
         messageId: '',
         role: 'interviewer',
-        content: '첫 질문', // 여기 실제 첫 질문 넣어야됨
+        content: firstQ,
       },
     ]);
-  }, []);
+  }, [firstQ]);
 
   // 최대 메시지 도달 확인
   useEffect(() => {

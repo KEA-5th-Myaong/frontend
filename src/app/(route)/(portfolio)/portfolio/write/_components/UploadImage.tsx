@@ -26,7 +26,6 @@ export default function UploadImage({ onImageUpload }: UploadImageProps) {
 
       try {
         const picUrl = await postPortfoliosPic(formData); // URL 반환
-        console.log('이미지 업로드 성공 (핸들러)', picUrl);
         onImageUpload(String(picUrl)); // 부모 컴포넌트에 URL 전달
         setPreviewUrl(String(picUrl)); // URL 상태 설정
       } catch (error) {

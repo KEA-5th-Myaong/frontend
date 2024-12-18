@@ -20,7 +20,7 @@ interface InputProps<T extends FieldValues> {
 
 export default function Input<T extends FieldValues>({
   element,
-  label,
+  // label,
   size,
   color,
   type,
@@ -33,7 +33,6 @@ export default function Input<T extends FieldValues>({
   onChange,
   required,
 }: InputProps<T>) {
-  console.log(label);
   const inputWidth = size === 'sm' ? 'w-[260px]' : 'w-full';
   const background = color === 'white' ? 'bg-white-0' : 'bg-transparent';
 
@@ -68,7 +67,7 @@ export default function Input<T extends FieldValues>({
           }}
           onChange={handleInputChange}
           required={required}
-          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-sm font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
+          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-sm font-semibold text-black-0 dark:bg-white-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
         />
       ) : (
         <textarea

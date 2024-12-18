@@ -9,6 +9,7 @@ import FormInput from '../../_components/FormInput';
 import { validateId } from '../../_utils/validation';
 import Modal from '../../../../_components/Modal';
 import { fetchCheckUsername, postSignUpDetail } from '@/app/_services/membersService';
+import PageWrapper from '@/app/_components/ui/PageWrapper';
 
 export default function SignUpDetailForm() {
   const {
@@ -85,7 +86,7 @@ export default function SignUpDetailForm() {
     }
   };
   return (
-    <>
+    <PageWrapper className="w-full">
       <form className="flex flex-col gap-10 self-stretch pb-12  md:pt-0" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* 이름 input */}
         <FormInput<SignUpState>
@@ -140,6 +141,6 @@ export default function SignUpDetailForm() {
           onBtnClick={handleModalConfirm}
         />
       )}
-    </>
+    </PageWrapper>
   );
 }

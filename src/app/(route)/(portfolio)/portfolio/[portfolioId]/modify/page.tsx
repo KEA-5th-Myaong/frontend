@@ -98,7 +98,6 @@ export default function PortfolioModify() {
     // API 요청
     try {
       await putPortfolios(String(portfolioId), cleanedData);
-      console.log('수정완료');
       router.push(`/portfolio`);
       queryClient.invalidateQueries({ queryKey: ['portfolio', portfolioId] });
     } catch (error) {
@@ -141,7 +140,7 @@ export default function PortfolioModify() {
                     {...register('title')}
                     placeholder="포트폴리오 제목을 입력해 주세요."
                     type="text"
-                    className="pre-3xl-semibold w-full focus:outline-none"
+                    className="pre-3xl-semibold w-full focus:outline-none dark:bg-transparent"
                   />
                   <div ref={dropdownRef}>
                     <Icons

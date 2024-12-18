@@ -29,7 +29,6 @@ export default function LoadPSModal({ onSelect, onOverlayClick }: LoadPSModalPro
   // 자기소개서 목록 불러오기
   const [psList, setPSList] = useState([]); // 자소서 배열
   const { data: psData } = useCustomQuery(['ps'], () => fetchPSList());
-  console.log(psData);
 
   useEffect(() => {
     if (psData?.data && Array.isArray(psData.data)) {
@@ -45,7 +44,6 @@ export default function LoadPSModal({ onSelect, onOverlayClick }: LoadPSModalPro
     setSelectedPSId(id);
     onSelect(id);
   };
-
   return (
     <Overlay onClick={handleOverlayClick}>
       <motion.div
