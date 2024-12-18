@@ -8,6 +8,7 @@ import FormInput from '../../_components/FormInput';
 import Modal from '../../../../_components/Modal';
 import { validateCheckPwd, validatePwd } from '../../_utils/validation';
 import { ChangePwdProps } from '../../_types/forms';
+import PageWrapper from '@/app/_components/ui/PageWrapper';
 
 export default function ChangePwdForm() {
   const {
@@ -52,7 +53,7 @@ export default function ChangePwdForm() {
     }
   };
   return (
-    <>
+    <PageWrapper className="w-full">
       <form className="flex flex-col gap-10 self-stretch" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* 비밀번호 input */}
         <FormInput<ChangePwdProps>
@@ -90,6 +91,6 @@ export default function ChangePwdForm() {
       </form>
 
       {showModal && <Modal topText={MODAL_TEXT[3]} btnText={MODAL_TEXT[0]} onBtnClick={handleModalConfirm} />}
-    </>
+    </PageWrapper>
   );
 }
