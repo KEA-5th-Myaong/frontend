@@ -20,7 +20,7 @@ interface InputProps<T extends FieldValues> {
 
 export default function Input<T extends FieldValues>({
   element,
-  label,
+  // label,
   size,
   color,
   type,
@@ -33,7 +33,6 @@ export default function Input<T extends FieldValues>({
   onChange,
   required,
 }: InputProps<T>) {
-  console.log(label);
   const inputWidth = size === 'sm' ? 'w-[260px]' : 'w-full';
   const background = color === 'white' ? 'bg-white-0' : 'bg-transparent';
 

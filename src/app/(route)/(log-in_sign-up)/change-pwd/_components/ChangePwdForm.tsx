@@ -28,9 +28,7 @@ export default function ChangePwdForm() {
 
   const userPwdValue = watch('originPassword');
 
-  const onSubmit = async (data: ChangePwdProps) => {
-    console.log('비밀번호 데이터', data);
-
+  const onSubmit = async () => {
     return { success: true };
   };
 
@@ -42,9 +40,9 @@ export default function ChangePwdForm() {
 
   const isFormValid = Object.keys(errors).length === 0;
 
-  const handleFormSubmit = async (data: ChangePwdProps) => {
+  const handleFormSubmit = async () => {
     try {
-      const result = await onSubmit(data);
+      const result = await onSubmit();
       if (result.success) {
         setShowModal(true);
       }

@@ -98,7 +98,6 @@ export default function PortfolioModify() {
     // API 요청
     try {
       await putPortfolios(String(portfolioId), cleanedData);
-      console.log('수정완료');
       router.push(`/portfolio`);
       queryClient.invalidateQueries({ queryKey: ['portfolio', portfolioId] });
     } catch (error) {

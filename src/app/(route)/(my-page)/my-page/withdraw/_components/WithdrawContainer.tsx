@@ -18,8 +18,7 @@ export default function WithdrawContainer() {
   };
 
   const onSubmit = async (data: FieldValues) => {
-    const response = await axios.post('/api/withdraw', data); // 임시 api 주소
-    console.log(response); // 콘솔로그는 나중에 제거
+    await axios.post('/api/withdraw', data); // 임시 api 주소
   };
 
   // api 연결 후, 모달 띄우기를 api 성공시로 이동

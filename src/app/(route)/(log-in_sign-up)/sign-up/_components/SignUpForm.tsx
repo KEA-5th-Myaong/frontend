@@ -66,7 +66,6 @@ export default function SignUpForm() {
         setIsEmailChecked(true); // 중복이 아닐 때만 true로 설정
       }
     } catch (error) {
-      console.log(error);
       setError('email', {
         type: 'manual',
         message: FORM_CATCH_ERROR[0],

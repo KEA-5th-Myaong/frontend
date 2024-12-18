@@ -29,7 +29,6 @@ export default function InterviewHistoryPage() {
 
   useEffect(() => {
     if (setMessage) {
-      console.log(messages);
       setMessage(messages); // messages state가 변경될 때마다 store에 저장
     }
   }, [messages, setMessage]);

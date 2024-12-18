@@ -53,8 +53,6 @@ export async function postPortfoliosPic(formData: FormData): Promise<{ picUrl: s
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
-    console.log('API Response:', response);
-
     // `picUrl` 문자열만 반환
     return response.data.data.picUrl;
   } catch (error) {
@@ -77,7 +75,6 @@ export async function putPortfoliosMain(portfolioId: string) {
 export async function postPortfoliosMemo(portfolioId: string, memoData: PortfolioListMemo) {
   try {
     const { data } = await api.post(`/portfolios/${portfolioId}/memo`, memoData);
-    console.log('메모 등록 성공', data);
     return data;
   } catch (error) {
     console.error('포트폴리오 메모 등록 실패: ', error);
