@@ -67,7 +67,7 @@ export default function Input<T extends FieldValues>({
           }}
           onChange={handleInputChange}
           required={required}
-          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-sm font-semibold text-black-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
+          className={`${inputWidth} ${background} mt-[8px] px-[20px] py-[12px] text-sm font-semibold text-black-0 dark:bg-white-0 border border-gray-5 rounded-[10px] focus:outline-none focus:border-primary-1 focus:border-[2px]`}
         />
       ) : (
         <textarea
