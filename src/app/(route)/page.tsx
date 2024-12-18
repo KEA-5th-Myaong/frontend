@@ -51,7 +51,7 @@ export default function Home() {
         alt="주황색 배경 효과"
         width={600}
         height={600}
-        className="absolute z-[0] left-[-300px] "
+        className="absolute z-[0] left-[-300px]"
       />
       <Image
         src="/assets/landing-page/img-orange-circle.svg"
@@ -155,13 +155,15 @@ export default function Home() {
             width={300}
             height={120}
             className="z-[1]"
+            loading="lazy"
           />
           <Image
             src="/assets/landing-page/blue-background.svg"
             alt="파란색 배경 이미지"
             width={400}
             height={300}
-            className="absolute top-[120px] left-[150px] z-[0] "
+            className="absolute top-[120px] left-[150px] z-[0]"
+            loading="lazy"
           />
         </motion.div>
 
@@ -184,6 +186,7 @@ export default function Home() {
               width={80}
               height={80}
               className="absolute top-[-40px] sm:left-[-10px] md:left-[-40px]"
+              loading="lazy"
             />
             <Image
               src="/assets/landing-page/section3-img2-sm.svg"
@@ -191,6 +194,7 @@ export default function Home() {
               width={600}
               height={600}
               className="block md:hidden"
+              loading="lazy"
             />
 
             <Image
@@ -199,6 +203,7 @@ export default function Home() {
               width={900}
               height={900}
               className="hidden md:block"
+              loading="lazy"
             />
           </div>
         </motion.div>
@@ -224,6 +229,7 @@ export default function Home() {
                 width={500}
                 height={200}
                 className="mr-[30px]"
+                loading="lazy"
               />
               <Image
                 src="/assets/landing-page/section4-img1.svg"
@@ -231,6 +237,7 @@ export default function Home() {
                 width={250}
                 height={200}
                 className="z-[1] sm:hidden md:block"
+                loading="lazy"
               />
               <Image
                 src="/assets/landing-page/blue-background.svg"
@@ -238,6 +245,7 @@ export default function Home() {
                 width={400}
                 height={300}
                 className="absolute right-[-120px] top-[-80px] z-[0] hidden md:block"
+                loading="lazy"
               />
             </div>
             <div className="flex mt-[30px]">
@@ -247,12 +255,14 @@ export default function Home() {
                 width={200}
                 height={150}
                 className="mr-[30px] hidden md:block"
+                loading="lazy"
               />
               <Image
                 src="/assets/landing-page/section4-back.svg"
                 alt="백엔드 개발자 포스트 이미지"
                 width={500}
                 height={200}
+                loading="lazy"
               />
             </div>
           </div>
@@ -271,13 +281,22 @@ export default function Home() {
             취업 성공을 위한 맞춤형 AI 지원, 지금 시작하세요
           </p>
           <div className="flex mt-[55px] ">
-            <button
-              type="button"
-              className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 mx-2.5 py-[15px] px-[35px] rounded-[100px] dark:border-[#4d6a88] border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
-            >
-              <Image src="/assets/landing-page/ic-eye.svg" alt="눈 아이콘" width={20} height={20} className="mr-2.5" />
-              구경해보기
-            </button>
+            <Link href="/main">
+              <button
+                type="button"
+                className="flex items-center sm:pre-xl-semibold md:pre-2xl-semibold bg-blue-1 text-white-0 mx-2.5 py-[15px] px-[35px] rounded-[100px] dark:border-[#4d6a88] border-white-0 border-[3px] hover:scale-105 transform transition-transform duration-200 ease-out"
+              >
+                <Image
+                  src="/assets/landing-page/ic-eye.svg"
+                  alt="눈 아이콘"
+                  width={20}
+                  height={20}
+                  className="mr-2.5"
+                  loading="lazy"
+                />
+                구경해보기
+              </button>
+            </Link>
             <Link href="/log-in">
               <button
                 type="button"
@@ -289,6 +308,7 @@ export default function Home() {
                   width={20}
                   height={20}
                   className="mr-2.5"
+                  loading="lazy"
                 />
                 간편 회원가입
               </button>
