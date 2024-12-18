@@ -25,7 +25,7 @@ export default function InterviewPersonalStatement() {
   const queryClient = useQueryClient();
 
   const companyId = useCompanyIdStore((state) => state.companyId); // 기업 id
-  const { setInterviewId } = useInterviewIdStore(); // 인터뷰 id store에 저장
+  const { setInterviewId, setFirstQ } = useInterviewIdStore(); // 인터뷰 id store에 저장
 
   const [psList, setPSList] = useState([]); // 자소서 배열
 
@@ -46,7 +46,9 @@ export default function InterviewPersonalStatement() {
   const handlePSClick = async () => {
     const response = await postInterview(interviewData);
     const interviewId = response?.data.interviewId;
+    const firstQ = response?.data.content;
     setInterviewId(interviewId); // store에 저장하는 인터뷰 id
+    setFirstQ(firstQ);
 
     // 상태 업데이트가 반영될 때까지 기다림
     await new Promise((resolve) => {
