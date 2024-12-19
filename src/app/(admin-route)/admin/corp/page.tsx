@@ -24,9 +24,9 @@ export default function AdminCorp() {
         <div className="flex-col mt-2 h-[500px] max-w-[50%] border-gray-5 border">
           <div className="flex px-12 bg-gray-5 py-4 w-full text-sm font-semibold">기업명</div>
           <div className="my-2 h-full">
-            <div className="flex-col h-[75%]">
+            <div className="flex-col h-[75%] overflow-scroll">
               {testData.corpList.map((item) => (
-                <div className="flex items-center w-full h-11">
+                <div className="flex items-center w-full h-7 py-8">
                   <Icons name={ArrowCircleIcon} className="flex justify-center h-5 w-[15%]" />
                   <div className="flex w-[74%] item-center">
                     {item.name}
@@ -40,7 +40,7 @@ export default function AdminCorp() {
                       />
                     </button>
                   </div>
-                  <Icons name={TrashIcon} className="h-6 w-[10%]" />
+                  <Icons name={TrashIcon} className="h-6 w-[10%] mr-4" />
                 </div>
               ))}
             </div>

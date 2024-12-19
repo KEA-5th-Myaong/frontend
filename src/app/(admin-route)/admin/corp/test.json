@@ -2,31 +2,35 @@
   "corpList": [
     {
       "companyId": 1,
-      "name": "기업 이름"
+      "name": "삼성전자"
     },
     {
       "companyId": 2,
-      "name": "기업 이름"
+      "name": "현대자동차"
     },
     {
       "companyId": 3,
-      "name": "기업 이름"
+      "name": "LG전자"
     },
     {
       "companyId": 4,
-      "name": "기업 이름"
+      "name": "SK하이닉스"
     },
     {
       "companyId": 5,
-      "name": "기업 이름"
+      "name": "카카오"
     },
     {
       "companyId": 6,
-      "name": "기업 이름"
+      "name": "네이버"
     },
     {
       "companyId": 7,
-      "name": "기업 이름"
+      "name": "포스코"
+    },
+    {
+      "companyId": 8,
+      "name": "KT"
     }
   ]
 }
