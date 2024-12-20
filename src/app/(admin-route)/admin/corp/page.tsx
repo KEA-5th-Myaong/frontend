@@ -18,7 +18,7 @@ export default function AdminCorp() {
           <div className="flex justify-start  py-2  ">
             <Icons name={{ ...SearchIcon, fill: '#00000' }} />
             {/* 검색어 입력시 / hover 색상 변경 필요 */}
-            <textarea className="resize-none ml-3 px-[18px] w-full max-h-[30px]  placeholder:text-gray-3 focus:outline-none" />
+            <textarea className="resize-none ml-3 px-[18px] w-full max-h-[30px] placeholder:text-gray-3 focus:outline-none" />
           </div>
         </div>
         <div className="flex-col mt-2 h-[500px] max-w-[50%] border-gray-5 border">

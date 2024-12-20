@@ -13,17 +13,25 @@ import {
   MemberIcon,
   NoticeIcon,
 } from '@/app/_components/ui/iconPath';
+import useMe from '@/app/_hooks/useMe';
 
 export default function AdminMain() {
+  const { data: userData } = useMe();
   const handleLogoutClick = () => {};
   return (
     <section className="flex-center flex-col w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 font-semibold min-w-[360px] w-full max-w-[768px] pb-20">
         {/* 관리자 */}
         <div className="flex-center flex-col bg-black-3 h-[286px] pt-10 pb-9 text-white-0 font-semibold w-full max-w-h-96 shadow-xl">
-          <Image width={120} height={120} src="/assets/admin/main-admin.svg" alt="" />
-          <p className="mt-4">관리자</p>
-          <p className="mt-3 font-medium">yeonilil@naver.com</p>
+          <Image
+            width={120}
+            height={120}
+            src={userData?.data.profilePicUrl || '/assets/admin/main-admin.svg'}
+            alt="관리자 프로필 이미지"
+            className="rounded-full"
+          />
+          <p className="mt-4">관리자 {userData?.data.nickname}</p>
+          <p className="mt-3 font-medium">{userData?.data.email}</p>
           <button type="button" onClick={handleLogoutClick} className="mt-5 flex gap-1.5 items-center">
             <Icons name={LogOutIcon} />
             로그아웃
