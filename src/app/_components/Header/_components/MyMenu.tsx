@@ -70,7 +70,6 @@ export default function MyMenu({ handleMenuOpen, openMenu, userData }: MyMenuPro
       console.error('로그아웃 중 오류 발생:', error);
     }
   };
-
   return (
     <div className="md:items-center hidden md:flex md:justify-end w-full gap-3 lg:gap-8">
       <ThemeToggle />

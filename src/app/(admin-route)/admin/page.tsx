@@ -2,6 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import Icons from '@/app/_components/ui/Icon';
 import {
   AlertIcon,
@@ -17,7 +20,24 @@ import useMe from '@/app/_hooks/useMe';
 
 export default function AdminMain() {
   const { data: userData } = useMe();
-  const handleLogoutClick = () => {};
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const handleLogout = async () => {
+    try {
+      // 로그아웃 처리
+      Cookies.remove('accessToken');
+      // 모든 관련 쿼리 무효화
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+
+      // 캐시된 사용자 데이터 제거
+      queryClient.setQueryData(['me'], null);
+      // 다른 관련된 쿼리들도 초기화
+      queryClient.clear();
+      router.push('/log-in');
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+    }
+  };
   return (
     <section className="flex-center flex-col w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-7 font-semibold min-w-[360px] w-full max-w-[768px] pb-20">
@@ -32,7 +52,7 @@ export default function AdminMain() {
           />
           <p className="mt-4">관리자 {userData?.data.nickname}</p>
           <p className="mt-3 font-medium">{userData?.data.email}</p>
-          <button type="button" onClick={handleLogoutClick} className="mt-5 flex gap-1.5 items-center">
+          <button type="button" onClick={handleLogout} className="mt-5 flex gap-1.5 items-center">
             <Icons name={LogOutIcon} />
             로그아웃
           </button>
