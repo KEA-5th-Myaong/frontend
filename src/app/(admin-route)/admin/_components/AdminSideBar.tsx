@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { useRouter, usePathname } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import Icons from '@/app/_components/ui/Icon';
 import {
   CorpIcon,
@@ -16,7 +18,24 @@ import {
 
 export default function AdminSideBar() {
   const pathname = usePathname();
-  const handleLogoutClick = () => {};
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const handleLogout = async () => {
+    try {
+      // 로그아웃 처리
+      Cookies.remove('accessToken');
+      // 모든 관련 쿼리 무효화
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+
+      // 캐시된 사용자 데이터 제거
+      queryClient.setQueryData(['me'], null);
+      // 다른 관련된 쿼리들도 초기화
+      queryClient.clear();
+      router.push('/log-in');
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+    }
+  };
 
   if (pathname === '/admin') {
     return null;
@@ -30,14 +49,13 @@ export default function AdminSideBar() {
         : '[--icon-stroke:#FFF] hover:[--icon-stroke:#303030]'
     }`;
   };
-
   return (
     <div className="w-full max-w-52">
       <div className="flex-center flex-col bg-black-3 py-9 text-white-0 font-semibold">
         <Image width={79} height={79} src="/assets/admin/main-admin.svg" alt="" />
         <p className="mt-2">관리자</p>
         <p className="mt-2 font-medium text-xs">yeonilil@naver.com</p>
-        <button type="button" onClick={handleLogoutClick} className="mt-16 flex gap-1.5 items-center">
+        <button type="button" onClick={handleLogout} className="mt-16 flex gap-1.5 items-center">
           <Icons name={LogOutIcon} />
           로그아웃
         </button>

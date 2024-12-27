@@ -10,8 +10,8 @@ export const expressionMapping: { [key: string]: string } = {
   Disgust: '인상을 풀고 편안한 표정을 지어보세요',
   Fear: '많이 긴장되어 보여요 좀 더 미소 지어도 좋을 것 같아요',
   Happy: '적당한 미소 정도가 좋아요',
-  Sad: '슬픈 표정보다 은은한 미소가 좋을 것 같아요',
-  Surprise: '너무 놀란 표정은 당황스러워 보일 수 있어요',
+  Sad: '조금 더 은은한 미소를 지어 보세요',
+  Surprise: '입을 조금 다물고 차분해질 필요가 있어요',
   Neutral: '좋아요!',
-  'No face detected': '얼굴이 인식되지 않아요',
+  'No face detected': '허리를 피고 턱을 내려 자세를 바르게 해주세요',
 };
