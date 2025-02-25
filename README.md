@@ -10,6 +10,11 @@
 - 2024.09.01.~2024.12.31
   
 ## 🧑‍💻 개발자 소개
+|<img src="https://github.com/user-attachments/assets/3ae3d63a-3706-4aa2-9ff0-8db94d661436" width="150px" height="200px" />|<img src="https://github.com/user-attachments/assets/" width="150px" height="200px" />|<img src="https://github.com/user-attachments/assets/" width="150px" height="200px" />|
+|:---:|:---:|:---:|
+|**김현중**|**곽서연**|**백지연**|
+|Frontend Developer|Frontend Developer|Frontend Developer|
+|[GitHub](https://github.com/kimgorok) | [GitHub](https://github.com/yeonilil) | [GitHub](https://github.com/BaekJiyeon02)|
 
 ## 🛠️ 기술 스택
 
@@ -19,12 +24,30 @@
 #### 프레임워크
 
 <img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"> 
+
 #### 라이브러리
 
-<img src="https://img.shields.io/badge/React%20Hook%20Form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white"> <img src="https://img.shields.io/badge/zustand-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"> 
+- tanstack-query
+- toast-ui/editor
+- dompurify
+- html-react-parser
+- js-cookie
+- react-hook-form
+- react-intersection-observer
+- react-slick(slick-carousel)
+- react-to-pdf
+- sharp
+- uuid
+- zustand
+
+#### 데이터 프로세싱
+- axios
+
 #### UI
 
 <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"> 
+- framer-motion
+
 
 #### 코드 포매터 및 검사 도구
 
