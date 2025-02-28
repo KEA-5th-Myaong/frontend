@@ -3,8 +3,6 @@
 ## 프로젝트 소개
 - AI 모델을 이용한 클라우드 네이티브 기반 취업 지원 블로그 서비스
 
-#### 서비스 배포 주소
-- 
 
 #### 개발 기간
 - 2024.09.01.~2024.12.31
@@ -46,6 +44,7 @@
 #### UI
 
 <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"> 
+
 - framer-motion
 
 
