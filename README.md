@@ -8,7 +8,7 @@
 - 2024.09.01.~2024.12.31
 
 ## 🧑‍💻 개발자 소개
-|<img src="https://github.com/user-attachments/assets/53d3f3d5-6cef-400b-9be1-61bb78631321" width="150px" height="200px" />|<img src="https://github.com/user-attachments/assets/" width="150px" height="200px" />|<img src="https://github.com/user-attachments/assets/33a21583-674d-441d-9a91-808705b3792e" width="150px" height="200px" />|
+|<img src="https://github.com/user-attachments/assets/53d3f3d5-6cef-400b-9be1-61bb78631321" width="150px" height="200px" />|<img src="https://github.com/user-attachments/assets/99eba5ee-0448-4c05-a965-862de3e7eb1e" width="150px" height="200px" />|<img src="https://github.com/user-attachments/assets/33a21583-674d-441d-9a91-808705b3792e" width="150px" height="200px" />|
 |:---:|:---:|:---:|
 |**김현중**|**곽서연**|**백지연**|
 |Frontend Developer|Frontend Developer|Frontend Developer|
