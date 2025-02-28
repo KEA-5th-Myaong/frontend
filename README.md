@@ -14,6 +14,17 @@
 |Frontend Developer|Frontend Developer|Frontend Developer|
 |[GitHub](https://github.com/kimgorok) | [GitHub](https://github.com/yeonilil) | [GitHub](https://github.com/BaekJiyeon02)|
 
+## 🙋 역할 분담
+### 김현중
+- 로그인, 회원가입, 블로그 페이지, 모의 면접, 자기소개서 목록, 마이페이지, 메인 페이지, 관리자 메인/상세 페이지, 약관동의 페이지
+
+### 곽서연
+- 랜딩 페이지, 포트폴리오 목록/작성/조회
+
+### 백지연
+- 자기소개서 작성/수정/상세보기, 헤더, 문의 공지 페이지, 관리자 기업 관리 페이지, 다크모드, 포스트 작성
+
+
 ## 🛠️ 기술 스택
 
 #### 언어
